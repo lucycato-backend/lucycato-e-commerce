@@ -1,1 +1,3 @@
 rootProject.name = 'big-tech'
+include 'common'
+
