@@ -1,0 +1,105 @@
+version: "3"
+services:
+  #infra-server
+  gateway-server:
+    image: lucycato/big-tech-gateway-server:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8060:8080"
+    environment:
+      - KAFKA_LOGGING_TOPIC=lucycato_logging_out_stdout
+  config-server:
+    image: lucycato/big-tech-config-server:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8061:8080"
+    environment:
+      - KAFKA_LOGGING_TOPIC=lucycato_logging_out_stdout
+  eureka-server:
+    image: lucycato/big-tech-eureka-server:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8062:8080"
+    environment:
+      - KAFKA_LOGGING_TOPIC=lucycato_logging_out_stdout
+  #operate-server
+  logging-consumer:
+    image: lucycato/big-tech-logging-consumer:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8070:8080"
+    environment:
+      - KAFKA_LOGGING_TOPIC=lucycato_logging_out_stdout
+  task-consumer:
+    image: lucycato/big-tech-task-consumer:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8071:8080"
+    environment:
+      - KAFKA_LOGGING_TOPIC=lucycato_logging_out_stdout
+  auth-server:
+    image: lucycato/big-tech-auth-server:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8072:8080"
+    environment:
+      - KAFKA_LOGGING_TOPIC=lucycato_logging_out_stdout
+  batch-server:
+    image: lucycato/big-tech-batch-server:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8073:8080"
+    environment:
+      - KAFKA_LOGGING_TOPIC=lucycato_logging_out_stdout
+  #Service
+  member-service:
+    image: lucycato/big-tech-member-service:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8080:8080"
+    environment:
+      - KAFKA_LOGGING_TOPIC=lucycato_logging_out_stdout
+  notification-service:
+    image: lucycato/big-tech-notification-service:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8081:8080"
+    environment:
+      - KAFKA_LOGGING_TOPIC=lucycato_logging_out_stdout
+  event-service:
+    image: lucycato/big-tech-event-service:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8082:8080"
+    environment:
+      - KAFKA_LOGGING_TOPIC=lucycato_logging_out_stdout
+  delivery-service:
+    image: lucycato/big-tech-delivery-service:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8083:8080"
+    environment:
+      - KAFKA_LOGGING_TOPIC=lucycato_logging_out_stdout
+  webtoon-service:
+    image: lucycato/big-tech-webtoon-service:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8084:8080"
+    environment:
+      - KAFKA_LOGGING_TOPIC=lucycato_logging_out_stdout
+
+networks:
+  lucycato_network:
+    driver: bridge
