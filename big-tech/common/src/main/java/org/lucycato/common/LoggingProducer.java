@@ -5,12 +5,13 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
 import java.util.Properties;
 
 @Component
 public class LoggingProducer {
-    private final KafkaProducer<String, String>  kafkaProducer;
+    private final KafkaProducer<String, String> kafkaProducer;
 
     private final String topic;
 
@@ -27,12 +28,14 @@ public class LoggingProducer {
         this.topic = topic;
     }
 
-    public void sendLogMessage(String logKey, String logMessage) {
-        ProducerRecord<String, String> record = new ProducerRecord<>(topic, logKey, logMessage);
-        kafkaProducer.send(record, (metadata, exception) -> {
-            if (exception != null) {
-                exception.printStackTrace();
-            }
-        });
+    public Mono<Void> sendLogMessage(String logKey, String logMessage) {
+        return Mono.just(new ProducerRecord<>(topic, logKey, logMessage))
+                .flatMap(record -> Mono.create(sink -> kafkaProducer.send(record, ((metadata, exception) -> {
+                    if (exception != null) {
+                        sink.error(exception);
+                    } else {
+                        sink.success();
+                    }
+                }))));
     }
 }
