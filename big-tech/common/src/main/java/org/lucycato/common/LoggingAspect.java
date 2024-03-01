@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 public class LoggingAspect {
     private final LoggingProducer loggingProducer;
 
-    @Before("execution(* com.lucycato.*.adapter.in.web.*.*(..))")
+    @Before("execution(* org.lucycato.*.adapter.in.web.*.*(..))")
     public void beforeMethodExecution(JoinPoint joinPoint) {
         // * Mono: 0 ~ 1개를 방출, Flux: 0 ~ N개 방출
         // * 즉 Mono는 1개 방출 후 dispose 된다 (방출 후 dispose 된다는 것은 메모리 누수가 발생을 안한다.)
