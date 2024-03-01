@@ -116,7 +116,9 @@ services:
       - "lucycato_network"
     ports:
       - "8080:8080"
+      - "5005:5005"
     environment:
+      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n
       - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
   notification-service:
@@ -134,6 +136,7 @@ services:
     ports:
       - "8082:8080"
     environment:
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
   delivery-service:
     image: lucycato/big-tech-delivery-service:1.0.0
