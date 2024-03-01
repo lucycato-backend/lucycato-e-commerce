@@ -4,6 +4,8 @@ import org.lucycato.common.error.ErrorCodeImpl;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientRequestException;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -22,16 +24,16 @@ public class CommonWebClient {
         return webClient.get()
                 .uri(URI.create(url))
                 .retrieve()
-                .onStatus(HttpStatusCode::isError, response -> Mono.error(ErrorCodeImpl.CLIENT.build()))
-                .bodyToMono(String.class);
+                .bodyToMono(String.class)
+                .onErrorResume(WebClientRequestException.class, ex -> Mono.empty());
     }
 
     public Flux<String> sendGetRequestResultFlux(String url) {
         return webClient.get()
                 .uri(URI.create(url))
                 .retrieve()
-                .onStatus(HttpStatusCode::isError, response -> Mono.error(ErrorCodeImpl.CLIENT.build()))
-                .bodyToFlux(String.class);
+                .bodyToFlux(String.class)
+                .onErrorResume(WebClientRequestException.class, ex -> Mono.empty());
     }
 
     public Mono<String> sendPostRequestResultMono(String url, Map<String, Object> body) {
@@ -40,8 +42,8 @@ public class CommonWebClient {
                 .header("Content-Type", "application/json")
                 .bodyValue(body)
                 .retrieve()
-                .onStatus(HttpStatusCode::isError, response -> Mono.error(ErrorCodeImpl.CLIENT.build()))
-                .bodyToMono(String.class);
+                .bodyToMono(String.class)
+                .onErrorResume(WebClientRequestException.class, ex -> Mono.empty());
     }
 
     public Flux<String> sendPostRequestResultFlux(String url, Map<String, Object> body) {
@@ -50,8 +52,8 @@ public class CommonWebClient {
                 .header("Content-Type", "application/json")
                 .bodyValue(body)
                 .retrieve()
-                .onStatus(HttpStatusCode::isError, response -> Mono.error(ErrorCodeImpl.CLIENT.build()))
-                .bodyToFlux(String.class);
+                .bodyToFlux(String.class)
+                .onErrorResume(WebClientRequestException.class, ex -> Mono.empty());
     }
 
     public Mono<String> sendPutRequestResultMono(String url, Map<String, Object> body) {
@@ -60,8 +62,8 @@ public class CommonWebClient {
                 .header("Content-Type", "application/json")
                 .bodyValue(body)
                 .retrieve()
-                .onStatus(HttpStatusCode::isError, response -> Mono.error(ErrorCodeImpl.CLIENT.build()))
-                .bodyToMono(String.class);
+                .bodyToMono(String.class)
+                .onErrorResume(WebClientRequestException.class, ex -> Mono.empty());
     }
 
     public Flux<String> sendPutRequestResultFlux(String url, Map<String, Object> body) {
@@ -70,23 +72,23 @@ public class CommonWebClient {
                 .header("Content-Type", "application/json")
                 .bodyValue(body)
                 .retrieve()
-                .onStatus(HttpStatusCode::isError, response -> Mono.error(ErrorCodeImpl.CLIENT.build()))
-                .bodyToFlux(String.class);
+                .bodyToFlux(String.class)
+                .onErrorResume(WebClientRequestException.class, ex -> Mono.empty());
     }
 
     public Mono<String> sendDeleteRequestResultMono(String url)  {
         return webClient.delete()
                 .uri(URI.create(url))
                 .retrieve()
-                .onStatus(HttpStatusCode::isError, response -> Mono.error(ErrorCodeImpl.CLIENT.build()))
-                .bodyToMono(String.class);
+                .bodyToMono(String.class)
+                .onErrorResume(WebClientRequestException.class, ex -> Mono.empty());
     }
 
     public Flux<String> sendDeleteRequestResultFlux(String url) {
         return webClient.delete()
                 .uri(URI.create(url))
                 .retrieve()
-                .onStatus(HttpStatusCode::isError, response -> Mono.error(ErrorCodeImpl.CLIENT.build()))
-                .bodyToFlux(String.class);
+                .bodyToFlux(String.class)
+                .onErrorResume(WebClientRequestException.class, ex -> Mono.empty());
     }
 }
