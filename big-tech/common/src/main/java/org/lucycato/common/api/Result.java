@@ -17,6 +17,7 @@ public class Result {
         Result result = new Result();
         result.code = Result.SUCCESS_CODE;
         result.reason = Result.SUCCESS_REASON;
+        result.frontMessage = "";
         return result;
     }
 

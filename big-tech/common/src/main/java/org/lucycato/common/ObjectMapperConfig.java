@@ -1,5 +1,6 @@
 package org.lucycato.common;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -24,6 +25,8 @@ public class ObjectMapperConfig {
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
         objectMapper.setPropertyNamingStrategy(new PropertyNamingStrategies.LowerCamelCaseStrategy());
 
