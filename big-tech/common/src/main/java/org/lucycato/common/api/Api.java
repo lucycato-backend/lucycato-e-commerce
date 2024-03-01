@@ -37,11 +37,4 @@ public class Api<T> {
         api.body = new Object();
         return api;
     }
-
-    public static Api<Object> ERROR(ErrorCode errorCode, Throwable tx) {
-        Api<Object> api = new Api<>();
-        api.result = Result.ERROR(errorCode, tx);
-        api.body = new Object();
-        return api;
-    }
 }

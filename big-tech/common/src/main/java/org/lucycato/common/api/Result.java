@@ -3,18 +3,20 @@ package org.lucycato.common.api;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.lucycato.common.error.ErrorCode;
-import org.lucycato.common.error.ErrorCodeImpl;
 
 @Getter
 @NoArgsConstructor
 public class Result {
+    private static final String SUCCESS_CODE = "LUCYCATO";
+    private static final String SUCCESS_REASON = "success";
     private String code;
     private String reason;
+    private String frontMessage;
 
     public static Result OK() {
         Result result = new Result();
-        result.code = ErrorCodeImpl.OK.getCode();
-        result.reason = ErrorCodeImpl.OK.getReason();
+        result.code = Result.SUCCESS_CODE;
+        result.reason = Result.SUCCESS_REASON;
         return result;
     }
 
@@ -22,6 +24,7 @@ public class Result {
         Result result = new Result();
         result.code = errorCode.getCode();
         result.reason = errorCode.getReason();
+        result.frontMessage = errorCode.getFrontMessage();
         return result;
     }
 
@@ -29,13 +32,7 @@ public class Result {
         Result result = new Result();
         result.code = errorCode.getCode();
         result.reason = reason;
-        return result;
-    }
-
-    public static Result ERROR(ErrorCode errorCode, Throwable tx) {
-        Result result = new Result();
-        result.code = errorCode.getCode();
-        result.reason = tx.getLocalizedMessage();
+        result.frontMessage = errorCode.getFrontMessage();
         return result;
     }
 }
