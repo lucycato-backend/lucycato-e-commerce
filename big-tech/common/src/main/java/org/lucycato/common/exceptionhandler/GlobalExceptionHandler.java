@@ -8,10 +8,10 @@ import org.lucycato.common.error.ErrorCode;
 import org.lucycato.common.error.ErrorCodeImpl;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
+가import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.support.WebExchangeBindException;
+import org.springframework.web.reactive.function.client.WebClientRequestException;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.springframework.web.server.MethodNotAllowedException;
 import org.springframework.web.server.ServerWebInputException;
 import reactor.core.publisher.Mono;
@@ -47,6 +47,12 @@ public class GlobalExceptionHandler {
             reason = errorCode.getReason() + ": " + ((ServerWebInputException) ex).getReason();
         } else if (ex instanceof MethodNotAllowedException) {
             errorCode = ErrorCodeImpl.METHOD_NOT_ALLOWED;
+            reason = errorCode.getReason();
+        } else if (ex instanceof WebClientRequestException) {
+            errorCode = ErrorCodeImpl.REQUEST_CLIENT;
+            reason = errorCode.getReason();
+        } else if (ex instanceof WebClientResponseException) {
+            errorCode = ErrorCodeImpl.RESPONSE_CLIENT;
             reason = errorCode.getReason();
         } else {
             errorCode = ErrorCodeImpl.INTERNAL_SERVER;
