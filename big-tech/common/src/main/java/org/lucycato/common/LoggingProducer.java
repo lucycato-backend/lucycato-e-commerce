@@ -32,6 +32,7 @@ public class LoggingProducer {
         return Mono.just(new ProducerRecord<>(topic, logKey, logMessage))
                 .flatMap(record -> Mono.create(sink -> kafkaProducer.send(record, ((metadata, exception) -> {
                     if (exception != null) {
+                        exception.printStackTrace();
                         sink.error(exception);
                     } else {
                         sink.success();
