@@ -12,14 +12,10 @@ import java.util.Properties;
 @Component
 public class TaskProducer {
     private final LoggingProducer loggingProducer;
-
     private final PrintStackTraceManager printStackTraceManager;
     private final KafkaProducer<String, String> kafkaProducer;
-
     private final ObjectMapper objectMapper;
-
     private final String bootstrapServers;
-
     private final String topic;
 
     public TaskProducer(
