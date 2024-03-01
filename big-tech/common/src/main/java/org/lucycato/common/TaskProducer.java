@@ -11,6 +11,9 @@ import java.util.Properties;
 
 @Component
 public class TaskProducer {
+    private final LoggingProducer loggingProducer;
+
+    private final PrintStackTraceManager printStackTraceManager;
     private final KafkaProducer<String, String> kafkaProducer;
 
     private final ObjectMapper objectMapper;
@@ -22,6 +25,8 @@ public class TaskProducer {
     public TaskProducer(
             @Value("${kafka.clusters.bootstrapservers:null}") String bootstrapServers,
             @Value("${kafka.task.topic:null}") String topic,
+            LoggingProducer loggingProducer,
+            PrintStackTraceManager printStackTraceManager,
             ObjectMapper objectMapper
     ) {
         Properties props = new Properties();
@@ -29,10 +34,12 @@ public class TaskProducer {
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
-        this.kafkaProducer = new KafkaProducer<>(props);
-        this.objectMapper = objectMapper;
         this.bootstrapServers = bootstrapServers;
         this.topic = topic;
+        this.kafkaProducer = new KafkaProducer<>(props);
+        this.objectMapper = objectMapper;
+        this.loggingProducer = loggingProducer;
+        this.printStackTraceManager = printStackTraceManager;
     }
 
     public Mono<Void> sendTask(String taskKey, Object taskValue) {
@@ -41,6 +48,9 @@ public class TaskProducer {
                 .map(taskValueJsonString -> new ProducerRecord<>(topic, taskKey, taskValueJsonString))
                 .flatMap(record -> Mono.create(sink -> kafkaProducer.send(record, (metadata, exception) -> {
                     if (exception != null) {
+                        exception.printStackTrace();
+                        String stackTraceString = printStackTraceManager.getStackTraceAsString(exception);
+                        loggingProducer.sendLogMessage("kafka exception", stackTraceString);
                         sink.error(exception);
                     } else {
                         sink.success();
