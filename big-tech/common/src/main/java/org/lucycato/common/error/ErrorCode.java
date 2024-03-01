@@ -4,4 +4,7 @@ public interface ErrorCode {
     Integer getHttpCode();
     String getCode();
     String getReason();
+    String getFrontMessage();
+
+    RuntimeException build(Object ...args);
 }
