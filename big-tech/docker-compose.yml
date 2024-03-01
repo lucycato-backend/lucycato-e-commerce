@@ -27,6 +27,15 @@ services:
       - KAFKA_ADVERTISED_LISTENERS=LC://kafka:29092,LX://localhost:9092
     depends_on:
       - zookeeper
+    #kafka topic create
+    # - enter kafka terminal -> kafka-topics.sh --create --bootstrap-server <broker-list> --replication-factor <number> --partitions <number> --topic <topic-name>
+    # - ex) kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 3 --topic my-topic
+    #kafka topic list
+    # - enter kafka terminal -> kafka-topics.sh --list --bootstrap-server <broker-list>
+    # - ex) kafka-topics.sh --list --bootstrap-server localhost:9092
+    #kafka topic delete
+    # - enter kafka terminal -> kafka-topics.sh --delete --bootstrap-server <broker-list> --topic <topic-name>
+    # - ex) kafka-topics.sh --delete --bootstrap-server localhost:9092 --topic my-topic
   kafka-ui:
     image: provectuslabs/kafka-ui
     container_name: kafka-ui
@@ -146,3 +155,4 @@ services:
 networks:
   lucycato_network:
     driver: bridge
+
