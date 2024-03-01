@@ -4,7 +4,7 @@ services:
   zookeeper:
     image: 'arm64v8/zookeeper:3.8'
     networks:
-      - positeam_network
+      - "lucycato_network"
     ports:
       - '2181:2181'
     environment:
@@ -14,7 +14,7 @@ services:
   kafka:
     image: 'wurstmeister/kafka:2.13-2.8.1'
     networks:
-      - positeam_network
+      - "lucycato_network"
     ports:
       - '9092:9092'
     environment:
@@ -40,7 +40,7 @@ services:
     image: provectuslabs/kafka-ui
     container_name: kafka-ui
     networks:
-      - positeam_network
+      - "lucycato_network"
     ports:
       - "8989:8080"
     restart: always
