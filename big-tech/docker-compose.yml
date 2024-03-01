@@ -108,6 +108,7 @@ services:
     ports:
       - "8080:8080"
     environment:
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
       - KAFKA_LOGGING_TOPIC=lucycato.logging.out.stdout
   notification-service:
     image: lucycato/big-tech-notification-service:1.0.0
