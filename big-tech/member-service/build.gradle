@@ -16,6 +16,12 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
 dependencies {
     implementation project(':common')
 
@@ -24,6 +30,10 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.3'
 
     implementation 'org.springframework.boot:spring-boot-starter-actuator:3.2.3'
+
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 }
 
 test {
