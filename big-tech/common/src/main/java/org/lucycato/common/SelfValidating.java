@@ -13,7 +13,7 @@ public abstract class SelfValidating<T> {
         validator = factory.getValidator();
     }
 
-    protected void validateSelf() {
+    protected void validateSelf() throws Exception {
         Set<ConstraintViolation<T>> violations = validator.validate((T) this);
         if (!violations.isEmpty()) {
             throw ErrorCodeImpl.VALIDATION.build();
