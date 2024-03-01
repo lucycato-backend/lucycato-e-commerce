@@ -1,6 +1,6 @@
 package org.lucycato.common;
 
-import org.springframework.http.HttpStatus;
+import org.lucycato.common.error.ErrorCodeImpl;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -22,7 +22,7 @@ public class CommonWebClient {
         return webClient.get()
                 .uri(URI.create(url))
                 .retrieve()
-                .onStatus(HttpStatusCode::isError, response -> Mono.error(new RuntimeException("Error with status code: " + response.statusCode())))
+                .onStatus(HttpStatusCode::isError, response -> Mono.error(ErrorCodeImpl.CLIENT.build()))
                 .bodyToMono(String.class);
     }
 
@@ -30,7 +30,7 @@ public class CommonWebClient {
         return webClient.get()
                 .uri(URI.create(url))
                 .retrieve()
-                .onStatus(HttpStatusCode::isError, response -> Mono.error(new RuntimeException("Error with status code: " + response.statusCode())))
+                .onStatus(HttpStatusCode::isError, response -> Mono.error(ErrorCodeImpl.CLIENT.build()))
                 .bodyToFlux(String.class);
     }
 
@@ -40,7 +40,7 @@ public class CommonWebClient {
                 .header("Content-Type", "application/json")
                 .bodyValue(body)
                 .retrieve()
-                .onStatus(HttpStatusCode::isError, response -> Mono.error(new RuntimeException("Error with status code: " + response.statusCode())))
+                .onStatus(HttpStatusCode::isError, response -> Mono.error(ErrorCodeImpl.CLIENT.build()))
                 .bodyToMono(String.class);
     }
 
@@ -50,7 +50,7 @@ public class CommonWebClient {
                 .header("Content-Type", "application/json")
                 .bodyValue(body)
                 .retrieve()
-                .onStatus(HttpStatusCode::isError, response -> Mono.error(new RuntimeException("Error with status code: " + response.statusCode())))
+                .onStatus(HttpStatusCode::isError, response -> Mono.error(ErrorCodeImpl.CLIENT.build()))
                 .bodyToFlux(String.class);
     }
 
@@ -60,7 +60,7 @@ public class CommonWebClient {
                 .header("Content-Type", "application/json")
                 .bodyValue(body)
                 .retrieve()
-                .onStatus(HttpStatusCode::isError, response -> Mono.error(new RuntimeException("Error with status code: " + response.statusCode())))
+                .onStatus(HttpStatusCode::isError, response -> Mono.error(ErrorCodeImpl.CLIENT.build()))
                 .bodyToMono(String.class);
     }
 
@@ -70,7 +70,7 @@ public class CommonWebClient {
                 .header("Content-Type", "application/json")
                 .bodyValue(body)
                 .retrieve()
-                .onStatus(HttpStatusCode::isError, response -> Mono.error(new RuntimeException("Error with status code: " + response.statusCode())))
+                .onStatus(HttpStatusCode::isError, response -> Mono.error(ErrorCodeImpl.CLIENT.build()))
                 .bodyToFlux(String.class);
     }
 
@@ -78,7 +78,7 @@ public class CommonWebClient {
         return webClient.delete()
                 .uri(URI.create(url))
                 .retrieve()
-                .onStatus(HttpStatusCode::isError, response -> Mono.error(new RuntimeException("Error with status code: " + response.statusCode())))
+                .onStatus(HttpStatusCode::isError, response -> Mono.error(ErrorCodeImpl.CLIENT.build()))
                 .bodyToMono(String.class);
     }
 
@@ -86,7 +86,7 @@ public class CommonWebClient {
         return webClient.delete()
                 .uri(URI.create(url))
                 .retrieve()
-                .onStatus(HttpStatusCode::isError, response -> Mono.error(new RuntimeException("Error with status code: " + response.statusCode())))
+                .onStatus(HttpStatusCode::isError, response -> Mono.error(ErrorCodeImpl.CLIENT.build()))
                 .bodyToFlux(String.class);
     }
 }
