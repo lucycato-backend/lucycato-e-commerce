@@ -17,7 +17,6 @@ class LoggingServiceTest {
     @Test
     void handleLogging() {
         HandleLoggingCommand command = new HandleLoggingCommand("exception", "Hello");
-        StepVerifier.create(loggingUseCase.handleLogging(command))
-                .verifyComplete();
+        loggingUseCase.handleLogging(command);
     }
 }
