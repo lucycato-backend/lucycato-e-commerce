@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
     public Mono<ResponseEntity<Api<Object>>> handleGlobalException(Exception ex) {
         ex.printStackTrace();
         String stackTranceString = printStackTraceManager.getStackTraceAsString(ex);
-        loggingProducer.sendLogMessage("exception", stackTranceString);
+        loggingProducer.sendLogMessage("exception", stackTranceString).subscribe();
 
         return validateException(ex)
                 .map(tuple -> ResponseEntity

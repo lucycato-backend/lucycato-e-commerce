@@ -1,6 +1,7 @@
 version: "3"
 services:
   #external-system-server
+  #TODO: mysql server
   zookeeper:
     image: 'arm64v8/zookeeper:3.8'
     networks:
@@ -82,8 +83,12 @@ services:
       - "lucycato_network"
     ports:
       - "8070:8080"
+#      - "5005:5005"
     environment:
+#      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
+  #TODO: mysql 연동 - table name : save_task_history
   task-consumer:
     image: lucycato/big-tech-task-consumer:1.0.0
     networks:
@@ -115,7 +120,6 @@ services:
       - "lucycato_network"
     ports:
       - "8080:8080"
-      - "5005:5005"
     environment:
       - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n
       - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092

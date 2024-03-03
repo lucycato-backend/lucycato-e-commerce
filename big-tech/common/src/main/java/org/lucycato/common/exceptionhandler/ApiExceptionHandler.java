@@ -22,7 +22,7 @@ public class ApiExceptionHandler {
     public Mono<ResponseEntity<Api<Object>>> handleApiException(ApiExceptionImpl ex) {
         ex.printStackTrace();
         String stackTraceString = printStackTraceManager.getStackTraceAsString(ex);
-        loggingProducer.sendLogMessage("exception", stackTraceString);
+        loggingProducer.sendLogMessage("exception", stackTraceString).subscribe();
 
         return Mono.just(ResponseEntity
                 .status(ex.getErrorCode().getHttpCode())
