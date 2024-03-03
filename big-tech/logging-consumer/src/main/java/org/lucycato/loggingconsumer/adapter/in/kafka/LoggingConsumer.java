@@ -1,6 +1,5 @@
 package org.lucycato.loggingconsumer.adapter.in.kafka;
 
-import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -9,7 +8,6 @@ import org.lucycato.loggingconsumer.application.port.in.HandleLoggingCommand;
 import org.lucycato.loggingconsumer.application.port.in.LoggingUseCase;
 import org.springframework.beans.factory.annotation.Value;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 import java.time.Duration;
@@ -18,12 +16,12 @@ import java.util.Properties;
 import java.util.stream.IntStream;
 
 @ConsumerAdapter
-@RequiredArgsConstructor
 public class LoggingConsumer {
     private final String CONSUMER_GROUP_ID = "lucycato-logging-consumer-group";
+
     public LoggingConsumer(
             @Value("${kafka.clusters.bootstrapservers}") String bootstrapServers,
-            @Value("${logging.topic}") String topic,
+            @Value("${kafka.logging.topic}") String topic,
             LoggingUseCase loggingUseCase
     ) {
         Properties props = new Properties();
@@ -32,25 +30,22 @@ public class LoggingConsumer {
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 
-        IntStream.range(0, 2).forEach(i -> {
-            Flux.empty()
+        IntStream.range(0, 3).forEach(i -> {
+            KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
+            consumer.subscribe(Collections.singletonList(topic));
+
+            Flux.just("")
                     .publishOn(Schedulers.boundedElastic())
-                    .flatMap(it -> {
-                        KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
-                        consumer.subscribe(Collections.singletonList(topic));
-                        return Mono.just(consumer);
-                    })
-                    .flatMap(consumer -> Flux.create(sink -> {
-                                ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
-                                if (records != null && !records.isEmpty()) {
-                                    for (ConsumerRecord<String, String> record : records) {
-                                        sink.next(record);
-                                    }
-                                }
-                            })
-                            .map(object -> (ConsumerRecord<String, String>) object)
-                            .map(record -> new HandleLoggingCommand(record.key(), record.value()))
-                            .flatMap(loggingUseCase::handleLogging))
+                    .flatMap(it -> Flux.<ConsumerRecord<String, String>>create(sink -> {
+                        while (!sink.isCancelled()) {
+                            ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
+                            for (ConsumerRecord<String, String> record : records) {
+                                sink.next(record);
+                            }
+                        }
+                    }))
+                    .map(record -> new HandleLoggingCommand(record.key(), record.value()))
+                    .doOnNext(loggingUseCase::handleLogging)
                     .subscribe();
         });
     }
