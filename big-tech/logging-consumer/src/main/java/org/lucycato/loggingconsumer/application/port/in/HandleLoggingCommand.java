@@ -7,5 +7,6 @@ import lombok.*;
 @AllArgsConstructor
 public class HandleLoggingCommand {
     private String loggingKey;
+
     private String loggingValue;
 }
