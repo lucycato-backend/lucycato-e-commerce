@@ -1,5 +1,4 @@
 rootProject.name = 'big-tech'
-include 'model'
 include 'common'
 include 'gateway-server'
 include 'config-server'
@@ -13,4 +12,3 @@ include 'notification-service'
 include 'event-service'
 include 'delivery-service'
 include 'webtoon-service'
-
