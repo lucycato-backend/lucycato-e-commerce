@@ -43,7 +43,6 @@ services:
       - "lucycato_network"
     ports:
       - "8989:8080"
-    restart: always
     depends_on:
       - kafka
       - zookeeper
