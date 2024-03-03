@@ -9,7 +9,8 @@ import reactor.core.publisher.Mono;
 public class LoggingService implements LoggingUseCase {
 
     @Override
-    public void handleLogging(HandleLoggingCommand command) {
+    public Mono<Void> handleLogging(HandleLoggingCommand command) {
         System.out.println("[Logging Consumer] Received logging message -> " + " < " + command.getLoggingKey() + " > " + command.getLoggingValue());
+        return Mono.empty();
     }
 }
