@@ -16,6 +16,12 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
 dependencies {
     implementation project(':common')
 
@@ -24,6 +30,17 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.3'
 
     implementation 'org.springframework.boot:spring-boot-starter-actuator:3.2.3'
+
+    implementation 'org.springframework.kafka:spring-kafka'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
+    testImplementation 'io.projectreactor:reactor-test'
+
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
+    implementation "io.asyncer:r2dbc-mysql:1.0.2"
 }
 
 test {
