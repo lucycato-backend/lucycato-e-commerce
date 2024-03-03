@@ -16,7 +16,7 @@ public class KafkaResultTaskConsumerRegisterHelper {
 
     public KafkaResultTaskConsumerRegisterHelper(
             @Value("${kafka.clusters.bootstrapservers:null}") String bootstrapServers,
-            @Value("${task.result.topic:null}") String topic
+            @Value("${kafka.task.result.topic:null}") String topic
     ) {
         this.bootstrapServers = bootstrapServers;
         this.topic = topic;
