@@ -34,11 +34,11 @@ public class LoggingConsumer {
             KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
             consumer.subscribe(Collections.singletonList(topic));
 
-            Flux.just("")
+            Flux.just(Duration.ofMillis(100))
                     .publishOn(Schedulers.boundedElastic())
-                    .flatMap(it -> Flux.<ConsumerRecord<String, String>>create(sink -> {
+                    .flatMap(duration -> Flux.<ConsumerRecord<String, String>>create(sink -> {
                         while (!sink.isCancelled()) {
-                            ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
+                            ConsumerRecords<String, String> records = consumer.poll(duration);
                             for (ConsumerRecord<String, String> record : records) {
                                 sink.next(record);
                             }
