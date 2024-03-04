@@ -9,19 +9,10 @@ import lombok.NoArgsConstructor;
 import org.lucycato.common.SelfValidating;
 
 @Getter
+@AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class TaskKey extends SelfValidating<TaskKey> {
-    @NotBlank
+public class TaskKey {
     private String transactionUUID;
 
-    @NotNull
     private TaskKeyCategory taskKeyCategory;
-
-    public TaskKey(String transactionUUID, TaskKeyCategory taskKeyCategory) throws Exception {
-        this.transactionUUID = transactionUUID;
-        this.taskKeyCategory = taskKeyCategory;
-
-        this.validateSelf();
-    }
 }
