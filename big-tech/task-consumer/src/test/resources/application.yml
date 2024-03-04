@@ -1,0 +1,5 @@
+spring:
+  r2dbc:
+    url:  r2dbc:mysql://host.docker.internal:3306/lucycato_task?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    username: root
+    password: root1234!!
