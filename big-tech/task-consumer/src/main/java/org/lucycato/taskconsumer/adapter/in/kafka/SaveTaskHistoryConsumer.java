@@ -1,15 +1,19 @@
 package org.lucycato.taskconsumer.adapter.in.kafka;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.lucycato.common.annotation.in.ConsumerAdapter;
+import org.lucycato.common.model.task.TaskKey;
 import org.lucycato.taskconsumer.application.port.in.SaveTaskHistoryAndSendTaskResultCommand;
 import org.lucycato.taskconsumer.application.port.in.SaveTaskHistoryUseCase;
 import org.springframework.beans.factory.annotation.Value;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
+import reactor.util.function.Tuples;
 
 import java.time.Duration;
 import java.util.Collections;
@@ -20,9 +24,11 @@ import java.util.stream.IntStream;
 @RequiredArgsConstructor
 public class SaveTaskHistoryConsumer {
     private final String GROUP_ID = "lucycato-save-task-history-consumer-group";
+
     public SaveTaskHistoryConsumer(
             @Value("${kafka.clusters.bootstrapservers}") String bootstrapServers,
             @Value("${kafka.task.topic}") String topic,
+            ObjectMapper objectMapper,
             SaveTaskHistoryUseCase saveTaskHistoryUseCase
     ) {
         Properties props = new Properties();
@@ -45,8 +51,9 @@ public class SaveTaskHistoryConsumer {
                             }
                         }
                     }))
-                    .map(record -> new SaveTaskHistoryAndSendTaskResultCommand(record.key(), record.value()))
-                    .doOnNext(saveTaskHistoryUseCase::saveTaskHistoryAndSendTaskResult)
+                    .flatMap(record -> Mono.fromCallable(() -> Tuples.of(objectMapper.readValue(record.key(), TaskKey.class), record.value()))
+                            .map(tuple -> new SaveTaskHistoryAndSendTaskResultCommand(tuple.getT1(), tuple.getT2()))
+                            .doOnNext(saveTaskHistoryUseCase::saveTaskHistoryAndSendTaskResult))
                     .subscribe();
         });
     }
