@@ -2,7 +2,6 @@ package org.lucycato.common.error;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.lucycato.common.exception.ApiExceptionImpl;
 import org.springframework.http.HttpStatus;
 
 @Getter
@@ -22,9 +21,4 @@ public enum ErrorCodeImpl implements ErrorCode {
     private final String code;
     private final String reason;
     private final String frontMessage;
-
-    @Override
-    public RuntimeException build(Object ...args) {
-        return new ApiExceptionImpl(this, reason.formatted(args));
-    }
 }

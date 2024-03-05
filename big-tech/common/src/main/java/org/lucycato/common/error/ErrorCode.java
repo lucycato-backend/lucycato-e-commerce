@@ -5,6 +5,4 @@ public interface ErrorCode {
     String getCode();
     String getReason();
     String getFrontMessage();
-
-    RuntimeException build(Object ...args);
 }
