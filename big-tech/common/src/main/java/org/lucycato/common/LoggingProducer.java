@@ -1,11 +1,9 @@
 package org.lucycato.common;
 
-import lombok.extern.java.Log;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.lucycato.common.annotation.out.ProducerAdapter;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 import java.util.Properties;
@@ -34,10 +32,8 @@ public class LoggingProducer {
                 .flatMap(record -> Mono.create(sink -> kafkaProducer.send(record, ((metadata, exception) -> {
                     if (exception != null) {
                         exception.printStackTrace();
-                        sink.error(exception);
-                    } else {
-                        sink.success();
                     }
+                    sink.success();
                 }))));
     }
 }
