@@ -25,8 +25,8 @@ public class ApiExceptionHandler {
         loggingProducer.sendLogMessage("exception", stackTraceString).subscribe();
 
         return Mono.just(ResponseEntity
-                .status(ex.getErrorCode().getHttpCode())
-                .body(Api.ERROR(ex.getErrorCode(), ex.getReason()))
+                .status(ex.getHttpCode())
+                .body(Api.ERROR(ex.getResult()))
         );
     }
 }
