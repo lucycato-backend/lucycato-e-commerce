@@ -2,6 +2,7 @@ package org.lucycato.common;
 
 import jakarta.validation.*;
 import org.lucycato.common.error.ErrorCodeImpl;
+import org.lucycato.common.exception.ApiExceptionImpl;
 
 import java.util.Set;
 
@@ -16,7 +17,7 @@ public abstract class SelfValidating<T> {
     protected void validateSelf() throws Exception {
         Set<ConstraintViolation<T>> violations = validator.validate((T) this);
         if (!violations.isEmpty()) {
-            throw ErrorCodeImpl.VALIDATION.build();
+            throw new ApiExceptionImpl(ErrorCodeImpl.VALIDATION);
         }
     }
 }
