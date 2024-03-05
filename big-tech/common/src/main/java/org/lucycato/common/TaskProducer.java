@@ -6,11 +6,10 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.lucycato.common.annotation.out.ProducerAdapter;
 import org.lucycato.common.error.ErrorCodeImpl;
+import org.lucycato.common.exception.ApiExceptionImpl;
 import org.lucycato.common.model.task.TaskKey;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
-import reactor.util.function.Tuple2;
 import reactor.util.function.Tuples;
 
 import java.util.Properties;
@@ -45,9 +44,9 @@ public class TaskProducer {
     }
 
     public Mono<Void> sendTask(TaskKey taskKey, Object taskValue) {
-        if (bootstrapServers == null || topic == null) return Mono.error(ErrorCodeImpl.KAFKA_SEND_TASK_FAIL.build());
+        if (bootstrapServers == null || topic == null) return Mono.error(new ApiExceptionImpl(ErrorCodeImpl.KAFKA_SEND_TASK_FAIL));
         return Mono.fromCallable(() -> Tuples.of(objectMapper.writeValueAsString(taskKey), objectMapper.writeValueAsString(taskValue)))
-                .onErrorResume(JsonProcessingException.class, error -> Mono.error(ErrorCodeImpl.JSON_PARSING.build()))
+                .onErrorResume(JsonProcessingException.class, error -> Mono.error(new ApiExceptionImpl(ErrorCodeImpl.KAFKA_SEND_TASK_FAIL)))
                 .map(tuple -> new ProducerRecord<>(topic, tuple.getT1(), tuple.getT2()))
                 .flatMap(record -> Mono.create(sink -> kafkaProducer.send(record, (metadata, exception) -> {
                     if (exception != null) {
