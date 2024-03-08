@@ -1,0 +1,635 @@
+commit ee4dff9f6c7c409309951179fbf548702f2842a8
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Thu Mar 7 23:55:56 2024 +0900
+
+    LUSY-002: 에러 핸들링에 대한 예외 개선
+
+commit e5b225309bdbfb01f3f6e8060bb67b5753d5cccd
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Wed Mar 6 00:08:16 2024 +0900
+
+    LUSY-002: 에러 핸들링에 대한 예외 개선
+
+commit 31e8ce7726ef9e45dc0b8cb1d71b7935c356ce18
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Wed Mar 6 00:08:10 2024 +0900
+
+    LUSY-002: CommonWebClient jsonString -> Api<T> 로직 반영, request, response exception 대응 코드 반영
+
+commit 6116173eb2e26b245d4ff35665f973a6d8c2a772
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Wed Mar 6 00:07:20 2024 +0900
+
+    LUSY-002: logging logic 다음 스트림 영향 코드 삭제
+
+commit fec6825308a78281b3d5a95a193a792ddc7ec48c
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Wed Mar 6 00:05:30 2024 +0900
+
+    LUSY-002: ErrorCode build 제거
+
+commit 6037ee3397751fd5653e3981190998cd4f3a7578
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Wed Mar 6 00:05:12 2024 +0900
+
+    LUSY-002: ApiException constructor 설계 및 반영
+
+commit 7418d4d5e69cf74dc75730e792f0defd01105ed8
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Wed Mar 6 00:05:03 2024 +0900
+
+    [FIX] ApiException constructor 설계 및 반영
+
+commit 92000bb2071da5ee220e2f40460ea4b137ba8a12
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Mon Mar 4 23:04:56 2024 +0900
+
+    LUSY-002: 예외 처리 방식을 개선
+
+commit 989dd88c04ad5622f366d5a4a754b56250d6c910
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Mon Mar 4 23:04:47 2024 +0900
+
+    LUSY-002: self validation logic 수정 추후 반영
+
+commit f8a1d99531dd5af39f1e1d618688fb01be9e568f
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Mon Mar 4 23:04:32 2024 +0900
+
+    LUSY-002: json parsing logic service -> consumer 분리
+
+commit d5093fb88e75036234a87307641303917630250a
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Mon Mar 4 23:04:07 2024 +0900
+
+    LUSY-002: self validation logic 수정 추후 반영
+
+commit df6444bdc40aeaf95a5953faaf888128bd1d68b9
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Mon Mar 4 23:03:36 2024 +0900
+
+    LUSY-002: task-consumer test code 추가 -> send message exception case issue 반영
+
+commit 2270607b6a43f9a4315e57f0dbfcdc9d16b756c1
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Mon Mar 4 23:02:56 2024 +0900
+
+    LUSY-002: task-consumer test yml 파일 추가
+
+commit 78c18d982d9fe6634cfbc955f0d6134a203a830b
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 23:36:45 2024 +0900
+
+    LUSY-007: SaveTaskHistoryStatus 에 대한 enum class 추가
+
+commit 3c68fcdf0bc3133509e83097b5a5916730c8929c
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 23:36:35 2024 +0900
+
+    LUSY-007: kafka task-consumer 공통 struct 개발
+
+commit 43ca40b6c9218ea45974b12919925a39119c9989
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 23:36:01 2024 +0900
+
+    LUSY-007: task-consumer config 개발
+
+commit b43ebf5d4d69d69b4396d9fb2dcbd57d2658cd2f
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 23:35:49 2024 +0900
+
+    LUSY-007: task-consumer service 개발
+
+commit acede4105d0aeae4757212d416f5b8eb05aabbd2
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 23:35:11 2024 +0900
+
+    LUSY-007: task-consumer out adapter persistence, producer 개발
+
+commit 350b5fc49642ebb46040160cc61473a62870ce99
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 23:34:30 2024 +0900
+
+    LUSY-007: task-consumer out port 개발
+
+commit 898f783615291bd62ce021ff96de6f13af71d05f
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 23:34:15 2024 +0900
+
+    LUSY-007: task-consumer save history task domain 개발
+
+commit 20fdb6cd0e556645089f104be45badf033680e0f
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 23:33:57 2024 +0900
+
+    LUSY-007: task-consumer in adapter kafka 개발
+
+commit 0e0b40b352dd70a06fe8d69d5da28af2aae8927b
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 23:33:35 2024 +0900
+
+    LUSY-007: task-consumer in port 개발
+
+commit 197edb2994c4661fa8f88a3cfff103beb200453f
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 23:27:17 2024 +0900
+
+    LUSY-007: model module 삭제
+
+commit 37e3ae8ef96c342a9fa0308365440a9dcaac23c3
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 23:26:52 2024 +0900
+
+    LUSY-007: sendTask logic 보완
+
+commit e2797818290f4150eec9d690067180ebd2be1059
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 23:26:21 2024 +0900
+
+    LUSY-007: project 구성 변경
+
+commit f6225ef767229aeff32afb06f9fef54f9a1788a8
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 23:26:05 2024 +0900
+
+    LUSY-007: task.result.topic @Value 이름 수정
+
+commit 5ac58feb55c07a874766b12e55596fa0ae4ae67f
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 23:25:25 2024 +0900
+
+    LUSY-007: stream function 수정
+
+commit a5a57fb08ff48f28408b41bead2a00a5080eab7b
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 23:25:19 2024 +0900
+
+    LUSY-007: stream function 수정
+
+commit 9057f04e7ed776b890ab7e0ce9bad590344b6d57
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 23:24:28 2024 +0900
+
+    LUSY-007: Flux.empty() onComplete() 이슈 대응 결론: kafka consumer kafka subscribe 가능
+
+commit 2b85b2bb1a77d4eb92db0759c51b7d801e21f348
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 23:22:36 2024 +0900
+
+    LUSY-007: json parsing, kafka task fail error code 추가
+
+commit fcfc8e6552d2d2faf2dccbd72fb7e1385d8532bd
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 23:22:05 2024 +0900
+
+    LUSY-007: lombok, kafka, validation, r2dbc 의존성 추가
+
+commit 841adad563e4b02268de369c0147e81e3e889998
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 23:21:28 2024 +0900
+
+    LUSY-007: docker-compose to-do 작성
+
+commit 157303034252ee1953e8882734da7bfc1ad986d2
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 19:28:59 2024 +0900
+
+    LUSY-007: KAFKA_CLUSTERS_BOOTSTRAPSERVERS 환경변수 추가
+
+commit e42c425c5a2e2965115f36f68ca9ae8be75f4b03
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 19:28:49 2024 +0900
+
+    LUSY-007: logging common component bean 등록
+
+commit 9e2876258b6004f337402b807c7563d34e587217
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 19:28:25 2024 +0900
+
+    LUSY-007: logging service 로직 수정
+
+commit 8f333158270247d7cf18d9922c51071026589f50
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 19:28:08 2024 +0900
+
+    LUSY-007: logging test code 수정
+
+commit b9225bf7dd3f7ab61e1c7cb17b9bec3c3650151e
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 18:44:06 2024 +0900
+
+    LUSY-007: logging service 로릭 수정
+
+commit e4a2f6cac0c4e7dbf73bbdc58ec504ef8ca4b740
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 18:39:50 2024 +0900
+
+    LUSY-007: logging consumer logic 수정
+
+commit 77ccb04cc4df94fde8d07c29c08fd72b008a0d91
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 18:39:25 2024 +0900
+
+    LUSY-007: exception logging sendMessage 구독 추가
+
+commit 9f4d804ae65decc8efc1507ab5eeff943e7a20de
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 14:40:28 2024 +0900
+
+    LUSY-007: logging-consumer test code 작성
+
+commit 4de8ddd3009e5da6e5ab0c2a162a92801b99f13c
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 14:40:13 2024 +0900
+
+    LUSY-007: logging-consumer service 구현
+
+commit 645c166b4ebfe175afbecda55fbc8292165f275c
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 14:40:05 2024 +0900
+
+    LUSY-007: logging-consumer in port 추가
+
+commit e24fee8b7757c2a28c90ac231529f35b7aee4d62
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 14:39:37 2024 +0900
+
+    LUSY-007: out adapter producer annotation change
+
+commit 985990ca737ab338407099819d76ede0f74ec66e
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 14:38:51 2024 +0900
+
+    LUSY-007: in adapter kafka consumer 추가
+
+commit 44b473249f9b9d883726fef66359fb420cf4b88a
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 14:38:28 2024 +0900
+
+    LUSY-007: lombok, kafka, reactor test 의존성 추가
+
+commit fc464effdb04e1b6b353f5c0cc40b8e70782e4d3
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 12:49:50 2024 +0900
+
+    LUSY-003: 오타 수정
+
+commit 6642a390a9bce0fc7437fdddca6ce3e8a774b474
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sun Mar 3 12:49:38 2024 +0900
+
+    LUSY-003: kafka-ui restart always 제거
+
+commit c878ce266554863f8778b61f221ec135930333ed
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sat Mar 2 00:06:09 2024 +0900
+
+    LUSY-003: event-service bean create config 추가
+
+commit a554f487480871aadd6567a4b5cbf9d88fae8d70
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sat Mar 2 00:05:46 2024 +0900
+
+    LUSY-003: web client test code 작성
+
+commit c6f2619f3f8c8105ffb4eb0ae3b4af847a9d08e1
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sat Mar 2 00:05:24 2024 +0900
+
+    LUSY-003: success frontMessage 빈문자열 추가
+
+commit 4cc1c2e7955c78515d6a8deb867c22e62c015e07
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sat Mar 2 00:05:07 2024 +0900
+
+    LUSY-003: json field null -> field delete 속성 추가
+
+commit 320596b560d3e552b83fe55e2a613fd76f792c79
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sat Mar 2 00:04:31 2024 +0900
+
+    LUSY-003: global exception web client error 추가
+
+commit 42d699f72777d6f52715218ea1b207dccdcd3a19
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sat Mar 2 00:04:01 2024 +0900
+
+    LUSY-003: web client error code 추가
+
+commit 5f3509e5901efb6f2abaca54e116fee68630d2cc
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sat Mar 2 00:03:43 2024 +0900
+
+    LUSY-003: web client exception handler 고도화
+
+commit 5f65baa14e17f585365156817b8e2ab7dbd51855
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Sat Mar 2 00:03:14 2024 +0900
+
+    LUSY-003: 맴버 및 카프라 로깅 토픽에 docker debug environment 추가
+
+commit 12477fef65fa7c270b2d07a8382dcc138bbc29be
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Fri Mar 1 17:37:01 2024 +0900
+
+    LUSY-002: TaskProducer linting
+
+commit fb5ede34b06f988dbfa2fad8a977056d4c02f4c0
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Fri Mar 1 17:32:12 2024 +0900
+
+    LUSY-002: validation, lombok 의존성 추가 및 common component bean 등록 config 추가
+
+commit 032da5b48c71821b769ebc9a4c1e0a5bcb58fe01
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Fri Mar 1 17:28:10 2024 +0900
+
+    LUSY-002: TestRequest 삭제
+
+commit 3bd41440b7ac2c3c0cbe65703821f4df2013f6a4
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Fri Mar 1 17:10:28 2024 +0900
+
+    LUSY-002: logging을 위한 throw exception 코드 추가
+
+commit 03da5f2f9a8800be0ec5805acc8ff684cd60893d
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Fri Mar 1 17:10:18 2024 +0900
+
+    LUSY-002: logging을 위한 throw exception 코드 추가
+
+commit a7926051ddba67be753a52807c2a19b670129106
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Fri Mar 1 17:07:02 2024 +0900
+
+    LUSY-002: task producer send task 실패 시 logging 및 error 추적 기능 추가
+
+commit c9e0e5d9b62bc2d392222f1200f7b8f3ba4ecaa4
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Fri Mar 1 17:05:37 2024 +0900
+
+    LUSY-002: self validation 실패 시 exception 수정
+
+commit 76dcde2ef1043032b7d0f33154db717e92d8bb65
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Fri Mar 1 17:05:10 2024 +0900
+
+    LUSY-002: package name에 맞게 수정
+
+commit 41b1c34688994a9b6e20ce4a30f95faacd26175c
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Fri Mar 1 17:04:46 2024 +0900
+
+    LUSY-002: send message 실패 시 error message print code 추가
+
+commit 32cb222fd4e68175bebff1a24f6f5c244eac76f3
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Fri Mar 1 17:04:15 2024 +0900
+
+    LUSY-002: exception handler 개발
+
+commit b71a6c81730ed54d34154d92d7a1216f310c18a3
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Fri Mar 1 17:04:01 2024 +0900
+
+    LUSY-002: custom runtime exception 개발
+
+commit c232140e5445721c652f74c77d6a8cada3f5d14a
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Fri Mar 1 17:03:35 2024 +0900
+
+    LUSY-002: error 상황 exception 고도화
+
+commit a404211ea2d8acf649f70ed48653ada1a11d3e5c
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Fri Mar 1 17:03:13 2024 +0900
+
+    LUSY-002: error code 고도화
+
+commit 529ea1412d7165fe111ed163ba26e2bcf646702e
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Fri Mar 1 17:02:42 2024 +0900
+
+    LUSY-002: printStackTrace to String 변환 component 개발
+
+commit 5941bef548a1c5b9139444b47774a64aa7b9ed01
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Fri Mar 1 17:01:19 2024 +0900
+
+    LUSY-002: API RESULT OK 함수 수정  tx parameter function 삭제, front message 추가
+
+commit fb7ae5ab6b8acd3030a513925f7a8f41ef8c6668
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Fri Mar 1 15:37:17 2024 +0900
+
+    LUSY-002: networks 수정
+
+commit d7782a556c9c6cec4c7b910c450893dbb59fe17d
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Fri Mar 1 15:36:16 2024 +0900
+
+    LUSY-002: logging topic environment 수정
+
+commit d6949d637cbb659c792d511afb8b1f5dcf23d39f
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Fri Mar 1 15:32:26 2024 +0900
+
+    LUSY-002: kafka topic create, list, delete 주석 추가
+
+commit 30cdc060fc7c6060ff71dbc5920b793c989dfab6
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Fri Mar 1 15:29:02 2024 +0900
+
+    LUSY-002: kafka bootstrap server environment 추가
+
+commit d216ff360c9439b62ba378a5127c3468290c09b5
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Fri Mar 1 15:28:08 2024 +0900
+
+    LUSY-002: kafka topic name 규격 수정
+
+commit c5d44946296810324a51bb02896806d6aace48c4
+Author: learnGrowD <dev_willd@naver.com>
+Date:   Fri Mar 1 15:27:15 2024 +0900
+
+    LUSY-002: #external system 구성 추가
+
+commit 92155e6d663cbbdb3025a8ed598336fef29a4893
+Author: will_d <dev_willd@naver.com>
+Date:   Thu Feb 29 21:07:14 2024 +0900
+
+    LUSY-002: ErrorCode 기반 추가
+
+commit b01ddaa3333f51b71e21ea7138c86bdcd99b99b3
+Author: will_d <dev_willd@naver.com>
+Date:   Thu Feb 29 21:06:58 2024 +0900
+
+    LUSY-002: API RESULT 개발
+
+commit 2cc1e628f020471f3dff2ef352ade1e00c9f74f2
+Author: will_d <dev_willd@naver.com>
+Date:   Thu Feb 29 20:53:06 2024 +0900
+
+    LUSY-006: import java.time.Duration Import 제거
+
+commit e7f60a880919f5724e213c970c8e4d8d4bba4e4c
+Author: will_d <dev_willd@naver.com>
+Date:   Thu Feb 29 20:36:18 2024 +0900
+
+    LUSY-006: Out Adapter 등록
+
+commit b79d0733836bb9007a6d26e935d53cfe7007f43c
+Author: will_d <dev_willd@naver.com>
+Date:   Thu Feb 29 20:36:07 2024 +0900
+
+    LUSY-006: In Adapter 등록
+
+commit 3c65e0a54a34c733d2458e02e2edca6cf1d43bf9
+Author: will_d <dev_willd@naver.com>
+Date:   Thu Feb 29 20:35:46 2024 +0900
+
+    LUSY-006: Mapper 생성
+
+commit d183c729db7b94bac76c01c2c5408bf9b071f9a2
+Author: will_d <dev_willd@naver.com>
+Date:   Thu Feb 29 20:26:55 2024 +0900
+
+    LUSY-005: .DS_Store 파일 추가
+
+commit 35c47def0abecdaeeaf7b1d05fd40b5d975b1eed
+Author: will_d <dev_willd@naver.com>
+Date:   Thu Feb 29 20:26:41 2024 +0900
+
+    LUSY-005: Mono 메모리 누수 주석 추가
+
+commit 8feb494b2efed673b06700a8f3b3f0060a7501e5
+Author: will_d <dev_willd@naver.com>
+Date:   Thu Feb 29 20:14:22 2024 +0900
+
+    LUSY-005: KafkaResultTaskConsumerRegisterHelper 구현
+
+commit ae90eb64f29bcb6350e3ab22577d02fbb1e52e32
+Author: will_d <dev_willd@naver.com>
+Date:   Thu Feb 29 20:12:27 2024 +0900
+
+    LUSY-005: webflux 기반 Logging Aspect, Logging Producer Refactoring
+
+commit c5bb9f1c762a360e9bb4c69442c7b7cc08cec2be
+Author: will_d <dev_willd@naver.com>
+Date:   Thu Feb 29 20:12:09 2024 +0900
+
+    LUSY-005: webflux 기반 TaskProducer 구현
+
+commit 84046e8bce64e6501e572e3a0c1a212f2466fba4
+Author: will_d <dev_willd@naver.com>
+Date:   Thu Feb 29 19:24:26 2024 +0900
+
+    LUSY-005: SelfValidating 구축
+
+commit 796f8c33edb7e6db4edf13cc21625ef3b4ae49d6
+Author: will_d <dev_willd@naver.com>
+Date:   Thu Feb 29 19:23:30 2024 +0900
+
+    LUSY-005: ObjectMapper 설정 구현
+
+commit b037465e78f46ec1aef3e73d0574c73cb62b86ec
+Author: will_d <dev_willd@naver.com>
+Date:   Thu Feb 29 19:22:00 2024 +0900
+
+    LUSY-005: logging producer, logging aspect 구현
+
+commit e8613bb7830c02a2ef4402c5c34644e1fe55ba39
+Author: will_d <dev_willd@naver.com>
+Date:   Thu Feb 29 19:15:34 2024 +0900
+
+    LUSY-005: spring aop, validation, lombok 의존성 추가
+
+commit 10708f6f4516cb813409c36b891ea4a18a771c87
+Author: will_d <dev_willd@naver.com>
+Date:   Thu Feb 29 19:11:49 2024 +0900
+
+    LUSY-005: Demo application.properties 등 추가
+
+commit 662a06e576680b1199c449e2c03969cf4234c847
+Author: will_d <dev_willd@naver.com>
+Date:   Thu Feb 29 19:11:25 2024 +0900
+
+    LUSY-005: commonWebClient 개발
+
+commit 5db01effd8548e604973a39b4f89d8942d95973f
+Author: will_d <dev_willd@naver.com>
+Date:   Thu Feb 29 19:00:46 2024 +0900
+
+    LUSY-005: spring-boot, webflux, starter 의존성 추가
+
+commit ea917dbe81ab67e8abe4bf71bd522a34d75fade8
+Author: will_d <dev_willd@naver.com>
+Date:   Wed Feb 28 21:14:11 2024 +0900
+
+    LUSY-004: 실행방법 작성
+
+commit 0a5be445c456f04a988443309f65e51c1fd52b6d
+Author: will_d <dev_willd@naver.com>
+Date:   Wed Feb 28 21:08:50 2024 +0900
+
+    LUSY-004: dockerfile 추가
+
+commit 8c48064016d37e60f68ec230e61399e93d05752f
+Author: will_d <dev_willd@naver.com>
+Date:   Wed Feb 28 21:08:34 2024 +0900
+
+    docker-compose 구성
+
+commit f6dbaf01b58524b1deb6ceae0131f7b49d4e4636
+Author: will_d <dev_willd@naver.com>
+Date:   Wed Feb 28 21:08:23 2024 +0900
+
+    dependency 추가, docker-plugin 추가
+
+commit 4030dbab6aacc97291a8595ac84e5f49b240e27f
+Author: will_d <dev_willd@naver.com>
+Date:   Wed Feb 28 21:07:41 2024 +0900
+
+    tmp
+
+commit 221a276845f9f16733e5e8f6818cef60e166d75d
+Author: will_d <dev_willd@naver.com>
+Date:   Wed Feb 28 21:07:32 2024 +0900
+
+    mono-repo 구성
+
+commit 97eb0dbf7d506b40194e0d02d434c266f8cf7bfb
+Author: will_d <dev_willd@naver.com>
+Date:   Wed Feb 28 21:07:22 2024 +0900
+
+    tmp
+
+commit ecd4cc1bac32f432016b41f9674fd1e5f93f7dcd
+Author: will_d <dev_willd@naver.com>
+Date:   Wed Feb 28 21:06:59 2024 +0900
+
+    application init
+
+commit edaeed53aa82094bbcbfa6f02f80a22c39512dea
+Author: will_d <dev_willd@naver.com>
+Date:   Wed Feb 28 21:06:18 2024 +0900
+
+    application init
+
+commit 19e0914aa17b2f9a1c12d19c1b831209526128ca
+Author: will_d <dev_willd@naver.com>
+Date:   Wed Feb 28 19:24:53 2024 +0900
+
+    common init
+
+commit 52d362461a044ade83880cc3def1e46652d7715e
+Author: will_d <dev_willd@naver.com>
+Date:   Wed Feb 28 19:23:56 2024 +0900
+
+    project init
+
+commit d97c965e6d70933999d6595e785432a8a5ce514c
+Author: Minji Kim <85613861+Java-kokyu@users.noreply.github.com>
+Date:   Sat Feb 24 16:09:12 2024 +0900
+
+    Initial commit
