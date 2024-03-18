@@ -105,33 +105,52 @@ Spring Framework 기반으로 최신 기술 스택 학습과, 본질적인 실�
 
 <tr>
   <td align=center>
-  <a href="https://github.com/learnGrowD">
-  <img src="https://avatars.githubusercontent.com/u/104897960?v=4" width="100px"  />
-  <br/>
-  Back-end 🖥
-  <br/>
-  learnGrowD
-  </a>
+    <a href="https://github.com/learnGrowD">
+      <img src="https://avatars.githubusercontent.com/u/104897960?v=4" width="100px"  />
+      <br/>
+      Back-end 🖥
+      <br/>
+      learnGrowD
+    </a>
   </td>
-    
   <td align=center>
-  <a href="https://github.com/aihoshistar">
-  <img src="https://avatars.githubusercontent.com/u/45850400?v=4" width="100px"  />
-  <br/>
-  Back-end 🖥
-  <br/>
-  aihoshistar
-  </a>
+    <a href="https://github.com/aihoshistar">
+      <img src="https://avatars.githubusercontent.com/u/45850400?v=4" width="100px"  />
+      <br/>
+      Back-end 🖥
+      <br/>
+      aihoshistar
+    </a>
   </td>
+  <td align=center>
+    <a href="https://github.com/Jjinyshin">
+      <img src="https://avatars.githubusercontent.com/u/87403267?v=4" width="100px"  />
+      <br/>
+      Back-end 🖥
+      <br/>
+      Nyeong
+    </a>
+  </td>
+</tr>
 
+<tr>
   <td align=center>
-  <a href="https://github.com/Java-kokyu">
-  <img src="https://avatars.githubusercontent.com/u/85613861?v=4" width="100px"  />
-  <br/>
-  Back-end 🖥
-  <br/>
-  Java-kokyu
-  </a>
+    <a href="https://github.com/Java-kokyu">
+      <img src="https://avatars.githubusercontent.com/u/85613861?v=4" width="100px"  />
+      <br/>
+      Back-end 🖥
+      <br/>
+      Java-kokyu
+    </a>
+  </td>
+  <td align=center>
+    <a href="https://github.com/witwint">
+      <img src="https://avatars.githubusercontent.com/u/108222981?v=4" width="100px" />
+      <br/>
+      Back-end 🖥
+      <br/>
+      SEOKBEOM MOON
+    </a>
   </td>
 </tr>
 </table>
