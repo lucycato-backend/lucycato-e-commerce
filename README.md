@@ -133,6 +133,17 @@ Spring Framework 기반으로 최신 기술 스택 학습과, 본질적인 실�
   Java-kokyu
   </a>
   </td>
+
+  </td>
+    <td align=center>
+    <a href="https://github.com/lmw313">
+      <img src="https://avatars.githubusercontent.com/u/20276615?v=4" width="100px" />
+      <br/>
+      Back-end 🖥
+      <br/>
+      이민우
+    </a>
+  </td>
 </tr>
 </table>
 
