@@ -6,8 +6,6 @@ services:
     image: mysql:latest
     networks:
       - lucycato_network
-    ports:
-      - "3306:3306"
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=password
@@ -24,13 +22,25 @@ services:
     volumes:
       - ./data/mysql:/data
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5.0.4
+    depends_on:
+      - mysql
+    container_name: phpmyadmin
+    environment:
+      - PMA_HOST=mysql
+      - MYSQL_ROOT_PASSWORD=password
+    restart: always
+    ports:
+      - 20080:80
+    networks:
+      - lucycato_network
+
   redis:
     container_name: redis
     image: redis:latest
     command: redis-server
     restart: always
-    ports:
-      - 6379:6379
     volumes:
       - ./data/redis:/data
     networks:
@@ -46,8 +56,6 @@ services:
       - MONGO_INITDB_DATABASE=mydatabase
       - MONGO_INITDB_USERNAME=user
       - MONGO_INITDB_PASSWORD=password
-    ports:
-      - 27017:27017
     volumes:
       - ./data/mongodb:/data/db
     networks:
