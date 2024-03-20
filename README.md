@@ -195,6 +195,11 @@ cd big-tech
 docker-compose up -d
 ```
 
+별도의 데이터베이스를 사용하지 않는다면 `docker-compose-db.yml` 파일을 실행해주세요.
+```bash
+docker-compose -f docker-compose-db.yml up -d
+```
+
 4. Postman을 사용하여 API를 테스트합니다.
 
 [<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://god.gw.postman.com/run-collection/11284346-749022bb-df2b-4deb-bfb7-3c0c2cd247a8?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D11284346-749022bb-df2b-4deb-bfb7-3c0c2cd247a8%26entityType%3Dcollection%26workspaceId%3Dfd9e4cc7-7ad5-4b10-a541-37c9f79e5c66)
