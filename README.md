@@ -27,14 +27,21 @@ cd big-tech
 docker-compose up -d
 ```
 
+**주의 사항**
+
+- Docker를 사용하여 서비스를 실행하는 경우 Docker Desktop 또는 Docker Engine이 로컬에 설치되어 있어야 합니다.
+- Docker Compose를 사용하여 관련 서비스를 실행하려면 Docker Compose가 로컬에 설치되어 있어야 합니다.
+
 4. Postman을 사용하여 API를 테스트합니다.
 
 [<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://god.gw.postman.com/run-collection/11284346-749022bb-df2b-4deb-bfb7-3c0c2cd247a8?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D11284346-749022bb-df2b-4deb-bfb7-3c0c2cd247a8%26entityType%3Dcollection%26workspaceId%3Dfd9e4cc7-7ad5-4b10-a541-37c9f79e5c66)
 
-## 주의 사항
-
-- Docker를 사용하여 서비스를 실행하는 경우 Docker Desktop 또는 Docker Engine이 로컬에 설치되어 있어야 합니다.
-- Docker Compose를 사용하여 관련 서비스를 실행하려면 Docker Compose가 로컬에 설치되어 있어야 합니다.
+## 프로젝트 컨벤션
+ - Branch : 이슈프로젝트/이슈번호
+ - Commit : 이슈번호: 작업내용
+ - Pull Request Title : 이슈번호: 이슈제목
+ - Pull Request Description : 작성하지 않으셔도 됩니다. 작성이 필요하다면 이슈에 작성해주세요.
+ - Merge Commit : 이슈번호: 이슈제목 (#이슈번호)
 
 # 📚 스프링 기술 스터디
 
