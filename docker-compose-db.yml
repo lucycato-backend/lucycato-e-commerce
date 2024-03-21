@@ -22,6 +22,21 @@ services:
     volumes:
       - ./data/mysql:/data
 
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=root
+      - RABBITMQ_DEFAULT_PASS=password
+    volumes:
+      - ./data/rabbitmq/data:/var/lib/rabbitmq
+      - ./data/rabbitmq/logs:/var/log/rabbitmq
+    networks:
+      - lucycato_network
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:5.0.4
     depends_on:
@@ -59,7 +74,7 @@ services:
     volumes:
       - ./data/mongodb:/data/db
     networks:
-      - registry-net
+      - lucycato_network
 
 networks:
   lucycato_network:
