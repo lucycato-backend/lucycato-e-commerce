@@ -1,6 +1,66 @@
+# 🔍 프로젝트 설치 및 실행 방법
+
+## 요구 사항
+
+- Java Development Kit (JDK) 17
+- Gradle 8.5
+- Docker 및 Docker Compose (필수 사항)
+
+## 설치 및 실행
+
+1. 이 저장소를 클론합니다:
+
+```bash
+git clone git@github.com:lucycato-backend/big-tech.git
+```
+
+2. 프로젝트 디렉토리로 이동합니다:
+
+```bash
+cd big-tech
+```
+
+3. Docker Plug in을 사용하여 프로젝트를 빌드 및 이미지를 생성합니다:
+
+```bash
+./gradlew docker
+docker-compose up -d
+```
+
+**주의 사항**
+
+- Docker를 사용하여 서비스를 실행하는 경우 Docker Desktop 또는 Docker Engine이 로컬에 설치되어 있어야 합니다.
+- Docker Compose를 사용하여 관련 서비스를 실행하려면 Docker Compose가 로컬에 설치되어 있어야 합니다.
+
+4. Postman을 사용하여 API를 테스트합니다.
+
+[<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://god.gw.postman.com/run-collection/11284346-749022bb-df2b-4deb-bfb7-3c0c2cd247a8?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D11284346-749022bb-df2b-4deb-bfb7-3c0c2cd247a8%26entityType%3Dcollection%26workspaceId%3Dfd9e4cc7-7ad5-4b10-a541-37c9f79e5c66)
+
+## 프로젝트 컨벤션
+ - Branch : 이슈프로젝트/이슈번호
+ - Commit : 이슈번호: 작업내용
+ - Pull Request Title : 이슈번호: 이슈제목
+ - Pull Request Description : 작성하지 않으셔도 됩니다. 작성이 필요하다면 이슈에 작성해주세요.
+ - Merge Commit : 이슈번호: 이슈제목 (#이슈번호)
+
+## 코드 컨벤션 
+TODO: 코드 컨벤션을 IDEA 에서 자동화 할 수 있는 방법이 있는가 확인 후 .idea 폴더에 추가할 예정입니다.
+ - 클래스명, 인터페이스명 : 파스칼케이스
+ - 메서드명, 변수명, 함수 : 카멜케이스
+ - 상수명 : 대문자 스네이크케이스
+ - 줄바꿈 : LF
+ - 들여쓰기 : 4칸
+ - 중괄호 : 다음줄에
+ - 주석 : TODO/FIXME/DOCS 제외하고 사용 금지
+ - 라인 길이 : 120자 이내
+ - 라인 끝 공백 : 제거
+ - 빈 줄 : 제거
+ - import : 정렬
+ - 불필요한 것 : 제거
+
 # 📚 스프링 기술 스터디
 
-## 🍎 Team Lucycato 소개
+## 🍎 Team Lucycato 
 안녕하세요 Team Lucycato 리더 도학태입니다.
 Team Lucycato는 스타트업, 금융업에 종사하는 다양한 백엔드 개발자로
 이루어진 스터디 모임입니다. 우리는 매주 정기적으로 온라인, 오프라인 모임을 통해
@@ -27,20 +87,20 @@ Spring Framework 기반으로 최신 기술 스택 학습과, 본질적인 실�
 그래서 저는 진정으로 훌륭한 개발자가 되기 위한 계획을 준비했습니다.
 우리 Team Lucycato는 아래의 계획을 기반으로 학습을 진행하고 있습니다.
 
-** Team Lucycato DNA
+### Team Lucycato DNA
  - 열정
  - 희생, 헌신
 
-** Team Lucycato Vision
+### Team Lucycato Vision
 - 탁월한 기준에 근거한 코드를 작성하는 본질적인 실력향상
 - 탁월한 기준과 안목의 초석이 되는 CS 학습
 - PR (문서화 블로그 글 작성) 
 
-** 계획과 전략
+### 계획과 전략
    - 토요일 09:00 ~ 19:00(오프라인) / 장소 : 합정역
    - 화요일 21:00 ~ 00:00 (온라인)  / 디스코드
 
-1부: 세상에 나아가기 전에 진정으로 훌륭한 코드를 작성해보자.
+### 1부: 세상에 나아가기 전에 진정으로 훌륭한 코드를 작성해보자.
 ** Local Environment Development
 1. MSA 
 	- 어떻게 경계를 나눌 것인가: Business, Domain
@@ -89,14 +149,14 @@ Spring Framework 기반으로 최신 기술 스택 학습과, 본질적인 실�
 	- Endpoint 설계 원칙 
 	- git branch 분리 전략, git commit, pull request 전략
 
-2부: 세상에 나아가자.
+### 2부: 세상에 나아가자.
 ** infra
 1. Kubernetes, Helm (Proxy Server, Load Balancer)
 2. AWS 다양한 서비스
 3. CI / CD (Jenkins, Argo CD) : 자동화 파이프라인을 구축하자
 4. Graceful Shutdown, Zero Downtime Deployment 이해하고 자주 테스트하고 배포하자.
 
-3부: 진정으로 탁월한 기준을 가지고 싶거든 탁월한 기준을 찾아 나서라.
+### 3부: 진정으로 탁월한 기준을 가지고 싶거든 탁월한 기준을 찾아 나서라.
 ** Finding a Mentor
 
 ## 🧑‍💻 스터디 참여자
@@ -165,49 +225,6 @@ Spring Framework 기반으로 최신 기술 스택 학습과, 본질적인 실�
   </td>
 </tr>
 </table>
-
-# 🔍 프로젝트 설치 및 실행 방법
-
-## 요구 사항
-
-- Java Development Kit (JDK) 17
-- Gradle 8.5
-- Docker 및 Docker Compose (필수 사항)
-
-## 설치 및 실행
-
-1. 이 저장소를 클론합니다:
-
-```bash
-git clone git@github.com:lucycato-backend/big-tech.git
-```
-
-2. 프로젝트 디렉토리로 이동합니다:
-
-```bash
-cd big-tech
-```
-
-3. Docker Plug in을 사용하여 프로젝트를 빌드 및 이미지를 생성합니다:
-
-```bash
-./gradlew docker
-docker-compose up -d
-```
-
-별도의 데이터베이스를 사용하지 않는다면 `docker-compose-db.yml` 파일을 실행해주세요.
-```bash
-docker-compose -f docker-compose-db.yml up -d
-```
-
-4. Postman을 사용하여 API를 테스트합니다.
-
-[<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://god.gw.postman.com/run-collection/11284346-749022bb-df2b-4deb-bfb7-3c0c2cd247a8?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D11284346-749022bb-df2b-4deb-bfb7-3c0c2cd247a8%26entityType%3Dcollection%26workspaceId%3Dfd9e4cc7-7ad5-4b10-a541-37c9f79e5c66)
-
-## 주의 사항
-
-- Docker를 사용하여 서비스를 실행하는 경우 Docker Desktop 또는 Docker Engine이 로컬에 설치되어 있어야 합니다.
-- Docker Compose를 사용하여 관련 서비스를 실행하려면 Docker Compose가 로컬에 설치되어 있어야 합니다.
 
 ## 스터디 조인 방법
 
