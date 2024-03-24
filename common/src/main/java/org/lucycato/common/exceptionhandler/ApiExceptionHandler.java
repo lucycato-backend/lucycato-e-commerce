@@ -1,7 +1,7 @@
 package org.lucycato.common.exceptionhandler;
 
 import lombok.RequiredArgsConstructor;
-import org.lucycato.common.LoggingProducer;
+import org.lucycato.common.AsyncLoggingProducer;
 import org.lucycato.common.PrintStackTraceManager;
 import org.lucycato.common.api.Api;
 import org.lucycato.common.exception.ApiExceptionImpl;
@@ -15,14 +15,14 @@ import reactor.core.publisher.Mono;
 @ControllerAdvice
 @RequiredArgsConstructor
 public class ApiExceptionHandler {
-    private final LoggingProducer loggingProducer;
+    private final AsyncLoggingProducer asyncLoggingProducer;
     private final PrintStackTraceManager printStackTraceManager;
 
     @ExceptionHandler(value = ApiExceptionImpl.class)
     public Mono<ResponseEntity<Api<Object>>> handleApiException(ApiExceptionImpl ex) {
         ex.printStackTrace();
         String stackTraceString = printStackTraceManager.getStackTraceAsString(ex);
-        loggingProducer.sendLogMessage("exception", stackTraceString).subscribe();
+        asyncLoggingProducer.sendLogMessage("exception", stackTraceString);
 
         return Mono.just(ResponseEntity
                 .status(ex.getHttpCode())

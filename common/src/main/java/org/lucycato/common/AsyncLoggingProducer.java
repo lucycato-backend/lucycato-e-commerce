@@ -1,7 +1,9 @@
 package org.lucycato.common;
 
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.requests.ProduceRequest;
 import org.lucycato.common.annotation.out.ProducerAdapter;
 import org.springframework.beans.factory.annotation.Value;
 import reactor.core.publisher.Mono;
@@ -9,12 +11,12 @@ import reactor.core.publisher.Mono;
 import java.util.Properties;
 
 @ProducerAdapter
-public class LoggingProducer {
+public class AsyncLoggingProducer {
     private final KafkaProducer<String, String> kafkaProducer;
 
     private final String topic;
 
-    public LoggingProducer(
+    public AsyncLoggingProducer(
             @Value("${kafka.clusters.bootstrapservers}") String bootstrapServers,
             @Value("${kafka.logging.topic}") String topic
     ) {
@@ -27,13 +29,10 @@ public class LoggingProducer {
         this.topic = topic;
     }
 
-    public Mono<Void> sendLogMessage(String logKey, String logMessage) {
-        return Mono.just(new ProducerRecord<>(topic, logKey, logMessage))
-                .flatMap(record -> Mono.create(sink -> kafkaProducer.send(record, ((metadata, exception) -> {
-                    if (exception != null) {
-                        exception.printStackTrace();
-                    }
-                    sink.success();
-                }))));
+    public void sendLogMessage(String logKey, String logMessage) {
+        ProducerRecord<String, String> record = new ProducerRecord<>(topic, logKey, logMessage);
+        kafkaProducer.send(record, (recordMetadata, e) -> {
+            if (e != null) e.printStackTrace();
+        });
     }
 }

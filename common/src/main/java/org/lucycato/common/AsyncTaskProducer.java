@@ -15,18 +15,18 @@ import reactor.util.function.Tuples;
 import java.util.Properties;
 
 @ProducerAdapter
-public class TaskProducer {
-    private final LoggingProducer loggingProducer;
+public class AsyncTaskProducer {
+    private final AsyncLoggingProducer asyncLoggingProducer;
     private final PrintStackTraceManager printStackTraceManager;
     private final KafkaProducer<String, String> kafkaProducer;
     private final ObjectMapper objectMapper;
     private final String bootstrapServers;
     private final String topic;
 
-    public TaskProducer(
+    public AsyncTaskProducer(
             @Value("${kafka.clusters.bootstrapservers:null}") String bootstrapServers,
             @Value("${kafka.task.topic:null}") String topic,
-            LoggingProducer loggingProducer,
+            AsyncLoggingProducer asyncLoggingProducer,
             PrintStackTraceManager printStackTraceManager,
             ObjectMapper objectMapper
     ) {
@@ -39,7 +39,7 @@ public class TaskProducer {
         this.topic = topic;
         this.kafkaProducer = new KafkaProducer<>(props);
         this.objectMapper = objectMapper;
-        this.loggingProducer = loggingProducer;
+        this.asyncLoggingProducer = asyncLoggingProducer;
         this.printStackTraceManager = printStackTraceManager;
     }
 
@@ -52,7 +52,7 @@ public class TaskProducer {
                     if (exception != null) {
                         exception.printStackTrace();
                         String stackTraceString = printStackTraceManager.getStackTraceAsString(exception);
-                        loggingProducer.sendLogMessage("kafka exception", stackTraceString);
+                        asyncLoggingProducer.sendLogMessage("kafka exception", stackTraceString);
                         sink.error(exception);
                     } else {
                         sink.success();
