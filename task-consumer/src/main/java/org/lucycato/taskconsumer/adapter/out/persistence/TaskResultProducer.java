@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.lucycato.common.LoggingProducer;
+import org.lucycato.common.AsyncLoggingProducer;
 import org.lucycato.common.PrintStackTraceManager;
 import org.lucycato.common.annotation.out.ProducerAdapter;
 import org.lucycato.common.error.ErrorCodeImpl;
@@ -18,20 +18,20 @@ import java.util.Properties;
 
 @ProducerAdapter
 public class TaskResultProducer implements SendResultTaskPort {
-    private final LoggingProducer loggingProducer;
+    private final AsyncLoggingProducer asyncLoggingProducer;
     private final PrintStackTraceManager printStackTraceManager;
     private final KafkaProducer<String, String> kafkaProducer;
     private final ObjectMapper objectMapper;
     private final String topic;
 
     public TaskResultProducer(
-            LoggingProducer loggingProducer,
+            AsyncLoggingProducer asyncLoggingProducer,
             PrintStackTraceManager printStackTraceManager,
             ObjectMapper objectMapper,
             @Value("${kafka.clusters.bootstrapservers}") String bootstrapServers,
             @Value("${kafka.task.result.topic}") String topic
     ) {
-        this.loggingProducer = loggingProducer;
+        this.asyncLoggingProducer = asyncLoggingProducer;
         this.printStackTraceManager = printStackTraceManager;
         this.objectMapper = objectMapper;
 
@@ -53,7 +53,7 @@ public class TaskResultProducer implements SendResultTaskPort {
                     if (exception != null) {
                         exception.printStackTrace();
                         String stackTraceString = printStackTraceManager.getStackTraceAsString(exception);
-                        loggingProducer.sendLogMessage("kafka exception", stackTraceString);
+                        asyncLoggingProducer.sendLogMessage("kafka exception", stackTraceString);
                         sink.error(exception);
                     } else {
                         sink.success();
