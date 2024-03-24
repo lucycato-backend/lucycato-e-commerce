@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.lucycato.common.CommonWebClient;
 import org.lucycato.common.api.Api;
 import org.lucycato.common.error.ErrorCodeImpl;
+import org.lucycato.common.exception.ApiExceptionImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +37,7 @@ public class MemberServiceApplication {
                         Api<User> value = objectMapper.readValue(ex.getResponseBodyAsString(), new TypeReference<>() {});
                         return Mono.just(value);
                     } catch (Exception e) {
-                        throw ErrorCodeImpl.REQUEST_CLIENT.build();
+                        throw new ApiExceptionImpl(ErrorCodeImpl.REQUEST_CLIENT);
                     }
                 });
     }
