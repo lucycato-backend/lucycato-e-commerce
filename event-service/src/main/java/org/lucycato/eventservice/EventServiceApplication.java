@@ -14,13 +14,4 @@ public class EventServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(EventServiceApplication.class, args);
     }
-
-    @GetMapping
-    public Mono<Api<String>> test() {
-        if (true) {
-            throw ErrorCodeImpl.NULL_POINT.build();
-        }
-        return Mono.just(Api.OK("HELLO!!"));
-    }
-
 }

@@ -8,6 +8,7 @@ import org.lucycato.common.LoggingProducer;
 import org.lucycato.common.PrintStackTraceManager;
 import org.lucycato.common.annotation.out.ProducerAdapter;
 import org.lucycato.common.error.ErrorCodeImpl;
+import org.lucycato.common.exception.ApiExceptionImpl;
 import org.lucycato.common.model.task.TaskKey;
 import org.lucycato.taskconsumer.application.port.out.SendResultTaskPort;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,7 +47,7 @@ public class TaskResultProducer implements SendResultTaskPort {
     @Override
     public Mono<Void> sendTaskResultJsonMessage(TaskKey taskKey, String jsonString) {
         return Mono.fromCallable(() -> objectMapper.writeValueAsString(taskKey))
-                .onErrorResume(JsonProcessingException.class, error -> Mono.error(ErrorCodeImpl.JSON_PARSING.build()))
+                .onErrorResume(JsonProcessingException.class, error -> Mono.error(new ApiExceptionImpl(ErrorCodeImpl.JSON_PARSING)))
                 .map(taskKeyJsonString -> new ProducerRecord<String, String>(topic, taskKeyJsonString, jsonString))
                 .flatMap(record -> Mono.create(sink -> kafkaProducer.send(record, (metadata, exception) -> {
                     if (exception != null) {

@@ -20,24 +20,4 @@ public class MemberServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(MemberServiceApplication.class, args);
     }
-
-    private final ObjectMapper objectMapper;
-    private final CommonWebClient commonWebClient;
-
-    @GetMapping
-    public Mono<Api<User>> test() {
-        String url = "http://event-service:8080";
-        return commonWebClient.sendGetRequestResultMono(url)
-                .map(it -> {
-                    return Api.OK(new User());
-                })
-                .onErrorResume(WebClientResponseException.class, ex -> {
-                    try {
-                        Api<User> value = objectMapper.readValue(ex.getResponseBodyAsString(), new TypeReference<>() {});
-                        return Mono.just(value);
-                    } catch (Exception e) {
-                        throw ErrorCodeImpl.REQUEST_CLIENT.build();
-                    }
-                });
-    }
 }
