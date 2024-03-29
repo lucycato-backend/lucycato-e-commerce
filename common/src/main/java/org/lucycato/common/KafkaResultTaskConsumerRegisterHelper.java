@@ -23,7 +23,6 @@ public class KafkaResultTaskConsumerRegisterHelper {
     }
 
     public Properties createPropsConsumerTaskResultTopic(String groupId) {
-        if (bootstrapServers == null || topic == null) throw new RuntimeException("server environment is not exist please setting environment");
         Properties props = new Properties();
         props.put("bootstrap.servers", bootstrapServers);
         props.put("group.id", groupId);

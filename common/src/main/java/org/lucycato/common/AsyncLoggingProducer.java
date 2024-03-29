@@ -1,12 +1,9 @@
 package org.lucycato.common;
 
-import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.common.requests.ProduceRequest;
-import org.lucycato.common.annotation.out.ProducerAdapter;
+import org.lucycato.common.annotation.hexagonal.out.ProducerAdapter;
 import org.springframework.beans.factory.annotation.Value;
-import reactor.core.publisher.Mono;
 
 import java.util.Properties;
 
