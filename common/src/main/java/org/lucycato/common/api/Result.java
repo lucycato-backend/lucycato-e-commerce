@@ -7,7 +7,7 @@ import org.lucycato.common.error.ErrorCode;
 @Getter
 @NoArgsConstructor
 public class Result {
-    private static final String SUCCESS_CODE = "LUCYCATO";
+    private static final String SUCCESS_CODE = "lcs";
     private static final String SUCCESS_REASON = "success";
     private String code;
     private String reason;
