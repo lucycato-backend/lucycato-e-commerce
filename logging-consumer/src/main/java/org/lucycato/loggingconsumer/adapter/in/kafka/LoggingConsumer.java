@@ -3,7 +3,7 @@ package org.lucycato.loggingconsumer.adapter.in.kafka;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.lucycato.common.annotation.in.ConsumerAdapter;
+import org.lucycato.common.annotation.hexagonal.in.ConsumerAdapter;
 import org.lucycato.loggingconsumer.application.port.in.HandleLoggingCommand;
 import org.lucycato.loggingconsumer.application.port.in.LoggingUseCase;
 import org.springframework.beans.factory.annotation.Value;

@@ -6,7 +6,7 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.lucycato.common.AsyncLoggingProducer;
 import org.lucycato.common.PrintStackTraceManager;
-import org.lucycato.common.annotation.out.ProducerAdapter;
+import org.lucycato.common.annotation.hexagonal.out.ProducerAdapter;
 import org.lucycato.common.error.ErrorCodeImpl;
 import org.lucycato.common.exception.ApiExceptionImpl;
 import org.lucycato.common.model.task.TaskKey;

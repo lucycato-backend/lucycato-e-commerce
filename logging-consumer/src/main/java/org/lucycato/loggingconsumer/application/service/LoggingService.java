@@ -1,6 +1,6 @@
 package org.lucycato.loggingconsumer.application.service;
 
-import org.lucycato.common.annotation.in.UseCase;
+import org.lucycato.common.annotation.hexagonal.in.UseCase;
 import org.lucycato.loggingconsumer.application.port.in.HandleLoggingCommand;
 import org.lucycato.loggingconsumer.application.port.in.LoggingUseCase;
 import reactor.core.publisher.Mono;

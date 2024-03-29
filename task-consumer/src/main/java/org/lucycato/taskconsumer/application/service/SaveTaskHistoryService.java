@@ -1,7 +1,7 @@
 package org.lucycato.taskconsumer.application.service;
 
 import lombok.RequiredArgsConstructor;
-import org.lucycato.common.annotation.in.UseCase;
+import org.lucycato.common.annotation.hexagonal.in.UseCase;
 import org.lucycato.taskconsumer.application.port.in.SaveTaskHistoryAndSendTaskResultCommand;
 import org.lucycato.taskconsumer.application.port.in.SaveTaskHistoryUseCase;
 import org.lucycato.taskconsumer.application.port.out.SaveTaskHistoryPort;
