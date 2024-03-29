@@ -1,7 +1,7 @@
 package org.lucycato.common.exceptionhandler;
 
 import lombok.RequiredArgsConstructor;
-import org.lucycato.common.LoggingProducer;
+import org.lucycato.common.AsyncLoggingProducer;
 import org.lucycato.common.PrintStackTraceManager;
 import org.lucycato.common.api.Api;
 import org.lucycato.common.error.ErrorCode;
@@ -22,14 +22,14 @@ import reactor.util.function.Tuples;
 @ControllerAdvice
 @RequiredArgsConstructor
 public class GlobalExceptionHandler {
-    private final LoggingProducer loggingProducer;
+    private final AsyncLoggingProducer asyncLoggingProducer;
     private final PrintStackTraceManager printStackTraceManager;
 
     @ExceptionHandler(value = Exception.class)
     public Mono<ResponseEntity<Api<Object>>> handleGlobalException(Exception ex) {
         ex.printStackTrace();
         String stackTranceString = printStackTraceManager.getStackTraceAsString(ex);
-        loggingProducer.sendLogMessage("exception", stackTranceString).subscribe();
+        asyncLoggingProducer.sendLogMessage("exception", stackTranceString);
 
         return validateException(ex)
                 .map(tuple -> ResponseEntity

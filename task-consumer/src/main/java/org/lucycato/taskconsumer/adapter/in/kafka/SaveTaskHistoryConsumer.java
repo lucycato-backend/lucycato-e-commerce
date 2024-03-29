@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.lucycato.common.annotation.in.ConsumerAdapter;
+import org.lucycato.common.annotation.hexagonal.in.ConsumerAdapter;
 import org.lucycato.common.model.task.TaskKey;
 import org.lucycato.taskconsumer.application.port.in.SaveTaskHistoryAndSendTaskResultCommand;
 import org.lucycato.taskconsumer.application.port.in.SaveTaskHistoryUseCase;

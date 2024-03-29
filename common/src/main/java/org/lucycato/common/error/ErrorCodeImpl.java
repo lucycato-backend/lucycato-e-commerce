@@ -15,7 +15,8 @@ public enum ErrorCodeImpl implements ErrorCode {
     VALIDATION(HttpStatus.INTERNAL_SERVER_ERROR.value(), "LC-0006", "fail validation", ""),
     METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED.value(), "LC-0007", "method not allowed please method change", ""),
     JSON_PARSING(HttpStatus.INTERNAL_SERVER_ERROR.value(), "LC-0008", "json parsing", ""),
-    KAFKA_SEND_TASK_FAIL(HttpStatus.INTERNAL_SERVER_ERROR.value(), "LC-0009", "kafka send task fail please environment setting", ""),
+    KAFKA_SEND_FAIL(HttpStatus.INTERNAL_SERVER_ERROR.value(), "LC-0009", "kafka send task fail please environment setting", ""),
+    RESOLVER_VALUE_NOT_FOUNT(HttpStatus.INTERNAL_SERVER_ERROR.value(), "LC-0010", "resolver value not found", ""),
     ;
     private final Integer httpCode;
     private final String code;

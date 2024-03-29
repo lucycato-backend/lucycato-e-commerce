@@ -1,4 +1,4 @@
-package org.lucycato.common.annotation.in;
+package org.lucycato.common.annotation.hexagonal.out;
 
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.stereotype.Component;
@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Component
-public @interface WebAdapter {
+public @interface ProducerAdapter {
     @AliasFor(annotation = Component.class)
     String value() default "";
 }

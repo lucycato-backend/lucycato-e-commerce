@@ -1,7 +1,7 @@
 package org.lucycato.taskconsumer.adapter.out.persistence;
 
 import lombok.RequiredArgsConstructor;
-import org.lucycato.common.annotation.out.PersistenceAdapter;
+import org.lucycato.common.annotation.hexagonal.out.PersistenceAdapter;
 import org.lucycato.common.model.task.TaskKey;
 import org.lucycato.taskconsumer.application.port.out.SaveTaskHistoryPort;
 import org.lucycato.taskconsumer.domain.SaveTaskHistoryR2dbcEntity;

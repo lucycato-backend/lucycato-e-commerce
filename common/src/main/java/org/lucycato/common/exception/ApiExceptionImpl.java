@@ -24,12 +24,6 @@ public class ApiExceptionImpl extends RuntimeException implements ApiException {
         this.result = Result.ERROR(errorCode);
     }
 
-    public ApiExceptionImpl(ErrorCode errorCode, String reason) {
-        super(reason);
-        this.httpCode = errorCode.getHttpCode();
-        this.result = Result.ERROR(errorCode, reason);
-    }
-
     public ApiExceptionImpl(ErrorCode errorCode, Throwable tx) {
         super(tx.getLocalizedMessage());
         this.httpCode = errorCode.getHttpCode();
