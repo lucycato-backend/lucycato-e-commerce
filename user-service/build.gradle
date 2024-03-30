@@ -5,7 +5,7 @@ plugins {
     id 'com.palantir.docker' version '0.35.0'
 }
 
-group = 'org.lucycato.member-service'
+group = 'org.lucycato.user-service'
 version = '1.0.0'
 
 java {
@@ -24,8 +24,9 @@ configurations {
 
 dependencies {
     implementation project(':common')
+    implementation project(':mvc')
 
-    implementation 'org.springframework.boot:spring-boot-starter-webflux:3.2.3'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter:3.2.3'
     testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.3'
 
@@ -34,6 +35,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'com.mysql:mysql-connector-j'
 }
 
 test {

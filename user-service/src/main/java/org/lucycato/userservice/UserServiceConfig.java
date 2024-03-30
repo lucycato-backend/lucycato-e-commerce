@@ -1,9 +1,9 @@
-package org.lucycato.memberservice;
+package org.lucycato.userservice;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan("org.lucycato.common")
-public class MemberServiceConfig {
+@ComponentScan({"org.lucycato.common", "org.lucycato.mvc"})
+public class UserServiceConfig {
 }
