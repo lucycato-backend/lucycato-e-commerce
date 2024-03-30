@@ -114,13 +114,14 @@ services:
     environment:
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
   #Service
-  member-service:
-    image: lucycato/big-tech-member-service:1.0.0
+  user-service:
+    image: lucycato/big-tech-user-service:1.0.0
     networks:
       - "lucycato_network"
     ports:
       - "8080:8080"
     environment:
+      -
       - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n
       - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
