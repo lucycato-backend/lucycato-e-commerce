@@ -2,11 +2,7 @@ package org.lucycato.userservice.adapter.in.web;
 
 import lombok.RequiredArgsConstructor;
 import org.lucycato.common.annotation.hexagonal.in.WebAdapter;
-import org.lucycato.common.annotation.resolver.AdminMemberHeaders;
-import org.lucycato.common.annotation.resolver.AppMemberHeaders;
 import org.lucycato.common.api.Api;
-import org.lucycato.common.resolver.AdminMemberHeaderDetail;
-import org.lucycato.common.resolver.AppMemberHeaderDetail;
 import org.lucycato.userservice.adapter.in.web.response.AppVersionCheckResponse;
 import org.lucycato.userservice.application.port.in.MobileWebUseCase;
 import org.lucycato.userservice.application.port.in.command.AppVersionCheckCommand;
