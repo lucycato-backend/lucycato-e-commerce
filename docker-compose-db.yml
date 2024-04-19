@@ -22,20 +22,20 @@ services:
     volumes:
       - ./data/mysql:/data
 
-  rabbitmq:
-    container_name: rabbitmq
-    image: rabbitmq:3-management-alpine
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    environment:
-      - RABBITMQ_DEFAULT_USER=root
-      - RABBITMQ_DEFAULT_PASS=password
-    volumes:
-      - ./data/rabbitmq/data:/var/lib/rabbitmq
-      - ./data/rabbitmq/logs:/var/log/rabbitmq
-    networks:
-      - lucycato_network
+#  rabbitmq:
+#    container_name: rabbitmq
+#    image: rabbitmq:3-management-alpine
+#    ports:
+#      - "5672:5672"
+#      - "15672:15672"
+#    environment:
+#      - RABBITMQ_DEFAULT_USER=root
+#      - RABBITMQ_DEFAULT_PASS=password
+#    volumes:
+#      - ./data/rabbitmq/data:/var/lib/rabbitmq
+#      - ./data/rabbitmq/logs:/var/log/rabbitmq
+#    networks:
+#      - lucycato_network
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:5.0.4
@@ -51,30 +51,30 @@ services:
     networks:
       - lucycato_network
 
-  redis:
-    container_name: redis
-    image: redis:latest
-    command: redis-server
-    restart: always
-    volumes:
-      - ./data/redis:/data
-    networks:
-      - lucycato_network
+#  redis:
+#    container_name: redis
+#    image: redis:latest
+#    command: redis-server
+#    restart: always
+#    volumes:
+#      - ./data/redis:/data
+#    networks:
+#      - lucycato_network
   
-  mongo:
-    container_name: mongo
-    image: mongo:latest
-    restart: always
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=password
-      - MONGO_INITDB_DATABASE=mydatabase
-      - MONGO_INITDB_USERNAME=user
-      - MONGO_INITDB_PASSWORD=password
-    volumes:
-      - ./data/mongodb:/data/db
-    networks:
-      - lucycato_network
+#  mongo:
+#    container_name: mongo
+#    image: mongo:latest
+#    restart: always
+#    environment:
+#      - MONGO_INITDB_ROOT_USERNAME=root
+#      - MONGO_INITDB_ROOT_PASSWORD=password
+#      - MONGO_INITDB_DATABASE=mydatabase
+#      - MONGO_INITDB_USERNAME=user
+#      - MONGO_INITDB_PASSWORD=password
+#    volumes:
+#      - ./data/mongodb:/data/db
+#    networks:
+#      - lucycato_network
 
 networks:
   lucycato_network:
