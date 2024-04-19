@@ -24,7 +24,7 @@ public class CommonWebClient {
         this.webClient = WebClient.builder().build();
     }
 
-    public <T> Mono<Api<T>> sendGetRequestResultMono(String url) {
+    public <T> Mono<T> sendGetRequestResultMono(String url) {
         return Mono.deferContextual(contextView ->
                 webClient.get()
                         .uri(URI.create(url))
@@ -32,7 +32,7 @@ public class CommonWebClient {
                                 contextView.getOrDefault(XHeaderContext.ADMIN_OR_APP_MEMBER_JSON_STRING_HEADER_KEY, ""))
                         .retrieve()
                         .bodyToMono(String.class)
-                        .flatMap(jsonString -> Mono.fromCallable(() -> objectMapper.readValue(jsonString, new TypeReference<Api<T>>() {
+                        .flatMap(jsonString -> Mono.fromCallable(() -> objectMapper.readValue(jsonString, new TypeReference<T>() {
                         })))
                         .onErrorResume(WebClientResponseException.class, ex ->
                                 Mono.fromCallable(() -> objectMapper.readValue(ex.getResponseBodyAsString(), new TypeReference<Api<T>>() {
@@ -43,7 +43,7 @@ public class CommonWebClient {
         );
     }
 
-    public <T> Mono<Api<T>> sendPostRequestResultMono(String url, Map<String, Object> body) {
+    public <T> Mono<T> sendPostRequestResultMono(String url, Map<String, Object> body) {
         return Mono.deferContextual(contextView ->
                 webClient.post()
                         .uri(URI.create(url))
@@ -53,7 +53,7 @@ public class CommonWebClient {
                         .bodyValue(body)
                         .retrieve()
                         .bodyToMono(String.class)
-                        .flatMap(jsonString -> Mono.fromCallable(() -> objectMapper.readValue(jsonString, new TypeReference<Api<T>>() {
+                        .flatMap(jsonString -> Mono.fromCallable(() -> objectMapper.readValue(jsonString, new TypeReference<T>() {
                         })))
                         .onErrorResume(WebClientResponseException.class, ex ->
                                 Mono.fromCallable(() -> objectMapper.readValue(ex.getResponseBodyAsString(), new TypeReference<Api<T>>() {
@@ -64,7 +64,7 @@ public class CommonWebClient {
         );
     }
 
-    public <T> Mono<Api<T>> sendPutRequestResultMono(String url, Map<String, Object> body) {
+    public <T> Mono<T> sendPutRequestResultMono(String url, Map<String, Object> body) {
         return Mono.deferContextual(contextView ->
                 webClient.put()
                         .uri(URI.create(url))
@@ -74,7 +74,7 @@ public class CommonWebClient {
                         .bodyValue(body)
                         .retrieve()
                         .bodyToMono(String.class)
-                        .flatMap(jsonString -> Mono.fromCallable(() -> objectMapper.readValue(jsonString, new TypeReference<Api<T>>() {
+                        .flatMap(jsonString -> Mono.fromCallable(() -> objectMapper.readValue(jsonString, new TypeReference<T>() {
                         })))
                         .onErrorResume(WebClientResponseException.class, ex ->
                                 Mono.fromCallable(() -> objectMapper.readValue(ex.getResponseBodyAsString(), new TypeReference<Api<T>>() {
@@ -85,7 +85,7 @@ public class CommonWebClient {
         );
     }
 
-    public <T> Mono<Api<T>> sendDeleteRequestResultMono(String url) {
+    public <T> Mono<T> sendDeleteRequestResultMono(String url) {
         return Mono.deferContextual(contextView ->
                 webClient.delete()
                         .uri(URI.create(url))
@@ -93,7 +93,7 @@ public class CommonWebClient {
                                 contextView.getOrDefault(XHeaderContext.ADMIN_OR_APP_MEMBER_JSON_STRING_HEADER_KEY, ""))
                         .retrieve()
                         .bodyToMono(String.class)
-                        .flatMap(jsonString -> Mono.fromCallable(() -> objectMapper.readValue(jsonString, new TypeReference<Api<T>>() {
+                        .flatMap(jsonString -> Mono.fromCallable(() -> objectMapper.readValue(jsonString, new TypeReference<T>() {
                         })))
                         .onErrorResume(WebClientResponseException.class, ex ->
                                 Mono.fromCallable(() -> objectMapper.readValue(ex.getResponseBodyAsString(), new TypeReference<Api<T>>() {

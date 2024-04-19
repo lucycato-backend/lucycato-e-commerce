@@ -24,7 +24,7 @@ public class CommonHttpClient {
         this.httpClient = HttpClient.newBuilder().build();
     }
 
-    public <T> Api<T> sendGetRequest(String url) throws Exception {
+    public <T> T sendGetRequest(String url) throws Exception {
         RequestAttributes requestContext = RequestContextHolder.getRequestAttributes();
         String adminOrAppMemberJsonStringHeader = requestContext != null ? (String) requestContext.getAttribute(XHeaderContext.ADMIN_OR_APP_MEMBER_JSON_STRING_HEADER_KEY, RequestAttributes.SCOPE_REQUEST) : "";
         HttpRequest request = HttpRequest.newBuilder()
@@ -38,7 +38,7 @@ public class CommonHttpClient {
         return validateStatusCodeAndReturnResponse(response);
     }
 
-    public <T> Api<T> sendPostRequest(String url, String body) throws Exception {
+    public <T> T sendPostRequest(String url, String body) throws Exception {
         RequestAttributes requestContext = RequestContextHolder.getRequestAttributes();
         String adminOrAppMemberJsonStringHeader = requestContext != null ? (String) requestContext.getAttribute(XHeaderContext.ADMIN_OR_APP_MEMBER_JSON_STRING_HEADER_KEY, RequestAttributes.SCOPE_REQUEST) : "";
         HttpRequest request = HttpRequest.newBuilder()
@@ -53,7 +53,7 @@ public class CommonHttpClient {
         return validateStatusCodeAndReturnResponse(response);
     }
 
-    public <T> Api<T> sendPutRequest(String url, String body) throws Exception {
+    public <T> T sendPutRequest(String url, String body) throws Exception {
         RequestAttributes requestContext = RequestContextHolder.getRequestAttributes();
         String adminOrAppMemberJsonStringHeader = requestContext != null ? (String) requestContext.getAttribute(XHeaderContext.ADMIN_OR_APP_MEMBER_JSON_STRING_HEADER_KEY, RequestAttributes.SCOPE_REQUEST) : "";
         HttpRequest request = HttpRequest.newBuilder()
@@ -68,7 +68,7 @@ public class CommonHttpClient {
         return validateStatusCodeAndReturnResponse(response);
     }
 
-    public <T> Api<T> sendDeleteRequest(String url) throws Exception {
+    public <T> T sendDeleteRequest(String url) throws Exception {
         RequestAttributes requestContext = RequestContextHolder.getRequestAttributes();
         String adminOrAppMemberJsonStringHeader = requestContext != null ? (String) requestContext.getAttribute(XHeaderContext.ADMIN_OR_APP_MEMBER_JSON_STRING_HEADER_KEY, RequestAttributes.SCOPE_REQUEST) : "";
         HttpRequest request = HttpRequest.newBuilder()
@@ -82,13 +82,13 @@ public class CommonHttpClient {
         return validateStatusCodeAndReturnResponse(response);
     }
 
-    private <T> Api<T> validateStatusCodeAndReturnResponse(HttpResponse<String> response) throws Exception {
+    private <T> T validateStatusCodeAndReturnResponse(HttpResponse<String> response) throws Exception {
         boolean isSuccess = response.statusCode() >= 200 && response.statusCode() < 300;
         if (isSuccess) {
-            return objectMapper.readValue(response.body(), new TypeReference<Api<T>>() {
+            return objectMapper.readValue(response.body(), new TypeReference<T>() {
             });
         } else {
-            Api<T> apiErrorReason = objectMapper.readValue(response.body(), new TypeReference<Api<T>>() {});
+            Api<T> apiErrorReason = objectMapper.readValue(response.body(), new TypeReference<>() {});
             throw new ApiExceptionImpl(response.statusCode(), apiErrorReason.getResult());
         }
     }
