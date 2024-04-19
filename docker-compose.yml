@@ -105,14 +105,6 @@ services:
       - "8072:8080"
     environment:
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
-  batch-server:
-    image: lucycato/big-tech-batch-server:1.0.0
-    networks:
-      - "lucycato_network"
-    ports:
-      - "8073:8080"
-    environment:
-      - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
   #Service
   user-service:
     image: lucycato/big-tech-user-service:1.0.0
@@ -130,31 +122,6 @@ services:
       - "lucycato_network"
     ports:
       - "8081:8080"
-    environment:
-      - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
-  event-service:
-    image: lucycato/big-tech-event-service:1.0.0
-    networks:
-      - "lucycato_network"
-    ports:
-      - "8082:8080"
-    environment:
-      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
-      - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
-  delivery-service:
-    image: lucycato/big-tech-delivery-service:1.0.0
-    networks:
-      - "lucycato_network"
-    ports:
-      - "8083:8080"
-    environment:
-      - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
-  webtoon-service:
-    image: lucycato/big-tech-webtoon-service:1.0.0
-    networks:
-      - "lucycato_network"
-    ports:
-      - "8084:8080"
     environment:
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
 

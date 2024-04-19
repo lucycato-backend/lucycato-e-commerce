@@ -7,11 +7,11 @@ import org.lucycato.common.SelfValidating;
 @Getter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class AdminMemberHeaderDetail extends SelfValidating<AdminMemberHeaderDetail> {
+public class AdminUserHeaderDetail extends SelfValidating<AdminUserHeaderDetail> {
     @NotNull
     private Long adminMemberId;
 
-    public AdminMemberHeaderDetail(Long adminMemberId) {
+    public AdminUserHeaderDetail(Long adminMemberId) {
         this.adminMemberId = adminMemberId;
 
         this.validateSelf();

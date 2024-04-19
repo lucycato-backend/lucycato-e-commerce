@@ -3,10 +3,10 @@ package org.lucycato.webflux.resolver;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.lucycato.common.XHeaderContext;
-import org.lucycato.common.annotation.resolver.AdminMemberHeaders;
+import org.lucycato.common.annotation.resolver.AdminUserHeaders;
 import org.lucycato.common.error.ErrorCodeImpl;
 import org.lucycato.common.exception.ApiExceptionImpl;
-import org.lucycato.common.resolver.AdminMemberHeaderDetail;
+import org.lucycato.common.resolver.AdminUserHeaderDetail;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.BindingContext;
@@ -23,8 +23,8 @@ public class WebFluxAdminMemberMethodArgumentResolver implements HandlerMethodAr
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        Boolean annotation = parameter.hasParameterAnnotation(AdminMemberHeaders.class);
-        Boolean parameterType = parameter.getParameterType().equals(AdminMemberHeaderDetail.class);
+        Boolean annotation = parameter.hasParameterAnnotation(AdminUserHeaders.class);
+        Boolean parameterType = parameter.getParameterType().equals(AdminUserHeaderDetail.class);
         return annotation && parameterType;
     }
 
@@ -32,11 +32,14 @@ public class WebFluxAdminMemberMethodArgumentResolver implements HandlerMethodAr
     public Mono<Object> resolveArgument(MethodParameter parameter, BindingContext bindingContext, ServerWebExchange exchange) {
         List<String> adminMemberJsonList = exchange.getRequest().getHeaders().get(XHeaderContext.ADMIN_OR_APP_MEMBER_JSON_STRING_HEADER_KEY);
         if (adminMemberJsonList != null && !adminMemberJsonList.isEmpty()) {
-            return Mono.fromCallable(() -> objectMapper.readValue(adminMemberJsonList.get(0), AdminMemberHeaderDetail.class))
-                    .map(readValue -> new AdminMemberHeaderDetail(
+            return Mono.fromCallable(() -> objectMapper.readValue(adminMemberJsonList.get(0), AdminUserHeaderDetail.class))
+                    .map(readValue -> new AdminUserHeaderDetail(
                             readValue.getAdminMemberId()
                     ));
         }
         return Mono.error(new ApiExceptionImpl(ErrorCodeImpl.RESOLVER_VALUE_NOT_FOUNT));
     }
 }
+
+
+
