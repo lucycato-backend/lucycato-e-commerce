@@ -3,10 +3,10 @@ package org.lucycato.webflux.resolver;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.lucycato.common.XHeaderContext;
-import org.lucycato.common.annotation.resolver.AppMemberHeaders;
+import org.lucycato.common.annotation.resolver.AppUserHeaders;
 import org.lucycato.common.error.ErrorCodeImpl;
 import org.lucycato.common.exception.ApiExceptionImpl;
-import org.lucycato.common.resolver.AppMemberHeaderDetail;
+import org.lucycato.common.resolver.AppUserHeaderDetail;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.BindingContext;
@@ -23,8 +23,8 @@ public class WebFluxAppMemberMethodArgumentResolver implements HandlerMethodArgu
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        Boolean annotation = parameter.hasParameterAnnotation(AppMemberHeaders.class);
-        Boolean parameterType = parameter.getParameterType().equals(AppMemberHeaderDetail.class);
+        Boolean annotation = parameter.hasParameterAnnotation(AppUserHeaders.class);
+        Boolean parameterType = parameter.getParameterType().equals(AppUserHeaderDetail.class);
         return annotation && parameterType;
     }
 
@@ -32,8 +32,8 @@ public class WebFluxAppMemberMethodArgumentResolver implements HandlerMethodArgu
     public Mono<Object> resolveArgument(MethodParameter parameter, BindingContext bindingContext, ServerWebExchange exchange) {
         List<String> appMemberJsonList = exchange.getRequest().getHeaders().get(XHeaderContext.ADMIN_OR_APP_MEMBER_JSON_STRING_HEADER_KEY);
         if (appMemberJsonList != null && !appMemberJsonList.isEmpty()) {
-            return Mono.fromCallable(() -> objectMapper.readValue(appMemberJsonList.get(0), AppMemberHeaderDetail.class))
-                    .map(readValue -> new AppMemberHeaderDetail(
+            return Mono.fromCallable(() -> objectMapper.readValue(appMemberJsonList.get(0), AppUserHeaderDetail.class))
+                    .map(readValue -> new AppUserHeaderDetail(
                         readValue.getAppMemberId()
                     ));
         }

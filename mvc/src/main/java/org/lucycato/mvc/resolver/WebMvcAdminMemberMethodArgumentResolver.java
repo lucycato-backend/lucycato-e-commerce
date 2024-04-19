@@ -3,10 +3,10 @@ package org.lucycato.mvc.resolver;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.lucycato.common.XHeaderContext;
-import org.lucycato.common.annotation.resolver.AdminMemberHeaders;
+import org.lucycato.common.annotation.resolver.AdminUserHeaders;
 import org.lucycato.common.error.ErrorCodeImpl;
 import org.lucycato.common.exception.ApiExceptionImpl;
-import org.lucycato.common.resolver.AdminMemberHeaderDetail;
+import org.lucycato.common.resolver.AdminUserHeaderDetail;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -21,8 +21,8 @@ public class WebMvcAdminMemberMethodArgumentResolver implements HandlerMethodArg
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        Boolean annotation = parameter.hasParameterAnnotation(AdminMemberHeaders.class);
-        Boolean parameterType = parameter.getParameterType().equals(AdminMemberHeaderDetail.class);
+        Boolean annotation = parameter.hasParameterAnnotation(AdminUserHeaders.class);
+        Boolean parameterType = parameter.getParameterType().equals(AdminUserHeaderDetail.class);
         return annotation && parameterType;
     }
 
@@ -30,8 +30,8 @@ public class WebMvcAdminMemberMethodArgumentResolver implements HandlerMethodArg
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         String[] adminMemberJsonList = webRequest.getHeaderValues(XHeaderContext.ADMIN_OR_APP_MEMBER_JSON_STRING_HEADER_KEY);
         if (adminMemberJsonList != null && adminMemberJsonList.length != 0) {
-            AdminMemberHeaderDetail readValue = objectMapper.readValue(adminMemberJsonList[0], AdminMemberHeaderDetail.class);
-            return new AdminMemberHeaderDetail(
+            AdminUserHeaderDetail readValue = objectMapper.readValue(adminMemberJsonList[0], AdminUserHeaderDetail.class);
+            return new AdminUserHeaderDetail(
                     readValue.getAdminMemberId()
             );
         }
