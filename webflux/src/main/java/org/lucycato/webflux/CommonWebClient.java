@@ -3,11 +3,10 @@ package org.lucycato.webflux;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.lucycato.common.XHeaderContext;
-import org.lucycato.common.api.Api;
+import org.lucycato.common.api.Erroresponse;
 import org.lucycato.common.exception.ApiExceptionImpl;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientRequestException;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
 
@@ -35,7 +34,7 @@ public class CommonWebClient {
                         .flatMap(jsonString -> Mono.fromCallable(() -> objectMapper.readValue(jsonString, new TypeReference<T>() {
                         })))
                         .onErrorResume(WebClientResponseException.class, ex ->
-                                Mono.fromCallable(() -> objectMapper.readValue(ex.getResponseBodyAsString(), new TypeReference<Api<T>>() {
+                                Mono.fromCallable(() -> objectMapper.readValue(ex.getResponseBodyAsString(), new TypeReference<Erroresponse<T>>() {
                                         }))
                                         .flatMap(apiErrorReason -> Mono.error(new ApiExceptionImpl(ex.getStatusCode().value(), apiErrorReason.getResult())))
                         )
@@ -56,7 +55,7 @@ public class CommonWebClient {
                         .flatMap(jsonString -> Mono.fromCallable(() -> objectMapper.readValue(jsonString, new TypeReference<T>() {
                         })))
                         .onErrorResume(WebClientResponseException.class, ex ->
-                                Mono.fromCallable(() -> objectMapper.readValue(ex.getResponseBodyAsString(), new TypeReference<Api<T>>() {
+                                Mono.fromCallable(() -> objectMapper.readValue(ex.getResponseBodyAsString(), new TypeReference<Erroresponse<T>>() {
                                         }))
                                         .flatMap(apiErrorReason -> Mono.error(new ApiExceptionImpl(ex.getStatusCode().value(), apiErrorReason.getResult())))
                         )
@@ -77,7 +76,7 @@ public class CommonWebClient {
                         .flatMap(jsonString -> Mono.fromCallable(() -> objectMapper.readValue(jsonString, new TypeReference<T>() {
                         })))
                         .onErrorResume(WebClientResponseException.class, ex ->
-                                Mono.fromCallable(() -> objectMapper.readValue(ex.getResponseBodyAsString(), new TypeReference<Api<T>>() {
+                                Mono.fromCallable(() -> objectMapper.readValue(ex.getResponseBodyAsString(), new TypeReference<Erroresponse<T>>() {
                                         }))
                                         .flatMap(apiErrorReason -> Mono.error(new ApiExceptionImpl(ex.getStatusCode().value(), apiErrorReason.getResult())))
                         )
@@ -96,7 +95,7 @@ public class CommonWebClient {
                         .flatMap(jsonString -> Mono.fromCallable(() -> objectMapper.readValue(jsonString, new TypeReference<T>() {
                         })))
                         .onErrorResume(WebClientResponseException.class, ex ->
-                                Mono.fromCallable(() -> objectMapper.readValue(ex.getResponseBodyAsString(), new TypeReference<Api<T>>() {
+                                Mono.fromCallable(() -> objectMapper.readValue(ex.getResponseBodyAsString(), new TypeReference<Erroresponse<T>>() {
                                         }))
                                         .flatMap(apiErrorReason -> Mono.error(new ApiExceptionImpl(ex.getStatusCode().value(), apiErrorReason.getResult())))
                         )

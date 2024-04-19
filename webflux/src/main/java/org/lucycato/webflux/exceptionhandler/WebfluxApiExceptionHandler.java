@@ -1,6 +1,6 @@
 package org.lucycato.webflux.exceptionhandler;
 
-import org.lucycato.common.api.Api;
+import org.lucycato.common.api.Erroresponse;
 import org.lucycato.common.exception.ApiExceptionImpl;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.ResponseEntity;
@@ -13,13 +13,13 @@ import reactor.core.publisher.Mono;
 public class WebfluxApiExceptionHandler {
 
     @ExceptionHandler(ApiExceptionImpl.class)
-    public Mono<ResponseEntity<Api<Object>>> handlerApiException(ApiExceptionImpl ex) {
+    public Mono<ResponseEntity<Erroresponse<Object>>> handlerApiException(ApiExceptionImpl ex) {
         // TODO: refactoring
         ex.printStackTrace();
 
         return Mono.just(ResponseEntity
                 .status(ex.getHttpCode())
-                .body(Api.ERROR(ex.getResult()))
+                .body(Erroresponse.ERROR(ex.getResult()))
         );
     }
 }

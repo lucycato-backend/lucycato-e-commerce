@@ -3,7 +3,7 @@ package org.lucycato.mvc;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.lucycato.common.XHeaderContext;
-import org.lucycato.common.api.Api;
+import org.lucycato.common.api.Erroresponse;
 import org.lucycato.common.exception.ApiExceptionImpl;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
@@ -88,8 +88,8 @@ public class CommonHttpClient {
             return objectMapper.readValue(response.body(), new TypeReference<T>() {
             });
         } else {
-            Api<T> apiErrorReason = objectMapper.readValue(response.body(), new TypeReference<>() {});
-            throw new ApiExceptionImpl(response.statusCode(), apiErrorReason.getResult());
+            Erroresponse<T> ERRORResponseErrorReason = objectMapper.readValue(response.body(), new TypeReference<>() {});
+            throw new ApiExceptionImpl(response.statusCode(), ERRORResponseErrorReason.getResult());
         }
     }
 }
