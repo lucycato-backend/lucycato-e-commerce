@@ -52,15 +52,17 @@ services:
       - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper:2181
   #infra-server
   gateway-server:
-    image: lucycato/big-tech-gateway-server:1.0.0
+    image: lucycato/lucycato-e-commerce-gateway-server:1.0.0
     networks:
       - "lucycato_network"
     ports:
       - "8060:8080"
     environment:
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
+      - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
   config-server:
-    image: lucycato/big-tech-config-server:1.0.0
+    image: lucycato/lucycato-e-commerce-config-server:1.0.0
     networks:
       - "lucycato_network"
     ports:
@@ -68,7 +70,7 @@ services:
     environment:
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
   eureka-server:
-    image: lucycato/big-tech-eureka-server:1.0.0
+    image: lucycato/lucycato-e-commerce-eureka-server:1.0.0
     networks:
       - "lucycato_network"
     ports:
@@ -77,7 +79,7 @@ services:
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
   #operate-server
   logging-consumer:
-    image: lucycato/big-tech-logging-consumer:1.0.0
+    image: lucycato/lucycato-e-commerce-logging-consumer:1.0.0
     networks:
       - "lucycato_network"
     ports:
@@ -89,7 +91,7 @@ services:
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
   #TODO: mysql 연동 - table name : save_task_history
   task-consumer:
-    image: lucycato/big-tech-task-consumer:1.0.0
+    image: lucycato/lucycato-e-commerce-task-consumer:1.0.0
     networks:
       - "lucycato_network"
     ports:
@@ -97,7 +99,7 @@ services:
     environment:
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
   auth-server:
-    image: lucycato/big-tech-auth-server:1.0.0
+    image: lucycato/lucycato-e-commerce-auth-server:1.0.0
     networks:
       - "lucycato_network"
     ports:
@@ -106,7 +108,7 @@ services:
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
   #Service
   user-service:
-    image: lucycato/big-tech-user-service:1.0.0
+    image: lucycato/lucycato-e-commerce-user-service:1.0.0
     networks:
       - "lucycato_network"
     ports:
@@ -116,7 +118,7 @@ services:
       - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
   notification-service:
-    image: lucycato/big-tech-notification-service:1.0.0
+    image: lucycato/lucycato-e-commerce-notification-service:1.0.0
     networks:
       - "lucycato_network"
     ports:
