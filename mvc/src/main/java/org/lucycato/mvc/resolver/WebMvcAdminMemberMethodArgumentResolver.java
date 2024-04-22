@@ -2,8 +2,8 @@ package org.lucycato.mvc.resolver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.lucycato.common.XHeaderContext;
 import org.lucycato.common.annotation.resolver.AdminUserHeaders;
+import org.lucycato.common.context.XHeaderContext;
 import org.lucycato.common.error.ErrorCodeImpl;
 import org.lucycato.common.exception.ApiExceptionImpl;
 import org.lucycato.common.resolver.AdminUserHeaderDetail;
@@ -28,12 +28,12 @@ public class WebMvcAdminMemberMethodArgumentResolver implements HandlerMethodArg
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        String[] adminMemberJsonList = webRequest.getHeaderValues(XHeaderContext.ADMIN_OR_APP_MEMBER_JSON_STRING_HEADER_KEY);
-        if (adminMemberJsonList != null && adminMemberJsonList.length != 0) {
-            AdminUserHeaderDetail readValue = objectMapper.readValue(adminMemberJsonList[0], AdminUserHeaderDetail.class);
-            return new AdminUserHeaderDetail(
-                    readValue.getAdminMemberId()
-            );
+        String[] adminUserJsonList = webRequest.getHeaderValues(XHeaderContext.ADMIN_OR_APP_USER_JSON_STRING_HEADER_KEY);
+        if (adminUserJsonList != null && adminUserJsonList.length != 0) {
+            AdminUserHeaderDetail adminUserHeaderDetail = objectMapper.readValue(adminUserJsonList[0], AdminUserHeaderDetail.class);
+            if (adminUserHeaderDetail.getAdminMemberId() != null) {
+                return adminUserHeaderDetail;
+            }
         }
         return new ApiExceptionImpl(ErrorCodeImpl.RESOLVER_VALUE_NOT_FOUNT);
     }

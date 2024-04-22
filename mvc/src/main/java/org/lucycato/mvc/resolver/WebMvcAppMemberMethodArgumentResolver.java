@@ -2,8 +2,8 @@ package org.lucycato.mvc.resolver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.lucycato.common.XHeaderContext;
 import org.lucycato.common.annotation.resolver.AppUserHeaders;
+import org.lucycato.common.context.XHeaderContext;
 import org.lucycato.common.error.ErrorCodeImpl;
 import org.lucycato.common.exception.ApiExceptionImpl;
 import org.lucycato.common.resolver.AppUserHeaderDetail;
@@ -28,12 +28,12 @@ public class WebMvcAppMemberMethodArgumentResolver implements HandlerMethodArgum
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        String[] appMemberJsonList = webRequest.getHeaderValues(XHeaderContext.ADMIN_OR_APP_MEMBER_JSON_STRING_HEADER_KEY);
-        if (appMemberJsonList != null && appMemberJsonList.length != 0){
-            AppUserHeaderDetail readValue = objectMapper.readValue(appMemberJsonList[0], AppUserHeaderDetail.class);
-            return new AppUserHeaderDetail(
-                    readValue.getAppMemberId()
-            );
+        String[] appUserJsonList = webRequest.getHeaderValues(XHeaderContext.ADMIN_OR_APP_USER_JSON_STRING_HEADER_KEY);
+        if (appUserJsonList != null && appUserJsonList.length != 0){
+            AppUserHeaderDetail appUserHeaderDetail = objectMapper.readValue(appUserJsonList[0], AppUserHeaderDetail.class);
+            if (appUserHeaderDetail.getAppMemberId() != null) {
+                return appUserHeaderDetail;
+            }
         }
         return new ApiExceptionImpl(ErrorCodeImpl.RESOLVER_VALUE_NOT_FOUNT);
     }

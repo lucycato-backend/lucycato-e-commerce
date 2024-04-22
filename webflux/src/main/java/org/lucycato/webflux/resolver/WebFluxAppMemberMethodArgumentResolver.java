@@ -2,7 +2,7 @@ package org.lucycato.webflux.resolver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.lucycato.common.XHeaderContext;
+import org.lucycato.common.context.XHeaderContext;
 import org.lucycato.common.annotation.resolver.AppUserHeaders;
 import org.lucycato.common.error.ErrorCodeImpl;
 import org.lucycato.common.exception.ApiExceptionImpl;
@@ -30,12 +30,12 @@ public class WebFluxAppMemberMethodArgumentResolver implements HandlerMethodArgu
 
     @Override
     public Mono<Object> resolveArgument(MethodParameter parameter, BindingContext bindingContext, ServerWebExchange exchange) {
-        List<String> appMemberJsonList = exchange.getRequest().getHeaders().get(XHeaderContext.ADMIN_OR_APP_MEMBER_JSON_STRING_HEADER_KEY);
-        if (appMemberJsonList != null && !appMemberJsonList.isEmpty()) {
-            return Mono.fromCallable(() -> objectMapper.readValue(appMemberJsonList.get(0), AppUserHeaderDetail.class))
-                    .map(readValue -> new AppUserHeaderDetail(
-                        readValue.getAppMemberId()
-                    ));
+        List<String> appUserJsonList = exchange.getRequest().getHeaders().get(XHeaderContext.ADMIN_OR_APP_USER_JSON_STRING_HEADER_KEY);
+        if (appUserJsonList != null && !appUserJsonList.isEmpty()) {
+            return Mono.fromCallable(() -> objectMapper.readValue(appUserJsonList.get(0), AppUserHeaderDetail.class))
+                    .filter(appUserHeaderDetail -> appUserHeaderDetail.getAppMemberId() != null)
+                    .switchIfEmpty(Mono.error(new ApiExceptionImpl(ErrorCodeImpl.RESOLVER_VALUE_NOT_FOUNT)))
+                    .map(appUserHeaderDetail -> appUserHeaderDetail);
         }
         return Mono.error(new ApiExceptionImpl(ErrorCodeImpl.RESOLVER_VALUE_NOT_FOUNT));
     }
