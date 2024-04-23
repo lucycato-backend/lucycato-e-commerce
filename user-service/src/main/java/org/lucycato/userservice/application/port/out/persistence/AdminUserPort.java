@@ -34,4 +34,5 @@ public interface AdminUserPort {
             String password
     );
 
+    AdminUserResult modifyAdminUserRole(Long adminUserId, List<AdminUserRole> adminUserRoles);
 }

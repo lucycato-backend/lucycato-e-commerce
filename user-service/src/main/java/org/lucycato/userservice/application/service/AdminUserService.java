@@ -92,6 +92,21 @@ public class AdminUserService implements AdminUserUseCase {
 
     @Override
     public AdminUser modifyAdminUserRole(ModifyAdminUserRoleCommand command) {
-        return null;
+        AdminUserResult adminUserResult = adminUserPort.modifyAdminUserRole(
+                command.getTargetAdminUserId(),
+                command.getAdminUserRoles()
+        );
+        return AdminUser.create(
+                adminUserResult.getAdminUserId(),
+                adminUserResult.getName(),
+                adminUserResult.getEmail(),
+                adminUserResult.getPhoneNumber(),
+                adminUserResult.getImageUrl(),
+                adminUserResult.getAdminUserRoles(),
+                adminUserResult.getLastLoginAt(),
+                adminUserResult.getLastLogoutAt(),
+                adminUserResult.getCreatedAt(),
+                adminUserResult.getModifiedAt()
+        );
     }
 }
