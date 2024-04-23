@@ -9,6 +9,8 @@ import org.lucycato.userservice.model.enums.DeviceOsType;
 public class AdminUserRegisterRequest {
     private String nickName;
 
+    private String name;
+
     private String email;
 
     private String password;

@@ -2,13 +2,13 @@ package org.lucycato.userservice.application.port.in;
 
 import org.lucycato.userservice.application.port.in.command.*;
 import org.lucycato.userservice.domain.AdminUser;
-import org.lucycato.userservice.domain.UserLogin;
+import org.lucycato.userservice.domain.AdminUserLogin;
 
 public interface AdminUserUseCase {
 
-    AdminUser register(AdminUserRegisterCommand command);
+    AdminUserLogin register(AdminUserRegisterCommand command);
 
-    UserLogin login(AdminUserLoginCommand command);
+    AdminUserLogin login(AdminUserLoginCommand command);
 
     void logout(AdminUserLogoutCommand command);
 

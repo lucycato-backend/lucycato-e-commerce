@@ -10,7 +10,7 @@ import org.lucycato.userservice.adapter.in.web.request.ModifyAdminUserRoleReques
 import org.lucycato.userservice.application.port.in.AdminUserUseCase;
 import org.lucycato.userservice.application.port.in.command.*;
 import org.lucycato.userservice.domain.AdminUser;
-import org.lucycato.userservice.domain.UserLogin;
+import org.lucycato.userservice.domain.AdminUserLogin;
 import org.springframework.web.bind.annotation.*;
 
 @WebAdapter
@@ -21,9 +21,10 @@ public class AdminUserController {
     private final AdminUserUseCase adminUserUseCase;
 
     @PostMapping("open-api/lucycato/v1/admin/user/register")
-    public AdminUser registerAdminUserOwnService(@RequestBody AdminUserRegisterRequest request) {
+    public AdminUserLogin registerAdminUserOwnService(@RequestBody AdminUserRegisterRequest request) {
         AdminUserRegisterCommand command = new AdminUserRegisterCommand(
                 request.getNickName(),
+                request.getName(),
                 request.getEmail(),
                 request.getPassword(),
                 request.getPhoneNumber(),
@@ -36,7 +37,7 @@ public class AdminUserController {
     }
 
     @PostMapping("open-api/lucycato/v1/admin/user/login")
-    public UserLogin loginAdminUser(@RequestBody AdminUserLoginRequest request) {
+    public AdminUserLogin loginAdminUser(@RequestBody AdminUserLoginRequest request) {
         AdminUserLoginCommand command = new AdminUserLoginCommand(
                 request.getEmail(),
                 request.getPassword(),
