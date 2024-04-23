@@ -1,4 +1,4 @@
-package org.lucycato.userservice.application.port.out.persistence;
+package org.lucycato.userservice.application.port.out;
 
 import org.lucycato.common.security.AdminUserRole;
 import org.lucycato.userservice.application.port.out.result.AdminUserResult;
