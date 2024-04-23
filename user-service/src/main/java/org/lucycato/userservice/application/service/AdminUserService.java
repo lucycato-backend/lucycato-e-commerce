@@ -87,7 +87,7 @@ public class AdminUserService implements AdminUserUseCase {
 
     @Override
     public void logout(AdminUserLogoutCommand command) {
-
+        adminUserPort.expireAdminUser(command.getAdminMemberId());
     }
 
     @Override

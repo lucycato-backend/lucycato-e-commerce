@@ -27,6 +27,8 @@ public interface AdminUserPort {
             String deviceOsVersion
     );
 
+    void expireAdminUser(Long adminUserId);
+
     AdminUserResult getAdminUserResult(
             String email,
             String password
