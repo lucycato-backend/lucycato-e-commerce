@@ -6,13 +6,14 @@ services:
     image: mysql:latest
     networks:
       - lucycato_network
-    restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=default
       - MYSQL_USER=admin
       - MYSQL_PASSWORD=password
       - TZ=Asia/Seoul
+    ports:
+      - "3306:3306"
     command: [
       '--default-authentication-plugin=mysql_native_password',
       '--character-set-server=utf8mb4',
@@ -20,22 +21,7 @@ services:
       '--lower_case_table_names=1'
     ]
     volumes:
-      - ./data/mysql:/data
-
-#  rabbitmq:
-#    container_name: rabbitmq
-#    image: rabbitmq:3-management-alpine
-#    ports:
-#      - "5672:5672"
-#      - "15672:15672"
-#    environment:
-#      - RABBITMQ_DEFAULT_USER=root
-#      - RABBITMQ_DEFAULT_PASS=password
-#    volumes:
-#      - ./data/rabbitmq/data:/var/lib/rabbitmq
-#      - ./data/rabbitmq/logs:/var/log/rabbitmq
-#    networks:
-#      - lucycato_network
+      - ./data/mysql:/var/lib/mysql
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:5.0.4
@@ -45,21 +31,21 @@ services:
     environment:
       - PMA_HOST=mysql
       - MYSQL_ROOT_PASSWORD=password
-    restart: always
     ports:
       - 20080:80
     networks:
       - lucycato_network
 
-#  redis:
-#    container_name: redis
-#    image: redis:latest
-#    command: redis-server
-#    restart: always
-#    volumes:
-#      - ./data/redis:/data
-#    networks:
-#      - lucycato_network
+  redis:
+    container_name: redis
+    image: redis:latest
+    command: redis-server
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./data/redis:/data
+    networks:
+      - lucycato_network
   
 #  mongo:
 #    container_name: mongo
@@ -73,6 +59,21 @@ services:
 #      - MONGO_INITDB_PASSWORD=password
 #    volumes:
 #      - ./data/mongodb:/data/db
+#    networks:
+#      - lucycato_network
+
+#  rabbitmq:
+#    container_name: rabbitmq
+#    image: rabbitmq:3-management-alpine
+#    ports:
+#      - "5672:5672"
+#      - "15672:15672"
+#    environment:
+#      - RABBITMQ_DEFAULT_USER=root
+#      - RABBITMQ_DEFAULT_PASS=password
+#    volumes:
+#      - ./data/rabbitmq/data:/var/lib/rabbitmq
+#      - ./data/rabbitmq/logs:/var/log/rabbitmq
 #    networks:
 #      - lucycato_network
 
