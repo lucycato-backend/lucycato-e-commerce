@@ -18,4 +18,18 @@ public interface AdminUserPort {
             DeviceOsType deviceOsType,
             String deviceOsVersion
     );
+
+    void registerDeviceInfo(
+            Long adminUserid,
+            String deviceMacAddress,
+            String deviceFcmToken,
+            DeviceOsType deviceOsType,
+            String deviceOsVersion
+    );
+
+    AdminUserResult getAdminUserResult(
+            String email,
+            String password
+    );
+
 }

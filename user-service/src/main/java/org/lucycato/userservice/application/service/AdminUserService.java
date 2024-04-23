@@ -56,7 +56,33 @@ public class AdminUserService implements AdminUserUseCase {
 
     @Override
     public AdminUserLogin login(AdminUserLoginCommand command) {
-        return null;
+        AdminUserResult adminUserResult;
+        try {
+             adminUserResult = adminUserPort.getAdminUserResult(command.getEmail(), command.getPassword());
+        } catch (Exception e) {
+            throw new ApiExceptionImpl(UserErrorCodeImpl.USER_NOT_MATH);
+        }
+
+        adminUserPort.registerDeviceInfo(
+                adminUserResult.getAdminUserId(),
+                command.getDeviceMacAddress(),
+                command.getDeviceFcmToken(),
+                command.getDeviceOsType(),
+                command.getDeiceOsVersion()
+        );
+
+        IssueFcmTokenResult issueFcmTokenResult = authPort.issueAdminUserFcmToken(
+                adminUserResult.getAdminUserId(),
+                adminUserResult.getAdminUserRoles()
+        );
+
+        return AdminUserLogin.create(
+                adminUserResult.getAdminUserId(),
+                issueFcmTokenResult.getAccessToken(),
+                issueFcmTokenResult.getExpiredAccessToken(),
+                issueFcmTokenResult.getRefreshToken(),
+                issueFcmTokenResult.getExpiredRefreshToken()
+        );
     }
 
     @Override
