@@ -21,7 +21,7 @@ public class QueryAdminUserController {
     private final QueryAdminUserUseCase queryAdminUserUseCase;
 
     @GetMapping("api/lucycato/v1/admin/user/me")
-    public AdminUser getAppUser(@AdminUserHeaders AdminUserHeaderDetail adminUserHeaderDetail) {
+    public AdminUser getAdminUser(@AdminUserHeaders AdminUserHeaderDetail adminUserHeaderDetail) {
         GetAdminUserCommand command = new GetAdminUserCommand(
                 adminUserHeaderDetail.getAdminMemberId()
         );

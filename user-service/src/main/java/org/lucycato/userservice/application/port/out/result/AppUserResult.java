@@ -4,7 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.lucycato.common.security.AdminUserRole;
+import org.lucycato.userservice.model.enums.AppUserBadge;
+import org.lucycato.userservice.model.enums.AppUserGrade;
 import org.lucycato.userservice.model.info.DeviceInfo;
 
 import java.time.LocalDateTime;
@@ -14,14 +15,14 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AdminUserResult {
-    private Long adminUserId;
+public class AppUserResult {
+    private Long appUserId;
+
+    private String nickName;
 
     private String name;
 
     private String email;
-
-    private String nickName;
 
     private String password;
 
@@ -29,7 +30,9 @@ public class AdminUserResult {
 
     private String imageUrl;
 
-    private List<AdminUserRole> adminUserRoles;
+    private AppUserGrade grade;
+
+    private List<AppUserBadge> badges;
 
     private List<DeviceInfo> deviceInfos;
 
