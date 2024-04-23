@@ -1,7 +1,8 @@
 package org.lucycato.userservice.domain;
 
 import lombok.*;
-import org.lucycato.common.security.AdminUserRole;
+import org.lucycato.userservice.model.enums.AppUserBadge;
+import org.lucycato.userservice.model.enums.AppUserGrade;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -10,8 +11,10 @@ import java.util.List;
 @Setter(value = AccessLevel.PRIVATE)
 @Builder(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class AdminUser {
-    private final Long adminUserId;
+public class AppUser {
+    private final Long appUserId;
+
+    private final String nickName;
 
     private final String name;
 
@@ -21,7 +24,9 @@ public class AdminUser {
 
     private final String imageUrl;
 
-    private final List<AdminUserRole> roles;
+    private final AppUserGrade grade;
+
+    private final List<AppUserBadge> badges;
 
     private final LocalDateTime lastLoginAt;
 
@@ -31,25 +36,29 @@ public class AdminUser {
 
     private final LocalDateTime modifiedAt;
 
-    public static AdminUser create(
-            Long adminUserId,
+    public static AppUser created(
+            Long appUserId,
+            String nickName,
             String name,
             String email,
             String phoneNumber,
             String imageUrl,
-            List<AdminUserRole> roles,
+            AppUserGrade grade,
+            List<AppUserBadge> badges,
             LocalDateTime lastLoginAt,
             LocalDateTime lastLogoutAt,
             LocalDateTime createdAt,
             LocalDateTime modifiedAt
     ) {
-        return AdminUser.builder()
-                .adminUserId(adminUserId)
+        return AppUser.builder()
+                .appUserId(appUserId)
+                .nickName(nickName)
                 .name(name)
                 .email(email)
                 .phoneNumber(phoneNumber)
                 .imageUrl(imageUrl)
-                .roles(roles)
+                .grade(grade)
+                .badges(badges)
                 .lastLoginAt(lastLoginAt)
                 .lastLogoutAt(lastLogoutAt)
                 .createdAt(createdAt)

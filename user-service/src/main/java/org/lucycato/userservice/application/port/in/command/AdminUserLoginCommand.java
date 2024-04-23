@@ -12,18 +12,12 @@ import org.lucycato.userservice.model.enums.DeviceOsType;
 @Getter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class UserRegisterCommand extends SelfValidating<UserRegisterCommand> {
-    @NotBlank
-    private String nickName;
-
+public class AdminUserLoginCommand extends SelfValidating<AdminUserLoginCommand> {
     @Email
     private String email;
 
     @NotBlank
     private String password;
-
-    @NotBlank
-    private String phoneNumber;
 
     @NotBlank
     private String deviceMacAddress;
@@ -37,11 +31,13 @@ public class UserRegisterCommand extends SelfValidating<UserRegisterCommand> {
     @NotBlank
     private String deiceOsVersion;
 
-    public UserRegisterCommand(String nickName, String email, String password, String phoneNumber) {
-        this.nickName = nickName;
+    public AdminUserLoginCommand(String email, String password, String deviceMacAddress, String deviceFcmToken, DeviceOsType deviceOsType, String deiceOsVersion) {
         this.email = email;
         this.password = password;
-        this.phoneNumber = phoneNumber;
+        this.deviceMacAddress = deviceMacAddress;
+        this.deviceFcmToken = deviceFcmToken;
+        this.deviceOsType = deviceOsType;
+        this.deiceOsVersion = deiceOsVersion;
 
         this.validateSelf();
     }

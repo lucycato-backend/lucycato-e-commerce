@@ -6,16 +6,14 @@ import org.lucycato.userservice.model.enums.DeviceOsType;
 
 @Getter
 @NoArgsConstructor
-public class UserLoginRequest {
+public class AdminUserRegisterRequest {
+    private String nickName;
+
     private String email;
 
     private String password;
 
-    private String deviceMacAddress;
+    private String phoneNumber;
 
-    private String deviceFcmToken;
-
-    private DeviceOsType deviceOsType;
-
-    private String deiceOsVersion;
+    private DeviceInfoRequest deviceInfo;
 }

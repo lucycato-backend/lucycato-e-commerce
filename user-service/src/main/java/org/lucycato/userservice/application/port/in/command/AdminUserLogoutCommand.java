@@ -1,6 +1,5 @@
 package org.lucycato.userservice.application.port.in.command;
 
-
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -10,12 +9,12 @@ import org.lucycato.common.SelfValidating;
 @Getter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class AppLogoutCommand extends SelfValidating<AppLogoutCommand> {
+public class AdminUserLogoutCommand extends SelfValidating<AdminUserLogoutCommand> {
     @NotNull
-    private Long userId;
+    private Long adminMemberId;
 
-    public AppLogoutCommand(Long userId) {
-        this.userId = userId;
+    public AdminUserLogoutCommand(Long adminMemberId) {
+        this.adminMemberId = adminMemberId;
 
         this.validateSelf();
     }
