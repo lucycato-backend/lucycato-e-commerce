@@ -7,6 +7,8 @@ import org.lucycato.userservice.model.enums.DeviceOsType;
 @Getter
 @NoArgsConstructor
 public class AdminUserRegisterRequest {
+    private String phoneNumberAuthCode;
+
     private String nickName;
 
     private String name;

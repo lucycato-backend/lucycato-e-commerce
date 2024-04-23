@@ -23,6 +23,7 @@ public class AdminUserController {
     @PostMapping("open-api/lucycato/v1/admin/user/register")
     public AdminUserLogin registerAdminUserOwnService(@RequestBody AdminUserRegisterRequest request) {
         AdminUserRegisterCommand command = new AdminUserRegisterCommand(
+                request.getPhoneNumberAuthCode(),
                 request.getNickName(),
                 request.getName(),
                 request.getEmail(),

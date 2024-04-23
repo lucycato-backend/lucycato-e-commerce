@@ -22,36 +22,42 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class AdminUserService implements AdminUserUseCase {
+
     private final AdminUserPort adminUserPort;
 
     private final AuthPort authPort;
-
     @Override
     public AdminUserLogin register(AdminUserRegisterCommand command) {
-        AdminUserResult adminUserResult = adminUserPort.registerAdminUser(
-                command.getNickName(),
-                command.getName(),
-                command.getEmail(),
-                command.getPassword(),
-                command.getPhoneNumber(),
-                command.getDeviceMacAddress(),
-                command.getDeviceFcmToken(),
-                command.getDeviceOsType(),
-                command.getDeiceOsVersion()
-        );
+        Boolean isVerification = authPort.verifyPhoneNumberAuthCode(command.getPhoneNumberAuthCode());
 
-        IssueFcmTokenResult issueFcmTokenResult = authPort.issueAdminUserFcmToken(
-                adminUserResult.getAdminUserId(),
-                adminUserResult.getAdminUserRoles()
-        );
+        if (isVerification) {
+            AdminUserResult adminUserResult = adminUserPort.registerAdminUser(
+                    command.getNickName(),
+                    command.getName(),
+                    command.getEmail(),
+                    command.getPassword(),
+                    command.getPhoneNumber(),
+                    command.getDeviceMacAddress(),
+                    command.getDeviceFcmToken(),
+                    command.getDeviceOsType(),
+                    command.getDeiceOsVersion()
+            );
 
-        return AdminUserLogin.create(
-                adminUserResult.getAdminUserId(),
-                issueFcmTokenResult.getAccessToken(),
-                issueFcmTokenResult.getExpiredAccessToken(),
-                issueFcmTokenResult.getRefreshToken(),
-                issueFcmTokenResult.getExpiredRefreshToken()
-        );
+            IssueFcmTokenResult issueFcmTokenResult = authPort.issueAdminUserFcmToken(
+                    adminUserResult.getAdminUserId(),
+                    adminUserResult.getAdminUserRoles()
+            );
+
+            return AdminUserLogin.create(
+                    adminUserResult.getAdminUserId(),
+                    issueFcmTokenResult.getAccessToken(),
+                    issueFcmTokenResult.getExpiredAccessToken(),
+                    issueFcmTokenResult.getRefreshToken(),
+                    issueFcmTokenResult.getExpiredRefreshToken()
+            );
+        } else {
+            throw new ApiExceptionImpl(UserErrorCodeImpl.PHONE_NUMBER_VERIFICATION_NOT_MATCH);
+        }
     }
 
     @Override

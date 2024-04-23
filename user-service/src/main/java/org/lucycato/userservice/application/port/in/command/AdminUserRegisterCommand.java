@@ -14,6 +14,9 @@ import org.lucycato.userservice.model.enums.DeviceOsType;
 @EqualsAndHashCode(callSuper = false)
 public class AdminUserRegisterCommand extends SelfValidating<AdminUserRegisterCommand> {
     @NotBlank
+    private String phoneNumberAuthCode;
+
+    @NotBlank
     private String nickName;
 
     @NotBlank
@@ -40,7 +43,8 @@ public class AdminUserRegisterCommand extends SelfValidating<AdminUserRegisterCo
     @NotBlank
     private String deiceOsVersion;
 
-    public AdminUserRegisterCommand(String nickName, String name, String email, String password, String phoneNumber, String deviceMacAddress, String deviceFcmToken, DeviceOsType deviceOsType, String deiceOsVersion) {
+    public AdminUserRegisterCommand(String phoneNumberAuthCode, String nickName, String name, String email, String password, String phoneNumber, String deviceMacAddress, String deviceFcmToken, DeviceOsType deviceOsType, String deiceOsVersion) {
+        this.phoneNumberAuthCode = phoneNumberAuthCode;
         this.nickName = nickName;
         this.name = name;
         this.email = email;
