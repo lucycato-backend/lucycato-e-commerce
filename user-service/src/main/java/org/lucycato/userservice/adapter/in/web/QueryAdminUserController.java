@@ -9,6 +9,7 @@ import org.lucycato.userservice.application.port.in.QueryAdminUserUseCase;
 import org.lucycato.userservice.application.port.in.command.*;
 import org.lucycato.userservice.domain.AdminUser;
 import org.lucycato.userservice.domain.AppUser;
+import org.lucycato.userservice.model.info.DeviceInfo;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +27,12 @@ public class QueryAdminUserController {
                 adminUserHeaderDetail.getAdminMemberId()
         );
         return queryAdminUserUseCase.getAdminUser(command);
+    }
+
+    @GetMapping("api/lucycato/v1/admin/user/device-info-list")
+    public List<DeviceInfo> getAdminUserDeviceInfoList(@AdminUserHeaders AdminUserHeaderDetail adminUserHeaderDetail) {
+        GetAdminUserDeviceInfoCommand command = new GetAdminUserDeviceInfoCommand(adminUserHeaderDetail.getAdminMemberId());
+        return queryAdminUserUseCase.getAdminUserDeviceInfoList(command);
     }
 
     @GetMapping("api/lucycato/v1/admin/user/{targetAppUserId}/app-user")

@@ -33,10 +33,6 @@ public class AdminUserResult {
 
     private List<DeviceInfo> deviceInfos;
 
-    private LocalDateTime lastLoginAt;
-
-    private LocalDateTime lastLogoutAt;
-
     private LocalDateTime createdAt;
 
     private LocalDateTime modifiedAt;

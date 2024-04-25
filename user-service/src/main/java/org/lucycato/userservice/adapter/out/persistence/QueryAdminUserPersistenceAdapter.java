@@ -29,7 +29,7 @@ public class QueryAdminUserPersistenceAdapter implements QueryAdminUserPort {
 
     @Override
     public AdminUserResult getAdminUser(Long adminUserId) {
-        AdminUserJpaEntity adminUserJpaEntity = adminUserJpaRepository.findById(adminUserId).orElseThrow(() -> new ApiExceptionImpl(ErrorCodeImpl.NULL_POINT));
+        AdminUserJpaEntity adminUserJpaEntity = adminUserJpaRepository.findById(adminUserId).orElseThrow(() -> new ApiExceptionImpl(ErrorCodeImpl.NOT_FOUND));
         return AdminUserResult.builder()
                 .adminUserId(adminUserJpaEntity.getId())
                 .name(adminUserJpaEntity.getName())
@@ -40,8 +40,6 @@ public class QueryAdminUserPersistenceAdapter implements QueryAdminUserPort {
                 .imageUrl(adminUserJpaEntity.getImageUrl())
                 .adminUserRoles(adminUserJpaEntity.getAdminUserRoles())
                 .deviceInfos(adminUserJpaEntity.getDeviceInfos())
-                .lastLoginAt(adminUserJpaEntity.getLastLoginAt())
-                .lastLogoutAt(adminUserJpaEntity.getLastLogoutAt())
                 .createdAt(adminUserJpaEntity.getCreatedAt())
                 .modifiedAt(adminUserJpaEntity.getModifiedAt())
                 .build();
@@ -50,7 +48,7 @@ public class QueryAdminUserPersistenceAdapter implements QueryAdminUserPort {
     @Override
     public AppUserResult getAppUser(Long appUserId) {
         return commonRedisTemplate.<AppUserResult>find(APP_USER_CACHE_KEY.formatted(appUserId)).orElseGet(() -> {
-            AppUserJpaEntity appUserJpaEntity = appUserJpaRepository.findById(appUserId).orElseThrow(() -> new ApiExceptionImpl(ErrorCodeImpl.NULL_POINT));
+            AppUserJpaEntity appUserJpaEntity = appUserJpaRepository.findById(appUserId).orElseThrow(() -> new ApiExceptionImpl(ErrorCodeImpl.NOT_FOUND));
             return AppUserResult.builder()
                     .appUserId(appUserJpaEntity.getId())
                     .nickName(appUserJpaEntity.getNickName())

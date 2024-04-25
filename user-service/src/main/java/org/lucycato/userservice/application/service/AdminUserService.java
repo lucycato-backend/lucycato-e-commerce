@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.lucycato.common.error.UserErrorCodeImpl;
 import org.lucycato.common.exception.ApiExceptionImpl;
 import org.lucycato.userservice.application.port.in.AdminUserUseCase;
-import org.lucycato.userservice.application.port.in.command.AdminUserLoginCommand;
-import org.lucycato.userservice.application.port.in.command.AdminUserLogoutCommand;
-import org.lucycato.userservice.application.port.in.command.AdminUserRegisterCommand;
-import org.lucycato.userservice.application.port.in.command.ModifyAdminUserRoleCommand;
+import org.lucycato.userservice.application.port.in.command.*;
 import org.lucycato.userservice.application.port.out.AdminUserPort;
 import org.lucycato.userservice.application.port.out.result.AdminUserResult;
 import org.lucycato.userservice.application.port.out.result.IssueFcmTokenResult;
@@ -41,7 +38,11 @@ public class AdminUserService implements AdminUserUseCase {
                     command.getDeviceMacAddress(),
                     command.getDeviceFcmToken(),
                     command.getDeviceOsType(),
-                    command.getDeiceOsVersion()
+                    command.getDeiceOsVersion(),
+                    command.getAppOrBrowserType(),
+                    command.getAppOrBrowserVersion(),
+                    command.getNetworkType(),
+                    command.getLocale()
             );
 
             IssueFcmTokenResult issueFcmTokenResult = authPort.issueAdminUserFcmToken(
@@ -65,8 +66,8 @@ public class AdminUserService implements AdminUserUseCase {
     public AdminUserLogin login(AdminUserLoginCommand command) {
         AdminUserResult adminUserResult;
         try {
-             adminUserResult = adminUserPort.getAdminUserResult(command.getEmail(), command.getPassword());
-        } catch (Exception e) {
+            adminUserResult = adminUserPort.getAdminUserResult(command.getEmail(), command.getPassword());
+        } catch (ApiExceptionImpl e) {
             throw new ApiExceptionImpl(UserErrorCodeImpl.USER_NOT_MATH);
         }
 
@@ -75,7 +76,11 @@ public class AdminUserService implements AdminUserUseCase {
                 command.getDeviceMacAddress(),
                 command.getDeviceFcmToken(),
                 command.getDeviceOsType(),
-                command.getDeiceOsVersion()
+                command.getDeiceOsVersion(),
+                command.getAppOrBrowserType(),
+                command.getAppOrBrowserVersion(),
+                command.getNetworkType(),
+                command.getLocale()
         );
 
         IssueFcmTokenResult issueFcmTokenResult = authPort.issueAdminUserFcmToken(
@@ -93,8 +98,27 @@ public class AdminUserService implements AdminUserUseCase {
     }
 
     @Override
+    public void loginCheck(AdminUserLoginCheckCommand command) {
+        adminUserPort.modifyDeviceInfo(
+                command.getAdminUserId(),
+                command.getDeviceMacAddress(),
+                command.getDeviceFcmToken(),
+                command.getDeviceOsType(),
+                command.getDeiceOsVersion(),
+                command.getAppOrBrowserType(),
+                command.getAppOrBrowserVersion(),
+                command.getNetworkType(),
+                command.getLocale()
+        );
+    }
+
+    @Override
     public void logout(AdminUserLogoutCommand command) {
-        adminUserPort.expireAdminUser(command.getAdminMemberId());
+        adminUserPort.expireAdminUser(
+                command.getAdminMemberId(),
+                command.getDeviceMacAddress(),
+                command.getAppOrBrowserType()
+        );
     }
 
     @Override
@@ -111,8 +135,6 @@ public class AdminUserService implements AdminUserUseCase {
                 adminUserResult.getPhoneNumber(),
                 adminUserResult.getImageUrl(),
                 adminUserResult.getAdminUserRoles(),
-                adminUserResult.getLastLoginAt(),
-                adminUserResult.getLastLogoutAt(),
                 adminUserResult.getCreatedAt(),
                 adminUserResult.getModifiedAt()
         );
@@ -131,8 +153,6 @@ public class AdminUserService implements AdminUserUseCase {
                 adminUserResult.getPhoneNumber(),
                 adminUserResult.getImageUrl(),
                 adminUserResult.getAdminUserRoles(),
-                adminUserResult.getLastLoginAt(),
-                adminUserResult.getLastLogoutAt(),
                 adminUserResult.getCreatedAt(),
                 adminUserResult.getModifiedAt()
         );
