@@ -35,7 +35,11 @@ public interface AdminUserPort {
             String locale
     );
 
-    void expireAdminUser(Long adminUserId);
+    void expireAdminUser(
+            Long adminUserId,
+            String deviceMacAddress,
+            AppOrBrowserType appOrBrowserType
+    );
 
     AdminUserResult getAdminUserResult(
             String email,

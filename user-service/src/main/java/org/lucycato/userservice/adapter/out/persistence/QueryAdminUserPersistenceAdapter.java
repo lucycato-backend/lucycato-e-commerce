@@ -40,8 +40,6 @@ public class QueryAdminUserPersistenceAdapter implements QueryAdminUserPort {
                 .imageUrl(adminUserJpaEntity.getImageUrl())
                 .adminUserRoles(adminUserJpaEntity.getAdminUserRoles())
                 .deviceInfos(adminUserJpaEntity.getDeviceInfos())
-                .lastLoginAt(adminUserJpaEntity.getLastLoginAt())
-                .lastLogoutAt(adminUserJpaEntity.getLastLogoutAt())
                 .createdAt(adminUserJpaEntity.getCreatedAt())
                 .modifiedAt(adminUserJpaEntity.getModifiedAt())
                 .build();

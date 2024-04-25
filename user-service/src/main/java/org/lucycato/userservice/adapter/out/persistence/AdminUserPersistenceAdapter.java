@@ -40,11 +40,6 @@ public class AdminUserPersistenceAdapter implements AdminUserPort {
             String locale
 
     ) {
-        Boolean isExist = adminUserJpaRepository.existByEmail(email);
-        if (!isExist) {
-            throw new ApiExceptionImpl(ErrorCodeImpl.NOT_FOUND);
-        }
-
         AppOrBrowserInfo appOrBrowserInfo = new AppOrBrowserInfo(
                 appOrBrowserType,
                 appOrBrowserVersion,
@@ -69,8 +64,7 @@ public class AdminUserPersistenceAdapter implements AdminUserPort {
                 password,
                 phoneNumber,
                 new ArrayList<>(),
-                Collections.singletonList(deviceInfo),
-                LocalDateTime.now()
+                Collections.singletonList(deviceInfo)
         );
 
         AdminUserJpaEntity savedAdminUserJpaEntity = adminUserJpaRepository.save(adminUserJpaEntity);
@@ -85,8 +79,6 @@ public class AdminUserPersistenceAdapter implements AdminUserPort {
                 .imageUrl(savedAdminUserJpaEntity.getImageUrl())
                 .adminUserRoles(savedAdminUserJpaEntity.getAdminUserRoles())
                 .deviceInfos(savedAdminUserJpaEntity.getDeviceInfos())
-                .lastLoginAt(savedAdminUserJpaEntity.getLastLoginAt())
-                .lastLogoutAt(savedAdminUserJpaEntity.getLastLogoutAt())
                 .createdAt(savedAdminUserJpaEntity.getCreatedAt())
                 .modifiedAt(savedAdminUserJpaEntity.getModifiedAt())
                 .build();
@@ -169,9 +161,36 @@ public class AdminUserPersistenceAdapter implements AdminUserPort {
     }
 
     @Override
-    public void expireAdminUser(Long adminUserId) {
+    public void expireAdminUser(
+            Long adminUserId,
+            String deviceMacAddress,
+            AppOrBrowserType appOrBrowserType
+    ) {
         AdminUserJpaEntity adminUserJpaEntity = getAdminJpaEntity(adminUserId);
-        adminUserJpaEntity.setLastLogoutAt(LocalDateTime.now());
+
+        List<DeviceInfo> deviceInfos = adminUserJpaEntity.getDeviceInfos();
+        List<AppOrBrowserInfo> appOrBrowserInfos = adminUserJpaEntity.getDeviceInfos().stream().filter(deviceInfo -> deviceInfo.getDeviceManAddress().equals(deviceMacAddress)).toList()
+                .get(0).getAppOrBrowserInfos();
+
+        AppOrBrowserInfo appOrBrowserInfo = appOrBrowserInfos.stream().filter(it -> it.getAppOrBrowserType().equals(appOrBrowserType)).toList().get(0);
+        appOrBrowserInfo.setLastLogoutAt(LocalDateTime.now());
+
+        appOrBrowserInfos.removeIf(it -> it.getAppOrBrowserType().equals(appOrBrowserType));
+        appOrBrowserInfos.add(appOrBrowserInfo);
+
+        DeviceInfo deviceInfo = deviceInfos.stream().filter(it -> it.getDeviceManAddress().equals(deviceMacAddress)).toList().get(0);
+        DeviceInfo savedDeviceInfo = new DeviceInfo(
+                deviceMacAddress,
+                deviceInfo.getDeviceFcmToken(),
+                deviceInfo.getDeviceOsType(),
+                deviceInfo.getDeviceOsVersion(),
+                appOrBrowserInfos
+        );
+
+        deviceInfos.removeIf(it -> it.getDeviceManAddress().equals(deviceMacAddress));
+        deviceInfos.add(savedDeviceInfo);
+
+        adminUserJpaEntity.setDeviceInfos(deviceInfos);
         adminUserJpaRepository.save(adminUserJpaEntity);
     }
 
@@ -191,8 +210,6 @@ public class AdminUserPersistenceAdapter implements AdminUserPort {
                 .imageUrl(adminUserJpaEntity.getImageUrl())
                 .adminUserRoles(adminUserJpaEntity.getAdminUserRoles())
                 .deviceInfos(adminUserJpaEntity.getDeviceInfos())
-                .lastLoginAt(adminUserJpaEntity.getLastLoginAt())
-                .lastLogoutAt(adminUserJpaEntity.getLastLogoutAt())
                 .createdAt(adminUserJpaEntity.getCreatedAt())
                 .modifiedAt(adminUserJpaEntity.getModifiedAt())
                 .build();
@@ -221,8 +238,6 @@ public class AdminUserPersistenceAdapter implements AdminUserPort {
                 .imageUrl(adminUserJpaEntity.getImageUrl())
                 .adminUserRoles(adminUserJpaEntity.getAdminUserRoles())
                 .deviceInfos(adminUserJpaEntity.getDeviceInfos())
-                .lastLoginAt(adminUserJpaEntity.getLastLoginAt())
-                .lastLogoutAt(adminUserJpaEntity.getLastLogoutAt())
                 .createdAt(adminUserJpaEntity.getCreatedAt())
                 .modifiedAt(adminUserJpaEntity.getModifiedAt())
                 .build();
@@ -245,8 +260,6 @@ public class AdminUserPersistenceAdapter implements AdminUserPort {
                 .imageUrl(savedAdminUserJpaEntity.getImageUrl())
                 .adminUserRoles(savedAdminUserJpaEntity.getAdminUserRoles())
                 .deviceInfos(savedAdminUserJpaEntity.getDeviceInfos())
-                .lastLoginAt(savedAdminUserJpaEntity.getLastLoginAt())
-                .lastLogoutAt(savedAdminUserJpaEntity.getLastLogoutAt())
                 .createdAt(savedAdminUserJpaEntity.getCreatedAt())
                 .modifiedAt(savedAdminUserJpaEntity.getModifiedAt())
                 .build();
