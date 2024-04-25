@@ -113,6 +113,7 @@ services:
       - "lucycato_network"
     ports:
       - "8080:8080"
+      - "5005:5005"
     environment:
       - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n
       - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
