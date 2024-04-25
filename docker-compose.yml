@@ -1,7 +1,6 @@
 version: "3"
 services:
   #external-system-server
-  #TODO: mysql server
   zookeeper:
     image: 'arm64v8/zookeeper:3.8'
     networks:
@@ -53,15 +52,17 @@ services:
       - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper:2181
   #infra-server
   gateway-server:
-    image: lucycato/big-tech-gateway-server:1.0.0
+    image: lucycato/lucycato-e-commerce-gateway-server:1.0.0
     networks:
       - "lucycato_network"
     ports:
       - "8060:8080"
     environment:
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
+      - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
   config-server:
-    image: lucycato/big-tech-config-server:1.0.0
+    image: lucycato/lucycato-e-commerce-config-server:1.0.0
     networks:
       - "lucycato_network"
     ports:
@@ -69,7 +70,7 @@ services:
     environment:
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
   eureka-server:
-    image: lucycato/big-tech-eureka-server:1.0.0
+    image: lucycato/lucycato-e-commerce-eureka-server:1.0.0
     networks:
       - "lucycato_network"
     ports:
@@ -78,7 +79,7 @@ services:
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
   #operate-server
   logging-consumer:
-    image: lucycato/big-tech-logging-consumer:1.0.0
+    image: lucycato/lucycato-e-commerce-logging-consumer:1.0.0
     networks:
       - "lucycato_network"
     ports:
@@ -90,7 +91,7 @@ services:
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
   #TODO: mysql 연동 - table name : save_task_history
   task-consumer:
-    image: lucycato/big-tech-task-consumer:1.0.0
+    image: lucycato/lucycato-e-commerce-task-consumer:1.0.0
     networks:
       - "lucycato_network"
     ports:
@@ -98,7 +99,7 @@ services:
     environment:
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
   auth-server:
-    image: lucycato/big-tech-auth-server:1.0.0
+    image: lucycato/lucycato-e-commerce-auth-server:1.0.0
     networks:
       - "lucycato_network"
     ports:
@@ -107,17 +108,27 @@ services:
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
   #Service
   user-service:
-    image: lucycato/big-tech-user-service:1.0.0
+    image: lucycato/lucycato-e-commerce-user-service:1.0.0
     networks:
       - "lucycato_network"
     ports:
       - "8080:8080"
+      - "5005:5005"
     environment:
       - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n
       - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/default
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_DATASOURCE_DRIVER-CLASS-NAME=com.mysql.cj.jdbc.Driver
+      - SPRING_JPA_HIBERNATE_DDL-AUTO=update
+      - SPRING_JPA_SHOW-SQL=true
+      - SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL=true
+      - SPRING_DATA_REDIS_HOST=redis
+      - SPRING_DATA_REDIS_PORT=6379
   notification-service:
-    image: lucycato/big-tech-notification-service:1.0.0
+    image: lucycato/lucycato-e-commerce-notification-service:1.0.0
     networks:
       - "lucycato_network"
     ports:

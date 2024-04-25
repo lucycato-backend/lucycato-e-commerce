@@ -11,13 +11,13 @@
 1. 이 저장소를 클론합니다:
 
 ```bash
-git clone git@github.com:lucycato-backend/big-tech.git
+git clone git@github.com:lucycato-backend/lucycato-e-commerce.git
 ```
 
 2. 프로젝트 디렉토리로 이동합니다:
 
 ```bash
-cd big-tech
+cd lucycato-e-commerce
 ```
 
 3. Docker Plug in을 사용하여 프로젝트를 빌드 및 이미지를 생성합니다:
