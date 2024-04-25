@@ -14,6 +14,7 @@ import org.lucycato.userservice.application.port.out.result.IssueFcmTokenResult;
 import org.lucycato.userservice.application.port.out.AuthPort;
 import org.lucycato.userservice.domain.AdminUser;
 import org.lucycato.userservice.domain.AdminUserLogin;
+import org.lucycato.userservice.model.enums.AppUserGrade;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,7 @@ public class AdminUserService implements AdminUserUseCase {
     private final AdminUserPort adminUserPort;
 
     private final AuthPort authPort;
+
     @Override
     public AdminUserLogin register(AdminUserRegisterCommand command) {
         Boolean isVerification = authPort.verifyPhoneNumberAuthCode(command.getPhoneNumberAuthCode());
@@ -68,7 +70,7 @@ public class AdminUserService implements AdminUserUseCase {
             throw new ApiExceptionImpl(UserErrorCodeImpl.USER_NOT_MATH);
         }
 
-        adminUserPort.registerDeviceInfo(
+        adminUserPort.modifyDeviceInfo(
                 adminUserResult.getAdminUserId(),
                 command.getDeviceMacAddress(),
                 command.getDeviceFcmToken(),
@@ -96,10 +98,31 @@ public class AdminUserService implements AdminUserUseCase {
     }
 
     @Override
-    public AdminUser modifyAdminUserRole(ModifyAdminUserRoleCommand command) {
-        AdminUserResult adminUserResult = adminUserPort.modifyAdminUserRole(
+    public AdminUser addAdminUserRole(ModifyAdminUserRoleCommand command) {
+        AdminUserResult adminUserResult = adminUserPort.addAdminUserRole(
                 command.getTargetAdminUserId(),
-                command.getAdminUserRoles()
+                command.getTargetChangeRole()
+        );
+
+        return AdminUser.create(
+                adminUserResult.getAdminUserId(),
+                adminUserResult.getName(),
+                adminUserResult.getEmail(),
+                adminUserResult.getPhoneNumber(),
+                adminUserResult.getImageUrl(),
+                adminUserResult.getAdminUserRoles(),
+                adminUserResult.getLastLoginAt(),
+                adminUserResult.getLastLogoutAt(),
+                adminUserResult.getCreatedAt(),
+                adminUserResult.getModifiedAt()
+        );
+    }
+
+    @Override
+    public AdminUser removeAdminUserRole(ModifyAdminUserRoleCommand command) {
+        AdminUserResult adminUserResult = adminUserPort.removeAdminUserRole(
+                command.getTargetAdminUserId(),
+                command.getTargetChangeRole()
         );
         return AdminUser.create(
                 adminUserResult.getAdminUserId(),

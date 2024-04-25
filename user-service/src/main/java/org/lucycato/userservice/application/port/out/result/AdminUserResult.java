@@ -17,11 +17,11 @@ import java.util.List;
 public class AdminUserResult {
     private Long adminUserId;
 
+    private String nickName;
+
     private String name;
 
     private String email;
-
-    private String nickName;
 
     private String password;
 

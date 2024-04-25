@@ -12,8 +12,7 @@ public enum AdminUserRole {
     MANAGER(1, "사이트 관리자 권한"),
     TEACHER(2, "강사 권한"),
     RESEARCHER(3, "선생님 연구소 직원 권한"),
-    TEACHING_ASSISTANT(4, "조교 권한"),
-    NONE(5, "권한 없음"),
+    TEACHING_ASSISTANT(4, "조교 권한")
     ;
     private final Integer priority;
     private final String description;

@@ -17,15 +17,10 @@ public class AppUserHeaderDetail extends SelfValidating<AppUserHeaderDetail> {
     @NotNull
     private Long appMemberId;
 
-    @NotBlank
-    private List<AppUserRole> appUserRoles;
-
     public AppUserHeaderDetail(
-            Long appMemberId,
-            List<AppUserRole> appUserRoles
+            Long appMemberId
     ) {
         this.appMemberId = appMemberId;
-        this.appUserRoles = appUserRoles;
 
         this.validateSelf();
     }

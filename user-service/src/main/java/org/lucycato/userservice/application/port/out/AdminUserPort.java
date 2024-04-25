@@ -4,8 +4,6 @@ import org.lucycato.common.security.AdminUserRole;
 import org.lucycato.userservice.application.port.out.result.AdminUserResult;
 import org.lucycato.userservice.model.enums.DeviceOsType;
 
-import java.util.List;
-
 public interface AdminUserPort {
     AdminUserResult registerAdminUser(
             String nickName,
@@ -19,7 +17,7 @@ public interface AdminUserPort {
             String deviceOsVersion
     );
 
-    void registerDeviceInfo(
+    void modifyDeviceInfo(
             Long adminUserid,
             String deviceMacAddress,
             String deviceFcmToken,
@@ -34,5 +32,7 @@ public interface AdminUserPort {
             String password
     );
 
-    AdminUserResult modifyAdminUserRole(Long adminUserId, List<AdminUserRole> adminUserRoles);
+    AdminUserResult addAdminUserRole(Long adminUserId, AdminUserRole targetAdminUserRole);
+
+    AdminUserResult removeAdminUserRole(Long adminUserId, AdminUserRole targetAdminUserRole);
 }

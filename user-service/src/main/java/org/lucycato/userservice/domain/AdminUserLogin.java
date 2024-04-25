@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 @Setter(value = AccessLevel.PRIVATE)
 @Builder(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class UserLogin {
-    private final Long userId;
+public class AdminUserLogin {
+    private Long adminUserId;
 
     private final String accessToken;
 
@@ -19,15 +19,15 @@ public class UserLogin {
 
     private final LocalDateTime refreshTokenExpiredAt;
 
-    public static UserLogin create(
-            Long userId,
+    public static AdminUserLogin create(
+            Long adminUserId,
             String accessToken,
             LocalDateTime accessTokenExpiredAt,
             String refreshToken,
             LocalDateTime refreshTokenExpiredAt
     ) {
-        return UserLogin.builder()
-                .userId(userId)
+        return AdminUserLogin.builder()
+                .adminUserId(adminUserId)
                 .accessToken(accessToken)
                 .accessTokenExpiredAt(accessTokenExpiredAt)
                 .refreshToken(refreshToken)
