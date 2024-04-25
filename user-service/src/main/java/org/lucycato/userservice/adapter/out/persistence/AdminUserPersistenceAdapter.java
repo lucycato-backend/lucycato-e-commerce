@@ -5,21 +5,17 @@ import org.lucycato.common.annotation.hexagonal.out.PersistenceAdapter;
 import org.lucycato.common.error.ErrorCodeImpl;
 import org.lucycato.common.exception.ApiExceptionImpl;
 import org.lucycato.common.security.AdminUserRole;
-import org.lucycato.mvc.CommonRedisTemplate;
 import org.lucycato.userservice.adapter.out.persistence.entity.AdminUserJpaEntity;
 import org.lucycato.userservice.application.port.out.AdminUserPort;
 import org.lucycato.userservice.application.port.out.result.AdminUserResult;
+import org.lucycato.userservice.model.enums.AppOrBrowserType;
 import org.lucycato.userservice.model.enums.DeviceOsType;
+import org.lucycato.userservice.model.enums.NetworkType;
+import org.lucycato.userservice.model.info.AppOrBrowserInfo;
 import org.lucycato.userservice.model.info.DeviceInfo;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.redis.core.RedisTemplate;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
@@ -37,14 +33,35 @@ public class AdminUserPersistenceAdapter implements AdminUserPort {
             String deviceMacAddress,
             String deviceFcmToken,
             DeviceOsType deviceOsType,
-            String deviceOsVersion
+            String deviceOsVersion,
+            AppOrBrowserType appOrBrowserType,
+            String appOrBrowserVersion,
+            NetworkType networkType,
+            String locale
+
     ) {
+        Boolean isExist = adminUserJpaRepository.existByEmail(email);
+        if (!isExist) {
+            throw new ApiExceptionImpl(ErrorCodeImpl.NOT_FOUND);
+        }
+
+        AppOrBrowserInfo appOrBrowserInfo = new AppOrBrowserInfo(
+                appOrBrowserType,
+                appOrBrowserVersion,
+                networkType,
+                locale,
+                LocalDateTime.now(),
+                null
+        );
+
         DeviceInfo deviceInfo = new DeviceInfo(
                 deviceMacAddress,
                 deviceFcmToken,
                 deviceOsType,
-                deviceOsVersion
+                deviceOsVersion,
+                List.of(appOrBrowserInfo)
         );
+
         AdminUserJpaEntity adminUserJpaEntity = new AdminUserJpaEntity(
                 nickName,
                 name,
@@ -81,35 +98,73 @@ public class AdminUserPersistenceAdapter implements AdminUserPort {
             String deviceMacAddress,
             String deviceFcmToken,
             DeviceOsType deviceOsType,
-            String deviceOsVersion
+            String deviceOsVersion,
+            AppOrBrowserType appOrBrowserType,
+            String appOrBrowserVersion,
+            NetworkType networkType,
+            String locale
     ) {
         AdminUserJpaEntity adminUserJpaEntity = getAdminJpaEntity(adminUserid);
-        List<DeviceInfo> deviceInfos = adminUserJpaEntity.getDeviceInfos().stream()
-                .filter(deviceInfo -> deviceInfo.getDeviceManAddress().equals(deviceMacAddress))
-                .toList();
 
-        if (deviceInfos.isEmpty()) {
+        List<DeviceInfo> deviceInfos = adminUserJpaEntity.getDeviceInfos();
+        boolean isDeviceExist = adminUserJpaEntity.getDeviceInfos().stream().anyMatch(deviceInfo -> deviceInfo.getDeviceManAddress().equals(deviceMacAddress));
+
+        if (!isDeviceExist) {
+            AppOrBrowserInfo appOrBrowserInfo = new AppOrBrowserInfo(
+                    appOrBrowserType,
+                    appOrBrowserVersion,
+                    networkType,
+                    locale,
+                    LocalDateTime.now(),
+                    null
+            );
             DeviceInfo deviceInfo = new DeviceInfo(
                     deviceMacAddress,
                     deviceFcmToken,
                     deviceOsType,
-                    deviceOsVersion
+                    deviceOsVersion,
+                    List.of(appOrBrowserInfo)
             );
-            adminUserJpaEntity.getDeviceInfos().add(deviceInfo);
+            deviceInfos.add(deviceInfo);
         } else {
-            adminUserJpaEntity.getDeviceInfos().removeIf(deviceInfo -> deviceInfo.getDeviceManAddress().equals(deviceMacAddress));
+            List<AppOrBrowserInfo> appOrBrowserInfos = adminUserJpaEntity.getDeviceInfos().stream().filter(deviceInfo -> deviceInfo.getDeviceManAddress().equals(deviceMacAddress)).toList()
+                    .get(0).getAppOrBrowserInfos();
 
-            DeviceInfo deviceInfo = new DeviceInfo(
+            boolean isAppOrBrowserExist = appOrBrowserInfos.stream().anyMatch(appOrBrowserInfo -> appOrBrowserInfo.getAppOrBrowserType().equals(appOrBrowserType));
+            if (!isAppOrBrowserExist) {
+                AppOrBrowserInfo appOrBrowserInfo = new AppOrBrowserInfo(
+                        appOrBrowserType,
+                        appOrBrowserVersion,
+                        networkType,
+                        locale,
+                        LocalDateTime.now(),
+                        null
+                );
+                appOrBrowserInfos.add(appOrBrowserInfo);
+            } else {
+                AppOrBrowserInfo appOrBrowserInfo = appOrBrowserInfos.stream().filter(it -> it.getAppOrBrowserType().equals(appOrBrowserType)).toList().get(0);
+                appOrBrowserInfo.setAppOrBrowserVersion(appOrBrowserVersion);
+                appOrBrowserInfo.setLocale(locale);
+                appOrBrowserInfo.setNetworkType(networkType);
+                appOrBrowserInfo.setLastLoginAt(LocalDateTime.now());
+
+                appOrBrowserInfos.removeIf(it -> it.getAppOrBrowserType().equals(appOrBrowserType));
+                appOrBrowserInfos.add(appOrBrowserInfo);
+            }
+
+            DeviceInfo savedDeviceInfo = new DeviceInfo(
                     deviceMacAddress,
                     deviceFcmToken,
                     deviceOsType,
-                    deviceOsVersion
+                    deviceOsVersion,
+                    appOrBrowserInfos
             );
 
-            adminUserJpaEntity.getDeviceInfos().add(deviceInfo);
-            adminUserJpaEntity.setDeviceInfos(adminUserJpaEntity.getDeviceInfos());
+            deviceInfos.removeIf(deviceInfo -> deviceInfo.getDeviceManAddress().equals(deviceMacAddress));
+            deviceInfos.add(savedDeviceInfo);
         }
 
+        adminUserJpaEntity.setDeviceInfos(deviceInfos);
         adminUserJpaRepository.save(adminUserJpaEntity);
     }
 
@@ -125,7 +180,7 @@ public class AdminUserPersistenceAdapter implements AdminUserPort {
             String email,
             String password
     ) {
-        AdminUserJpaEntity adminUserJpaEntity = adminUserJpaRepository.findFirstByEmailAndPassword(email, password).orElseThrow(() -> new ApiExceptionImpl(ErrorCodeImpl.NULL_POINT));
+        AdminUserJpaEntity adminUserJpaEntity = adminUserJpaRepository.findFirstByEmailAndPassword(email, password).orElseThrow(() -> new ApiExceptionImpl(ErrorCodeImpl.NOT_FOUND));
         return AdminUserResult.builder()
                 .adminUserId(adminUserJpaEntity.getId())
                 .nickName(adminUserJpaEntity.getNickName())
@@ -198,6 +253,6 @@ public class AdminUserPersistenceAdapter implements AdminUserPort {
     }
 
     private AdminUserJpaEntity getAdminJpaEntity(Long adminUserId) {
-        return adminUserJpaRepository.findById(adminUserId).orElseThrow(() -> new ApiExceptionImpl(ErrorCodeImpl.NULL_POINT));
+        return adminUserJpaRepository.findById(adminUserId).orElseThrow(() -> new ApiExceptionImpl(ErrorCodeImpl.NOT_FOUND));
     }
 }

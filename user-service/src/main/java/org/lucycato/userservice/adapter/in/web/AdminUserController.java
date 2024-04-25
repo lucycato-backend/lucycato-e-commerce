@@ -32,7 +32,11 @@ public class AdminUserController {
                 request.getDeviceInfo().getDeviceMacAddress(),
                 request.getDeviceInfo().getDeviceFcmToken(),
                 request.getDeviceInfo().getDeviceOsType(),
-                request.getDeviceInfo().getDeiceOsVersion()
+                request.getDeviceInfo().getDeiceOsVersion(),
+                request.getAppOrDeviceInfo().getAppOrBrowserType(),
+                request.getAppOrDeviceInfo().getAppOrBrowserVersion(),
+                request.getAppOrDeviceInfo().getNetworkType(),
+                request.getAppOrDeviceInfo().getLocale()
         );
         return adminUserUseCase.register(command);
     }
@@ -51,9 +55,18 @@ public class AdminUserController {
                 request.getDeviceInfo().getDeviceMacAddress(),
                 request.getDeviceInfo().getDeviceFcmToken(),
                 request.getDeviceInfo().getDeviceOsType(),
-                request.getDeviceInfo().getDeiceOsVersion()
+                request.getDeviceInfo().getDeiceOsVersion(),
+                request.getAppOrDeviceInfo().getAppOrBrowserType(),
+                request.getAppOrDeviceInfo().getAppOrBrowserVersion(),
+                request.getAppOrDeviceInfo().getNetworkType(),
+                request.getAppOrDeviceInfo().getLocale()
         );
         return adminUserUseCase.login(command);
+    }
+
+    @PostMapping("api/lucycato/v1/admin/user/login-check")
+    public AdminUser checkLoginAdminUser(@AdminUserHeaders AdminUserHeaderDetail adminUserHeaderDetail) {
+        return null;
     }
 
     @PostMapping("api/lucycato/v1/admin/user/logout")

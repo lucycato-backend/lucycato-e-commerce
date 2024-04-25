@@ -12,4 +12,6 @@ public class AdminUserLoginRequest {
     private String password;
 
     private DeviceInfoRequest deviceInfo;
+
+    private AppOrDeviceInfoRequest appOrDeviceInfo;
 }

@@ -32,17 +32,26 @@ public class AdminUserService implements AdminUserUseCase {
         Boolean isVerification = authPort.verifyPhoneNumberAuthCode(command.getPhoneNumberAuthCode());
 
         if (isVerification) {
-            AdminUserResult adminUserResult = adminUserPort.registerAdminUser(
-                    command.getNickName(),
-                    command.getName(),
-                    command.getEmail(),
-                    command.getPassword(),
-                    command.getPhoneNumber(),
-                    command.getDeviceMacAddress(),
-                    command.getDeviceFcmToken(),
-                    command.getDeviceOsType(),
-                    command.getDeiceOsVersion()
-            );
+            AdminUserResult adminUserResult;
+            try {
+                adminUserResult = adminUserPort.registerAdminUser(
+                        command.getNickName(),
+                        command.getName(),
+                        command.getEmail(),
+                        command.getPassword(),
+                        command.getPhoneNumber(),
+                        command.getDeviceMacAddress(),
+                        command.getDeviceFcmToken(),
+                        command.getDeviceOsType(),
+                        command.getDeiceOsVersion(),
+                        command.getAppOrBrowserType(),
+                        command.getAppOrBrowserVersion(),
+                        command.getNetworkType(),
+                        command.getLocale()
+                );
+            } catch (ApiExceptionImpl e) {
+                throw new ApiExceptionImpl(UserErrorCodeImpl.USER_DUPLICATE);
+            }
 
             IssueFcmTokenResult issueFcmTokenResult = authPort.issueAdminUserFcmToken(
                     adminUserResult.getAdminUserId(),
@@ -65,8 +74,8 @@ public class AdminUserService implements AdminUserUseCase {
     public AdminUserLogin login(AdminUserLoginCommand command) {
         AdminUserResult adminUserResult;
         try {
-             adminUserResult = adminUserPort.getAdminUserResult(command.getEmail(), command.getPassword());
-        } catch (Exception e) {
+            adminUserResult = adminUserPort.getAdminUserResult(command.getEmail(), command.getPassword());
+        } catch (ApiExceptionImpl e) {
             throw new ApiExceptionImpl(UserErrorCodeImpl.USER_NOT_MATH);
         }
 
@@ -75,7 +84,11 @@ public class AdminUserService implements AdminUserUseCase {
                 command.getDeviceMacAddress(),
                 command.getDeviceFcmToken(),
                 command.getDeviceOsType(),
-                command.getDeiceOsVersion()
+                command.getDeiceOsVersion(),
+                command.getAppOrBrowserType(),
+                command.getAppOrBrowserVersion(),
+                command.getNetworkType(),
+                command.getLocale()
         );
 
         IssueFcmTokenResult issueFcmTokenResult = authPort.issueAdminUserFcmToken(
