@@ -8,7 +8,9 @@ import org.lucycato.common.exception.ApiExceptionImpl;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.awt.*;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -18,19 +20,31 @@ public class CommonRedisTemplate {
 
     private final ObjectMapper objectMapper;
 
-    public <T> T save(String key, T value, Long ttl, TimeUnit timeUnit) throws Exception {
-        String jsonString = objectMapper.writeValueAsString(value);
+    public <T> T save(String key, T value, Long ttl, TimeUnit timeUnit) {
+        String jsonString;
+        try {
+            jsonString = objectMapper.writeValueAsString(value);
+        } catch (Exception e) {
+            throw new ApiExceptionImpl(ErrorCodeImpl.JSON_PARSING);
+        }
         redisTemplate.opsForValue().set(key, jsonString, ttl, timeUnit);
         return value;
     }
 
-    public <T> T find(String key) throws Exception {
-        String jsonString = redisTemplate.opsForValue().get(key);
-        return objectMapper.readValue(jsonString, new TypeReference<T>() {
-        });
+    public <T> Optional<T> find(String key) {
+        try {
+            String jsonString = redisTemplate.opsForValue().get(key);
+            if (jsonString == null) {
+                return Optional.empty();
+            } else {
+                return Optional.of(objectMapper.readValue(jsonString, new TypeReference<T>() {}));
+            }
+        } catch (Exception e) {
+            throw new ApiExceptionImpl(ErrorCodeImpl.JSON_PARSING);
+        }
     }
 
-    public <T> List<T> findAll(List<String> keys) throws Exception {
+    public <T> List<T> findAll(List<String> keys) {
         List<String> jsonStringList = redisTemplate.opsForValue().multiGet(keys);
         return jsonStringList.stream().map(jsonString -> {
             try {
@@ -42,7 +56,7 @@ public class CommonRedisTemplate {
         }).toList();
     }
 
-    public <T> T update(String key, T value, Long ttl, TimeUnit timeUnit) throws Exception {
+    public <T> T update(String key, T value, Long ttl, TimeUnit timeUnit) {
         return save(key, value, ttl, timeUnit);
     }
 
