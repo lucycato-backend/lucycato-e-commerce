@@ -12,5 +12,7 @@ public interface AdminUserUseCase {
 
     void logout(AdminUserLogoutCommand command);
 
-    AdminUser modifyAdminUserRole(ModifyAdminUserRoleCommand command);
+    AdminUser addAdminUserRole(ModifyAdminUserRoleCommand command);
+
+    AdminUser removeAdminUserRole(ModifyAdminUserRoleCommand command);
 }

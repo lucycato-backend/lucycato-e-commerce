@@ -58,13 +58,23 @@ public class AdminUserController {
         adminUserUseCase.logout(command);
     }
 
-    @PostMapping("api/lucycato/v1/admin/user/modify-role")
-    public AdminUser modifyAdminUserRole(@AdminUserHeaders AdminUserHeaderDetail adminUserHeaderDetail, @RequestBody ModifyAdminUserRoleRequest request) {
+    @PatchMapping("api/lucycato/v1/admin/user/add-role")
+    public AdminUser addAdminUserRole(@AdminUserHeaders AdminUserHeaderDetail adminUserHeaderDetail, @RequestBody ModifyAdminUserRoleRequest request) {
         ModifyAdminUserRoleCommand command = new ModifyAdminUserRoleCommand(
                 adminUserHeaderDetail.getAdminUserRoles(),
                 request.getTargetUserId(),
                 request.getRole()
         );
-        return adminUserUseCase.modifyAdminUserRole(command);
+        return adminUserUseCase.addAdminUserRole(command);
+    }
+
+    @PatchMapping("api/lucycato/v1/admin/user/remove-role")
+    public AdminUser removeAdminUserRole(@AdminUserHeaders AdminUserHeaderDetail adminUserHeaderDetail, @RequestBody ModifyAdminUserRoleRequest request) {
+        ModifyAdminUserRoleCommand command = new ModifyAdminUserRoleCommand(
+                adminUserHeaderDetail.getAdminUserRoles(),
+                request.getTargetUserId(),
+                request.getRole()
+        );
+        return adminUserUseCase.removeAdminUserRole(command);
     }
 }
