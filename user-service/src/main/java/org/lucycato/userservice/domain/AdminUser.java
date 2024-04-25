@@ -23,10 +23,6 @@ public class AdminUser {
 
     private final List<AdminUserRole> roles;
 
-    private final LocalDateTime lastLoginAt;
-
-    private final LocalDateTime lastLogoutAt;
-
     private final LocalDateTime createdAt;
 
     private final LocalDateTime modifiedAt;
@@ -38,8 +34,6 @@ public class AdminUser {
             String phoneNumber,
             String imageUrl,
             List<AdminUserRole> roles,
-            LocalDateTime lastLoginAt,
-            LocalDateTime lastLogoutAt,
             LocalDateTime createdAt,
             LocalDateTime modifiedAt
     ) {
@@ -50,8 +44,6 @@ public class AdminUser {
                 .phoneNumber(phoneNumber)
                 .imageUrl(imageUrl)
                 .roles(roles)
-                .lastLoginAt(lastLoginAt)
-                .lastLogoutAt(lastLogoutAt)
                 .createdAt(createdAt)
                 .modifiedAt(modifiedAt)
                 .build();

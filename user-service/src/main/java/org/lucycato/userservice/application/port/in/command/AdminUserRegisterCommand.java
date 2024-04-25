@@ -7,7 +7,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.lucycato.common.SelfValidating;
+import org.lucycato.userservice.model.enums.AppOrBrowserType;
 import org.lucycato.userservice.model.enums.DeviceOsType;
+import org.lucycato.userservice.model.enums.NetworkType;
 
 @Getter
 @NoArgsConstructor
@@ -43,7 +45,19 @@ public class AdminUserRegisterCommand extends SelfValidating<AdminUserRegisterCo
     @NotBlank
     private String deiceOsVersion;
 
-    public AdminUserRegisterCommand(String phoneNumberAuthCode, String nickName, String name, String email, String password, String phoneNumber, String deviceMacAddress, String deviceFcmToken, DeviceOsType deviceOsType, String deiceOsVersion) {
+    @NotNull
+    private AppOrBrowserType appOrBrowserType;
+
+    @NotBlank
+    private String appOrBrowserVersion;
+
+    @NotNull
+    private NetworkType networkType;
+
+    @NotBlank
+    private String locale;
+
+    public AdminUserRegisterCommand(String phoneNumberAuthCode, String nickName, String name, String email, String password, String phoneNumber, String deviceMacAddress, String deviceFcmToken, DeviceOsType deviceOsType, String deiceOsVersion, AppOrBrowserType appOrBrowserType, String appOrBrowserVersion, NetworkType networkType, String locale) {
         this.phoneNumberAuthCode = phoneNumberAuthCode;
         this.nickName = nickName;
         this.name = name;
@@ -54,6 +68,10 @@ public class AdminUserRegisterCommand extends SelfValidating<AdminUserRegisterCo
         this.deviceFcmToken = deviceFcmToken;
         this.deviceOsType = deviceOsType;
         this.deiceOsVersion = deiceOsVersion;
+        this.appOrBrowserType = appOrBrowserType;
+        this.appOrBrowserVersion = appOrBrowserVersion;
+        this.networkType = networkType;
+        this.locale = locale;
 
         this.validateSelf();
     }

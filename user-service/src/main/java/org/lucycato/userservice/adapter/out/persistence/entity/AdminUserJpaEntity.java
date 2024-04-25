@@ -42,17 +42,13 @@ public class AdminUserJpaEntity {
     @Column(columnDefinition = "JSON")
     private List<DeviceInfo> deviceInfos;
 
-    private LocalDateTime lastLoginAt;
-
-    private LocalDateTime lastLogoutAt;
-
     @CreatedDate
     private LocalDateTime createdAt;
 
     @LastModifiedDate
     private LocalDateTime modifiedAt;
 
-    public AdminUserJpaEntity(String nickName, String name, String email, String password, String phoneNumber, List<AdminUserRole> adminUserRoles, List<DeviceInfo> deviceInfos, LocalDateTime lastLoginAt) {
+    public AdminUserJpaEntity(String nickName, String name, String email, String password, String phoneNumber, List<AdminUserRole> adminUserRoles, List<DeviceInfo> deviceInfos) {
         this.nickName = nickName;
         this.name = name;
         this.email = email;
@@ -60,6 +56,5 @@ public class AdminUserJpaEntity {
         this.phoneNumber = phoneNumber;
         this.adminUserRoles = adminUserRoles;
         this.deviceInfos = deviceInfos;
-        this.lastLoginAt = lastLoginAt;
     }
 }

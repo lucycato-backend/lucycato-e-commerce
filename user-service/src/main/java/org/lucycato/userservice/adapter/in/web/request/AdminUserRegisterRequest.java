@@ -20,4 +20,6 @@ public class AdminUserRegisterRequest {
     private String phoneNumber;
 
     private DeviceInfoRequest deviceInfo;
+
+    private AppOrDeviceInfoRequest appOrDeviceInfo;
 }

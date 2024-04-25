@@ -2,7 +2,7 @@ version: "3"
 services:
   #external-system-server
   zookeeper:
-    image: 'arm64v8/zookeeper:3.8'
+    image: 'zookeeper:3.9.2'
     networks:
       - "lucycato_network"
     ports:

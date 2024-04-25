@@ -10,6 +10,7 @@ import org.lucycato.userservice.application.port.out.result.AdminUserResult;
 import org.lucycato.userservice.application.port.out.result.AppUserResult;
 import org.lucycato.userservice.domain.AdminUser;
 import org.lucycato.userservice.domain.AppUser;
+import org.lucycato.userservice.model.info.DeviceInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,11 +36,15 @@ public class QueryAdminUserService implements QueryAdminUserUseCase {
                 adminUserResult.getPhoneNumber(),
                 adminUserResult.getImageUrl(),
                 adminUserResult.getAdminUserRoles(),
-                adminUserResult.getLastLoginAt(),
-                adminUserResult.getLastLogoutAt(),
                 adminUserResult.getCreatedAt(),
                 adminUserResult.getModifiedAt()
         );
+    }
+
+    @Override
+    public List<DeviceInfo> getAdminUserDeviceInfoList(GetAdminUserDeviceInfoCommand command) {
+        AdminUserResult adminUserResult = queryAdminUserPort.getAdminUser(command.getAdminUserId());
+        return adminUserResult.getDeviceInfos();
     }
 
     @Override

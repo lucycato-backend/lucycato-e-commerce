@@ -10,4 +10,7 @@ import java.util.Optional;
 public interface AdminUserJpaRepository extends JpaRepository<AdminUserJpaEntity, Long> {
     @Query("select e from AdminUserJpaEntity e where e.email = :email and e.password = :password")
     Optional<AdminUserJpaEntity> findFirstByEmailAndPassword(String email, String password);
+
+    @Query("select count(e) > 0 from AdminUserJpaEntity e where e.email = :email")
+    Boolean existByEmail(String email);
 }

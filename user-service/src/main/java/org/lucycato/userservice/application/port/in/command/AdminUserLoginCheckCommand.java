@@ -14,12 +14,9 @@ import org.lucycato.userservice.model.enums.NetworkType;
 @Getter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class AdminUserLoginCommand extends SelfValidating<AdminUserLoginCommand> {
-    @Email
-    private String email;
-
-    @NotBlank
-    private String password;
+public class AdminUserLoginCheckCommand extends SelfValidating<AdminUserLoginCheckCommand> {
+    @NotNull
+    private Long adminUserId;
 
     @NotBlank
     private String deviceMacAddress;
@@ -45,9 +42,8 @@ public class AdminUserLoginCommand extends SelfValidating<AdminUserLoginCommand>
     @NotBlank
     private String locale;
 
-    public AdminUserLoginCommand(String email, String password, String deviceMacAddress, String deviceFcmToken, DeviceOsType deviceOsType, String deiceOsVersion, AppOrBrowserType appOrBrowserType, String appOrBrowserVersion, NetworkType networkType, String locale) {
-        this.email = email;
-        this.password = password;
+    public AdminUserLoginCheckCommand(Long adminUserId, String deviceMacAddress, String deviceFcmToken, DeviceOsType deviceOsType, String deiceOsVersion, AppOrBrowserType appOrBrowserType, String appOrBrowserVersion, NetworkType networkType, String locale) {
+        this.adminUserId = adminUserId;
         this.deviceMacAddress = deviceMacAddress;
         this.deviceFcmToken = deviceFcmToken;
         this.deviceOsType = deviceOsType;
