@@ -37,6 +37,12 @@ public class AdminUserController {
         return adminUserUseCase.register(command);
     }
 
+    // TODO: 어드민 아이디 중복 check API 개발
+
+    // TODO: 아이디 찾기 API 개발
+
+    // TODO: 비밀번호 찾기 API 개발
+
     @PostMapping("open-api/lucycato/v1/admin/user/login")
     public AdminUserLogin loginAdminUser(@RequestBody AdminUserLoginRequest request) {
         AdminUserLoginCommand command = new AdminUserLoginCommand(
