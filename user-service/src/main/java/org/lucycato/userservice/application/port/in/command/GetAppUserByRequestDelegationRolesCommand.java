@@ -1,6 +1,7 @@
 package org.lucycato.userservice.application.port.in.command;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,10 +14,10 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class GetAppUserByRequestDelegationRolesCommand extends SelfValidating<GetAppUserByRequestDelegationRolesCommand> {
-    @NotBlank
+    @NotEmpty
     private List<AdminUserRole> adminUserRoles;
 
-    @NotBlank
+    @NotEmpty
     private List<AdminUserRole> requestDelegationRoles;
 
     public GetAppUserByRequestDelegationRolesCommand(List<AdminUserRole> adminUserRoles, List<AdminUserRole> requestDelegationRoles) {

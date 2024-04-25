@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class GetAppUserListByLectureIdsCommand extends SelfValidating<GetAppUserListByLectureIdsCommand> {
-    @NotBlank
+    @NotEmpty
     private List<AdminUserRole> adminUserRoles;
 
     @NotEmpty

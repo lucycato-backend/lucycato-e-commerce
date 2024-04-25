@@ -1,6 +1,7 @@
 package org.lucycato.userservice.application.port.in.command;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -14,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class ModifyAdminUserRoleCommand extends SelfValidating<ModifyAdminUserRoleCommand> {
-    @NotBlank
+    @NotEmpty
     private List<AdminUserRole> adminUserRoles;
 
     @NotNull
