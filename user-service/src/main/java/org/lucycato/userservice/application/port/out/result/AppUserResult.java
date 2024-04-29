@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.lucycato.userservice.model.enums.AppUserBadge;
 import org.lucycato.userservice.model.enums.AppUserGrade;
+import org.lucycato.userservice.model.enums.SocialStatus;
 import org.lucycato.userservice.model.info.DeviceInfo;
 
 import java.time.LocalDateTime;
@@ -17,6 +18,8 @@ import java.util.List;
 @NoArgsConstructor
 public class AppUserResult {
     private Long appUserId;
+
+    private SocialStatus socialStatus;
 
     private String nickName;
 

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.lucycato.userservice.model.enums.AppUserBadge;
 import org.lucycato.userservice.model.enums.AppUserGrade;
+import org.lucycato.userservice.model.enums.SocialStatus;
 import org.lucycato.userservice.model.info.DeviceInfo;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -22,6 +23,9 @@ public class AppUserJpaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Enumerated(EnumType.STRING)
+    private SocialStatus socialStatus;
 
     private String nickName;
 
@@ -53,7 +57,8 @@ public class AppUserJpaEntity {
     @LastModifiedDate
     private LocalDateTime modifiedAt;
 
-    public AppUserJpaEntity(String nickName, String name, String email, String phoneNumber, String imageUrl, AppUserGrade grade, List<AppUserBadge> appUserBadges, List<DeviceInfo> deviceInfos, LocalDateTime lastLoginAt, LocalDateTime lastLogoutAt, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+    public AppUserJpaEntity(SocialStatus socialStatus, String nickName, String name, String email, String phoneNumber, String imageUrl, AppUserGrade grade, List<AppUserBadge> appUserBadges, List<DeviceInfo> deviceInfos, LocalDateTime lastLoginAt, LocalDateTime lastLogoutAt, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+        this.socialStatus = socialStatus;
         this.nickName = nickName;
         this.name = name;
         this.email = email;
