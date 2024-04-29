@@ -10,6 +10,8 @@ import org.lucycato.userservice.application.port.out.result.AdminUserResult;
 import org.lucycato.userservice.application.port.out.result.AppUserResult;
 import org.lucycato.userservice.domain.AdminUser;
 import org.lucycato.userservice.domain.AppUser;
+import org.lucycato.userservice.domain.DeviceManagement;
+import org.lucycato.userservice.model.enums.UserStatus;
 import org.lucycato.userservice.model.info.DeviceInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,9 +44,13 @@ public class QueryAdminUserService implements QueryAdminUserUseCase {
     }
 
     @Override
-    public List<DeviceInfo> getAdminUserDeviceInfoList(GetAdminUserDeviceInfoCommand command) {
+    public DeviceManagement getAdminUserDevicemanagement(GetAdminUserDeviceInfoCommand command) {
         AdminUserResult adminUserResult = queryAdminUserPort.getAdminUser(command.getAdminUserId());
-        return adminUserResult.getDeviceInfos();
+        return DeviceManagement.create(
+                command.getAdminUserId(),
+                UserStatus.ADMIN,
+                adminUserResult.getDeviceInfos()
+        );
     }
 
     @Override
@@ -52,6 +58,7 @@ public class QueryAdminUserService implements QueryAdminUserUseCase {
         AppUserResult appUserResult = queryAdminUserPort.getAppUser(command.getTargetAppUserId());
         return AppUser.create(
                 appUserResult.getAppUserId(),
+                appUserResult.getSocialStatus(),
                 appUserResult.getNickName(),
                 appUserResult.getName(),
                 appUserResult.getEmail(),
@@ -59,8 +66,6 @@ public class QueryAdminUserService implements QueryAdminUserUseCase {
                 appUserResult.getImageUrl(),
                 appUserResult.getGrade(),
                 appUserResult.getBadges(),
-                appUserResult.getLastLoginAt(),
-                appUserResult.getLastLogoutAt(),
                 appUserResult.getCreatedAt(),
                 appUserResult.getModifiedAt()
         );
@@ -72,6 +77,7 @@ public class QueryAdminUserService implements QueryAdminUserUseCase {
         return appUserResults.stream().map(appUserResult ->
                 AppUser.create(
                         appUserResult.getAppUserId(),
+                        appUserResult.getSocialStatus(),
                         appUserResult.getNickName(),
                         appUserResult.getName(),
                         appUserResult.getEmail(),
@@ -79,8 +85,6 @@ public class QueryAdminUserService implements QueryAdminUserUseCase {
                         appUserResult.getImageUrl(),
                         appUserResult.getGrade(),
                         appUserResult.getBadges(),
-                        appUserResult.getLastLoginAt(),
-                        appUserResult.getLastLogoutAt(),
                         appUserResult.getCreatedAt(),
                         appUserResult.getModifiedAt()
                 )
@@ -94,6 +98,7 @@ public class QueryAdminUserService implements QueryAdminUserUseCase {
         return appUserResults.stream().map(appUserResult ->
                 AppUser.create(
                         appUserResult.getAppUserId(),
+                        appUserResult.getSocialStatus(),
                         appUserResult.getNickName(),
                         appUserResult.getName(),
                         appUserResult.getEmail(),
@@ -101,8 +106,6 @@ public class QueryAdminUserService implements QueryAdminUserUseCase {
                         appUserResult.getImageUrl(),
                         appUserResult.getGrade(),
                         appUserResult.getBadges(),
-                        appUserResult.getLastLoginAt(),
-                        appUserResult.getLastLogoutAt(),
                         appUserResult.getCreatedAt(),
                         appUserResult.getModifiedAt()
                 )
@@ -116,6 +119,7 @@ public class QueryAdminUserService implements QueryAdminUserUseCase {
         return appUserResults.stream().map(appUserResult ->
                 AppUser.create(
                         appUserResult.getAppUserId(),
+                        appUserResult.getSocialStatus(),
                         appUserResult.getNickName(),
                         appUserResult.getName(),
                         appUserResult.getEmail(),
@@ -123,8 +127,6 @@ public class QueryAdminUserService implements QueryAdminUserUseCase {
                         appUserResult.getImageUrl(),
                         appUserResult.getGrade(),
                         appUserResult.getBadges(),
-                        appUserResult.getLastLoginAt(),
-                        appUserResult.getLastLogoutAt(),
                         appUserResult.getCreatedAt(),
                         appUserResult.getModifiedAt()
                 )
@@ -138,6 +140,7 @@ public class QueryAdminUserService implements QueryAdminUserUseCase {
         return appUserResults.stream().map(appUserResult ->
                 AppUser.create(
                         appUserResult.getAppUserId(),
+                        appUserResult.getSocialStatus(),
                         appUserResult.getNickName(),
                         appUserResult.getName(),
                         appUserResult.getEmail(),
@@ -145,8 +148,6 @@ public class QueryAdminUserService implements QueryAdminUserUseCase {
                         appUserResult.getImageUrl(),
                         appUserResult.getGrade(),
                         appUserResult.getBadges(),
-                        appUserResult.getLastLoginAt(),
-                        appUserResult.getLastLogoutAt(),
                         appUserResult.getCreatedAt(),
                         appUserResult.getModifiedAt()
                 )
