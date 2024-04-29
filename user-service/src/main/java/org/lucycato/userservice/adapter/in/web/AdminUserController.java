@@ -8,7 +8,7 @@ import org.lucycato.userservice.adapter.in.web.request.*;
 import org.lucycato.userservice.application.port.in.AdminUserUseCase;
 import org.lucycato.userservice.application.port.in.command.*;
 import org.lucycato.userservice.domain.AdminUser;
-import org.lucycato.userservice.domain.AdminUserLogin;
+import org.lucycato.userservice.domain.UserLogin;
 import org.springframework.web.bind.annotation.*;
 
 @WebAdapter
@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.*;
 public class AdminUserController {
     private final AdminUserUseCase adminUserUseCase;
 
-    @PostMapping("open-api/lucycato/v1/admin/user/register")
-    public AdminUserLogin registerAdminUserOwnService(@RequestBody AdminUserRegisterRequest request) {
+    @PostMapping("open-api/lucycato/v1/admin/user/register-own-service")
+    public UserLogin registerAdminUserOwnService(@RequestBody AdminUserRegisterRequest request) {
         AdminUserRegisterCommand command = new AdminUserRegisterCommand(
                 request.getPhoneNumberAuthCode(),
                 request.getNickName(),
@@ -45,8 +45,8 @@ public class AdminUserController {
 
     // TODO: 비밀번호 찾기 API 개발
 
-    @PostMapping("open-api/lucycato/v1/admin/user/login")
-    public AdminUserLogin loginAdminUser(@RequestBody AdminUserLoginRequest request) {
+    @PostMapping("open-api/lucycato/v1/admin/user/login-own-service")
+    public UserLogin loginAdminUser(@RequestBody AdminUserLoginRequest request) {
         AdminUserLoginCommand command = new AdminUserLoginCommand(
                 request.getEmail(),
                 request.getPassword(),

@@ -10,8 +10,8 @@ import org.lucycato.userservice.application.port.out.result.AdminUserResult;
 import org.lucycato.userservice.application.port.out.result.IssueFcmTokenResult;
 import org.lucycato.userservice.application.port.out.AuthPort;
 import org.lucycato.userservice.domain.AdminUser;
-import org.lucycato.userservice.domain.AdminUserLogin;
-import org.lucycato.userservice.model.enums.AppUserGrade;
+import org.lucycato.userservice.domain.UserLogin;
+import org.lucycato.userservice.model.enums.UserStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +25,7 @@ public class AdminUserService implements AdminUserUseCase {
     private final AuthPort authPort;
 
     @Override
-    public AdminUserLogin register(AdminUserRegisterCommand command) {
+    public UserLogin register(AdminUserRegisterCommand command) {
         Boolean isVerification = authPort.verifyPhoneNumberAuthCode(command.getPhoneNumberAuthCode());
 
         if (isVerification) {
@@ -50,8 +50,9 @@ public class AdminUserService implements AdminUserUseCase {
                     adminUserResult.getAdminUserRoles()
             );
 
-            return AdminUserLogin.create(
+            return UserLogin.create(
                     adminUserResult.getAdminUserId(),
+                    UserStatus.ADMIN,
                     issueFcmTokenResult.getAccessToken(),
                     issueFcmTokenResult.getExpiredAccessToken(),
                     issueFcmTokenResult.getRefreshToken(),
@@ -63,7 +64,7 @@ public class AdminUserService implements AdminUserUseCase {
     }
 
     @Override
-    public AdminUserLogin login(AdminUserLoginCommand command) {
+    public UserLogin login(AdminUserLoginCommand command) {
         AdminUserResult adminUserResult;
         try {
             adminUserResult = adminUserPort.getAdminUserResult(command.getEmail(), command.getPassword());
@@ -88,8 +89,9 @@ public class AdminUserService implements AdminUserUseCase {
                 adminUserResult.getAdminUserRoles()
         );
 
-        return AdminUserLogin.create(
+        return UserLogin.create(
                 adminUserResult.getAdminUserId(),
+                UserStatus.ADMIN,
                 issueFcmTokenResult.getAccessToken(),
                 issueFcmTokenResult.getExpiredAccessToken(),
                 issueFcmTokenResult.getRefreshToken(),

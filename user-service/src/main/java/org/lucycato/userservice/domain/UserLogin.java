@@ -1,6 +1,7 @@
 package org.lucycato.userservice.domain;
 
 import lombok.*;
+import org.lucycato.userservice.model.enums.UserStatus;
 
 import java.time.LocalDateTime;
 
@@ -8,8 +9,10 @@ import java.time.LocalDateTime;
 @Setter(value = AccessLevel.PRIVATE)
 @Builder(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class AdminUserLogin {
-    private Long adminUserId;
+public class UserLogin {
+    private Long userId;
+
+    private UserStatus userStatus;
 
     private final String accessToken;
 
@@ -19,15 +22,17 @@ public class AdminUserLogin {
 
     private final LocalDateTime refreshTokenExpiredAt;
 
-    public static AdminUserLogin create(
-            Long adminUserId,
+    public static UserLogin create(
+            Long userId,
+            UserStatus userStatus,
             String accessToken,
             LocalDateTime accessTokenExpiredAt,
             String refreshToken,
             LocalDateTime refreshTokenExpiredAt
     ) {
-        return AdminUserLogin.builder()
-                .adminUserId(adminUserId)
+        return UserLogin.builder()
+                .userId(userId)
+                .userStatus(userStatus)
                 .accessToken(accessToken)
                 .accessTokenExpiredAt(accessTokenExpiredAt)
                 .refreshToken(refreshToken)

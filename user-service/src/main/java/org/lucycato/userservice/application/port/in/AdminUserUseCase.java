@@ -1,15 +1,14 @@
 package org.lucycato.userservice.application.port.in;
 
-import org.lucycato.userservice.adapter.in.web.request.AdminUserLoginCheckRequest;
 import org.lucycato.userservice.application.port.in.command.*;
 import org.lucycato.userservice.domain.AdminUser;
-import org.lucycato.userservice.domain.AdminUserLogin;
+import org.lucycato.userservice.domain.UserLogin;
 
 public interface AdminUserUseCase {
 
-    AdminUserLogin register(AdminUserRegisterCommand command);
+    UserLogin register(AdminUserRegisterCommand command);
 
-    AdminUserLogin login(AdminUserLoginCommand command);
+    UserLogin login(AdminUserLoginCommand command);
 
     void loginCheck(AdminUserLoginCheckCommand command);
 
