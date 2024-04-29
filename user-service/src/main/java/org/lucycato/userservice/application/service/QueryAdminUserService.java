@@ -50,7 +50,7 @@ public class QueryAdminUserService implements QueryAdminUserUseCase {
     @Override
     public AppUser getAppUser(GetAppUserCommand command) {
         AppUserResult appUserResult = queryAdminUserPort.getAppUser(command.getTargetAppUserId());
-        return AppUser.created(
+        return AppUser.create(
                 appUserResult.getAppUserId(),
                 appUserResult.getNickName(),
                 appUserResult.getName(),
@@ -70,7 +70,7 @@ public class QueryAdminUserService implements QueryAdminUserUseCase {
     public List<AppUser> getAppUserList() {
         List<AppUserResult> appUserResults = queryAdminUserPort.getAppUserList();
         return appUserResults.stream().map(appUserResult ->
-                AppUser.created(
+                AppUser.create(
                         appUserResult.getAppUserId(),
                         appUserResult.getNickName(),
                         appUserResult.getName(),
@@ -92,7 +92,7 @@ public class QueryAdminUserService implements QueryAdminUserUseCase {
         List<Long> userIds = productPort.getAppUserIdsByLectureIds(command.getTargetLectureIds());
         List<AppUserResult> appUserResults = queryAdminUserPort.getAppUserListByUserIds(userIds);
         return appUserResults.stream().map(appUserResult ->
-                AppUser.created(
+                AppUser.create(
                         appUserResult.getAppUserId(),
                         appUserResult.getNickName(),
                         appUserResult.getName(),
@@ -114,7 +114,7 @@ public class QueryAdminUserService implements QueryAdminUserUseCase {
         List<Long> userIds = productPort.getAppUserIdsByTeacherIds(command.getTargetTeacherIds());
         List<AppUserResult> appUserResults = queryAdminUserPort.getAppUserListByUserIds(userIds);
         return appUserResults.stream().map(appUserResult ->
-                AppUser.created(
+                AppUser.create(
                         appUserResult.getAppUserId(),
                         appUserResult.getNickName(),
                         appUserResult.getName(),
@@ -136,7 +136,7 @@ public class QueryAdminUserService implements QueryAdminUserUseCase {
         List<Long> userIds = authPort.getAppUserIdsByRequestDelegationRoles(command.getRequestDelegationRoles());
         List<AppUserResult> appUserResults = queryAdminUserPort.getAppUserListByUserIds(userIds);
         return appUserResults.stream().map(appUserResult ->
-                AppUser.created(
+                AppUser.create(
                         appUserResult.getAppUserId(),
                         appUserResult.getNickName(),
                         appUserResult.getName(),

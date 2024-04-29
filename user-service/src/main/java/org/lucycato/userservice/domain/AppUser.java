@@ -36,7 +36,7 @@ public class AppUser {
 
     private final LocalDateTime modifiedAt;
 
-    public static AppUser created(
+    public static AppUser create(
             Long appUserId,
             String nickName,
             String name,
