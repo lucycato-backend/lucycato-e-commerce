@@ -12,7 +12,6 @@ import org.lucycato.userservice.domain.AdminUser;
 import org.lucycato.userservice.domain.AppUser;
 import org.lucycato.userservice.domain.DeviceManagement;
 import org.lucycato.userservice.model.enums.UserStatus;
-import org.lucycato.userservice.model.info.DeviceInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,7 +53,7 @@ public class QueryAdminUserService implements QueryAdminUserUseCase {
     }
 
     @Override
-    public AppUser getAppUser(GetAppUserCommand command) {
+    public AppUser getAppUser(GetAppUserByAdminUserCommand command) {
         AppUserResult appUserResult = queryAdminUserPort.getAppUser(command.getTargetAppUserId());
         return AppUser.create(
                 appUserResult.getAppUserId(),

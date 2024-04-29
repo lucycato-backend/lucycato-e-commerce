@@ -37,7 +37,7 @@ public class QueryAdminUserController {
 
     @GetMapping("api/lucycato/v1/admin/user/{targetAppUserId}/app-user")
     public AppUser getAppUser(@AdminUserHeaders AdminUserHeaderDetail adminUserHeaderDetail, @PathVariable Long targetAppUserId) {
-        GetAppUserCommand command = new GetAppUserCommand(
+        GetAppUserByAdminUserCommand command = new GetAppUserByAdminUserCommand(
                 adminUserHeaderDetail.getAdminUserRoles(),
                 targetAppUserId
         );

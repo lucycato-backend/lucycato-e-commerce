@@ -12,7 +12,7 @@ public interface QueryAdminUserUseCase {
 
     DeviceManagement getAdminUserDevicemanagement(GetAdminUserDeviceInfoCommand command);
 
-    AppUser getAppUser(GetAppUserCommand command);
+    AppUser getAppUser(GetAppUserByAdminUserCommand command);
 
     List<AppUser> getAppUserList();
 
