@@ -30,7 +30,7 @@ public class QueryAdminUserController {
     }
 
     @GetMapping("api/lucycato/v1/admin/user/device-management/me")
-    public DeviceManagement getAdminUserDeviceInfoList(@AdminUserHeaders AdminUserHeaderDetail adminUserHeaderDetail) {
+    public DeviceManagement getAdminUserDevicemanagement(@AdminUserHeaders AdminUserHeaderDetail adminUserHeaderDetail) {
         GetAdminUserDeviceInfoCommand command = new GetAdminUserDeviceInfoCommand(adminUserHeaderDetail.getAdminMemberId());
         return queryAdminUserUseCase.getAdminUserDevicemanagement(command);
     }
