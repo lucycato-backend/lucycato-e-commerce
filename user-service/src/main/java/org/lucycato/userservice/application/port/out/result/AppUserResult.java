@@ -36,8 +36,6 @@ public class AppUserResult {
 
     private List<AppUserBadge> badges;
 
-    private List<DeviceVo> deviceVos;
-
     private List<AppUserMembershipResult> membershipResults;
 
     private LocalDateTime createdAt;
@@ -58,7 +56,6 @@ public class AppUserResult {
                 .imageUrl(entity.getImageUrl())
                 .grade(entity.getGrade())
                 .badges(entity.getAppUserBadges())
-                .deviceVos(entity.getDeviceVos())
                 .membershipResults(appUserMembershipResults)
                 .createdAt(entity.getCreatedAt())
                 .modifiedAt(entity.getModifiedAt())

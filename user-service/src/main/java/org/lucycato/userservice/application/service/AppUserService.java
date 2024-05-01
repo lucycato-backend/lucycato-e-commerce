@@ -70,9 +70,7 @@ public class AppUserService implements AppUserUseCase {
 
         return AppUserLogin.from(
                 appUserResult,
-                issueJwtTokenResult,
-                command.getCurrentAppUserDeviceMacAddress(),
-                command.getCurrentAppUserPlatformType()
+                issueJwtTokenResult
         );
     }
 
@@ -117,9 +115,7 @@ public class AppUserService implements AppUserUseCase {
 
         return AppUserLogin.from(
                 appUserResult,
-                issueJwtTokenResult,
-                command.getCurrentAppUserDeviceMacAddress(),
-                command.getCurrentAppUserPlatformType()
+                issueJwtTokenResult
         );
     }
 
