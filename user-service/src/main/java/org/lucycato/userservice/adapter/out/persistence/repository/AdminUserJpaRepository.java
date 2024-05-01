@@ -1,7 +1,6 @@
-package org.lucycato.userservice.adapter.out.persistence;
+package org.lucycato.userservice.adapter.out.persistence.repository;
 
 import org.lucycato.userservice.adapter.out.persistence.entity.AdminUserJpaEntity;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -11,6 +10,6 @@ public interface AdminUserJpaRepository extends JpaRepository<AdminUserJpaEntity
     @Query("select e from AdminUserJpaEntity e where e.email = :email and e.password = :password")
     Optional<AdminUserJpaEntity> findFirstByEmailAndPassword(String email, String password);
 
-    @Query("select count(e) > 0 from AdminUserJpaEntity e where e.email = :email")
-    Boolean existByEmail(String email);
+    @Query("select e.deviceVos from AdminUserJpaEntity e where e.id = :adminUserId order by id desc")
+    Optional<Object> findDeviceInfosByAppUserId(Long adminUserId);
 }
