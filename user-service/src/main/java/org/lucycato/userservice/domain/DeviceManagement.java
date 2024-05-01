@@ -2,8 +2,8 @@ package org.lucycato.userservice.domain;
 
 
 import lombok.*;
-import org.lucycato.userservice.model.enums.UserStatus;
-import org.lucycato.userservice.model.info.DeviceInfo;
+import org.lucycato.userservice.adapter.out.persistence.vo.DeviceVo;
+import org.lucycato.userservice.domain.enums.DeviceOsType;
 
 import java.util.List;
 
@@ -12,21 +12,29 @@ import java.util.List;
 @Builder(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class DeviceManagement {
-    private Long userId;
+    private String deviceManAddress;
 
-    private UserStatus userStatus;
+    private String deviceFcmToken;
 
-    private List<DeviceInfo> deviceInfos;
+    private DeviceOsType deviceOsType;
+
+    private String deviceOsVersion;
+
+    private List<Platform> platforms;
 
     public static DeviceManagement create(
-            Long userId,
-            UserStatus userStatus,
-            List<DeviceInfo> deviceInfos
+            String deviceManAddress,
+            String deviceFcmToken,
+            DeviceOsType deviceOsType,
+            String deviceOsVersion,
+            List<Platform> platforms
     ) {
         return DeviceManagement.builder()
-                .userId(userId)
-                .userStatus(userStatus)
-                .deviceInfos(deviceInfos)
+                .deviceManAddress(deviceManAddress)
+                .deviceFcmToken(deviceFcmToken)
+                .deviceOsType(deviceOsType)
+                .deviceOsVersion(deviceOsVersion)
+                .platforms(platforms)
                 .build();
     }
 }

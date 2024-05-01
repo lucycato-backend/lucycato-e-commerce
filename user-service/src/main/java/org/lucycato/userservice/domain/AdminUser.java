@@ -2,6 +2,7 @@ package org.lucycato.userservice.domain;
 
 import lombok.*;
 import org.lucycato.common.security.AdminUserRole;
+import org.lucycato.userservice.application.port.out.result.AdminUserResult;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,29 +24,23 @@ public class AdminUser {
 
     private final List<AdminUserRole> roles;
 
+    private final DeviceManagement currentDeviceManagement;
+
     private final LocalDateTime createdAt;
 
     private final LocalDateTime modifiedAt;
 
-    public static AdminUser create(
-            Long adminUserId,
-            String name,
-            String email,
-            String phoneNumber,
-            String imageUrl,
-            List<AdminUserRole> roles,
-            LocalDateTime createdAt,
-            LocalDateTime modifiedAt
-    ) {
+    public static AdminUser from(AdminUserResult result) {
         return AdminUser.builder()
-                .adminUserId(adminUserId)
-                .name(name)
-                .email(email)
-                .phoneNumber(phoneNumber)
-                .imageUrl(imageUrl)
-                .roles(roles)
-                .createdAt(createdAt)
-                .modifiedAt(modifiedAt)
+                .adminUserId(result.getAdminUserId())
+                .name(result.getName())
+                .email(result.getEmail())
+                .phoneNumber(result.getPhoneNumber())
+                .imageUrl(result.getImageUrl())
+                .roles(result.getAdminUserRoles())
+                .currentDeviceManagement(null)
+                .createdAt(result.getCreatedAt())
+                .modifiedAt(result.getModifiedAt())
                 .build();
     }
 }

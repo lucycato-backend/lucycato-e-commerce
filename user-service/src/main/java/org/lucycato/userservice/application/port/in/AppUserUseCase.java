@@ -3,30 +3,20 @@ package org.lucycato.userservice.application.port.in;
 import org.lucycato.userservice.application.port.in.command.*;
 import org.lucycato.userservice.domain.AppUser;
 import org.lucycato.userservice.domain.AppUserMembership;
-import org.lucycato.userservice.domain.DeviceManagement;
+import org.lucycato.userservice.domain.AppUserLogin;
 
 public interface AppUserUseCase {
-    AppUser loginByAppleLogin(AppUserLoginByAppleSocialCommand command);
+    AppUserLogin loginByAppleLogin(AppUserLoginByAppleSocialCommand command);
 
-    AppUser loginByGoogleSocial(AppUserLoginByGoogleSocialCommand command);
+    AppUserLogin loginByKakaoSocial(AppUserLoginByKakaoSocialCommand command);
 
-    AppUser loginByNaverSocial(AppUserLoginByNaverSocialCommand command);
+    AppUser verifyPhoneNumber(VerifyPhoneNumberCommand command);
 
-    AppUser loginByKakaoSocial(AppUserLoginByKakaoSocialCommand command);
+    void loginCheck(AppUserLoginCheckCommand command);
 
-    AppUser loginCheck(AppUserLoginCheckCommand command);
+    void logout(AppUserLogoutCommand command);
 
-    AppUser logout(AppUserLogoutCommand command);
+    AppUserMembership registerAppUserMembership(RegisterAppUserMembershipCommand command);
 
-    AppUser enterAppUserAdditionalInfo(AppUserAdditionalInfoCommand command);
-
-    AppUser registerAppUserMembership(RegisterAppUserMembershipCommand command);
-
-    AppUser safeRemoveAppUserMembership(SafeRemoveAppUserMembershipCommand command);
-
-    AppUser getAppUser(GetAppUserCommand command);
-
-    DeviceManagement getAppUserDeviceManagement(GetAppUserDeviceManagementCommand command);
-
-    AppUserMembership getAppUserMembership(GetAppUserMembershipCommand command);
+    void safeRemoveAppUserMembership(SafeRemoveAppUserMembershipCommand command);
 }

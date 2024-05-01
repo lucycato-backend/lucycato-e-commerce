@@ -10,15 +10,11 @@ import java.util.List;
 public interface QueryAdminUserUseCase {
     AdminUser getAdminUser(GetAdminUserCommand command);
 
-    DeviceManagement getAdminUserDevicemanagement(GetAdminUserDeviceInfoCommand command);
+    List<DeviceManagement> getAdminUserDeviceManagementList(GetAdminUserDeviceInfoCommand command);
 
     AppUser getAppUser(GetAppUserByAdminUserCommand command);
 
     List<AppUser> getAppUserList();
 
-    List<AppUser> getAppUserByLectureId(GetAppUserListByLectureIdsCommand command);
-
-    List<AppUser> getAppUserByTeacherId(GetAppUserListByTeacherIdsCommand command);
-
-    List<AppUser> getAppUserListByRequestDelegationRoles(GetAppUserByRequestDelegationRolesCommand command);
+    List<AppUser> getAppUserListByAppUserIds(List<Long> userIds);
 }

@@ -8,7 +8,7 @@ import org.lucycato.userservice.adapter.in.web.request.*;
 import org.lucycato.userservice.application.port.in.AdminUserUseCase;
 import org.lucycato.userservice.application.port.in.command.*;
 import org.lucycato.userservice.domain.AdminUser;
-import org.lucycato.userservice.domain.UserLogin;
+import org.lucycato.userservice.domain.AdminUserLogin;
 import org.springframework.web.bind.annotation.*;
 
 @WebAdapter
@@ -19,7 +19,10 @@ public class AdminUserController {
     private final AdminUserUseCase adminUserUseCase;
 
     @PostMapping("open-api/lucycato/v1/admin/user/register-own-service")
-    public UserLogin registerAdminUserOwnService(@RequestBody AdminUserRegisterRequest request) {
+    public AdminUserLogin registerAdminUserOwnService(
+            @RequestBody
+            AdminUserRegisterRequest request
+    ) {
         AdminUserRegisterCommand command = new AdminUserRegisterCommand(
                 request.getPhoneNumberAuthCode(),
                 request.getNickName(),
@@ -27,69 +30,81 @@ public class AdminUserController {
                 request.getEmail(),
                 request.getPassword(),
                 request.getPhoneNumber(),
-                request.getDeviceInfo().getDeviceMacAddress(),
-                request.getDeviceInfo().getDeviceFcmToken(),
-                request.getDeviceInfo().getDeviceOsType(),
-                request.getDeviceInfo().getDeiceOsVersion(),
-                request.getAppOrDeviceInfo().getAppOrBrowserType(),
-                request.getAppOrDeviceInfo().getAppOrBrowserVersion(),
-                request.getAppOrDeviceInfo().getNetworkType(),
-                request.getAppOrDeviceInfo().getLocale()
+                request.getDevice().getDeviceMacAddress(),
+                request.getDevice().getDeviceFcmToken(),
+                request.getDevice().getDeviceOsType(),
+                request.getDevice().getDeiceOsVersion(),
+                request.getPlatform().getPlatformType(),
+                request.getPlatform().getPlatformVersion(),
+                request.getPlatform().getNetworkType(),
+                request.getPlatform().getLocale()
         );
         return adminUserUseCase.register(command);
     }
 
-    // TODO: 어드민 아이디 중복 check API 개발
-
-    // TODO: 아이디 찾기 API 개발
-
-    // TODO: 비밀번호 찾기 API 개발
-
     @PostMapping("open-api/lucycato/v1/admin/user/login-own-service")
-    public UserLogin loginAdminUser(@RequestBody AdminUserLoginRequest request) {
+    public AdminUserLogin loginAdminUser(
+            @RequestBody
+            AdminUserLoginRequest request
+    ) {
         AdminUserLoginCommand command = new AdminUserLoginCommand(
                 request.getEmail(),
                 request.getPassword(),
-                request.getDeviceInfo().getDeviceMacAddress(),
-                request.getDeviceInfo().getDeviceFcmToken(),
-                request.getDeviceInfo().getDeviceOsType(),
-                request.getDeviceInfo().getDeiceOsVersion(),
-                request.getAppOrDeviceInfo().getAppOrBrowserType(),
-                request.getAppOrDeviceInfo().getAppOrBrowserVersion(),
-                request.getAppOrDeviceInfo().getNetworkType(),
-                request.getAppOrDeviceInfo().getLocale()
+                request.getDevice().getDeviceMacAddress(),
+                request.getDevice().getDeviceFcmToken(),
+                request.getDevice().getDeviceOsType(),
+                request.getDevice().getDeiceOsVersion(),
+                request.getPlatform().getPlatformType(),
+                request.getPlatform().getPlatformVersion(),
+                request.getPlatform().getNetworkType(),
+                request.getPlatform().getLocale()
         );
         return adminUserUseCase.login(command);
     }
 
     @PostMapping("api/lucycato/v1/admin/user/login-check")
-    public void checkLoginAdminUser(@AdminUserHeaders AdminUserHeaderDetail adminUserHeaderDetail, @RequestBody AdminUserLoginCheckRequest request) {
+    public void checkLoginAdminUser(
+            @AdminUserHeaders
+            AdminUserHeaderDetail adminUserHeaderDetail,
+            @RequestBody
+            AdminUserLoginCheckRequest request
+    ) {
         AdminUserLoginCheckCommand command = new AdminUserLoginCheckCommand(
-                adminUserHeaderDetail.getAdminMemberId(),
-                request.getDeviceInfo().getDeviceMacAddress(),
-                request.getDeviceInfo().getDeviceFcmToken(),
-                request.getDeviceInfo().getDeviceOsType(),
-                request.getDeviceInfo().getDeiceOsVersion(),
-                request.getAppOrDeviceInfo().getAppOrBrowserType(),
-                request.getAppOrDeviceInfo().getAppOrBrowserVersion(),
-                request.getAppOrDeviceInfo().getNetworkType(),
-                request.getAppOrDeviceInfo().getLocale()
+                adminUserHeaderDetail.getAdminUserId(),
+                request.getDevice().getDeviceMacAddress(),
+                request.getDevice().getDeviceFcmToken(),
+                request.getDevice().getDeviceOsType(),
+                request.getDevice().getDeiceOsVersion(),
+                request.getPlatform().getPlatformType(),
+                request.getPlatform().getPlatformVersion(),
+                request.getPlatform().getNetworkType(),
+                request.getPlatform().getLocale()
         );
         adminUserUseCase.loginCheck(command);
     }
 
     @PostMapping("api/lucycato/v1/admin/user/logout")
-    public void logoutAdminUser(@AdminUserHeaders AdminUserHeaderDetail adminUserHeaderDetail, @RequestBody AdminUserLogoutRequest request) {
+    public void logoutAdminUser(
+            @AdminUserHeaders
+            AdminUserHeaderDetail adminUserHeaderDetail,
+            @RequestBody
+            AdminUserLogoutRequest request
+    ) {
         AdminUserLogoutCommand command = new AdminUserLogoutCommand(
-                adminUserHeaderDetail.getAdminMemberId(),
+                adminUserHeaderDetail.getAdminUserId(),
                 request.getDeviceMacAddress(),
-                request.getAppOrBrowserType()
+                request.getPlatformType()
         );
         adminUserUseCase.logout(command);
     }
 
     @PatchMapping("api/lucycato/v1/admin/user/add-role")
-    public AdminUser addAdminUserRole(@AdminUserHeaders AdminUserHeaderDetail adminUserHeaderDetail, @RequestBody ModifyAdminUserRoleRequest request) {
+    public AdminUser addAdminUserRole(
+            @AdminUserHeaders
+            AdminUserHeaderDetail adminUserHeaderDetail,
+            @RequestBody
+            ModifyAdminUserRoleRequest request
+    ) {
         ModifyAdminUserRoleCommand command = new ModifyAdminUserRoleCommand(
                 adminUserHeaderDetail.getAdminUserRoles(),
                 request.getTargetUserId(),
@@ -99,7 +114,12 @@ public class AdminUserController {
     }
 
     @PatchMapping("api/lucycato/v1/admin/user/remove-role")
-    public AdminUser removeAdminUserRole(@AdminUserHeaders AdminUserHeaderDetail adminUserHeaderDetail, @RequestBody ModifyAdminUserRoleRequest request) {
+    public AdminUser removeAdminUserRole(
+            @AdminUserHeaders
+            AdminUserHeaderDetail adminUserHeaderDetail,
+            @RequestBody
+            ModifyAdminUserRoleRequest request
+    ) {
         ModifyAdminUserRoleCommand command = new ModifyAdminUserRoleCommand(
                 adminUserHeaderDetail.getAdminUserRoles(),
                 request.getTargetUserId(),

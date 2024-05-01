@@ -1,7 +1,8 @@
 package org.lucycato.userservice.domain;
 
 import lombok.*;
-import org.lucycato.userservice.model.enums.MembershipGrade;
+import org.lucycato.userservice.application.port.out.result.AppUserMembershipResult;
+import org.lucycato.userservice.domain.enums.MembershipGrade;
 
 import java.time.LocalDateTime;
 
@@ -22,21 +23,14 @@ public class AppUserMembership {
 
     private LocalDateTime expiredAt;
 
-    public static AppUserMembership create(
-            Long appUserMembershipId,
-            Long appUserId,
-            MembershipGrade membershipGrade,
-            Boolean isExpired,
-            LocalDateTime createdAt,
-            LocalDateTime expiredAt
-    ) {
+    public static AppUserMembership from(AppUserMembershipResult result) {
         return AppUserMembership.builder()
-                .appUserMembershipId(appUserMembershipId)
-                .appUserId(appUserId)
-                .membershipGrade(membershipGrade)
-                .isExpired(isExpired)
-                .createdAt(createdAt)
-                .expiredAt(expiredAt)
+                .appUserMembershipId(result.getAppUserMembershipId())
+                .appUserId(result.getAppUserId())
+                .membershipGrade(result.getMembershipGrade())
+                .isExpired(result.getIsExpired())
+                .createdAt(result.getCreatedAt())
+                .expiredAt(result.getExpiredAt())
                 .build();
     }
 }
