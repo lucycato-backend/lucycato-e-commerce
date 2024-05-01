@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class IssueFcmTokenResult {
+public class IssueJwtTokenResult {
     private String accessToken;
 
     private LocalDateTime expiredAccessToken;

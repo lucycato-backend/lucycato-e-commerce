@@ -1,19 +1,17 @@
-package org.lucycato.userservice.model.info;
+package org.lucycato.userservice.adapter.out.persistence.vo;
 
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.lucycato.userservice.model.enums.DeviceOsType;
-import org.w3c.dom.stylesheets.LinkStyle;
+import org.lucycato.userservice.domain.enums.DeviceOsType;
 
 import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class DeviceInfo {
+public class DeviceVo {
     private String deviceManAddress;
 
     private String deviceFcmToken;
@@ -22,13 +20,13 @@ public class DeviceInfo {
 
     private String deviceOsVersion;
 
-    private List<AppOrBrowserInfo> appOrBrowserInfos;
+    private List<PlatformVo> platformVos;
 
-    public DeviceInfo(String deviceManAddress, String deviceFcmToken, DeviceOsType deviceOsType, String deviceOsVersion, List<AppOrBrowserInfo> appOrBrowserInfos) {
+    public DeviceVo(String deviceManAddress, String deviceFcmToken, DeviceOsType deviceOsType, String deviceOsVersion, List<PlatformVo> platformVos) {
         this.deviceManAddress = deviceManAddress;
         this.deviceFcmToken = deviceFcmToken;
         this.deviceOsType = deviceOsType;
         this.deviceOsVersion = deviceOsVersion;
-        this.appOrBrowserInfos = appOrBrowserInfos;
+        this.platformVos = platformVos;
     }
 }

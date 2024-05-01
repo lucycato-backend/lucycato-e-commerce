@@ -1,4 +1,4 @@
-package org.lucycato.userservice.model.enums;
+package org.lucycato.userservice.domain.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

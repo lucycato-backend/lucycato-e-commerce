@@ -1,11 +1,11 @@
-package org.lucycato.userservice.model.enums;
+package org.lucycato.userservice.domain.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum AppOrBrowserType {
+public enum PlatformType {
     APP("app"),
     CHROME("chrome"),
     SAFARI("safari"),

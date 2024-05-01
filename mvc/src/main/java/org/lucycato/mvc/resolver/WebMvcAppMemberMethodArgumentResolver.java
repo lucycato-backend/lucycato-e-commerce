@@ -31,7 +31,7 @@ public class WebMvcAppMemberMethodArgumentResolver implements HandlerMethodArgum
         String[] appUserJsonList = webRequest.getHeaderValues(XHeaderContext.ADMIN_OR_APP_USER_JSON_STRING_HEADER_KEY);
         if (appUserJsonList != null && appUserJsonList.length != 0){
             AppUserHeaderDetail appUserHeaderDetail = objectMapper.readValue(appUserJsonList[0], AppUserHeaderDetail.class);
-            if (appUserHeaderDetail.getAppMemberId() != null) {
+            if (appUserHeaderDetail.getAppUserId() != null) {
                 return appUserHeaderDetail;
             }
         }

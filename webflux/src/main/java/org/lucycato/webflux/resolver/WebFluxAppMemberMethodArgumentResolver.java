@@ -33,7 +33,7 @@ public class WebFluxAppMemberMethodArgumentResolver implements HandlerMethodArgu
         List<String> appUserJsonList = exchange.getRequest().getHeaders().get(XHeaderContext.ADMIN_OR_APP_USER_JSON_STRING_HEADER_KEY);
         if (appUserJsonList != null && !appUserJsonList.isEmpty()) {
             return Mono.fromCallable(() -> objectMapper.readValue(appUserJsonList.get(0), AppUserHeaderDetail.class))
-                    .filter(appUserHeaderDetail -> appUserHeaderDetail.getAppMemberId() != null)
+                    .filter(appUserHeaderDetail -> appUserHeaderDetail.getAppUserId() != null)
                     .switchIfEmpty(Mono.error(new ApiExceptionImpl(ErrorCodeImpl.RESOLVER_VALUE_NOT_FOUNT)))
                     .map(appUserHeaderDetail -> appUserHeaderDetail);
         }
