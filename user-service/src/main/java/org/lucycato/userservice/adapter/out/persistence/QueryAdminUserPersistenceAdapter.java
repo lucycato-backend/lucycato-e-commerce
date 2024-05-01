@@ -9,6 +9,8 @@ import org.lucycato.userservice.adapter.out.persistence.jpaentity.AdminUserJpaEn
 import org.lucycato.userservice.adapter.out.persistence.jparepository.AdminUserJpaRepository;
 import org.lucycato.userservice.adapter.out.persistence.jpaentity.AppUserJpaEntity;
 import org.lucycato.userservice.adapter.out.persistence.jparepository.AppUserJpaRepository;
+import org.lucycato.userservice.adapter.out.persistence.redisentity.AppUserMembershipRedisEntity;
+import org.lucycato.userservice.adapter.out.persistence.redisentity.AppUserRedisEntity;
 import org.lucycato.userservice.adapter.out.persistence.vo.DeviceVo;
 import org.lucycato.userservice.application.port.out.QueryAdminUserPort;
 import org.lucycato.userservice.application.port.out.result.AdminUserResult;
@@ -22,13 +24,7 @@ import java.util.Objects;
 @PersistenceAdapter
 @RequiredArgsConstructor
 public class QueryAdminUserPersistenceAdapter implements QueryAdminUserPort {
-    private final String APP_USER_CACHE_KEY = "app-users:%d";
-
     private final AdminUserJpaRepository adminUserJpaRepository;
-
-    private final AppUserJpaRepository appUserJpaRepository;
-
-    private final CommonRedisTemplate commonRedisTemplate;
 
     @Override
     public AdminUserResult getAdminUser(Long adminUserId) {
@@ -37,47 +33,7 @@ public class QueryAdminUserPersistenceAdapter implements QueryAdminUserPort {
     }
 
     @Override
-    public AppUserResult getAppUser(Long appUserId) {
-        return commonRedisTemplate.<AppUserResult>find(APP_USER_CACHE_KEY.formatted(appUserId)).orElseGet(() -> {
-            AppUserJpaEntity appUserJpaEntity = appUserJpaRepository.findById(appUserId).orElseThrow(() -> new ApiExceptionImpl(ErrorCodeImpl.NOT_FOUND));
-            return AppUserResult.from(appUserJpaEntity);
-        });
-    }
-
-    @Override
-    public List<AppUserResult> getAppUserList() {
-        return appUserJpaRepository.findAll()
-                .stream()
-                .map(AppUserResult::from)
-                .toList();
-    }
-
-    @Override
-    public List<AppUserResult> getAppUserListByUserIds(List<Long> appUserIds) {
-        List<String> keys = appUserIds.stream().map(APP_USER_CACHE_KEY::formatted).toList();
-        List<AppUserResult> redisAppUserResults = commonRedisTemplate.findAll(keys);
-
-        List<Long> emptyAppUserIds = new ArrayList<>();
-        for (int i = 0; i < redisAppUserResults.size(); i++) {
-            if (redisAppUserResults.get(i) == null) {
-                emptyAppUserIds.add(appUserIds.get(i));
-            }
-        }
-
-        List<AppUserResult> dbAppUserResults = appUserJpaRepository.findByIds(emptyAppUserIds)
-                .stream()
-                .map(AppUserResult::from)
-                .toList();
-
-        dbAppUserResults.addAll(redisAppUserResults);
-        dbAppUserResults.removeIf(Objects::isNull);
-        dbAppUserResults.sort(Comparator.comparingLong(AppUserResult::getAppUserId).reversed());
-
-        return dbAppUserResults;
-    }
-
-    @Override
-    public List<DeviceVo> getAppUserDeviceInfoList(Long adminUserId) {
+    public List<DeviceVo> getAdminUserDeviceInfoList(Long adminUserId) {
         return (List<DeviceVo>) adminUserJpaRepository.findDeviceInfosByAppUserId(adminUserId).orElseThrow(() -> new ApiExceptionImpl(ErrorCodeImpl.NOT_FOUND));
     }
 }

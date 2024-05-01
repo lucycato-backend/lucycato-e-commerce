@@ -5,6 +5,7 @@ import org.lucycato.userservice.adapter.out.persistence.vo.DeviceVo;
 import org.lucycato.userservice.application.port.in.QueryAdminUserUseCase;
 import org.lucycato.userservice.application.port.in.command.*;
 import org.lucycato.userservice.application.port.out.QueryAdminUserPort;
+import org.lucycato.userservice.application.port.out.QueryAppUserPort;
 import org.lucycato.userservice.application.port.out.result.AdminUserResult;
 import org.lucycato.userservice.application.port.out.result.AppUserResult;
 import org.lucycato.userservice.domain.AdminUser;
@@ -22,6 +23,8 @@ import java.util.List;
 public class QueryAdminUserService implements QueryAdminUserUseCase {
     private final QueryAdminUserPort queryAdminUserPort;
 
+    private final QueryAppUserPort queryAppUserPort;
+
     @Override
     public AdminUser getAdminUser(GetAdminUserCommand command) {
         AdminUserResult adminUserResult = queryAdminUserPort.getAdminUser(command.getAdminUserId());
@@ -30,7 +33,7 @@ public class QueryAdminUserService implements QueryAdminUserUseCase {
 
     @Override
     public List<DeviceManagement> getAdminUserDeviceManagementList(GetAdminUserDeviceInfoCommand command) {
-        List<DeviceVo> deviceVos = queryAdminUserPort.getAppUserDeviceInfoList(command.getAdminUserId());
+        List<DeviceVo> deviceVos = queryAdminUserPort.getAdminUserDeviceInfoList(command.getAdminUserId());
 
         return deviceVos.stream().map(deviceVo -> {
             List<Platform> platforms = deviceVo.getPlatformVos().stream().map(platformVo -> Platform.create(
@@ -53,13 +56,13 @@ public class QueryAdminUserService implements QueryAdminUserUseCase {
 
     @Override
     public AppUser getAppUser(GetAppUserByAdminUserCommand command) {
-        AppUserResult appUserResult = queryAdminUserPort.getAppUser(command.getTargetAppUserId());
+        AppUserResult appUserResult = queryAppUserPort.getAppUserResult(command.getTargetAppUserId());
         return AppUser.from(appUserResult);
     }
 
     @Override
     public List<AppUser> getAppUserList() {
-        List<AppUserResult> appUserResults = queryAdminUserPort.getAppUserList();
+        List<AppUserResult> appUserResults = queryAppUserPort.getAppUserList();
         return appUserResults
                 .stream()
                 .map(AppUser::from)
@@ -68,7 +71,7 @@ public class QueryAdminUserService implements QueryAdminUserUseCase {
 
     @Override
     public List<AppUser> getAppUserListByAppUserIds(List<Long> appUserIds) {
-        List<AppUserResult> appUserResults = queryAdminUserPort.getAppUserListByUserIds(appUserIds);
+        List<AppUserResult> appUserResults = queryAppUserPort.getAppUserListByUserIds(appUserIds);
         return appUserResults
                 .stream()
                 .map(AppUser::from)

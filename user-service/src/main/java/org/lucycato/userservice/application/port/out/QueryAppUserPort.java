@@ -13,5 +13,9 @@ public interface QueryAppUserPort {
 
     AppUserResult getAppUserResult(Long appUserId);
 
+    List<AppUserResult> getAppUserList();
+
+    List<AppUserResult> getAppUserListByUserIds(List<Long> appUserIds);
+
     List<DeviceVo> getAppUserDeviceInfoList(Long appUserId);
 }
