@@ -1,15 +1,23 @@
 package org.lucycato.userservice.application.port.out;
 
 import org.lucycato.common.security.AdminUserRole;
-import org.lucycato.common.security.AppUserRole;
-import org.lucycato.userservice.application.port.out.result.IssueFcmTokenResult;
+import org.lucycato.userservice.application.port.out.result.IssueJwtTokenResult;
+import org.lucycato.userservice.domain.enums.PlatformType;
 
 import java.util.List;
 
 public interface AuthPort {
     Boolean verifyPhoneNumberAuthCode(String phoneNumberAuthCode);
 
-    IssueFcmTokenResult issueAdminUserFcmToken(Long adminUserId, List<AdminUserRole> adminUserRoles);
+    IssueJwtTokenResult issueAdminUserJwtToken(
+            Long adminUserId, List<AdminUserRole> adminUserRoles,
+            String currentDeviceMacAddress,
+            PlatformType currentPlatformType
+    );
 
-    List<Long> getAppUserIdsByRequestDelegationRoles(List<AdminUserRole> appUserRoles);
+    IssueJwtTokenResult issueAppUserJwtToken(
+            Long adminUserId,
+            String currentDeviceMacAddress,
+            PlatformType currentPlatformType
+    );
 }

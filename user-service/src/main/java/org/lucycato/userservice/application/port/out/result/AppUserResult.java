@@ -4,10 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.lucycato.userservice.model.enums.AppUserBadge;
-import org.lucycato.userservice.model.enums.AppUserGrade;
-import org.lucycato.userservice.model.enums.SocialStatus;
-import org.lucycato.userservice.model.info.DeviceInfo;
+import org.lucycato.userservice.adapter.out.persistence.entity.AppUserJpaEntity;
+import org.lucycato.userservice.domain.enums.AppUserBadge;
+import org.lucycato.userservice.domain.enums.AppUserGrade;
+import org.lucycato.userservice.domain.enums.SocialStatus;
+import org.lucycato.userservice.adapter.out.persistence.vo.DeviceVo;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,8 +21,6 @@ public class AppUserResult {
     private Long appUserId;
 
     private SocialStatus socialStatus;
-
-    private String nickName;
 
     private String name;
 
@@ -37,13 +36,32 @@ public class AppUserResult {
 
     private List<AppUserBadge> badges;
 
-    private List<DeviceInfo> deviceInfos;
+    private List<DeviceVo> deviceVos;
 
-    private LocalDateTime lastLoginAt;
-
-    private LocalDateTime lastLogoutAt;
+    private List<AppUserMembershipResult> membershipResults;
 
     private LocalDateTime createdAt;
 
     private LocalDateTime modifiedAt;
+
+    public static AppUserResult from(AppUserJpaEntity entity) {
+        List<AppUserMembershipResult> appUserMembershipResults = entity.getAppUserMembershipJpaEntities()
+                .stream()
+                .map(AppUserMembershipResult::from)
+                .toList();
+
+        return AppUserResult.builder()
+                .appUserId(entity.getId())
+                .name(entity.getName())
+                .email(entity.getEmail())
+                .phoneNumber(entity.getPhoneNumber())
+                .imageUrl(entity.getImageUrl())
+                .grade(entity.getGrade())
+                .badges(entity.getAppUserBadges())
+                .deviceVos(entity.getDeviceVos())
+                .membershipResults(appUserMembershipResults)
+                .createdAt(entity.getCreatedAt())
+                .modifiedAt(entity.getModifiedAt())
+                .build();
+    }
 }

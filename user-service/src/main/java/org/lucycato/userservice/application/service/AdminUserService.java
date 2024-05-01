@@ -6,12 +6,12 @@ import org.lucycato.common.exception.ApiExceptionImpl;
 import org.lucycato.userservice.application.port.in.AdminUserUseCase;
 import org.lucycato.userservice.application.port.in.command.*;
 import org.lucycato.userservice.application.port.out.AdminUserPort;
+import org.lucycato.userservice.application.port.out.DeviceManagementPort;
 import org.lucycato.userservice.application.port.out.result.AdminUserResult;
-import org.lucycato.userservice.application.port.out.result.IssueFcmTokenResult;
+import org.lucycato.userservice.application.port.out.result.IssueJwtTokenResult;
 import org.lucycato.userservice.application.port.out.AuthPort;
 import org.lucycato.userservice.domain.AdminUser;
-import org.lucycato.userservice.domain.UserLogin;
-import org.lucycato.userservice.model.enums.UserStatus;
+import org.lucycato.userservice.domain.AdminUserLogin;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,10 +22,12 @@ public class AdminUserService implements AdminUserUseCase {
 
     private final AdminUserPort adminUserPort;
 
+    private final DeviceManagementPort deviceManagementPort;
+
     private final AuthPort authPort;
 
     @Override
-    public UserLogin register(AdminUserRegisterCommand command) {
+    public AdminUserLogin register(AdminUserRegisterCommand command) {
         Boolean isVerification = authPort.verifyPhoneNumberAuthCode(command.getPhoneNumberAuthCode());
 
         if (isVerification) {
@@ -34,37 +36,36 @@ public class AdminUserService implements AdminUserUseCase {
                     command.getName(),
                     command.getEmail(),
                     command.getPassword(),
-                    command.getPhoneNumber(),
-                    command.getDeviceMacAddress(),
-                    command.getDeviceFcmToken(),
-                    command.getDeviceOsType(),
-                    command.getDeiceOsVersion(),
-                    command.getAppOrBrowserType(),
-                    command.getAppOrBrowserVersion(),
-                    command.getNetworkType(),
-                    command.getLocale()
+                    command.getPhoneNumber()
             );
 
-            IssueFcmTokenResult issueFcmTokenResult = authPort.issueAdminUserFcmToken(
+            deviceManagementPort.modifyAdminUserDeviceInfo(
                     adminUserResult.getAdminUserId(),
-                    adminUserResult.getAdminUserRoles()
+                    command.getCurrentAdminUserDeviceMacAddress(),
+                    command.getCurrentAdminUserDeviceFcmToken(),
+                    command.getCurrentAdminUserDeviceOsType(),
+                    command.getCurrentAdminUserDeiceOsVersion(),
+                    command.getCurrentAdminUserPlatformType(),
+                    command.getCurrentAdminUserPlatformVersion(),
+                    command.getCurrentAdminUserNetworkType(),
+                    command.getCurrentAdminUserLocale()
             );
 
-            return UserLogin.create(
+            IssueJwtTokenResult issueJwtTokenResult = authPort.issueAdminUserJwtToken(
                     adminUserResult.getAdminUserId(),
-                    UserStatus.ADMIN,
-                    issueFcmTokenResult.getAccessToken(),
-                    issueFcmTokenResult.getExpiredAccessToken(),
-                    issueFcmTokenResult.getRefreshToken(),
-                    issueFcmTokenResult.getExpiredRefreshToken()
+                    adminUserResult.getAdminUserRoles(),
+                    command.getCurrentAdminUserDeviceMacAddress(),
+                    command.getCurrentAdminUserPlatformType()
             );
+
+            return AdminUserLogin.from(adminUserResult, issueJwtTokenResult);
         } else {
             throw new ApiExceptionImpl(UserErrorCodeImpl.PHONE_NUMBER_VERIFICATION_NOT_MATCH);
         }
     }
 
     @Override
-    public UserLogin login(AdminUserLoginCommand command) {
+    public AdminUserLogin login(AdminUserLoginCommand command) {
         AdminUserResult adminUserResult;
         try {
             adminUserResult = adminUserPort.getAdminUserResult(command.getEmail(), command.getPassword());
@@ -72,54 +73,50 @@ public class AdminUserService implements AdminUserUseCase {
             throw new ApiExceptionImpl(UserErrorCodeImpl.USER_NOT_MATH);
         }
 
-        adminUserPort.modifyDeviceInfo(
+        deviceManagementPort.modifyAdminUserDeviceInfo(
                 adminUserResult.getAdminUserId(),
-                command.getDeviceMacAddress(),
-                command.getDeviceFcmToken(),
-                command.getDeviceOsType(),
-                command.getDeiceOsVersion(),
-                command.getAppOrBrowserType(),
-                command.getAppOrBrowserVersion(),
-                command.getNetworkType(),
-                command.getLocale()
+                command.getCurrentAdminUserDeviceMacAddress(),
+                command.getCurrentAdminUserDeviceFcmToken(),
+                command.getCurrentAdminUserDeviceOsType(),
+                command.getCurrentAdminUserDeiceOsVersion(),
+                command.getCurrentAdminUserPlatformType(),
+                command.getCurrentAdminUserPlatformVersion(),
+                command.getCurrentAdminUserNetworkType(),
+                command.getCurrentAdminUserLocale()
         );
 
-        IssueFcmTokenResult issueFcmTokenResult = authPort.issueAdminUserFcmToken(
+        IssueJwtTokenResult issueJwtTokenResult = authPort.issueAdminUserJwtToken(
                 adminUserResult.getAdminUserId(),
-                adminUserResult.getAdminUserRoles()
+                adminUserResult.getAdminUserRoles(),
+                command.getCurrentAdminUserDeviceMacAddress(),
+                command.getCurrentAdminUserPlatformType()
         );
 
-        return UserLogin.create(
-                adminUserResult.getAdminUserId(),
-                UserStatus.ADMIN,
-                issueFcmTokenResult.getAccessToken(),
-                issueFcmTokenResult.getExpiredAccessToken(),
-                issueFcmTokenResult.getRefreshToken(),
-                issueFcmTokenResult.getExpiredRefreshToken()
-        );
+        return AdminUserLogin.from(adminUserResult, issueJwtTokenResult);
     }
 
     @Override
     public void loginCheck(AdminUserLoginCheckCommand command) {
-        adminUserPort.modifyDeviceInfo(
+        deviceManagementPort.modifyAdminUserDeviceInfo(
                 command.getAdminUserId(),
-                command.getDeviceMacAddress(),
-                command.getDeviceFcmToken(),
-                command.getDeviceOsType(),
-                command.getDeiceOsVersion(),
-                command.getAppOrBrowserType(),
-                command.getAppOrBrowserVersion(),
-                command.getNetworkType(),
-                command.getLocale()
+                command.getCurrentAdminUserDeviceMacAddress(),
+                command.getCurrentAdminUserDeviceFcmToken(),
+                command.getCurrentAdminUserDeviceOsType(),
+                command.getCurrentAdminUserDeiceOsVersion(),
+                command.getCurrentAdminUserPlatformType(),
+                command.getCurrentAdminUserPlatformVersion(),
+                command.getCurrentAdminUserNetworkType(),
+                command.getCurrentAdminUserLocale()
         );
     }
 
     @Override
     public void logout(AdminUserLogoutCommand command) {
-        adminUserPort.expireAdminUser(
-                command.getAdminMemberId(),
-                command.getDeviceMacAddress(),
-                command.getAppOrBrowserType()
+
+        deviceManagementPort.modifyAdminUserDeviceLogout(
+                command.getAdminUserId(),
+                command.getCurrentAdminUserDeviceMacAddress(),
+                command.getCurrentAdminUserPlatformType()
         );
     }
 
@@ -130,16 +127,7 @@ public class AdminUserService implements AdminUserUseCase {
                 command.getTargetChangeRole()
         );
 
-        return AdminUser.create(
-                adminUserResult.getAdminUserId(),
-                adminUserResult.getName(),
-                adminUserResult.getEmail(),
-                adminUserResult.getPhoneNumber(),
-                adminUserResult.getImageUrl(),
-                adminUserResult.getAdminUserRoles(),
-                adminUserResult.getCreatedAt(),
-                adminUserResult.getModifiedAt()
-        );
+        return AdminUser.from(adminUserResult);
     }
 
     @Override
@@ -148,15 +136,6 @@ public class AdminUserService implements AdminUserUseCase {
                 command.getTargetAdminUserId(),
                 command.getTargetChangeRole()
         );
-        return AdminUser.create(
-                adminUserResult.getAdminUserId(),
-                adminUserResult.getName(),
-                adminUserResult.getEmail(),
-                adminUserResult.getPhoneNumber(),
-                adminUserResult.getImageUrl(),
-                adminUserResult.getAdminUserRoles(),
-                adminUserResult.getCreatedAt(),
-                adminUserResult.getModifiedAt()
-        );
+        return AdminUser.from(adminUserResult);
     }
 }
