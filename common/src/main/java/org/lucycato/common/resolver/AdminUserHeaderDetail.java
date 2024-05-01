@@ -13,15 +13,21 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 public class AdminUserHeaderDetail extends SelfValidating<AdminUserHeaderDetail> {
     @NotNull
-    private Long adminMemberId;
+    private Long adminUserId;
 
     @NotBlank
     private List<AdminUserRole> adminUserRoles;
 
-    public AdminUserHeaderDetail(Long adminMemberId, List<AdminUserRole> adminUserRoles) {
-        this.adminMemberId = adminMemberId;
-        this.adminUserRoles = adminUserRoles;
+    @NotBlank
+    private String currentAppUserDeviceMacAddress;
 
-        this.validateSelf();
+    @NotBlank
+    private String currentAppUserPlatFormType;
+
+    public AdminUserHeaderDetail(Long adminUserId, List<AdminUserRole> adminUserRoles, String currentAppUserDeviceMacAddress, String currentAppUserPlatFormType) {
+        this.adminUserId = adminUserId;
+        this.adminUserRoles = adminUserRoles;
+        this.currentAppUserDeviceMacAddress = currentAppUserDeviceMacAddress;
+        this.currentAppUserPlatFormType = currentAppUserPlatFormType;
     }
 }

@@ -6,21 +6,24 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.lucycato.common.SelfValidating;
-import org.lucycato.common.security.AppUserRole;
-
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class AppUserHeaderDetail extends SelfValidating<AppUserHeaderDetail> {
     @NotNull
-    private Long appMemberId;
+    private Long appUserId;
 
-    public AppUserHeaderDetail(
-            Long appMemberId
-    ) {
-        this.appMemberId = appMemberId;
+    @NotBlank
+    private String currentAppUserDeviceMacAddress;
+
+    @NotBlank
+    private String currentAppUserPlatFormType;
+
+    public AppUserHeaderDetail(Long appUserId, String currentAppUserDeviceMacAddress, String currentAppUserPlatFormType) {
+        this.appUserId = appUserId;
+        this.currentAppUserDeviceMacAddress = currentAppUserDeviceMacAddress;
+        this.currentAppUserPlatFormType = currentAppUserPlatFormType;
 
         this.validateSelf();
     }
