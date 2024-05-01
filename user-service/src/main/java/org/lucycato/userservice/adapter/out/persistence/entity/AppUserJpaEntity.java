@@ -2,20 +2,26 @@ package org.lucycato.userservice.adapter.out.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.lucycato.userservice.model.enums.AppUserBadge;
-import org.lucycato.userservice.model.enums.AppUserGrade;
-import org.lucycato.userservice.model.info.DeviceInfo;
+import org.lucycato.userservice.adapter.out.persistence.entity.converter.AppUserBadgeListConverter;
+import org.lucycato.userservice.adapter.out.persistence.vo.DeviceVo;
+import org.lucycato.userservice.adapter.out.persistence.entity.converter.DeviceInfoListConverter;
+import org.lucycato.userservice.domain.enums.AppUserBadge;
+import org.lucycato.userservice.domain.enums.AppUserGrade;
+import org.lucycato.userservice.domain.enums.AppUserStatus;
+import org.lucycato.userservice.domain.enums.SocialStatus;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Table(name = "app_user")
 @Entity
 @Getter
 @Setter
-@Builder
+@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
 @AllArgsConstructor
 public class AppUserJpaEntity {
@@ -23,29 +29,30 @@ public class AppUserJpaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nickName;
+    @Enumerated(EnumType.STRING)
+    private SocialStatus socialStatus;
 
     private String name;
 
     private String email;
 
-    private String password;
-
     private String phoneNumber;
 
     private String imageUrl;
 
+    @Enumerated(EnumType.STRING)
     private AppUserGrade grade;
 
+    @Convert(converter = AppUserBadgeListConverter.class)
+    @Column(columnDefinition = "JSON")
     private List<AppUserBadge> appUserBadges;
 
     @Convert(converter = DeviceInfoListConverter.class)
     @Column(columnDefinition = "JSON")
-    private List<DeviceInfo> deviceInfos;
+    private List<DeviceVo> deviceVos;
 
-    private LocalDateTime lastLoginAt;
-
-    private LocalDateTime lastLogoutAt;
+    @Enumerated(EnumType.STRING)
+    private AppUserStatus status;
 
     @CreatedDate
     private LocalDateTime createdAt;
@@ -53,18 +60,16 @@ public class AppUserJpaEntity {
     @LastModifiedDate
     private LocalDateTime modifiedAt;
 
-    public AppUserJpaEntity(String nickName, String name, String email, String phoneNumber, String imageUrl, AppUserGrade grade, List<AppUserBadge> appUserBadges, List<DeviceInfo> deviceInfos, LocalDateTime lastLoginAt, LocalDateTime lastLogoutAt, LocalDateTime createdAt, LocalDateTime modifiedAt) {
-        this.nickName = nickName;
+    @OneToMany(mappedBy = "appUserJpaEntity", fetch = FetchType.LAZY)
+    private List<AppUserMembershipJpaEntity> appUserMembershipJpaEntities;
+
+    public AppUserJpaEntity(SocialStatus socialStatus, String name, String email, String phoneNumber, AppUserStatus status) {
+        this.socialStatus = socialStatus;
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.imageUrl = imageUrl;
-        this.grade = grade;
-        this.appUserBadges = appUserBadges;
-        this.deviceInfos = deviceInfos;
-        this.lastLoginAt = lastLoginAt;
-        this.lastLogoutAt = lastLogoutAt;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
+        this.status = status;
+        this.appUserBadges = new ArrayList<>();
+        this.deviceVos = new ArrayList<>();
     }
 }

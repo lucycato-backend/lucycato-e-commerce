@@ -5,7 +5,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.lucycato.common.security.AdminUserRole;
-import org.lucycato.userservice.model.info.DeviceInfo;
+import org.lucycato.userservice.adapter.out.persistence.entity.AdminUserJpaEntity;
+import org.lucycato.userservice.adapter.out.persistence.vo.DeviceVo;
+import org.lucycato.userservice.domain.AppUserMembership;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -31,9 +33,25 @@ public class AdminUserResult {
 
     private List<AdminUserRole> adminUserRoles;
 
-    private List<DeviceInfo> deviceInfos;
+    private List<DeviceVo> deviceVos;
 
     private LocalDateTime createdAt;
 
     private LocalDateTime modifiedAt;
+
+    public static AdminUserResult from(AdminUserJpaEntity entity) {
+        return AdminUserResult.builder()
+                .adminUserId(entity.getId())
+                .name(entity.getName())
+                .email(entity.getEmail())
+                .password(entity.getPassword())
+                .nickName(entity.getNickName())
+                .phoneNumber(entity.getPhoneNumber())
+                .imageUrl(entity.getImageUrl())
+                .adminUserRoles(entity.getAdminUserRoles())
+                .deviceVos(entity.getDeviceVos())
+                .createdAt(entity.getCreatedAt())
+                .modifiedAt(entity.getModifiedAt())
+                .build();
+    }
 }

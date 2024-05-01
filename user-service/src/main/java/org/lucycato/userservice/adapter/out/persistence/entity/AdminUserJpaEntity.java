@@ -3,18 +3,22 @@ package org.lucycato.userservice.adapter.out.persistence.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.lucycato.common.security.AdminUserRole;
-import org.lucycato.userservice.model.info.DeviceInfo;
+import org.lucycato.userservice.adapter.out.persistence.entity.converter.AdminRoleListConverter;
+import org.lucycato.userservice.adapter.out.persistence.vo.DeviceVo;
+import org.lucycato.userservice.adapter.out.persistence.entity.converter.DeviceInfoListConverter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Table(name = "admin_user")
 @Entity
 @Getter
 @Setter
-@Builder
+@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
 @AllArgsConstructor
 public class AdminUserJpaEntity {
@@ -40,7 +44,7 @@ public class AdminUserJpaEntity {
 
     @Convert(converter = DeviceInfoListConverter.class)
     @Column(columnDefinition = "JSON")
-    private List<DeviceInfo> deviceInfos;
+    private List<DeviceVo> deviceVos;
 
     @CreatedDate
     private LocalDateTime createdAt;
@@ -48,13 +52,13 @@ public class AdminUserJpaEntity {
     @LastModifiedDate
     private LocalDateTime modifiedAt;
 
-    public AdminUserJpaEntity(String nickName, String name, String email, String password, String phoneNumber, List<AdminUserRole> adminUserRoles, List<DeviceInfo> deviceInfos) {
+    public AdminUserJpaEntity(String nickName, String name, String email, String password, String phoneNumber) {
         this.nickName = nickName;
         this.name = name;
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
-        this.adminUserRoles = adminUserRoles;
-        this.deviceInfos = deviceInfos;
+        this.adminUserRoles = new ArrayList<>();
+        this.deviceVos = new ArrayList<>();
     }
 }

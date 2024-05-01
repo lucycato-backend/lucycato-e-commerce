@@ -31,7 +31,7 @@ public class WebMvcAdminMemberMethodArgumentResolver implements HandlerMethodArg
         String[] adminUserJsonList = webRequest.getHeaderValues(XHeaderContext.ADMIN_OR_APP_USER_JSON_STRING_HEADER_KEY);
         if (adminUserJsonList != null && adminUserJsonList.length != 0) {
             AdminUserHeaderDetail adminUserHeaderDetail = objectMapper.readValue(adminUserJsonList[0], AdminUserHeaderDetail.class);
-            if (adminUserHeaderDetail.getAdminMemberId() != null) {
+            if (adminUserHeaderDetail.getAdminUserId() != null) {
                 return adminUserHeaderDetail;
             }
         }

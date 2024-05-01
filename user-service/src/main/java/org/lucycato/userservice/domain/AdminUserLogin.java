@@ -1,6 +1,8 @@
 package org.lucycato.userservice.domain;
 
 import lombok.*;
+import org.lucycato.userservice.application.port.out.result.AdminUserResult;
+import org.lucycato.userservice.application.port.out.result.IssueJwtTokenResult;
 
 import java.time.LocalDateTime;
 
@@ -9,7 +11,7 @@ import java.time.LocalDateTime;
 @Builder(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class AdminUserLogin {
-    private Long adminUserId;
+    private AdminUser adminUser;
 
     private final String accessToken;
 
@@ -19,19 +21,14 @@ public class AdminUserLogin {
 
     private final LocalDateTime refreshTokenExpiredAt;
 
-    public static AdminUserLogin create(
-            Long adminUserId,
-            String accessToken,
-            LocalDateTime accessTokenExpiredAt,
-            String refreshToken,
-            LocalDateTime refreshTokenExpiredAt
-    ) {
+    public static AdminUserLogin from(AdminUserResult adminUserResult, IssueJwtTokenResult issueJwtTokenResult) {
+        AdminUser adminUser = AdminUser.from(adminUserResult);
         return AdminUserLogin.builder()
-                .adminUserId(adminUserId)
-                .accessToken(accessToken)
-                .accessTokenExpiredAt(accessTokenExpiredAt)
-                .refreshToken(refreshToken)
-                .refreshTokenExpiredAt(refreshTokenExpiredAt)
+                .adminUser(adminUser)
+                .accessToken(issueJwtTokenResult.getAccessToken())
+                .accessTokenExpiredAt(issueJwtTokenResult.getExpiredAccessToken())
+                .refreshToken(issueJwtTokenResult.getRefreshToken())
+                .refreshTokenExpiredAt(issueJwtTokenResult.getExpiredRefreshToken())
                 .build();
     }
 }

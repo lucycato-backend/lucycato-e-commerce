@@ -3,22 +3,18 @@ package org.lucycato.userservice.application.port.in;
 import org.lucycato.userservice.application.port.in.command.*;
 import org.lucycato.userservice.domain.AdminUser;
 import org.lucycato.userservice.domain.AppUser;
-import org.lucycato.userservice.model.info.DeviceInfo;
+import org.lucycato.userservice.domain.DeviceManagement;
 
 import java.util.List;
 
 public interface QueryAdminUserUseCase {
     AdminUser getAdminUser(GetAdminUserCommand command);
 
-    List<DeviceInfo> getAdminUserDeviceInfoList(GetAdminUserDeviceInfoCommand command);
+    List<DeviceManagement> getAdminUserDeviceManagementList(GetAdminUserDeviceInfoCommand command);
 
-    AppUser getAppUser(GetAppUserCommand command);
+    AppUser getAppUser(GetAppUserByAdminUserCommand command);
 
     List<AppUser> getAppUserList();
 
-    List<AppUser> getAppUserByLectureId(GetAppUserListByLectureIdsCommand command);
-
-    List<AppUser> getAppUserByTeacherId(GetAppUserListByTeacherIdsCommand command);
-
-    List<AppUser> getAppUserListByRequestDelegationRoles(GetAppUserByRequestDelegationRolesCommand command);
+    List<AppUser> getAppUserListByAppUserIds(List<Long> userIds);
 }

@@ -89,7 +89,6 @@ services:
 #      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n
       - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
-  #TODO: mysql 연동 - table name : save_task_history
   task-consumer:
     image: lucycato/lucycato-e-commerce-task-consumer:1.0.0
     networks:

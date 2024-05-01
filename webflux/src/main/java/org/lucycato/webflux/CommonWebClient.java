@@ -38,7 +38,7 @@ public class CommonWebClient {
                                         }))
                                         .flatMap(apiErrorReason -> Mono.error(new ApiExceptionImpl(ex.getStatusCode().value(), apiErrorReason.getResult())))
                         )
-                        .onErrorResume(error -> Mono.empty())
+                        .onErrorResume(Mono::error)
         );
     }
 
@@ -59,7 +59,7 @@ public class CommonWebClient {
                                         }))
                                         .flatMap(apiErrorReason -> Mono.error(new ApiExceptionImpl(ex.getStatusCode().value(), apiErrorReason.getResult())))
                         )
-                        .onErrorResume(error -> Mono.empty())
+                        .onErrorResume(Mono::error)
         );
     }
 
@@ -80,7 +80,7 @@ public class CommonWebClient {
                                         }))
                                         .flatMap(apiErrorReason -> Mono.error(new ApiExceptionImpl(ex.getStatusCode().value(), apiErrorReason.getResult())))
                         )
-                        .onErrorResume(error -> Mono.empty())
+                        .onErrorResume(Mono::error)
         );
     }
 
@@ -99,7 +99,7 @@ public class CommonWebClient {
                                         }))
                                         .flatMap(apiErrorReason -> Mono.error(new ApiExceptionImpl(ex.getStatusCode().value(), apiErrorReason.getResult())))
                         )
-                        .onErrorResume(error -> Mono.empty())
+                        .onErrorResume(Mono::error)
         );
     }
 }

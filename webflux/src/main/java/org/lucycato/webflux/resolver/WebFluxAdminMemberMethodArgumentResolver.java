@@ -33,7 +33,7 @@ public class WebFluxAdminMemberMethodArgumentResolver implements HandlerMethodAr
         List<String> adminUserJsonList = exchange.getRequest().getHeaders().get(XHeaderContext.ADMIN_OR_APP_USER_JSON_STRING_HEADER_KEY);
         if (adminUserJsonList != null && !adminUserJsonList.isEmpty()) {
             return Mono.fromCallable(() -> objectMapper.readValue(adminUserJsonList.get(0), AdminUserHeaderDetail.class))
-                    .filter(adminUserHeaderDetail -> adminUserHeaderDetail.getAdminMemberId() != null)
+                    .filter(adminUserHeaderDetail -> adminUserHeaderDetail.getAdminUserId() != null)
                     .switchIfEmpty(Mono.error(new ApiExceptionImpl(ErrorCodeImpl.RESOLVER_VALUE_NOT_FOUNT)))
                     .map(adminUserHeaderDetail -> adminUserHeaderDetail);
         }

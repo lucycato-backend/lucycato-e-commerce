@@ -1,32 +1,32 @@
 package org.lucycato.userservice.application.port.in.command;
 
-
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.lucycato.common.SelfValidating;
-import org.lucycato.common.security.AdminUserRole;
-
-import java.util.List;
+import org.lucycato.userservice.domain.enums.PlatformType;
 
 @Getter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class GetAppUserCommand extends SelfValidating<GetAppUserCommand> {
-    @NotEmpty
-    private List<AdminUserRole> adminUserRoles;
+    @NotNull
+    private Long appUserId;
+
+    @NotBlank
+    private String currentAppUserDeviceMacAddress;
 
     @NotNull
-    private Long targetAppUserId;
+    private PlatformType currentAppUserPlatformType;
 
-    public GetAppUserCommand(List<AdminUserRole> adminUserRoles, Long targetAppUserId) {
-        this.adminUserRoles = adminUserRoles;
-        this.targetAppUserId = targetAppUserId;
+
+    public GetAppUserCommand(Long appUserId, String currentAppUserDeviceMacAddress, PlatformType currentAppUserPlatformType) {
+        this.appUserId = appUserId;
+        this.currentAppUserDeviceMacAddress = currentAppUserDeviceMacAddress;
+        this.currentAppUserPlatformType = currentAppUserPlatformType;
 
         this.validateSelf();
-
     }
 }

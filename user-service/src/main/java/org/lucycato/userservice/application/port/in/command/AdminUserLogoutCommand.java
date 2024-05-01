@@ -6,27 +6,25 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.lucycato.common.SelfValidating;
-import org.lucycato.userservice.model.enums.AppOrBrowserType;
-import org.lucycato.userservice.model.enums.DeviceOsType;
-import org.lucycato.userservice.model.enums.NetworkType;
+import org.lucycato.userservice.domain.enums.PlatformType;
 
 @Getter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class AdminUserLogoutCommand extends SelfValidating<AdminUserLogoutCommand> {
     @NotNull
-    private Long adminMemberId;
+    private Long adminUserId;
 
     @NotBlank
-    private String deviceMacAddress;
+    private String currentAdminUserDeviceMacAddress;
 
     @NotNull
-    private AppOrBrowserType appOrBrowserType;
+    private PlatformType currentAdminUserPlatformType;
 
-    public AdminUserLogoutCommand(Long adminMemberId, String deviceMacAddress, AppOrBrowserType appOrBrowserType) {
-        this.adminMemberId = adminMemberId;
-        this.deviceMacAddress = deviceMacAddress;
-        this.appOrBrowserType = appOrBrowserType;
+    public AdminUserLogoutCommand(Long adminUserId, String currentAdminUserDeviceMacAddress, PlatformType platformType) {
+        this.adminUserId = adminUserId;
+        this.currentAdminUserDeviceMacAddress = currentAdminUserDeviceMacAddress;
+        this.currentAdminUserPlatformType = platformType;
 
         this.validateSelf();
     }

@@ -3,10 +3,10 @@ package org.lucycato.userservice.adapter.out.service;
 import lombok.RequiredArgsConstructor;
 import org.lucycato.common.annotation.hexagonal.out.ServiceAdapter;
 import org.lucycato.common.security.AdminUserRole;
-import org.lucycato.common.security.AppUserRole;
 import org.lucycato.mvc.CommonHttpClient;
 import org.lucycato.userservice.application.port.out.AuthPort;
-import org.lucycato.userservice.application.port.out.result.IssueFcmTokenResult;
+import org.lucycato.userservice.application.port.out.result.IssueJwtTokenResult;
+import org.lucycato.userservice.domain.enums.PlatformType;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -23,10 +23,9 @@ public class AuthServiceAdapter implements AuthPort {
         return true;
     }
 
-    //TODO: auth-service 구현
     @Override
-    public IssueFcmTokenResult issueAdminUserFcmToken(Long adminUserId, List<AdminUserRole> adminUserRoles) {
-        return IssueFcmTokenResult.builder()
+    public IssueJwtTokenResult issueAdminUserJwtToken(Long adminUserId, List<AdminUserRole> adminUserRoles, String currentDeviceMacAddress, PlatformType currentPlatformType) {
+        return IssueJwtTokenResult.builder()
                 .accessToken("ACCESS JWT TOKEN")
                 .expiredAccessToken(LocalDateTime.now())
                 .refreshToken("REFRESH JWT TOKEN")
@@ -35,7 +34,12 @@ public class AuthServiceAdapter implements AuthPort {
     }
 
     @Override
-    public List<Long> getAppUserIdsByRequestDelegationRoles(List<AdminUserRole> appUserRoles) {
-        return Arrays.asList(1L, 2L);
+    public IssueJwtTokenResult issueAppUserJwtToken(Long adminUserId, String currentDeviceMacAddress, PlatformType currentPlatformType) {
+        return IssueJwtTokenResult.builder()
+                .accessToken("ACCESS JWT TOKEN")
+                .expiredAccessToken(LocalDateTime.now())
+                .refreshToken("REFRESH JWT TOKEN")
+                .expiredAccessToken(LocalDateTime.now())
+                .build();
     }
 }
