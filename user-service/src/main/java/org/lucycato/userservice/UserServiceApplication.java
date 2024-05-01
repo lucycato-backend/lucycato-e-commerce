@@ -9,8 +9,6 @@ public class UserServiceApplication {
         SpringApplication.run(UserServiceApplication.class, args);
     }
 
-    //TODO: redis memory cashing
-
     //TODO: 학생, 신입, 경력 추가 정보 받기 API 개발 -> 석범님
 
     // TODO: 어드민 아이디 중복 check API 개발 -> 진영님
