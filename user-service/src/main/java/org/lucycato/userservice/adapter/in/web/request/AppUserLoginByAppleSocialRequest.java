@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class AppUserLoginByAppleSocialRequest {
-    private DeviceInfoRequest deviceInfo;
+    private String code;
 
-    private AppOrDeviceInfoRequest appOrDeviceInfo;
+    private DeviceRequest device;
+
+    private PlatformRequest platform;
 }

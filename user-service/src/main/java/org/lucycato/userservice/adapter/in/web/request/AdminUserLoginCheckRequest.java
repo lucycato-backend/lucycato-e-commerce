@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class AdminUserLoginCheckRequest {
-    private DeviceInfoRequest deviceInfo;
+    private DeviceRequest device;
 
-    private AppOrDeviceInfoRequest appOrDeviceInfo;
+    private PlatformRequest platform;
 }

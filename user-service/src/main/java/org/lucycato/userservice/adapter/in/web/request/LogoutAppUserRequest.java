@@ -6,7 +6,7 @@ import org.lucycato.userservice.domain.enums.PlatformType;
 
 @Getter
 @NoArgsConstructor
-public class AdminUserLogoutRequest {
+public class LogoutAppUserRequest {
     private String deviceMacAddress;
 
     private PlatformType platformType;

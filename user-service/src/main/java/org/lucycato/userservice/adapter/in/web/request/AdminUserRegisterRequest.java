@@ -2,7 +2,6 @@ package org.lucycato.userservice.adapter.in.web.request;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.lucycato.userservice.model.enums.DeviceOsType;
 
 @Getter
 @NoArgsConstructor
@@ -19,7 +18,7 @@ public class AdminUserRegisterRequest {
 
     private String phoneNumber;
 
-    private DeviceInfoRequest deviceInfo;
+    private DeviceRequest device;
 
-    private AppOrDeviceInfoRequest appOrDeviceInfo;
+    private PlatformRequest platform;
 }

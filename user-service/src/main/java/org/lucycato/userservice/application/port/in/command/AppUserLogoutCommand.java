@@ -7,9 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.lucycato.common.SelfValidating;
-import org.lucycato.userservice.model.enums.AppOrBrowserType;
-import org.lucycato.userservice.model.enums.DeviceOsType;
-import org.lucycato.userservice.model.enums.NetworkType;
+import org.lucycato.userservice.domain.enums.PlatformType;
 
 @Getter
 @NoArgsConstructor
@@ -18,8 +16,16 @@ public class AppUserLogoutCommand extends SelfValidating<AppUserLogoutCommand> {
     @NotNull
     private Long appUserId;
 
-    public AppUserLogoutCommand(Long appUserId) {
+    @NotBlank
+    private String currentAppUserDeviceMacAddress;
+
+    @NotNull
+    private PlatformType currentAppUserPlatformType;
+
+    public AppUserLogoutCommand(Long appUserId, String currentAppUserDeviceMacAddress, PlatformType currentAppUserPlatformType) {
         this.appUserId = appUserId;
+        this.currentAppUserDeviceMacAddress = currentAppUserDeviceMacAddress;
+        this.currentAppUserPlatformType = currentAppUserPlatformType;
 
         this.validateSelf();
     }

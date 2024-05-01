@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 public class AppUserAdditionalInfoRequest {
     private String name;
 
-    private String nickName;
-
     private String email;
 
     private String phoneNumber;

@@ -7,9 +7,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.lucycato.common.SelfValidating;
-import org.lucycato.userservice.model.enums.AppOrBrowserType;
-import org.lucycato.userservice.model.enums.DeviceOsType;
-import org.lucycato.userservice.model.enums.NetworkType;
+import org.lucycato.userservice.domain.enums.PlatformType;
+import org.lucycato.userservice.domain.enums.DeviceOsType;
+import org.lucycato.userservice.domain.enums.NetworkType;
 
 @Getter
 @NoArgsConstructor
@@ -19,39 +19,39 @@ public class AppUserLoginCheckCommand extends SelfValidating<AppUserLoginCheckCo
     private Long appUserId;
 
     @NotBlank
-    private String deviceMacAddress;
+    private String currentAppUserDeviceMacAddress;
 
     @NotBlank
-    private String deviceFcmToken;
+    private String currentAppUserDeviceFcmToken;
 
     @NotNull
-    private DeviceOsType deviceOsType;
+    private DeviceOsType currentAppUserDeviceOsType;
 
     @NotBlank
-    private String deiceOsVersion;
+    private String currentAppUserDeiceOsVersion;
 
     @NotNull
-    private AppOrBrowserType appOrBrowserType;
+    private PlatformType currentAppUserPlatformType;
 
     @NotBlank
-    private String appOrBrowserVersion;
+    private String currentAppUserPlatformVersion;
 
     @NotNull
-    private NetworkType networkType;
+    private NetworkType currentAppUserNetworkType;
 
     @NotBlank
-    private String locale;
+    private String currentAppUserLocale;
 
-    public AppUserLoginCheckCommand(Long appUserId, String deviceMacAddress, String deviceFcmToken, DeviceOsType deviceOsType, String deiceOsVersion, AppOrBrowserType appOrBrowserType, String appOrBrowserVersion, NetworkType networkType, String locale) {
+    public AppUserLoginCheckCommand(Long appUserId, String currentAppUserDeviceMacAddress, String currentAppUserDeviceFcmToken, DeviceOsType currentAppUserDeviceOsType, String currentAppUserDeiceOsVersion, PlatformType currentAppUserPlatformType, String currentAppUserPlatformVersion, NetworkType currentAppUserNetworkType, String currentAppUserLocale) {
         this.appUserId = appUserId;
-        this.deviceMacAddress = deviceMacAddress;
-        this.deviceFcmToken = deviceFcmToken;
-        this.deviceOsType = deviceOsType;
-        this.deiceOsVersion = deiceOsVersion;
-        this.appOrBrowserType = appOrBrowserType;
-        this.appOrBrowserVersion = appOrBrowserVersion;
-        this.networkType = networkType;
-        this.locale = locale;
+        this.currentAppUserDeviceMacAddress = currentAppUserDeviceMacAddress;
+        this.currentAppUserDeviceFcmToken = currentAppUserDeviceFcmToken;
+        this.currentAppUserDeviceOsType = currentAppUserDeviceOsType;
+        this.currentAppUserDeiceOsVersion = currentAppUserDeiceOsVersion;
+        this.currentAppUserPlatformType = currentAppUserPlatformType;
+        this.currentAppUserPlatformVersion = currentAppUserPlatformVersion;
+        this.currentAppUserNetworkType = currentAppUserNetworkType;
+        this.currentAppUserLocale = currentAppUserLocale;
 
         this.validateSelf();
     }

@@ -10,28 +10,20 @@ import org.lucycato.common.SelfValidating;
 @Getter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class AppUserAdditionalInfoCommand extends SelfValidating<AppUserAdditionalInfoCommand> {
+public class VerifyPhoneNumberCommand extends SelfValidating<VerifyPhoneNumberCommand> {
     @NotNull
     private Long appUserId;
 
     @NotBlank
-    private String name;
-
-    @NotBlank
-    private String nickName;
-
-    @NotBlank
-    private String email;
-
-    @NotBlank
     private String phoneNumber;
 
-    public AppUserAdditionalInfoCommand(Long appUserId, String name, String nickName, String email, String phoneNumber) {
+    @NotBlank
+    private String authorizedCode;
+
+    public VerifyPhoneNumberCommand(Long appUserId, String phoneNumber, String authorizedCode) {
         this.appUserId = appUserId;
-        this.name = name;
-        this.nickName = nickName;
-        this.email = email;
         this.phoneNumber = phoneNumber;
+        this.authorizedCode = authorizedCode;
 
         this.validateSelf();
     }

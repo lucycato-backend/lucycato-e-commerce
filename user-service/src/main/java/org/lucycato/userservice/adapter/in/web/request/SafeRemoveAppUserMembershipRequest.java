@@ -5,8 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class AppUserLoginByNaverSocialRequest {
-    private DeviceInfoRequest deviceInfo;
+public class SafeRemoveAppUserMembershipRequest {
+    private Long appUserMembershipId;
 
-    private AppOrDeviceInfoRequest appOrDeviceInfo;
 }

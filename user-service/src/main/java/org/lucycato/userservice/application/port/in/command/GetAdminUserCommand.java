@@ -11,10 +11,10 @@ import org.lucycato.common.SelfValidating;
 @EqualsAndHashCode(callSuper = false)
 public class GetAdminUserCommand extends SelfValidating<GetAdminUserCommand>  {
     @NotNull
-    private Long targetAdminUserId;
+    private Long adminUserId;
 
-    public GetAdminUserCommand(Long targetAdminUserId) {
-        this.targetAdminUserId = targetAdminUserId;
+    public GetAdminUserCommand(Long adminUserId) {
+        this.adminUserId = adminUserId;
 
         this.validateSelf();
     }

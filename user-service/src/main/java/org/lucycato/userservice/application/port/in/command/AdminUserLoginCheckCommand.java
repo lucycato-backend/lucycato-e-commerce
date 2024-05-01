@@ -1,15 +1,14 @@
 package org.lucycato.userservice.application.port.in.command;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.lucycato.common.SelfValidating;
-import org.lucycato.userservice.model.enums.AppOrBrowserType;
-import org.lucycato.userservice.model.enums.DeviceOsType;
-import org.lucycato.userservice.model.enums.NetworkType;
+import org.lucycato.userservice.domain.enums.PlatformType;
+import org.lucycato.userservice.domain.enums.DeviceOsType;
+import org.lucycato.userservice.domain.enums.NetworkType;
 
 @Getter
 @NoArgsConstructor
@@ -19,39 +18,39 @@ public class AdminUserLoginCheckCommand extends SelfValidating<AdminUserLoginChe
     private Long adminUserId;
 
     @NotBlank
-    private String deviceMacAddress;
+    private String currentAdminUserDeviceMacAddress;
 
     @NotBlank
-    private String deviceFcmToken;
+    private String currentAdminUserDeviceFcmToken;
 
     @NotNull
-    private DeviceOsType deviceOsType;
+    private DeviceOsType currentAdminUserDeviceOsType;
 
     @NotBlank
-    private String deiceOsVersion;
+    private String currentAdminUserDeiceOsVersion;
 
     @NotNull
-    private AppOrBrowserType appOrBrowserType;
+    private PlatformType currentAdminUserPlatformType;
 
     @NotBlank
-    private String appOrBrowserVersion;
+    private String currentAdminUserPlatformVersion;
 
     @NotNull
-    private NetworkType networkType;
+    private NetworkType currentAdminUserNetworkType;
 
     @NotBlank
-    private String locale;
+    private String currentAdminUserLocale;
 
-    public AdminUserLoginCheckCommand(Long adminUserId, String deviceMacAddress, String deviceFcmToken, DeviceOsType deviceOsType, String deiceOsVersion, AppOrBrowserType appOrBrowserType, String appOrBrowserVersion, NetworkType networkType, String locale) {
+    public AdminUserLoginCheckCommand(Long adminUserId, String currentAdminUserDeviceMacAddress, String currentAdminUserDeviceFcmToken, DeviceOsType currentAdminUserDeviceOsType, String currentAdminUserDeiceOsVersion, PlatformType currentAdminUserPlatformType, String currentAdminUserPlatformVersion, NetworkType currentAdminUserNetworkType, String currentAdminUserLocale) {
         this.adminUserId = adminUserId;
-        this.deviceMacAddress = deviceMacAddress;
-        this.deviceFcmToken = deviceFcmToken;
-        this.deviceOsType = deviceOsType;
-        this.deiceOsVersion = deiceOsVersion;
-        this.appOrBrowserType = appOrBrowserType;
-        this.appOrBrowserVersion = appOrBrowserVersion;
-        this.networkType = networkType;
-        this.locale = locale;
+        this.currentAdminUserDeviceMacAddress = currentAdminUserDeviceMacAddress;
+        this.currentAdminUserDeviceFcmToken = currentAdminUserDeviceFcmToken;
+        this.currentAdminUserDeviceOsType = currentAdminUserDeviceOsType;
+        this.currentAdminUserDeiceOsVersion = currentAdminUserDeiceOsVersion;
+        this.currentAdminUserPlatformType = currentAdminUserPlatformType;
+        this.currentAdminUserPlatformVersion = currentAdminUserPlatformVersion;
+        this.currentAdminUserNetworkType = currentAdminUserNetworkType;
+        this.currentAdminUserLocale = currentAdminUserLocale;
 
         this.validateSelf();
     }
