@@ -24,11 +24,9 @@ public class AppUserLogin {
 
     public static AppUserLogin from(
             AppUserResult appUserResult,
-            IssueJwtTokenResult issueJwtTokenResult,
-            String currentAppUserDeviceMacAddress,
-            PlatformType currentAppUserPlatformType
+            IssueJwtTokenResult issueJwtTokenResult
     ) {
-        AppUser appUser = AppUser.from(appUserResult, currentAppUserDeviceMacAddress, currentAppUserPlatformType);
+        AppUser appUser = AppUser.from(appUserResult);
         return AppUserLogin.builder()
                 .appUser(appUser)
                 .accessToken(issueJwtTokenResult.getAccessToken())

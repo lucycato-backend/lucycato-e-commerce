@@ -24,11 +24,7 @@ public class QueryAppUserService implements QueryAppUserUseCase {
     @Override
     public AppUser getAppUser(GetAppUserCommand command) {
         AppUserResult appUserResult = queryAppUserPort.getAppUserResult(command.getAppUserId());
-        return AppUser.from(
-                appUserResult,
-                command.getCurrentAppUserDeviceMacAddress(),
-                command.getCurrentAppUserPlatformType()
-        );
+        return AppUser.from(appUserResult);
     }
 
     @Override

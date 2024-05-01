@@ -36,8 +36,6 @@ public class AppUser {
 
     private final List<AppUserBadge> badges;
 
-    private final DeviceManagement currentDeviceManagement;
-
     private List<AppUserMembership> appUserMemberships;
 
     private final LocalDateTime createdAt;
@@ -59,59 +57,6 @@ public class AppUser {
                 .imageUrl(result.getImageUrl())
                 .grade(result.getGrade())
                 .badges(result.getBadges())
-                .currentDeviceManagement(null)
-                .appUserMemberships(appUserMemberships)
-                .createdAt(result.getCreatedAt())
-                .modifiedAt(result.getModifiedAt())
-                .build();
-    }
-
-    public static AppUser from(AppUserResult result, String currentAppUserDeviceMacAddress, PlatformType currentAppUserPlatformType) {
-        List<DeviceVo> currentDeviceVos = result.getDeviceVos()
-                .stream()
-                .filter(deviceVo -> deviceVo.getDeviceManAddress().equals(currentAppUserDeviceMacAddress))
-                .toList();
-        DeviceManagement currentDeviceManager = null;
-        if (!currentDeviceVos.isEmpty()) {
-            List<Platform> currentPlatform = currentDeviceVos.get(0).getPlatformVos()
-                    .stream()
-                    .filter(platformVo -> platformVo.getPlatformType().equals(currentAppUserPlatformType))
-                    .map(platformVo -> Platform.create(
-                            platformVo.getPlatformType(),
-                            platformVo.getPlatformVersion(),
-                            platformVo.getNetworkType(),
-                            platformVo.getPlatformVersion(),
-                            platformVo.getLastLoginAt(),
-                            platformVo.getLastLogoutAt()
-                    ))
-                    .toList();
-
-            DeviceVo currentDeviceVo = currentDeviceVos.get(0);
-
-            currentDeviceManager = DeviceManagement.create(
-                    currentDeviceVo.getDeviceManAddress(),
-                    currentDeviceVo.getDeviceFcmToken(),
-                    currentDeviceVo.getDeviceOsType(),
-                    currentDeviceVo.getDeviceOsVersion(),
-                    currentPlatform
-            );
-        }
-
-        List<AppUserMembership> appUserMemberships = result.getMembershipResults()
-                .stream()
-                .map(AppUserMembership::from)
-                .toList();
-
-        return AppUser.builder()
-                .appUserId(result.getAppUserId())
-                .socialStatus(result.getSocialStatus())
-                .name(result.getName())
-                .email(result.getEmail())
-                .phoneNumber(result.getPhoneNumber())
-                .imageUrl(result.getImageUrl())
-                .grade(result.getGrade())
-                .badges(result.getBadges())
-                .currentDeviceManagement(currentDeviceManager)
                 .appUserMemberships(appUserMemberships)
                 .createdAt(result.getCreatedAt())
                 .modifiedAt(result.getModifiedAt())

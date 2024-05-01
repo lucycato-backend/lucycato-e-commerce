@@ -1,11 +1,11 @@
-package org.lucycato.userservice.adapter.out.persistence.entity;
+package org.lucycato.userservice.adapter.out.persistence.jpaentity;
 
 import jakarta.persistence.*;
 import lombok.*;
 import org.lucycato.common.security.AdminUserRole;
-import org.lucycato.userservice.adapter.out.persistence.entity.converter.AdminRoleListConverter;
+import org.lucycato.userservice.adapter.out.persistence.jpaentity.converter.AdminRoleListConverter;
 import org.lucycato.userservice.adapter.out.persistence.vo.DeviceVo;
-import org.lucycato.userservice.adapter.out.persistence.entity.converter.DeviceInfoListConverter;
+import org.lucycato.userservice.adapter.out.persistence.jpaentity.converter.DeviceInfoListConverter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;

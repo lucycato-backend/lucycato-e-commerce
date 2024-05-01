@@ -9,11 +9,5 @@ import java.util.List;
 public interface QueryAdminUserPort {
     AdminUserResult getAdminUser(Long adminUserId);
 
-    AppUserResult getAppUser(Long appUserId);
-
-    List<AppUserResult> getAppUserList();
-
-    List<AppUserResult> getAppUserListByUserIds(List<Long> appUserIds);
-
-    List<DeviceVo> getAppUserDeviceInfoList(Long adminUserId);
+    List<DeviceVo> getAdminUserDeviceInfoList(Long adminUserId);
 }

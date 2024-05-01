@@ -1,6 +1,6 @@
-package org.lucycato.userservice.adapter.out.persistence.repository;
+package org.lucycato.userservice.adapter.out.persistence.jparepository;
 
-import org.lucycato.userservice.adapter.out.persistence.entity.AppUserMembershipJpaEntity;
+import org.lucycato.userservice.adapter.out.persistence.jpaentity.AppUserMembershipJpaEntity;
 import org.lucycato.userservice.domain.enums.AppUserMembershipStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

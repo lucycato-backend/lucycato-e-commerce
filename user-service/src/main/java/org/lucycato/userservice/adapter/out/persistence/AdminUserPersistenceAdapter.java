@@ -5,8 +5,8 @@ import org.lucycato.common.annotation.hexagonal.out.PersistenceAdapter;
 import org.lucycato.common.error.ErrorCodeImpl;
 import org.lucycato.common.exception.ApiExceptionImpl;
 import org.lucycato.common.security.AdminUserRole;
-import org.lucycato.userservice.adapter.out.persistence.entity.AdminUserJpaEntity;
-import org.lucycato.userservice.adapter.out.persistence.repository.AdminUserJpaRepository;
+import org.lucycato.userservice.adapter.out.persistence.jpaentity.AdminUserJpaEntity;
+import org.lucycato.userservice.adapter.out.persistence.jparepository.AdminUserJpaRepository;
 import org.lucycato.userservice.application.port.out.AdminUserPort;
 import org.lucycato.userservice.application.port.out.result.AdminUserResult;
 
