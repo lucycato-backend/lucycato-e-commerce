@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.lucycato.userservice.adapter.out.persistence.jpaentity.AppUserMembershipJpaEntity;
+import org.lucycato.userservice.adapter.out.persistence.redisentity.AppUserMembershipRedisEntity;
 import org.lucycato.userservice.domain.enums.MembershipGrade;
 
 import java.time.LocalDateTime;
@@ -27,6 +28,16 @@ public class AppUserMembershipResult {
     private LocalDateTime expiredAt;
 
     public static AppUserMembershipResult from(AppUserMembershipJpaEntity entity) {
+        return AppUserMembershipResult.builder()
+                .appUserMembershipId(entity.getId())
+                .membershipGrade(entity.getMembershipGrade())
+                .isExpired(LocalDateTime.now().isAfter(entity.getExpiredAt()))
+                .createdAt(entity.getCreatedAt())
+                .expiredAt(entity.getExpiredAt())
+                .build();
+    }
+
+    public static AppUserMembershipResult from(AppUserMembershipRedisEntity entity) {
         return AppUserMembershipResult.builder()
                 .appUserMembershipId(entity.getId())
                 .membershipGrade(entity.getMembershipGrade())
