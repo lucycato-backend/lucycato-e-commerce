@@ -5,10 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.lucycato.common.error.ErrorCodeImpl;
 import org.lucycato.common.exception.ApiExceptionImpl;
+import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.stereotype.Component;
 
-import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -62,5 +64,20 @@ public class CommonRedisTemplate {
 
     public void delete(String key) {
         redisTemplate.delete(key);
+    }
+
+    public List<String> keyScan(String matchKey, Integer count) {
+        ScanOptions options = ScanOptions.scanOptions()
+                .match(matchKey)
+                .count(count)
+                .build();
+
+        Cursor<byte[]> cursor = redisTemplate.executeWithStickyConnection(redisConnection -> redisConnection.scan(options));
+        List<String> matchKeys = new ArrayList<>();
+        while (cursor.hasNext()) {
+            String key = new String(cursor.next());
+            matchKeys.add(key);
+        }
+        return matchKeys;
     }
 }
