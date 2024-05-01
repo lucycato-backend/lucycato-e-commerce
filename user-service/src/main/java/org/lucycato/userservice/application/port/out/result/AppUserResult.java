@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.lucycato.userservice.adapter.out.persistence.entity.AppUserJpaEntity;
+import org.lucycato.userservice.adapter.out.persistence.jpaentity.AppUserJpaEntity;
 import org.lucycato.userservice.domain.enums.AppUserBadge;
 import org.lucycato.userservice.domain.enums.AppUserGrade;
 import org.lucycato.userservice.domain.enums.SocialStatus;

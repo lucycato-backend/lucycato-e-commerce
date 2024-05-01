@@ -4,10 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.lucycato.common.annotation.hexagonal.out.PersistenceAdapter;
 import org.lucycato.common.error.ErrorCodeImpl;
 import org.lucycato.common.exception.ApiExceptionImpl;
-import org.lucycato.userservice.adapter.out.persistence.entity.AppUserJpaEntity;
-import org.lucycato.userservice.adapter.out.persistence.repository.AppUserJpaRepository;
-import org.lucycato.userservice.adapter.out.persistence.entity.AppUserMembershipJpaEntity;
-import org.lucycato.userservice.adapter.out.persistence.repository.AppUserMembershipJpaRepository;
+import org.lucycato.userservice.adapter.out.persistence.jpaentity.AppUserJpaEntity;
+import org.lucycato.userservice.adapter.out.persistence.jparepository.AppUserJpaRepository;
+import org.lucycato.userservice.adapter.out.persistence.jpaentity.AppUserMembershipJpaEntity;
+import org.lucycato.userservice.adapter.out.persistence.jparepository.AppUserMembershipJpaRepository;
 import org.lucycato.userservice.application.port.out.AppUserPort;
 import org.lucycato.userservice.application.port.out.result.AppUserMembershipResult;
 import org.lucycato.userservice.application.port.out.result.AppUserResult;
@@ -17,7 +17,6 @@ import org.lucycato.userservice.domain.enums.MembershipGrade;
 import org.lucycato.userservice.domain.enums.SocialStatus;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @PersistenceAdapter
 @RequiredArgsConstructor

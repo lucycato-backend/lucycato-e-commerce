@@ -1,10 +1,10 @@
-package org.lucycato.userservice.adapter.out.persistence.entity;
+package org.lucycato.userservice.adapter.out.persistence.jpaentity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.lucycato.userservice.adapter.out.persistence.entity.converter.AppUserBadgeListConverter;
+import org.lucycato.userservice.adapter.out.persistence.jpaentity.converter.AppUserBadgeListConverter;
 import org.lucycato.userservice.adapter.out.persistence.vo.DeviceVo;
-import org.lucycato.userservice.adapter.out.persistence.entity.converter.DeviceInfoListConverter;
+import org.lucycato.userservice.adapter.out.persistence.jpaentity.converter.DeviceInfoListConverter;
 import org.lucycato.userservice.domain.enums.AppUserBadge;
 import org.lucycato.userservice.domain.enums.AppUserGrade;
 import org.lucycato.userservice.domain.enums.AppUserStatus;
