@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.lucycato.userservice.adapter.out.persistence.jpaentity.AppUserMembershipJpaEntity;
-import org.lucycato.userservice.adapter.out.persistence.redisentity.AppUserMembershipRedisEntity;
+import org.lucycato.userservice.adapter.out.persistence.entity.AppUserMembershipJpaEntity;
+import org.lucycato.userservice.domain.enums.AppUserMembershipStatus;
 import org.lucycato.userservice.domain.enums.MembershipGrade;
 
 import java.time.LocalDateTime;
@@ -16,6 +16,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class AppUserMembershipResult {
     private Long appUserMembershipId;
+
+    private AppUserMembershipStatus status;
 
     private Long appUserId;
 
@@ -30,16 +32,7 @@ public class AppUserMembershipResult {
     public static AppUserMembershipResult from(AppUserMembershipJpaEntity entity) {
         return AppUserMembershipResult.builder()
                 .appUserMembershipId(entity.getId())
-                .membershipGrade(entity.getMembershipGrade())
-                .isExpired(LocalDateTime.now().isAfter(entity.getExpiredAt()))
-                .createdAt(entity.getCreatedAt())
-                .expiredAt(entity.getExpiredAt())
-                .build();
-    }
-
-    public static AppUserMembershipResult from(AppUserMembershipRedisEntity entity) {
-        return AppUserMembershipResult.builder()
-                .appUserMembershipId(entity.getId())
+                .status(entity.getStatus())
                 .membershipGrade(entity.getMembershipGrade())
                 .isExpired(LocalDateTime.now().isAfter(entity.getExpiredAt()))
                 .createdAt(entity.getCreatedAt())

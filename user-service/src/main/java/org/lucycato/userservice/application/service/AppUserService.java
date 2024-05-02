@@ -123,7 +123,11 @@ public class AppUserService implements AppUserUseCase {
     public AppUser verifyPhoneNumber(VerifyPhoneNumberCommand command) {
         Boolean isVerification = authPort.verifyPhoneNumberAuthCode(command.getPhoneNumber());
         if (isVerification) {
-            AppUserResult appUserResult = appUserPort.modifyAppUserPhoneNumber(command.getAppUserId(), command.getPhoneNumber());
+            AppUserResult appUserResult = appUserPort.modifyAppUser(
+                    command.getAppUserId(),
+                    command.getPhoneNumber(),
+                    AppUserStatus.ENABLED
+            );
             return AppUser.from(appUserResult);
         } else {
             throw new ApiExceptionImpl(UserErrorCodeImpl.PHONE_NUMBER_VERIFICATION_NOT_MATCH);
@@ -167,6 +171,6 @@ public class AppUserService implements AppUserUseCase {
 
     @Override
     public void safeRemoveAppUserMembership(SafeRemoveAppUserMembershipCommand command) {
-        appUserPort.safeRemoveAppUserMembership(command.getAppUserMembershipId());
+        appUserPort.safeRemoveAppUserMembership(command.getAppUserId(), command.getAppUserMembershipId());
     }
 }

@@ -129,6 +129,7 @@ public class AppUserController {
             SafeRemoveAppUserMembershipRequest request
     ) {
         SafeRemoveAppUserMembershipCommand command = new SafeRemoveAppUserMembershipCommand(
+                appUserHeaderDetail.getAppUserId(),
                 request.getAppUserMembershipId()
         );
         appUserUseCase.safeRemoveAppUserMembership(command);

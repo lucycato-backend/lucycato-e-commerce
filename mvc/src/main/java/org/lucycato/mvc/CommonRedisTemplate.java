@@ -3,7 +3,6 @@ package org.lucycato.mvc;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.lucycato.common.RedisEntity;
 import org.lucycato.common.error.ErrorCodeImpl;
 import org.lucycato.common.exception.ApiExceptionImpl;
 import org.springframework.data.redis.core.Cursor;
@@ -23,7 +22,7 @@ public class CommonRedisTemplate {
 
     private final ObjectMapper objectMapper;
 
-    public <T extends RedisEntity> T save(String key, T value, Long ttl, TimeUnit timeUnit) {
+    public <T> T save(String key, T value, Long ttl, TimeUnit timeUnit) {
         String jsonString;
         try {
             jsonString = objectMapper.writeValueAsString(value);
@@ -34,16 +33,20 @@ public class CommonRedisTemplate {
         return value;
     }
 
-    public <T extends RedisEntity> T find(String key) {
+    public <T> Optional<T> find(String key, Class<T> type) {
         try {
             String jsonString = redisTemplate.opsForValue().get(key);
-            return objectMapper.readValue(jsonString, new TypeReference<>() {});
+            if (jsonString != null) {
+                return Optional.of(objectMapper.readValue(jsonString, type));
+            } else {
+                return Optional.empty();
+            }
         } catch (Exception e) {
             throw new ApiExceptionImpl(ErrorCodeImpl.JSON_PARSING);
         }
     }
 
-    public <T extends RedisEntity> List<T> findAll(List<String> keys) {
+    public <T> List<T> findAll(List<String> keys) {
         List<String> jsonStringList = redisTemplate.opsForValue().multiGet(keys);
         return jsonStringList.stream().map(jsonString -> {
             try {
@@ -55,7 +58,7 @@ public class CommonRedisTemplate {
         }).toList();
     }
 
-    public <T extends RedisEntity> T update(String key, T value, Long ttl, TimeUnit timeUnit) {
+    public <T> T update(String key, T value, Long ttl, TimeUnit timeUnit) {
         return save(key, value, ttl, timeUnit);
     }
 

@@ -4,13 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.lucycato.userservice.adapter.out.persistence.jpaentity.AppUserJpaEntity;
-import org.lucycato.userservice.adapter.out.persistence.redisentity.AppUserMembershipRedisEntity;
-import org.lucycato.userservice.adapter.out.persistence.redisentity.AppUserRedisEntity;
+import org.lucycato.userservice.adapter.out.persistence.entity.AppUserJpaEntity;
 import org.lucycato.userservice.domain.enums.AppUserBadge;
 import org.lucycato.userservice.domain.enums.AppUserGrade;
+import org.lucycato.userservice.domain.enums.AppUserStatus;
 import org.lucycato.userservice.domain.enums.SocialStatus;
-import org.lucycato.userservice.adapter.out.persistence.vo.DeviceVo;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,6 +19,8 @@ import java.util.List;
 @NoArgsConstructor
 public class AppUserResult {
     private Long appUserId;
+
+    private AppUserStatus status;
 
     private SocialStatus socialStatus;
 
@@ -52,6 +52,8 @@ public class AppUserResult {
 
         return AppUserResult.builder()
                 .appUserId(entity.getId())
+                .status(entity.getStatus())
+                .socialStatus(entity.getSocialStatus())
                 .name(entity.getName())
                 .email(entity.getEmail())
                 .phoneNumber(entity.getPhoneNumber())
@@ -61,26 +63,6 @@ public class AppUserResult {
                 .membershipResults(appUserMembershipResults)
                 .createdAt(entity.getCreatedAt())
                 .modifiedAt(entity.getModifiedAt())
-                .build();
-    }
-
-    public static AppUserResult from(AppUserRedisEntity appUserRedisEntity, List<AppUserMembershipRedisEntity> appUserMembershipRedisEntity) {
-        List<AppUserMembershipResult> appUserMembershipResults = appUserMembershipRedisEntity
-                .stream()
-                .map(AppUserMembershipResult::from)
-                .toList();
-
-        return AppUserResult.builder()
-                .appUserId(appUserRedisEntity.getId())
-                .name(appUserRedisEntity.getName())
-                .email(appUserRedisEntity.getEmail())
-                .phoneNumber(appUserRedisEntity.getPhoneNumber())
-                .imageUrl(appUserRedisEntity.getImageUrl())
-                .grade(appUserRedisEntity.getGrade())
-                .badges(appUserRedisEntity.getAppUserBadges())
-                .membershipResults(appUserMembershipResults)
-                .createdAt(appUserRedisEntity.getCreatedAt())
-                .modifiedAt(appUserRedisEntity.getModifiedAt())
                 .build();
     }
 }

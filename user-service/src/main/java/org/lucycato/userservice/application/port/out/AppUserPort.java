@@ -17,10 +17,13 @@ public interface AppUserPort {
             AppUserStatus status
     );
 
-    AppUserResult modifyAppUserPhoneNumber(
+    AppUserResult modifyAppUser(
             Long appUserId,
-            String phoneNumber
+            String phoneNumber,
+            AppUserStatus appUserStatus
     );
+
+    void expiredAppUser(Long appUserId);
 
     AppUserMembershipResult registerAppUserMembership(
             Long appUserId,
@@ -29,6 +32,7 @@ public interface AppUserPort {
     );
 
     AppUserMembershipResult safeRemoveAppUserMembership(
+            Long appUserId,
             Long appUserMembershipId
     );
 }

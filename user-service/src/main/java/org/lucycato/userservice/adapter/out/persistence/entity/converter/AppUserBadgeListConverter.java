@@ -1,4 +1,4 @@
-package org.lucycato.userservice.adapter.out.persistence.jpaentity.converter;
+package org.lucycato.userservice.adapter.out.persistence.entity.converter;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

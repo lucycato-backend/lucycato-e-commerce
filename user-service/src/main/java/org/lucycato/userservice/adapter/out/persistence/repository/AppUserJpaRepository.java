@@ -1,6 +1,6 @@
-package org.lucycato.userservice.adapter.out.persistence.jparepository;
+package org.lucycato.userservice.adapter.out.persistence.repository;
 
-import org.lucycato.userservice.adapter.out.persistence.jpaentity.AppUserJpaEntity;
+import org.lucycato.userservice.adapter.out.persistence.entity.AppUserJpaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
