@@ -5,10 +5,7 @@ import org.lucycato.userservice.adapter.out.persistence.vo.DeviceVo;
 import org.lucycato.userservice.adapter.out.persistence.vo.PlatformVo;
 import org.lucycato.userservice.application.port.out.result.AppUserMembershipResult;
 import org.lucycato.userservice.application.port.out.result.AppUserResult;
-import org.lucycato.userservice.domain.enums.AppUserBadge;
-import org.lucycato.userservice.domain.enums.AppUserGrade;
-import org.lucycato.userservice.domain.enums.PlatformType;
-import org.lucycato.userservice.domain.enums.SocialStatus;
+import org.lucycato.userservice.domain.enums.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,6 +18,8 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class AppUser {
     private final Long appUserId;
+
+    private final AppUserStatus status;
 
     private final SocialStatus socialStatus;
 
@@ -50,6 +49,7 @@ public class AppUser {
 
         return AppUser.builder()
                 .appUserId(result.getAppUserId())
+                .status(result.getStatus())
                 .socialStatus(result.getSocialStatus())
                 .name(result.getName())
                 .email(result.getEmail())

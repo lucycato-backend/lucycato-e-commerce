@@ -17,9 +17,10 @@ public interface AppUserPort {
             AppUserStatus status
     );
 
-    AppUserResult modifyAppUserPhoneNumber(
+    AppUserResult modifyAppUser(
             Long appUserId,
-            String phoneNumber
+            String phoneNumber,
+            AppUserStatus appUserStatus
     );
 
     AppUserMembershipResult registerAppUserMembership(
