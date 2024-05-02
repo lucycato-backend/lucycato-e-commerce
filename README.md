@@ -20,10 +20,10 @@ git clone git@github.com:lucycato-backend/lucycato-e-commerce.git
 cd lucycato-e-commerce
 ```
 
-3. Docker Plug in을 사용하여 프로젝트를 빌드 및 이미지를 생성합니다:
+3. Docker plug-in, Docker Compose를 사용하여 프로젝트를 빌드 및 이미지를 생성, 실행합니다.
 
 ```bash
-./gradlew docker && docker compose up -d
+./gradlew docker && docker compose up -d && docker compose -f docker-compose-db.yml up -d
 ```
 
 4. Postman을 사용하여 API를 테스트합니다.
@@ -64,14 +64,9 @@ Spring Framework 기반으로 최신 기술 스택 학습과, 본질적인 실�
 ### Team Lucycato Vision
 - 탁월한 기준에 근거한 코드를 작성하는 본질적인 실력향상
 - 탁월한 기준과 안목의 초석이 되는 CS 학습
-- PR (블로그 글작성 및 영상촬영) 
+- PR (블로그 글작성 및 영상촬영)
 
-### 계획과 전략
-   - 토요일 09:00 ~ 18:00 (오프라인) / 장소: 합정역
-   - 화요일 21:00 ~ 00:00 (온라인) / 디스코드
-
-### 1부: 세상에 나아가기 전에 진정으로 훌륭한 코드를 작성해보자.
-** Local Environment Development
+### 1부: 세상에 나아가기 전에 진정으로 훌륭한 코드를 작성해보자. (Local Environment Development)
 1. MSA 
 	- 어떻게 경계를 나눌 것인가: Business, Domain
 2. Hexagonal Architecture 
@@ -89,27 +84,29 @@ Spring Framework 기반으로 최신 기술 스택 학습과, 본질적인 실�
 5. Redis
     - 강력한 성능 확보 전략인 Memory Caching을 활용하자.
     - Session Storage, Rank, Geo 등 다양한 활용 전략을 구축하자.
-6. Spring Batch
-	- Batch의 철학과 원리를 이해하고 다양한 활용 전략을 구축하자.
-7. Spring Security, Cookie, Session, JWT, Oauth2  with Gateway, Custom Auth Server
-	- MSA 환경에서의 인증 / 인가를 이해하자
-	- 자원 서버를 이해하자.
-	- 시스템의 보안을 높이는 방법에 대해 연구하자. 
+6. MySQL, MongoDB, Elasticsearch 
+	- 주요 DB의 내부 원리와 차이점을 알아보자.
+    - 실제 각각의 DB가 어떠한 상황에서 사용되는지 분석하여 실전 전략을 구축하자. 
+7. Spring Batch
+	- Batch의 철학과 원리를 이해하고 다양한 활용 전략을 구축하자. 
 8. 통합테스트, 단위 테스트, 기능 테스트
-	- 안정적인 시스템, 리팩토링을 할 수 있는 시스템을 개발해보자.
+	- 안정적인 시스템, 리팩토링을 할 수 있는 시스템을 개발해보자. 
 9. MSA Transaction
 	- 분리를 통해 생긴 문제 어떻게 해결할 것인가
 	- 2 Phase Commit, 보상트랜젝션, Saga
-10. CQRS Pattern
+10. Spring Security, Cookie, Session, JWT, Oauth2  with Gateway, Custom Auth Server
+	- MSA 환경에서의 인증 / 인가를 이해하자
+	- 자원 서버를 이해하자.
+	- 시스템의 보안을 높이는 방법에 대해 연구하자.
+11. CQRS Pattern
 	- 결국 물리적 분해를 통한 성능 확보 어떻게 정합성을 맞출 것인가 
-11. 결국엔 기초
-	- class, function naming 작명 규칙, 전략
-	- OOP, SOLID, Clean Architecture, Refactoring 기준 학습
-	- Endpoint 설계 원칙 
-	- git branch 분리 전략, git commit, pull request 전략
+12. 결국엔 기초
+    - class, function naming 작명 규칙, 전략
+    - OOP, SOLID, Clean Architecture, Refactoring 기준 학습
+    - Endpoint 설계 원칙 
+    - git branch 분리 전략, git commit, pull request 전략
 
-### 2부: 세상에 나아가자.
-** infra
+### 2부: 세상에 나아가자. (Infra)
 1. Docker, Docker Compose
 	- 서버를 분리해보자.
 2. Mono Repository
@@ -126,37 +123,75 @@ Spring Framework 기반으로 최신 기술 스택 학습과, 본질적인 실�
 7. CI / CD (Jenkins, Argo CD) : 자동화 파이프라인을 구축하자
 8. Graceful Shutdown, Zero Downtime Deployment 이해하고 자주 테스트하고 배포하자.
 
-### 3부: 진정으로 탁월한 기준을 가지고 싶거든 탁월한 기준을 찾아 나서라.
-** Finding a Mentor
+### 3부: 진정으로 탁월한 기준을 가지고 싶거든 탁월한 기준을 찾아 나서라. (Finding a Mentor)
+
+### 일정
+- 토요일 09:00 ~ 18:00 (오프라인) / 장소: 홍대입구역
+- 화요일 21:00 ~ 00:00 (온라인) / 디스코드
+
+### 체계
+✅ 토요일 루틴:
+- 9:00 ~ 9:20
+  - Lucycato WBS, Vision Check
+- 9:20 ~ 10:00
+  - CS O / X 문제 풀이 및 해설
+- 10:00 ~ 13:00
+  - 블로그 발표 + 질의응답
+- 13:00 ~ 14:00 
+  - 점심시간
+- 14:00 ~ 17:30 
+  - 주요  
+  - 구성권 과제 기반 코드리뷰
+  - 각자 작성한 코드에 대한 리뷰 진행
+- 17:30 ~ 18:00
+  - 다음주 CS O / X 문제 과제 할당
+  - 다음주 블로그 글 작성 Topic 산정
+  - 다음주 Topic 기초개념 과제 할당
+  - 다음주 개발 과제 할당
+   
+✅ 화요일 루틴:
+- 필요에 의한 전략 회의 최대 00:00 까지 시간 할애
+
+✅ 스터디 과제
+- 규칙: 토요일 스터디 전까지 각자 준비해온다.
+- 과제 목록
+  1. O/X 문제 준비 핵심적인 CS 3문제 + 해설 준비해오기
+  2. 각자 맡은 키워드를 주제로 블로그 작성해오기
+  3. 영상 보기 & 이커머스 프로젝트 코드 리뷰해오기
+     - learnGrowD: 프로젝트 소스코드 영상 제공 및 기본 코드 작성
+     - aihoshistar: 인프라 영상 제공
+  4. 각 주차별 토픽에 대한 기초지식 각자 예습해오기
+  5. 각자 맡은 API 개발해오기
+  6. 3 party 자료 조사해오기
+     - ex) 구글 소셜로그인, MongoDB etc..
 
 ## 🧑‍💻 스터디 참여자
-
 <table>
 
 <tr>
   <td align=center>
     <a href="https://github.com/learnGrowD">
-      <img src="https://avatars.githubusercontent.com/u/104897960?v=4" width="100px"  />
+      <img src="https://avatars.githubusercontent.com/u/104897960?v=4" width="160px"  />
       <br/>
-      Back-end 🖥
+      back-end 🖥
       <br/>
       learnGrowD
     </a>
   </td>
   <td align=center>
     <a href="https://github.com/aihoshistar">
-      <img src="https://avatars.githubusercontent.com/u/45850400?v=4" width="100px"  />
+      <img src="https://avatars.githubusercontent.com/u/45850400?v=4" width="160px"  />
       <br/>
-      Back-end 🖥
+      back-end 🖥
       <br/>
       aihoshistar
     </a>
   </td>
   <td align=center>
     <a href="https://github.com/Jjinyshin">
-      <img src="https://avatars.githubusercontent.com/u/87403267?v=4" width="100px"  />
+      <img src="https://avatars.githubusercontent.com/u/87403267?v=4" width="160px"  />
       <br/>
-      Back-end 🖥
+      back-end 🖥
       <br/>
       Nyeong
     </a>
@@ -166,18 +201,18 @@ Spring Framework 기반으로 최신 기술 스택 학습과, 본질적인 실�
 <tr>
   <td align=center>
     <a href="https://github.com/Java-kokyu">
-      <img src="https://avatars.githubusercontent.com/u/85613861?v=4" width="100px"  />
+      <img src="https://avatars.githubusercontent.com/u/85613861?v=4" width="160px"  />
       <br/>
-      Back-end 🖥
+      back-end 🖥
       <br/>
       Java-kokyu
     </a>
   </td>
   <td align=center>
     <a href="https://github.com/witwint">
-      <img src="https://avatars.githubusercontent.com/u/108222981?v=4" width="100px" />
+      <img src="https://avatars.githubusercontent.com/u/108222981?v=4" width="160px" />
       <br/>
-      Back-end 🖥
+      back-end 🖥
       <br/>
       SEOKBEOM MOON
     </a>
@@ -186,9 +221,9 @@ Spring Framework 기반으로 최신 기술 스택 학습과, 본질적인 실�
   </td>
     <td align=center>
     <a href="https://github.com/lmw313">
-      <img src="https://avatars.githubusercontent.com/u/20276615?v=4" width="100px" />
+      <img src="https://avatars.githubusercontent.com/u/20276615?v=4" width="160px" />
       <br/>
-      Back-end 🖥
+      back-end 🖥
       <br/>
       이민우
     </a>
@@ -196,8 +231,16 @@ Spring Framework 기반으로 최신 기술 스택 학습과, 본질적인 실�
 </tr>
 </table>
 
-## 스터디 조인 방법
+## 블로그 링크
+- Lucycato: https://github.com/lucycato-backend/blog/wiki
+- learnGrowD: https://velog.io/@will_d/posts
+- aihoshistar: https://todo.so.tl/
+- Nyeong: https://jinyshin.tistory.com/
+- Java-kokyu: https://mindybughunter.com/
+- SEOKBEOM MOON: https://plum-quilt-296.notion.site/bc5d97b915224b33b210543286a060a2
+- 이민우: https://investment-challenge-developer.tistory.com/
 
+## 스터디 조인 방법
 기술 스택과 계획을 봤을 때 만만치 않습니다. 헌신과 희생 없이는 우리의 계획과 목표를 이룰 수 없습니다. 그러나 희생하고 헌신한다면 불가능은 없습니다.
 또한 혼자서 위대한 일을 할 수 없지만, 팀이면 위대한 일이 가능하다는 말처럼 팀(규율이 있는)이라면 가능합니다.
 
@@ -209,5 +252,5 @@ Spring Framework 기반으로 최신 기술 스택 학습과, 본질적인 실�
 현재 부족한 분들은 제가 기본 개념에 대해서 강의를 해드리고 있습니다. (앞으로 합류할 인원들을 위해 강의 촬영도 기획 중입니다.)
 그러니 열정이 있고 포기하지 않는 근성을 가진 분이라면 과감히 연락주세요.
 
-- Team Lucycato 리더 도학태 전화번호 : 010-8705-1693
+- Team Lucycato 리더 도학태 전화번호: 010-8705-1693
 - Team Lucycato github: https://github.com/lucycato-backend
