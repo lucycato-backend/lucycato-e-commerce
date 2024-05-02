@@ -5,12 +5,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.lucycato.userservice.adapter.out.persistence.jpaentity.AppUserJpaEntity;
-import org.lucycato.userservice.adapter.out.persistence.redisentity.AppUserMembershipRedisEntity;
-import org.lucycato.userservice.adapter.out.persistence.redisentity.AppUserRedisEntity;
 import org.lucycato.userservice.domain.enums.AppUserBadge;
 import org.lucycato.userservice.domain.enums.AppUserGrade;
 import org.lucycato.userservice.domain.enums.SocialStatus;
-import org.lucycato.userservice.adapter.out.persistence.vo.DeviceVo;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -61,26 +58,6 @@ public class AppUserResult {
                 .membershipResults(appUserMembershipResults)
                 .createdAt(entity.getCreatedAt())
                 .modifiedAt(entity.getModifiedAt())
-                .build();
-    }
-
-    public static AppUserResult from(AppUserRedisEntity appUserRedisEntity, List<AppUserMembershipRedisEntity> appUserMembershipRedisEntity) {
-        List<AppUserMembershipResult> appUserMembershipResults = appUserMembershipRedisEntity
-                .stream()
-                .map(AppUserMembershipResult::from)
-                .toList();
-
-        return AppUserResult.builder()
-                .appUserId(appUserRedisEntity.getId())
-                .name(appUserRedisEntity.getName())
-                .email(appUserRedisEntity.getEmail())
-                .phoneNumber(appUserRedisEntity.getPhoneNumber())
-                .imageUrl(appUserRedisEntity.getImageUrl())
-                .grade(appUserRedisEntity.getGrade())
-                .badges(appUserRedisEntity.getAppUserBadges())
-                .membershipResults(appUserMembershipResults)
-                .createdAt(appUserRedisEntity.getCreatedAt())
-                .modifiedAt(appUserRedisEntity.getModifiedAt())
                 .build();
     }
 }

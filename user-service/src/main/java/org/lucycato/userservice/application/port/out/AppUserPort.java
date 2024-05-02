@@ -29,6 +29,7 @@ public interface AppUserPort {
     );
 
     AppUserMembershipResult safeRemoveAppUserMembership(
+            Long appUserId,
             Long appUserMembershipId
     );
 }

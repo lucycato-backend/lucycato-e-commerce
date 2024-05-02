@@ -12,9 +12,13 @@ import org.lucycato.common.SelfValidating;
 @EqualsAndHashCode(callSuper = false)
 public class SafeRemoveAppUserMembershipCommand extends SelfValidating<SafeRemoveAppUserMembershipCommand> {
     @NotNull
+    private Long appUserId;
+
+    @NotNull
     private Long appUserMembershipId;
 
-    public SafeRemoveAppUserMembershipCommand(Long appUserMembershipId) {
+    public SafeRemoveAppUserMembershipCommand(Long appUserId, Long appUserMembershipId) {
+        this.appUserId = appUserId;
         this.appUserMembershipId = appUserMembershipId;
 
         this.validateSelf();
