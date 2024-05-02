@@ -42,8 +42,6 @@ public class AppUserResult {
 
     private LocalDateTime createdAt;
 
-    private LocalDateTime modifiedAt;
-
     public static AppUserResult from(AppUserJpaEntity entity) {
         List<AppUserMembershipResult> appUserMembershipResults = entity.getAppUserMembershipJpaEntities()
                 .stream()
@@ -62,7 +60,6 @@ public class AppUserResult {
                 .badges(entity.getAppUserBadges())
                 .membershipResults(appUserMembershipResults)
                 .createdAt(entity.getCreatedAt())
-                .modifiedAt(entity.getModifiedAt())
                 .build();
     }
 }

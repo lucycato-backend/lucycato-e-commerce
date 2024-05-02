@@ -39,8 +39,6 @@ public class AppUser {
 
     private final LocalDateTime createdAt;
 
-    private final LocalDateTime modifiedAt;
-
     public static AppUser from(AppUserResult result) {
         List<AppUserMembership> appUserMemberships = result.getMembershipResults()
                 .stream()
@@ -59,7 +57,6 @@ public class AppUser {
                 .badges(result.getBadges())
                 .appUserMemberships(appUserMemberships)
                 .createdAt(result.getCreatedAt())
-                .modifiedAt(result.getModifiedAt())
                 .build();
     }
 }
