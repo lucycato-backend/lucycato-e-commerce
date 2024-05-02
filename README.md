@@ -128,6 +128,8 @@ Spring Framework 기반으로 최신 기술 스택 학습과, 본질적인 실�
 ### 일정
 - 토요일 09:00 ~ 18:00 (오프라인) / 장소: 홍대입구역
 - 화요일 21:00 ~ 00:00 (온라인) / 디스코드
+- 루시카토 운영 WBS: https://docs.google.com/spreadsheets/d/1_1T-mYBjX9wD2YPES2RJ84CgiRahHYf481Lmy7PeZpM/edit#gid=0
+- 루시카토 프로젝트 영상촬영 WBS: https://docs.google.com/spreadsheets/d/1Rid6wIcEXjY4oSuBLqBiuCgG3K82HYU9FAUyZLhkwK4/edit
 
 ### 체계
 ✅ 토요일 루틴:
