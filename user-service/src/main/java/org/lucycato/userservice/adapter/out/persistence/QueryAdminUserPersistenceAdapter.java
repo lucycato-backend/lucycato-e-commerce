@@ -6,8 +6,6 @@ import org.lucycato.common.error.ErrorCodeImpl;
 import org.lucycato.common.exception.ApiExceptionImpl;
 import org.lucycato.userservice.adapter.out.persistence.entity.AdminUserJpaEntity;
 import org.lucycato.userservice.adapter.out.persistence.repository.AdminUserJpaRepository;
-import org.lucycato.userservice.adapter.out.persistence.redisentity.AppUserMembershipRedisEntity;
-import org.lucycato.userservice.adapter.out.persistence.redisentity.AppUserRedisEntity;
 import org.lucycato.userservice.adapter.out.persistence.vo.DeviceVo;
 import org.lucycato.userservice.application.port.out.QueryAdminUserPort;
 import org.lucycato.userservice.application.port.out.result.AdminUserResult;

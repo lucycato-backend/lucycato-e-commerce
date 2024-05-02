@@ -52,14 +52,24 @@ public class AppUserPersistenceAdapter implements AppUserPort {
     }
 
     @Override
-    public AppUserResult modifyAppUserPhoneNumber(Long appUserId, String phoneNumber) {
+    public AppUserResult modifyAppUser(
+            Long appUserId,
+            String phoneNumber,
+            AppUserStatus appUserStatus
+    ) {
         AppUserJpaEntity appUserJpaEntity = appUserJpaRepository.findById(appUserId).orElseThrow(() -> new ApiExceptionImpl(ErrorCodeImpl.NOT_FOUND));
         appUserJpaEntity.setPhoneNumber(phoneNumber);
+        appUserJpaEntity.setStatus(appUserStatus);
         AppUserJpaEntity savedAppUserJpaEntity = appUserJpaRepository.save(appUserJpaEntity);
 
         commonRedisTemplate.delete(APP_USER_REDIS_KEY.formatted(appUserId));
 
         return AppUserResult.from(savedAppUserJpaEntity);
+    }
+
+    @Override
+    public void expiredAppUser(Long appUserId) {
+        commonRedisTemplate.delete(APP_USER_REDIS_KEY.formatted(appUserId));
     }
 
     @Override

@@ -39,7 +39,7 @@ public class QueryAppUserPersistenceAdapter implements QueryAppUserPort {
 
     @Override
     public AppUserResult getAppUserResult(Long appUserId) {;
-        return commonRedisTemplate.<AppUserResult>find(APP_USER_REDIS_KEY.formatted(appUserId))
+        return commonRedisTemplate.find(APP_USER_REDIS_KEY.formatted(appUserId), AppUserResult.class)
                 .orElseGet(() -> {
                     AppUserJpaEntity appUserJpaEntity = appUserJpaRepository.findById(appUserId).orElseThrow(() -> new ApiExceptionImpl(ErrorCodeImpl.NOT_FOUND));
                     AppUserResult appUserResult = AppUserResult.from(appUserJpaEntity);
