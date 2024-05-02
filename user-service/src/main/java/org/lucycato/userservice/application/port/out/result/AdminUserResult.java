@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.lucycato.common.security.AdminUserRole;
-import org.lucycato.userservice.adapter.out.persistence.jpaentity.AdminUserJpaEntity;
+import org.lucycato.userservice.adapter.out.persistence.entity.AdminUserJpaEntity;
 import org.lucycato.userservice.adapter.out.persistence.vo.DeviceVo;
 
 import java.time.LocalDateTime;

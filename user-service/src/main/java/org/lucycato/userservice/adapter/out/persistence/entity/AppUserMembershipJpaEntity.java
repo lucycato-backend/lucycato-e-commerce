@@ -1,4 +1,4 @@
-package org.lucycato.userservice.adapter.out.persistence.jpaentity;
+package org.lucycato.userservice.adapter.out.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.lucycato.userservice.adapter.out.persistence.jpaentity.AppUserMembershipJpaEntity;
+import org.lucycato.userservice.adapter.out.persistence.entity.AppUserMembershipJpaEntity;
 import org.lucycato.userservice.domain.enums.MembershipGrade;
 
 import java.time.LocalDateTime;
