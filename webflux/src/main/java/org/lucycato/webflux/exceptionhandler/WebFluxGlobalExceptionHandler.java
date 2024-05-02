@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
 
 @Order(Integer.MAX_VALUE)
 @RestControllerAdvice
-public class WebfluxGlobalExceptionHandler {
+public class WebFluxGlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public Mono<ResponseEntity<Erroresponse<Object>>> handlerGlobalException(Exception ex) {
