@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.lucycato.userservice.adapter.out.persistence.entity.AppUserJpaEntity;
 import org.lucycato.userservice.domain.enums.AppUserBadge;
 import org.lucycato.userservice.domain.enums.AppUserGrade;
+import org.lucycato.userservice.domain.enums.AppUserStatus;
 import org.lucycato.userservice.domain.enums.SocialStatus;
 
 import java.time.LocalDateTime;
@@ -18,6 +19,8 @@ import java.util.List;
 @NoArgsConstructor
 public class AppUserResult {
     private Long appUserId;
+
+    private AppUserStatus status;
 
     private SocialStatus socialStatus;
 
@@ -49,6 +52,8 @@ public class AppUserResult {
 
         return AppUserResult.builder()
                 .appUserId(entity.getId())
+                .status(entity.getStatus())
+                .socialStatus(entity.getSocialStatus())
                 .name(entity.getName())
                 .email(entity.getEmail())
                 .phoneNumber(entity.getPhoneNumber())

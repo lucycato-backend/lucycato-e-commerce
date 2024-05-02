@@ -71,5 +71,6 @@ public class AppUserJpaEntity {
         this.status = status;
         this.appUserBadges = new ArrayList<>();
         this.deviceVos = new ArrayList<>();
+        this.appUserMembershipJpaEntities = new ArrayList<>();
     }
 }

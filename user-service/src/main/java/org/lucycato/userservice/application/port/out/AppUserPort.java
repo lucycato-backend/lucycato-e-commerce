@@ -23,6 +23,8 @@ public interface AppUserPort {
             AppUserStatus appUserStatus
     );
 
+    void expiredAppUser(Long appUserId);
+
     AppUserMembershipResult registerAppUserMembership(
             Long appUserId,
             MembershipGrade membershipGrade,
