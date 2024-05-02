@@ -33,11 +33,11 @@ public class CommonRedisTemplate {
         return value;
     }
 
-    public <T> Optional<T> find(String key) {
+    public <T> Optional<T> find(String key, Class<T> type) {
         try {
             String jsonString = redisTemplate.opsForValue().get(key);
             if (jsonString != null) {
-                return Optional.of(objectMapper.readValue(jsonString, new TypeReference<>() {}));
+                return Optional.of(objectMapper.readValue(jsonString, type));
             } else {
                 return Optional.empty();
             }
