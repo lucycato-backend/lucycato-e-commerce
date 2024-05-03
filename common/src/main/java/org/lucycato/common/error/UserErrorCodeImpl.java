@@ -12,6 +12,7 @@ public enum UserErrorCodeImpl implements ErrorCode {
     PHONE_NUMBER_VERIFICATION_NOT_MATCH(HttpStatus.NOT_FOUND.value(), "LU-002", "phone number verification not match", "전화번호 인증이 유요하지 않습니다."),
     USER_DUPLICATE(HttpStatus.NOT_FOUND.value(), "LU-002", "user duplicate", "중복된 아이디가 있습니다."),
     EXIST_USER(HttpStatus.BAD_REQUEST.value(), "LU-003", "exist user","기존 회원이 존재합니다."),
+    EMAIL_NOT_MATH(HttpStatus.BAD_REQUEST.value(), "LU-004", "exist user","가입된 이메일이 없습니다."),
     ;
     private final Integer httpCode;
     private final String code;

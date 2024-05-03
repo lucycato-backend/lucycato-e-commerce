@@ -19,4 +19,8 @@ public interface AdminUserUseCase {
     AdminUser addAdminUserRole(ModifyAdminUserRoleCommand command);
 
     AdminUser removeAdminUserRole(ModifyAdminUserRoleCommand command);
+
+    boolean createAdminUserTempPassword(AdminUserCreateTempPasswordCommand command);
+
+    boolean checkAdminUserTempPassword(AdminUserCheckTempPasswordCommand command);
 }
