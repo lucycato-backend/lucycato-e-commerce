@@ -81,12 +81,12 @@ Spring Framework 기반으로 최신 기술 스택 학습과, 본질적인 실�
 4. Kafka
 	- 비동기 통신을 통해 여러 서버를 효율적으로 활용하자.
 	- 안정적이고 효율적인 Kafka Server 구성 전략 확립
-5. Redis
+5. MySQL, MongoDB, Elasticsearch
+    - 주요 DB의 내부 원리와 차이점을 알아보자.
+    - 실제 각각의 DB가 어떠한 상황에서 사용되는지 분석하여 실전 전략을 구축하자.
+6. Redis
     - 강력한 성능 확보 전략인 Memory Caching을 활용하자.
-    - Session Storage, Rank, Geo 등 다양한 활용 전략을 구축하자.
-6. MySQL, MongoDB, Elasticsearch 
-	- 주요 DB의 내부 원리와 차이점을 알아보자.
-    - 실제 각각의 DB가 어떠한 상황에서 사용되는지 분석하여 실전 전략을 구축하자. 
+    - Session Storage, Rank, Geo 등 다양한 활용 전략을 구축하자. 
 7. Spring Batch
 	- Batch의 철학과 원리를 이해하고 다양한 활용 전략을 구축하자. 
 8. 통합테스트, 단위 테스트, 기능 테스트
