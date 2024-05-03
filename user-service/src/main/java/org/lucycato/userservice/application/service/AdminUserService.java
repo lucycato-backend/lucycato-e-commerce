@@ -12,6 +12,7 @@ import org.lucycato.userservice.application.port.out.result.IssueJwtTokenResult;
 import org.lucycato.userservice.application.port.out.AuthPort;
 import org.lucycato.userservice.domain.AdminUser;
 import org.lucycato.userservice.domain.AdminUserLogin;
+import org.lucycato.userservice.domain.AdminUserProfile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
