@@ -1,7 +1,6 @@
 package org.lucycato.taskconsumer.domain;
 
 import lombok.*;
-import org.lucycato.common.model.task.TaskKeyCategory;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
@@ -27,15 +26,15 @@ public class SaveTaskHistoryR2dbcEntity {
     @CreatedDate
     private LocalDateTime createdAt;
 
-    public static SaveTaskHistoryR2dbcEntity register(
-            TaskKeyCategory taskKeyCategory,
-            SaveTaskHistoryStatus taskHistoryStatus,
-            String transactionUUID
-    ) {
-        return SaveTaskHistoryR2dbcEntity.builder()
-                .taskKeyCategory(taskKeyCategory.name())
-                .taskHistoryStatus(taskHistoryStatus.name())
-                .transactionUUID(transactionUUID)
-                .build();
-    }
+//    public static SaveTaskHistoryR2dbcEntity register(
+//            TaskKeyCategory taskKeyCategory,
+//            SaveTaskHistoryStatus taskHistoryStatus,
+//            String transactionUUID
+//    ) {
+//        return SaveTaskHistoryR2dbcEntity.builder()
+//                .taskKeyCategory(taskKeyCategory.name())
+//                .taskHistoryStatus(taskHistoryStatus.name())
+//                .transactionUUID(transactionUUID)
+//                .build();
+//    }
 }

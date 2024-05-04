@@ -9,7 +9,7 @@ import org.lucycato.common.PrintStackTraceManager;
 import org.lucycato.common.annotation.hexagonal.out.ProducerAdapter;
 import org.lucycato.common.error.ErrorCodeImpl;
 import org.lucycato.common.exception.ApiExceptionImpl;
-import org.lucycato.common.model.task.TaskKey;
+import org.lucycato.common.kafka.TaskKey;
 import org.lucycato.taskconsumer.application.port.out.SendResultTaskPort;
 import org.springframework.beans.factory.annotation.Value;
 import reactor.core.publisher.Mono;
