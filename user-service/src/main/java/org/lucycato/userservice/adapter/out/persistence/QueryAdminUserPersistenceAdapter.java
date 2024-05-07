@@ -6,6 +6,7 @@ import org.lucycato.common.error.ErrorCodeImpl;
 import org.lucycato.common.exception.ApiExceptionImpl;
 import org.lucycato.userservice.adapter.out.persistence.entity.AdminUserJpaEntity;
 import org.lucycato.userservice.adapter.out.persistence.repository.AdminUserJpaRepository;
+import org.lucycato.userservice.adapter.out.persistence.repository.QAdminUserRepository;
 import org.lucycato.userservice.adapter.out.persistence.vo.DeviceVo;
 import org.lucycato.userservice.application.port.out.QueryAdminUserPort;
 import org.lucycato.userservice.application.port.out.result.AdminUserResult;
@@ -18,6 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class QueryAdminUserPersistenceAdapter implements QueryAdminUserPort {
     private final AdminUserJpaRepository adminUserJpaRepository;
+    private final QAdminUserRepository qAdminUserRepository;
 
     @Override
     public AdminUserResult getAdminUser(Long adminUserId) {
@@ -26,9 +28,9 @@ public class QueryAdminUserPersistenceAdapter implements QueryAdminUserPort {
     }
 
     @Override
-    public Optional<AdminUserProfile> getAdminUserProfile(String name, String phoneNumber) {
-        Optional<AdminUserJpaEntity> adminUserJpaEntity = adminUserJpaRepository.findOneByNameAndPhoneNumber(name, phoneNumber);
-        return adminUserJpaEntity.map(AdminUserProfile::from);
+    public Optional<AdminUserResult> getAdminUser(String name, String phoneNumber) {
+        Optional<AdminUserJpaEntity> adminUserJpaEntity = qAdminUserRepository.findOneByEmailAndPassword(name, phoneNumber);
+        return adminUserJpaEntity.map(AdminUserResult::from);
     }
 
     @Override

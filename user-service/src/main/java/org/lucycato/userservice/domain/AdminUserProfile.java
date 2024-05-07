@@ -1,7 +1,6 @@
 package org.lucycato.userservice.domain;
 
 import lombok.*;
-import org.lucycato.userservice.adapter.out.persistence.entity.AdminUserJpaEntity;
 
 import java.time.LocalDateTime;
 
@@ -14,11 +13,11 @@ public class AdminUserProfile {
     private LocalDateTime createdAt;
     private String imageUrl;
 
-    public static AdminUserProfile from(AdminUserJpaEntity entity) {
+    public static AdminUserProfile create(String email, LocalDateTime createdAt, String imageUrl) {
         return AdminUserProfile.builder()
-                .email(entity.getEmail())
-                .createdAt(entity.getCreatedAt())
-                .imageUrl(entity.getImageUrl())
+                .email(email)
+                .createdAt(createdAt)
+                .imageUrl(imageUrl)
                 .build();
     }
 }

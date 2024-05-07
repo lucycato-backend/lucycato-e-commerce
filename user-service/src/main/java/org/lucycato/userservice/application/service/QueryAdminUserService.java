@@ -82,7 +82,8 @@ public class QueryAdminUserService implements QueryAdminUserUseCase {
 
     @Override
     public boolean certificateAdminUser(AdminUserCertificationCommand command) {
-        return queryAdminUserPort.getAdminUserProfile(command.getName(), command.getPhoneNumber()).isPresent();
+        // Boolean 만드는 것
+        return queryAdminUserPort.getAdminUser(command.getName(), command.getPhoneNumber()).isPresent();
     }
 
     @Override
@@ -92,7 +93,13 @@ public class QueryAdminUserService implements QueryAdminUserUseCase {
         if (!isVerification) {
             throw new ApiExceptionImpl(ErrorCodeImpl.VALIDATION);
         }
-        return queryAdminUserPort.getAdminUserProfile(command.getName(), command.getPhone())
+        AdminUserResult adminUserResult = queryAdminUserPort.getAdminUser(command.getName(), command.getPhone())
                 .orElseThrow(() -> new ApiExceptionImpl(ErrorCodeImpl.NOT_FOUND));
+
+        return AdminUserProfile.create(
+                adminUserResult.getEmail(),
+                adminUserResult.getCreatedAt(),
+                adminUserResult.getImageUrl()
+                );
     }
 }
