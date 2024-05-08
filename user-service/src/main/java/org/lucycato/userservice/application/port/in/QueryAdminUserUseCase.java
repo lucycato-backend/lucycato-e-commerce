@@ -2,6 +2,7 @@ package org.lucycato.userservice.application.port.in;
 
 import org.lucycato.userservice.application.port.in.command.*;
 import org.lucycato.userservice.domain.AdminUser;
+import org.lucycato.userservice.domain.AdminUserProfile;
 import org.lucycato.userservice.domain.AppUser;
 import org.lucycato.userservice.domain.DeviceManagement;
 
@@ -17,4 +18,8 @@ public interface QueryAdminUserUseCase {
     List<AppUser> getAppUserList();
 
     List<AppUser> getAppUserListByAppUserIds(List<Long> userIds);
+
+    boolean certificateAdminUser(AdminUserCertificationCommand command);
+
+    AdminUserProfile getAdminUserProfile(FindAdminUserIdCommand command);
 }
