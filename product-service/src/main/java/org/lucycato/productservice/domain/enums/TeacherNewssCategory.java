@@ -3,9 +3,10 @@ package org.lucycato.productservice.domain.enums;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public enum ReviewCategory {
-    BEST("베스트 수강평"),
-    NORMAL("일반 수강평"),
+public enum TeacherNewssCategory {
+    NOTICE("공지사항"),
+    EVENT("이벤트"),
+    OPEN("개강"),
     ;
     private final String description;
 }

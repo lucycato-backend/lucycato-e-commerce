@@ -1,29 +1,60 @@
 package org.lucycato.productservice.domain;
 
 import lombok.*;
-import org.lucycato.productservice.domain.enums.NewStatus;
-import org.lucycato.productservice.domain.enums.NewsCategory;
+import org.lucycato.productservice.domain.enums.TeacherNewStatus;
+import org.lucycato.productservice.domain.enums.TeacherNewssCategory;
+import org.lucycato.productservice.domain.enums.TeachingGenre;
 
 import java.time.LocalDateTime;
 
 @Getter
-@Setter(value = AccessLevel.PRIVATE)
 @Builder(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class TeacherNews {
-    private Long newsId;
+    private final Long teacherNewsId;
 
-    private Long teacherId;
+    private final String teacherName;
 
-    private Integer viewCount;
+    private final String teacherNewsTitle;
 
-    private NewsCategory category;
+    private final String teacherNewsContent;
 
-    private NewStatus status;
+    private final Integer teacherNewsViewCount;
 
-    private String title;
+    private final TeachingGenre teachingGenre;
 
-    private String content;
+    private final TeacherNewssCategory teacherNewssCategory;
 
-    private LocalDateTime createdAt;
+    private final TeacherNewStatus teacherNewStatus;
+
+    private final LocalDateTime createdAt;
+
+    public static TeacherNews from() {
+        return null;
+    }
+
+    public static Record createRecord() {
+        return null;
+    }
+
+    @Getter
+    @Builder(access = AccessLevel.PRIVATE)
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class Record {
+        private final Long teacherNewsId;
+
+        private final String teacherName;
+
+        private final String teacherNewsTitle;
+
+        private final Integer teacherNewsViewCount;
+
+        private final TeachingGenre teachingGenre;
+
+        private final TeacherNewssCategory teacherNewssCategory;
+
+        private final TeacherNewStatus teacherNewStatus;
+
+        private final LocalDateTime createdAt;
+    }
 }

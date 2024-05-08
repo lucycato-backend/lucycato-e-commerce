@@ -7,23 +7,41 @@ import org.lucycato.productservice.domain.enums.LectureContentStatus;
 import java.time.LocalDateTime;
 
 @Getter
-@Setter(value = AccessLevel.PRIVATE)
 @Builder(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class LectureContent {
-    private Long lectureContentId;
+    private final Long lectureContentId;
 
-    private Long lectureId;
+    private final String lectureContentTitle;
 
-    private String title;
+    private final LectureContentCategory lectureContentCategory;
 
-    private LectureContentCategory category;
+    private final String lectureContentThumbnailImageUrl;
 
-    private String thumbnailImageUrl;
+    private final String lectureContentVideoUrl;
 
-    private String videoUrl;
+    private final LectureContentStatus lectureContentStatus;
 
-    private LectureContentStatus status;
+    private final LocalDateTime createdAt;
 
-    private LocalDateTime createdAt;
+    public static LectureContent from() {
+       return null;
+    }
+
+    public static Record createRecord() {
+        return null;
+    }
+
+    @Getter
+    @Builder(access = AccessLevel.PRIVATE)
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class Record {
+        private final Long lectureContentId;
+
+        private final String lectureContentTitle;
+
+        private final LectureContentStatus lectureContentStatus;
+
+        private final LocalDateTime createdAt;
+    }
 }

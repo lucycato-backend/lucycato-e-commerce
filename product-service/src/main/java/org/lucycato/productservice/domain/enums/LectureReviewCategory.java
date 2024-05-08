@@ -3,11 +3,9 @@ package org.lucycato.productservice.domain.enums;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public enum ProductGenre {
-    DEVELOPER("개발"),
-    DESIGN("디자인"),
-    BUSINESS("비지니스"),
+public enum LectureReviewCategory {
+    BEST("베스트 수강평"),
+    NORMAL("일반 수강평"),
     ;
-
     private final String description;
 }

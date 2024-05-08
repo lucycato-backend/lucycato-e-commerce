@@ -1,34 +1,109 @@
 package org.lucycato.productservice.domain;
 
 import lombok.*;
-import org.lucycato.productservice.domain.enums.ProductGenre;
+import org.lucycato.productservice.domain.enums.TeacherImageCategory;
+import org.lucycato.productservice.domain.enums.TeachingGenre;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
-@Setter(value = AccessLevel.PRIVATE)
 @Builder(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Teacher {
     private final Long teacherId;
 
-    private final Integer rank;
+    private final Integer teacherRank;
 
-    private final ProductGenre genre;
+    private final String teacherName;
 
-    private final String name;
+    private final String teacherSlogan;
 
-    private final String slogan;
+    private final String teacherProfileDescription;
 
-    private final String teacherMainImage;
+    private final List<TeacherImage> teacherImages;
 
-    private final String teacherDetailImage;
+    private final Curriculum curriculum;
 
-    private final String curriculumImageUrl;
+    private final Statistics statistics;
 
-    private final String curriculumVideoUrl;
+    private final Boolean isRecentLectureOpen;
 
-    private final Integer operatorAllLectureCount;
+    private final Boolean isRecentTeacherNews;
 
-    private final Integer operatorCompleteLectureCount;
+    private final TeachingGenre teachingGenre;
 
-    private final Integer operatorProgressLectureCount;
+    private final LocalDateTime createdAt;
+
+    public static Teacher from() {
+        return null;
+    }
+
+    public static Record createRecord() {
+        return null;
+    }
+
+    @Getter
+    @Builder(access = AccessLevel.PRIVATE)
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class Record {
+        private final Long teacherId;
+
+        private final String teacherRank;
+
+        private final String teacherName;
+
+        private final String teacherSlogan;
+
+        private final List<String> teacherImages;
+
+        private final TeachingGenre teachingGenre;
+
+        private final Boolean isRecentLectureOpen;
+
+        private final Boolean isRecentTeacherNews;
+
+        private final LocalDateTime createdAt;
+    }
+
+    @Getter
+    @Builder(access = AccessLevel.PRIVATE)
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class TeacherImage {
+        private final TeacherImageCategory teacherImageCategory;
+
+        private final String teacherImageUrl;
+    }
+
+    @Getter
+    @Builder(access = AccessLevel.PRIVATE)
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class Curriculum {
+        private final String curriculumImageUrl;
+
+        private final String curriculumVideoUrl;
+    }
+
+    @Getter
+    @Builder(access = AccessLevel.PRIVATE)
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class Statistics {
+        private final Integer lectureSeriesCount;
+
+        private final Integer allOperatorLectureCount;
+
+        private final Integer completeOperatorLectureCount;
+
+        private final Integer progressOperatorLectureCount;
+
+        private final Integer notOperatorLectureCount;
+
+        private final Integer operatorTextEBookCount;
+
+        private final Integer nonOperatorTextEBookCount;
+
+        private final Integer targetStudentReviewCount;
+
+        private final Integer teacherNewsCount;
+    }
 }

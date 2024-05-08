@@ -7,39 +7,127 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
-@Setter(value = AccessLevel.PRIVATE)
 @Builder(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Lecture {
-    private Long lectureId;
+    private final Long lectureId;
 
-    private Long teacherId;
+    private final Teacher teacher;
 
-    private Long lectureSeriesId;
+    private final LectureSeries lectureSeries;
 
-    private String imageUrl;
+    private final List<LectureTextEBookPreView> lectureTextEBookPreViews;
 
-    private Subject subject;
+    private final LecturePreViewUrl lecturePreViewUrl;
 
-    private String title;
+    private final String lectureTitle;
 
-    private String description;
+    private final String lectureSubTitle;
 
-    private List<LectureContent> contents;
+    private final List<String> lectureTags;
 
-    private LectureTargetCategory targetCategory;
+    private final Integer lecturePrice;
 
-    private List<String> tags;
+    private final String lectureImageUrl;
 
-    private LectureGenre genre;
+    private final String lectureDescription;
 
-    private String composition;
+    private final String lectureComposition;
 
-    private Integer coursePeriod;
+    private final Integer lectureCoursePeriod;
 
-    private LectureProductWay productionWay;
+    private final List<LectureTargetCategory> lectureTargetCategories;
 
-    private LectureStatus status;
+    private final LectureGenre lectureGenre;
 
-    private LocalDateTime createdAt;
+    private final TeachingGenre teachingGenre;
+
+    private final SubjectCategory subjectCategory;
+
+    private final LectureStatus status;
+
+    private final LocalDateTime createdAt;
+
+    public static Lecture from() {
+        return null;
+    }
+
+    public static Record createRecord() {
+        return null;
+    }
+
+    @Getter
+    @Builder(access = AccessLevel.PRIVATE)
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class Record {
+        private final Long lectureId;
+
+        private final String teacherName;
+
+        private final String lectureTitle;
+
+        private final String lectureSubTitle;
+
+        private final List<String> lectureTags;
+
+        private final Integer lecturePrice;
+
+        private final List<String> lectureEBookPreviews;
+
+        private final List<String> lecturePreviewVideoUrls;
+
+        private final List<LectureTargetCategory> lectureTargetCategories;
+
+        private final LectureGenre lectureGenre;
+
+        private final TeachingGenre teachingGenre;
+
+        private final SubjectCategory subjectCategory;
+
+        private final LectureStatus status;
+    }
+
+    @Getter
+    @Builder(access = AccessLevel.PRIVATE)
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class Teacher {
+        private final String teacherName;
+
+        private final String teacherCurriculumImageUrl;
+
+        private final String teacherCurriculumVideoUrl;
+    }
+
+    @Getter
+    @Builder(access = AccessLevel.PRIVATE)
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class LectureSeries {
+        private final String lectureSeriesTitle;
+
+        private final String lectureSeriesDescription;
+
+        private final LectureSeriesCategory lectureSeriesCategory;
+    }
+
+    @Getter
+    @Builder(access = AccessLevel.PRIVATE)
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class LectureTextEBookPreView {
+        private final Long lectureTextEBookId;
+
+        private final String lectureTextEBookUniqueCode;
+
+        private final String lectureTEBookTitle;
+
+        private final String lectureTEBookPreviewDownLoadUrl;
+    }
+
+    @Getter
+    @Builder(access = AccessLevel.PRIVATE)
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class LecturePreViewUrl {
+        private final String otVideoUrl;
+
+        private final String previewVideoUrl;
+    }
 }

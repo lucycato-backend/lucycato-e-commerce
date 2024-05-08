@@ -3,9 +3,11 @@ package org.lucycato.productservice.domain.enums;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public enum NewStatus {
-    REGISTERED("등록"),
-    UNREGISTERED("등록 해지"),
+public enum TeachingGenre {
+    DEVELOPER("개발"),
+    DESIGN("디자인"),
+    BUSINESS("비지니스"),
     ;
+
     private final String description;
 }

@@ -4,22 +4,42 @@ import lombok.*;
 import org.lucycato.productservice.domain.enums.LectureSeriesCategory;
 import org.lucycato.productservice.domain.enums.LectureSeriesStatus;
 
+import java.util.List;
+
 @Getter
-@Setter(value = AccessLevel.PRIVATE)
 @Builder(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class LectureSeries {
-    private Long lectureSeriesId;
+    private final Long lectureSeriesId;
 
-    private Long teacherId;
+    private final String lectureSeriesTitle;
 
-    private LectureSeriesCategory category;
+    private final String lectureSeriesDescription;
 
-    private String imageUrl;
+    private final List<String> lectureSeriesExplainImageUrls;
 
-    private String title;
+    private final LectureSeriesCategory lectureSeriesCategory;
 
-    private String description;
+    private final LectureSeriesStatus lectureSeriesStatus;
 
-    private LectureSeriesStatus status;
+    public static LectureSeries from() {
+       return null;
+    }
+
+    public static Record createRecord() {
+       return null;
+    }
+
+    @Getter
+    @Builder(access = AccessLevel.PRIVATE)
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class Record {
+        private final Long lectureSeriesId;
+
+        private final String lectureSeriesTitle;
+
+        private final LectureSeriesCategory lectureSeriesCategory;
+
+        private final LectureSeriesStatus lectureSeriesStatus;
+    }
 }

@@ -3,10 +3,10 @@ package org.lucycato.productservice.domain.enums;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public enum NewsCategory {
-    NOTICE("공지사항"),
-    EVENT("이벤트"),
-    OPEN("개강"),
+public enum TeacherImageCategory {
+    MAIN("main image"),
+    SUB("sub image"),
+    FULL("full image"),
     ;
     private final String description;
 }

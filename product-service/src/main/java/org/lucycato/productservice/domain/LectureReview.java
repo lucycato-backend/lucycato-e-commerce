@@ -1,36 +1,82 @@
 package org.lucycato.productservice.domain;
 
-import lombok.*;
-import org.lucycato.productservice.domain.enums.ReviewCategory;
-import org.lucycato.productservice.domain.enums.ReviewStatus;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import org.lucycato.productservice.domain.enums.LectureReviewCategory;
+import org.lucycato.productservice.domain.enums.LectureReviewStatus;
+import org.lucycato.productservice.domain.enums.SubjectCategory;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
-@Setter(value = AccessLevel.PRIVATE)
 @Builder(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class LectureReview {
-    private Long reviewId;
+    private final Long lectureReviewId;
 
-    private Long appUserId;
+    private final String teacherName;
 
-    private Long teacherId;
+    private final String safeUserName;
 
-    private Long lectureId;
+    private final Lecture lecture;
 
-    private ReviewCategory category;
+    private final Double lectureReviewStar;
 
-    private ReviewStatus status;
+    private final Integer lectureReviewViewCount;
 
-    private BigDecimal star;
+    private final String lectureReviewTitle;
 
-    private Integer viewCount;
+    private final String lectureReviewContent;
 
-    private String title;
+    private final SubjectCategory subjectCategory;
 
-    private String content;
+    private final LectureReviewCategory lectureReviewCategory;
 
-    private LocalDateTime createdAt;
+    private final LectureReviewStatus lectureReviewStatus;
+
+    private final LocalDateTime createdAt;
+
+    public static LectureReview from() {
+        return null;
+    }
+
+    public static Record creatRecord() {
+        return null;
+    }
+
+    @Getter
+    @Builder(access = AccessLevel.PRIVATE)
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class Record {
+        private final Long lectureReViewId;
+
+        private final String safeUserName;
+
+        private final String lectureReviewTitle;
+
+        private final Double lectureReviewStar;
+
+        private final Integer lectureReviewViewCount;
+
+        private final LectureReviewCategory lectureReviewCategory;
+
+        private final LectureReviewStatus lectureReviewStatus;
+
+        private final LocalDateTime createdAt;
+    }
+
+    @Getter
+    @Builder(access = AccessLevel.PRIVATE)
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class Lecture {
+        private final String lectureName;
+
+        private final String lectureTarget;
+
+        private final String lectureOTVideoUrl;
+
+        private final String lecturePreviewVideoUrl;
+    }
 }
