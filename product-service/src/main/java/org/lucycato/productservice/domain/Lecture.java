@@ -24,8 +24,6 @@ public class Lecture {
 
     private final String lectureSubTitle;
 
-    private final List<String> lectureTags;
-
     private final Integer lecturePrice;
 
     private final String lectureImageUrl;
@@ -34,9 +32,7 @@ public class Lecture {
 
     private final String lectureComposition;
 
-    private final Integer lectureCoursePeriod;
-
-    private final List<LectureTargetCategory> lectureTargetCategories;
+    private final List<LectureTargetStudentCategory> lectureTargetStudentCategories;
 
     private final LectureGenre lectureGenre;
 
@@ -45,6 +41,8 @@ public class Lecture {
     private final SubjectCategory subjectCategory;
 
     private final LectureStatus status;
+
+    private final LocalDateTime expiredAt;
 
     private final LocalDateTime createdAt;
 
@@ -68,15 +66,13 @@ public class Lecture {
 
         private final String lectureSubTitle;
 
-        private final List<String> lectureTags;
-
         private final Integer lecturePrice;
 
         private final List<String> lectureEBookPreviews;
 
         private final List<String> lecturePreviewVideoUrls;
 
-        private final List<LectureTargetCategory> lectureTargetCategories;
+        private final List<LectureTargetStudentCategory> lectureTargetStudentCategories;
 
         private final LectureGenre lectureGenre;
 

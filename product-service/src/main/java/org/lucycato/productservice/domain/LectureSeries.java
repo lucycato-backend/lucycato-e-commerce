@@ -3,6 +3,7 @@ package org.lucycato.productservice.domain;
 import lombok.*;
 import org.lucycato.productservice.domain.enums.LectureSeriesCategory;
 import org.lucycato.productservice.domain.enums.LectureSeriesStatus;
+import org.lucycato.productservice.domain.enums.SubjectCategory;
 
 import java.util.List;
 
@@ -19,6 +20,8 @@ public class LectureSeries {
     private final List<String> lectureSeriesExplainImageUrls;
 
     private final LectureSeriesCategory lectureSeriesCategory;
+
+    private final SubjectCategory subjectCategory;
 
     private final LectureSeriesStatus lectureSeriesStatus;
 
@@ -37,6 +40,8 @@ public class LectureSeries {
         private final Long lectureSeriesId;
 
         private final String lectureSeriesTitle;
+
+        private final SubjectCategory subjectCategory;
 
         private final LectureSeriesCategory lectureSeriesCategory;
 
