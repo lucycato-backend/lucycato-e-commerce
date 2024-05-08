@@ -55,7 +55,7 @@ public class Teacher {
 
         private final String teacherSlogan;
 
-        private final List<String> teacherImages;
+        private final List<TeacherImage> teacherImages;
 
         private final TeachingGenre teachingGenre;
 
