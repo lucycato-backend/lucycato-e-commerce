@@ -3,6 +3,7 @@ package org.lucycato.userservice.application.port.in;
 import org.lucycato.userservice.application.port.in.command.*;
 import org.lucycato.userservice.domain.AdminUser;
 import org.lucycato.userservice.domain.AdminUserLogin;
+import org.lucycato.userservice.domain.AdminUserProfile;
 import org.lucycato.userservice.domain.AppUserLogin;
 
 public interface AdminUserUseCase {
@@ -18,4 +19,8 @@ public interface AdminUserUseCase {
     AdminUser addAdminUserRole(ModifyAdminUserRoleCommand command);
 
     AdminUser removeAdminUserRole(ModifyAdminUserRoleCommand command);
+
+    boolean createAdminUserTempPassword(AdminUserCreateTempPasswordCommand command);
+
+    boolean checkAdminUserTempPassword(AdminUserCheckTempPasswordCommand command);
 }

@@ -127,4 +127,27 @@ public class AdminUserController {
         );
         return adminUserUseCase.removeAdminUserRole(command);
     }
+
+    @PostMapping("open-api/lucycato/v1/admin/user/create-temp-password")
+    public boolean createAdminUserTempPassword(
+            @RequestBody
+            AdminUserCreateTempPasswordRequest request
+    ) {
+        AdminUserCreateTempPasswordCommand command = new AdminUserCreateTempPasswordCommand(
+                request.getEmail()
+        );
+        return adminUserUseCase.createAdminUserTempPassword(command);
+    }
+
+    @PostMapping("open-api/lucycato/v1/admin/user/check-temp-password")
+    public boolean checkAdminUserTempPassword(
+            @RequestBody
+            AdminUserCheckTempPasswordRequest request
+    ) {
+        AdminUserCheckTempPasswordCommand command = new AdminUserCheckTempPasswordCommand(
+                request.getEmail(),
+                request.getTempPassword()
+        );
+        return adminUserUseCase.checkAdminUserTempPassword(command);
+    }
 }
