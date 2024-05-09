@@ -9,6 +9,7 @@ import org.lucycato.userservice.adapter.out.persistence.entity.AdminUserJpaEntit
 import org.lucycato.userservice.adapter.out.persistence.repository.AdminUserJpaRepository;
 import org.lucycato.userservice.application.port.out.AdminUserPort;
 import org.lucycato.userservice.application.port.out.result.AdminUserResult;
+import org.lucycato.userservice.application.port.out.result.AdminfindPasswordResult;
 
 import java.util.*;
 
@@ -50,6 +51,14 @@ public class AdminUserPersistenceAdapter implements AdminUserPort {
     }
 
     @Override
+    public AdminUserResult getAdminUserResult(
+            String email
+    ) {
+        AdminUserJpaEntity adminUserJpaEntity = adminUserJpaRepository.findFirstByEmail(email).orElseThrow(() -> new ApiExceptionImpl(ErrorCodeImpl.NOT_FOUND));
+        return AdminUserResult.from(adminUserJpaEntity);
+    }
+
+    @Override
     public AdminUserResult addAdminUserRole(
             Long adminUserId,
             AdminUserRole targeAdminUserRole
@@ -77,5 +86,21 @@ public class AdminUserPersistenceAdapter implements AdminUserPort {
 
     private AdminUserJpaEntity getAdminJpaEntity(Long adminUserId) {
         return adminUserJpaRepository.findById(adminUserId).orElseThrow(() -> new ApiExceptionImpl(ErrorCodeImpl.NOT_FOUND));
+    }
+
+    @Override
+    public void setTempPasswordToRedis(String tempPassword, String email) {
+        // redis에 데이터 set 부분 구현 필요. 현재 메소드에서 redis 연동 바로 하면 되는지?
+    }
+
+    @Override
+    public AdminfindPasswordResult getTempPasswordToRedis(String email) {
+        // redis에 데이터 get 부분 구현 필요. 현재 메소드에서 redis 연동 바로 하면 되는지?
+        return new AdminfindPasswordResult("","");
+    }
+
+    @Override
+    public void sendTempPasswordByEmail(String tempPassword, String email) {
+         // send mail 구현 필요. 현재 메소드에서 send mail 바로 하면 되는지?
     }
 }
