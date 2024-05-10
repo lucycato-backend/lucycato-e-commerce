@@ -173,4 +173,9 @@ public class AppUserService implements AppUserUseCase {
     public void safeRemoveAppUserMembership(SafeRemoveAppUserMembershipCommand command) {
         appUserPort.safeRemoveAppUserMembership(command.getAppUserId(), command.getAppUserMembershipId());
     }
+
+    @Override
+    public void addAppUserCareer(AppUserAdditionalCareerCommand command) {
+        appUserPort.addAppUserCareer(command.getAppUserId(),command.getCareer(),command.getCareerDetail());
+    }
 }
