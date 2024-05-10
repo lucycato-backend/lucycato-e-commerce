@@ -5,6 +5,7 @@ import org.lucycato.common.annotation.hexagonal.in.WebAdapter;
 import org.lucycato.common.annotation.resolver.AppUserHeaders;
 import org.lucycato.common.resolver.AppUserHeaderDetail;
 import org.lucycato.userservice.adapter.in.web.request.*;
+import org.lucycato.userservice.adapter.in.web.request.AppUserAdditionalCareerRequest;
 import org.lucycato.userservice.application.port.in.AppUserUseCase;
 import org.lucycato.userservice.application.port.in.command.*;
 import org.lucycato.userservice.domain.AppUser;
@@ -133,5 +134,18 @@ public class AppUserController {
                 request.getAppUserMembershipId()
         );
         appUserUseCase.safeRemoveAppUserMembership(command);
+    }
+
+    @PostMapping("api/lucycato/v1/app/user/additional-career")
+    public void additionalCareerAppUser(
+            @AppUserHeaders AppUserHeaderDetail appUserHeaderDetail,
+            @RequestBody AppUserAdditionalCareerRequest request) {
+        AppUserAdditionalCareerCommand command = new AppUserAdditionalCareerCommand(
+                appUserHeaderDetail.getAppUserId(),
+                request.getCareer(),
+                request.getCareerDetail()
+        );
+        appUserUseCase.addAppUserCareer(command);
+
     }
 }
