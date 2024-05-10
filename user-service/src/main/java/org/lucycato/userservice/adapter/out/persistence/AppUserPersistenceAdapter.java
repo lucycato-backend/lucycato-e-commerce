@@ -12,10 +12,7 @@ import org.lucycato.userservice.adapter.out.persistence.repository.AppUserMember
 import org.lucycato.userservice.application.port.out.AppUserPort;
 import org.lucycato.userservice.application.port.out.result.AppUserMembershipResult;
 import org.lucycato.userservice.application.port.out.result.AppUserResult;
-import org.lucycato.userservice.domain.enums.AppUserMembershipStatus;
-import org.lucycato.userservice.domain.enums.AppUserStatus;
-import org.lucycato.userservice.domain.enums.MembershipGrade;
-import org.lucycato.userservice.domain.enums.SocialStatus;
+import org.lucycato.userservice.domain.enums.*;
 
 import java.time.LocalDateTime;
 
@@ -102,5 +99,15 @@ public class AppUserPersistenceAdapter implements AppUserPort {
         commonRedisTemplate.delete(APP_USER_REDIS_KEY.formatted(appUserId));
 
         return AppUserMembershipResult.from(savedAppUserMembershipJpaEntity);
+    }
+
+    @Override
+    public void addAppUserCareer(Long appUserId, String career, String careerDetail) {
+        AppUserJpaEntity appUserJpaEntity = appUserJpaRepository.findById(appUserId).orElseThrow(() -> new ApiExceptionImpl(ErrorCodeImpl.NOT_FOUND));
+        appUserJpaEntity.setCareer(AppUserCareer.valueOf(career));
+        appUserJpaEntity.setCareerDetail(careerDetail);
+
+        //모르겠어요
+        commonRedisTemplate.delete(APP_USER_REDIS_KEY.formatted(appUserId));
     }
 }

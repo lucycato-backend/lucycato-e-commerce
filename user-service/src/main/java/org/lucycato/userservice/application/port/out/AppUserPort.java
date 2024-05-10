@@ -35,4 +35,11 @@ public interface AppUserPort {
             Long appUserId,
             Long appUserMembershipId
     );
+
+    void addAppUserCareer(
+            Long appUserId,
+            String career,
+            String careerDetail
+    );
+
 }
