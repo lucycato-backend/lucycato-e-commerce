@@ -77,4 +77,9 @@ public class QueryAdminUserService implements QueryAdminUserUseCase {
                 .map(AppUser::from)
                 .toList();
     }
+
+    @Override
+    public boolean checkAdminUserEmail(AdminUserEmailCheckCommand command) {
+        return queryAdminUserPort.checkAdminUserEmail(command.getEmail());
+    }
 }

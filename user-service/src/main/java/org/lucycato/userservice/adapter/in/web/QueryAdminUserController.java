@@ -5,6 +5,7 @@ import org.lucycato.common.annotation.hexagonal.in.WebAdapter;
 import org.lucycato.common.annotation.resolver.AdminUserHeaders;
 import org.lucycato.common.resolver.AdminUserHeaderDetail;
 import org.lucycato.common.security.AdminUserRole;
+import org.lucycato.userservice.adapter.in.web.request.AdminUserEmailCheckRequest;
 import org.lucycato.userservice.application.port.in.QueryAdminUserUseCase;
 import org.lucycato.userservice.application.port.in.command.*;
 import org.lucycato.userservice.domain.AdminUser;
@@ -70,5 +71,16 @@ public class QueryAdminUserController {
         } else {
             return queryAdminUserUseCase.getAppUserListByAppUserIds(appUserIds);
         }
+    }
+
+    @GetMapping("api/lucycato/v1/admin/user/emails/check")
+    public Boolean checkAdminUserEmail(
+            @RequestParam String email
+    ) {
+        AdminUserEmailCheckCommand command = new AdminUserEmailCheckCommand(
+                email
+        );
+
+        return queryAdminUserUseCase.checkAdminUserEmail(command);
     }
 }

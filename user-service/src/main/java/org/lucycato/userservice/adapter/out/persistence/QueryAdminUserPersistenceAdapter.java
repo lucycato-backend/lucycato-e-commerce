@@ -27,4 +27,9 @@ public class QueryAdminUserPersistenceAdapter implements QueryAdminUserPort {
     public List<DeviceVo> getAdminUserDeviceInfoList(Long adminUserId) {
         return (List<DeviceVo>) adminUserJpaRepository.findDeviceInfosByAppUserId(adminUserId).orElseThrow(() -> new ApiExceptionImpl(ErrorCodeImpl.NOT_FOUND));
     }
+
+    @Override
+    public boolean checkAdminUserEmail(String email) {
+        return adminUserJpaRepository.existsByEmail(email);
+    }
 }

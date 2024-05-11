@@ -12,4 +12,6 @@ public interface AdminUserJpaRepository extends JpaRepository<AdminUserJpaEntity
 
     @Query("select e.deviceVos from AdminUserJpaEntity e where e.id = :adminUserId order by id desc")
     Optional<Object> findDeviceInfosByAppUserId(Long adminUserId);
+
+    boolean existsByEmail(String email);
 }

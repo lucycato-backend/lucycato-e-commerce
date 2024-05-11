@@ -17,4 +17,6 @@ public interface QueryAdminUserUseCase {
     List<AppUser> getAppUserList();
 
     List<AppUser> getAppUserListByAppUserIds(List<Long> userIds);
+
+    boolean checkAdminUserEmail(AdminUserEmailCheckCommand command);
 }
