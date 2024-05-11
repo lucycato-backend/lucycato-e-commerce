@@ -3,7 +3,7 @@ package org.lucycato.mvc;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.lucycato.common.context.XHeaderContext;
-import org.lucycato.common.api.Erroresponse;
+import org.lucycato.common.api.ErrorResponse;
 import org.lucycato.common.exception.ApiExceptionImpl;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
@@ -33,6 +33,19 @@ public class CommonHttpClient {
                         adminOrAppMemberJsonStringHeader == null || adminOrAppMemberJsonStringHeader.isEmpty() ? "" : adminOrAppMemberJsonStringHeader)
                 .GET()
                 .build();
+
+        String a =  """
+                    
+                    {
+                        taskKey: {
+                            topic: String,
+                            uuid: String,
+                            destination: String
+                        },
+                        value: <T>
+                    }
+                    
+                    """;
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         return validateStatusCodeAndReturnResponse(response);
@@ -88,7 +101,7 @@ public class CommonHttpClient {
             return objectMapper.readValue(response.body(), new TypeReference<T>() {
             });
         } else {
-            Erroresponse<T> ERRORResponseErrorReason = objectMapper.readValue(response.body(), new TypeReference<>() {});
+            ErrorResponse<T> ERRORResponseErrorReason = objectMapper.readValue(response.body(), new TypeReference<>() {});
             throw new ApiExceptionImpl(response.statusCode(), ERRORResponseErrorReason.getResult());
         }
     }

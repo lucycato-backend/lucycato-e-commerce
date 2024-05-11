@@ -5,9 +5,12 @@ import org.lucycato.common.annotation.hexagonal.in.WebAdapter;
 import org.lucycato.common.annotation.resolver.AdminUserHeaders;
 import org.lucycato.common.resolver.AdminUserHeaderDetail;
 import org.lucycato.common.security.AdminUserRole;
+import org.lucycato.userservice.adapter.in.web.request.AdminUserCertificationRequest;
+import org.lucycato.userservice.adapter.in.web.request.FindAdminUserIdRequest;
 import org.lucycato.userservice.application.port.in.QueryAdminUserUseCase;
 import org.lucycato.userservice.application.port.in.command.*;
 import org.lucycato.userservice.domain.AdminUser;
+import org.lucycato.userservice.domain.AdminUserProfile;
 import org.lucycato.userservice.domain.AppUser;
 import org.lucycato.userservice.domain.DeviceManagement;
 import org.springframework.web.bind.annotation.*;
@@ -70,5 +73,25 @@ public class QueryAdminUserController {
         } else {
             return queryAdminUserUseCase.getAppUserListByAppUserIds(appUserIds);
         }
+    }
+
+    @PostMapping("open-api/lucycato/v1/admin/user/certification/id")
+    public boolean certificateAdminUserId(@RequestBody AdminUserCertificationRequest request) {
+        AdminUserCertificationCommand command = new AdminUserCertificationCommand(
+                request.getName(),
+                request.getPhoneNumber()
+        );
+
+        return queryAdminUserUseCase.certificateAdminUser(command);
+    }
+
+    @PostMapping("open-api/lucycato/v1/admin/user/find-id")
+    public AdminUserProfile findAdminId(@RequestBody FindAdminUserIdRequest request) {
+        FindAdminUserIdCommand command = new FindAdminUserIdCommand(
+                request.getName(),
+                request.getPhoneNumber(),
+                request.getVerifyPhoneNumberAuthCode()
+        );
+        return queryAdminUserUseCase.getAdminUserProfile(command);
     }
 }

@@ -1,6 +1,6 @@
 version: "3"
-
-services: #external-system-server
+services:
+  #external-system-server
   zookeeper:
     image: 'zookeeper:3.9.2'
     networks:
@@ -11,7 +11,6 @@ services: #external-system-server
       - ALLOW_ANONYMOUS_LOGIN=yes
       - ZOO_TLS_CLIENT_AUTH=none
       - ZOO_TLS_QUORUM_CLIENT_AUTH=none
-
   kafka:
     image: 'wurstmeister/kafka:2.13-2.8.1'
     networks:
@@ -37,7 +36,6 @@ services: #external-system-server
     #kafka topic delete
     # - enter kafka terminal -> kafka-topics.sh --delete --bootstrap-server <broker-list> --topic <topic-name>
     # - ex) kafka-topics.sh --delete --bootstrap-server localhost:9092 --topic my-topic
-
   kafka-ui:
     image: provectuslabs/kafka-ui
     container_name: kafka-ui
@@ -53,7 +51,6 @@ services: #external-system-server
       - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:29092
       - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper:2181
   #infra-server
-
   gateway-server:
     image: lucycato/lucycato-e-commerce-gateway-server:1.0.0
     networks:
@@ -63,7 +60,15 @@ services: #external-system-server
     environment:
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
       - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
-
+      - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
+  config-server:
+    image: lucycato/lucycato-e-commerce-config-server:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8061:8080"
+    environment:
+      - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
   eureka-server:
     image: lucycato/lucycato-e-commerce-eureka-server:1.0.0
     networks:
@@ -73,18 +78,17 @@ services: #external-system-server
     environment:
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
   #operate-server
-
   logging-consumer:
     image: lucycato/lucycato-e-commerce-logging-consumer:1.0.0
     networks:
       - "lucycato_network"
     ports:
       - "8070:8080"
-    #      - "5005:5005"
-    environment: #      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n
+#      - "5005:5005"
+    environment:
+#      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n
       - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
-
   task-consumer:
     image: lucycato/lucycato-e-commerce-task-consumer:1.0.0
     networks:
@@ -92,8 +96,11 @@ services: #external-system-server
     ports:
       - "8071:8080"
     environment:
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
-
+      - SPRING_R2DBC_URL=r2dbc:mysql://mysql:3306/default
+      - SPRING_R2DBC_USERNAME=admin
+      - SPRING_R2DBC_PASSWORD=password
   auth-server:
     image: lucycato/lucycato-e-commerce-auth-server:1.0.0
     networks:
@@ -103,7 +110,6 @@ services: #external-system-server
     environment:
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
   #Service
-
   user-service:
     image: lucycato/lucycato-e-commerce-user-service:1.0.0
     networks:
@@ -124,7 +130,6 @@ services: #external-system-server
       - SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL=true
       - SPRING_DATA_REDIS_HOST=redis
       - SPRING_DATA_REDIS_PORT=6379
-
   notification-service:
     image: lucycato/lucycato-e-commerce-notification-service:1.0.0
     networks:
@@ -133,6 +138,18 @@ services: #external-system-server
       - "8081:8080"
     environment:
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
+  product-service:
+    image: lucycato/lucycato-e-commerce-product-service:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8082:8080"
+    environment:
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
+      - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
+      - SPRING_R2DBC_URL=r2dbc:mysql://mysql:3306/default
+      - SPRING_R2DBC_USERNAME=admin
+      - SPRING_R2DBC_PASSWORD=password
 
 networks:
   lucycato_network:

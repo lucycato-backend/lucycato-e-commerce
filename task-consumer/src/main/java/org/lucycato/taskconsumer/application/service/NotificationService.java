@@ -3,7 +3,8 @@ package org.lucycato.taskconsumer.application.service;
 import lombok.RequiredArgsConstructor;
 import org.lucycato.common.annotation.hexagonal.in.UseCase;
 import org.lucycato.taskconsumer.application.port.in.SaveTaskHistoryAndSendTaskResultCommand;
-import org.lucycato.taskconsumer.application.port.in.SaveTaskHistoryUseCase;
+import org.lucycato.taskconsumer.application.port.in.NotificationUseCase;
+import org.lucycato.taskconsumer.application.port.in.command.SendNotificationCommand;
 import org.lucycato.taskconsumer.application.port.out.SaveTaskHistoryPort;
 import org.lucycato.taskconsumer.application.port.out.SendResultTaskPort;
 import org.lucycato.taskconsumer.domain.SaveTaskHistoryR2dbcEntity;
@@ -12,7 +13,7 @@ import reactor.core.publisher.Mono;
 
 @UseCase
 @RequiredArgsConstructor
-public class SaveTaskHistoryService implements SaveTaskHistoryUseCase {
+public class NotificationService implements NotificationUseCase {
 
     private final SendResultTaskPort sendResultTaskPort;
 
@@ -26,5 +27,10 @@ public class SaveTaskHistoryService implements SaveTaskHistoryUseCase {
                                 .then(saveTaskHistoryPort.modifySaveTaskHistoryStatus(entity, SaveTaskHistoryStatus.SUCCESS))
                                 .onErrorResume(error -> saveTaskHistoryPort.modifySaveTaskHistoryStatus(entity, SaveTaskHistoryStatus.FAIL))
                 );
+    }
+
+    @Override
+    public Mono<Void> sendNotification(SendNotificationCommand command) {
+        return null;
     }
 }

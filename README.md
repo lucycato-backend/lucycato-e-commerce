@@ -57,16 +57,17 @@ Spring Framework 기반으로 최신 기술 스택 학습과, 본질적인 실�
 그래서 저는 진정으로 훌륭한 개발자가 되기 위한 계획을 준비했습니다.
 우리 Team Lucycato는 아래의 계획을 기반으로 학습을 진행하고 있습니다.
 
-### Team Lucycato DNA
+## Team Lucycato DNA
  - 열정, 희생, 헌신
  - 세상에 나아가자
 
-### Team Lucycato Vision
+## Team Lucycato Vision
 - 탁월한 기준에 근거한 코드를 작성하는 본질적인 실력향상
 - 탁월한 기준과 안목의 초석이 되는 CS 학습
 - PR (블로그 글작성 및 영상촬영)
 
-### 1부: 세상에 나아가기 전에 진정으로 훌륭한 코드를 작성해보자. (Local Environment Development)
+## 계획
+### * 1부: 세상에 나아가기 전에 진정으로 훌륭한 코드를 작성해보자. (Local Environment Development)
 1. MSA 
 	- 어떻게 경계를 나눌 것인가: Business, Domain
 2. Hexagonal Architecture 
@@ -81,32 +82,35 @@ Spring Framework 기반으로 최신 기술 스택 학습과, 본질적인 실�
 4. Kafka
 	- 비동기 통신을 통해 여러 서버를 효율적으로 활용하자.
 	- 안정적이고 효율적인 Kafka Server 구성 전략 확립
-5. MySQL, MongoDB, Elasticsearch
-    - 주요 DB의 내부 원리와 차이점을 알아보자.
-    - 실제 각각의 DB가 어떠한 상황에서 사용되는지 분석하여 실전 전략을 구축하자.
+5. MySQL / JPA / QueryDSL
+    - RDB의 내부원리와 특징을 이해하여 성능 확보 전략을 구축해보자.
+    - RDB를 잘 활용하기 위한 여러 도구들을 학습하자.
 6. Redis
-    - 강력한 성능 확보 전략인 Memory Caching을 활용하자.
-    - Session Storage, Rank, Geo 등 다양한 활용 전략을 구축하자. 
+    - 강력한 성능 확보 전략인 Memory Cache 전략을 구축하자.
+    - Session Storage, Rank, Geo 등 활용 사례 및 전략을 구축하자. 
 7. Spring Batch
-	- Batch의 철학과 원리를 이해하고 다양한 활용 전략을 구축하자. 
-8. 통합테스트, 단위 테스트, 기능 테스트
-	- 안정적인 시스템, 리팩토링을 할 수 있는 시스템을 개발해보자. 
-9. MSA Transaction
+	- Batch의 철학과 원리를 이해하고 다양한 활용 전략을 구축하자.  
+8. MSA Transaction
 	- 분리를 통해 생긴 문제 어떻게 해결할 것인가
 	- 2 Phase Commit, 보상트랜젝션, Saga
-10. Spring Security, Cookie, Session, JWT, Oauth2  with Gateway, Custom Auth Server
+9. MongoDB / Elasticsearch
+    - 여러 데이터베이스의 동작 원리를 이해하자
+    - 여러 데이터베이스의 특징 및 장단점을 이해하여 언제 사용하는것이 적합한지 전략을 구축해보자
+10. Kotlin
+    - vs Java
+    - null-safety
+    - coroutine
+11. 통합테스트, 단위 테스트, 기능 테스트
+    - 안정적인 시스템, 리팩토링을 할 수 있는 시스템을 개발해보자.
+12. Spring Security, Cookie, Session, JWT, Oauth2  with Gateway, Custom Auth Server
 	- MSA 환경에서의 인증 / 인가를 이해하자
 	- 자원 서버를 이해하자.
 	- 시스템의 보안을 높이는 방법에 대해 연구하자.
-11. CQRS Pattern
-	- 결국 물리적 분해를 통한 성능 확보 어떻게 정합성을 맞출 것인가 
-12. 결국엔 기초
-    - class, function naming 작명 규칙, 전략
-    - OOP, SOLID, Clean Architecture, Refactoring 기준 학습
-    - Endpoint 설계 원칙 
-    - git branch 분리 전략, git commit, pull request 전략
+13. 결국엔 기초
+    - RESTFul 설계, OOP, SOLID, Clean Architecture
+    - Class, Function Elastic Naming
 
-### 2부: 세상에 나아가자. (Infra)
+### * 2부: 세상에 나아가자. (Infra)
 1. Docker, Docker Compose
 	- 서버를 분리해보자.
 2. Mono Repository
@@ -123,15 +127,41 @@ Spring Framework 기반으로 최신 기술 스택 학습과, 본질적인 실�
 7. CI / CD (Jenkins, Argo CD) : 자동화 파이프라인을 구축하자
 8. Graceful Shutdown, Zero Downtime Deployment 이해하고 자주 테스트하고 배포하자.
 
-### 3부: 진정으로 탁월한 기준을 가지고 싶거든 탁월한 기준을 찾아 나서라. (Finding a Mentor)
+### * 3부: 진정으로 탁월한 기준을 가지고 싶거든 탁월한 기준을 찾아 나서라. (Finding a Mentor)
+    - 기획중
+### * Domain: e-commerce
+	1. Common 구축
+	2. Gateway, Auth
+		- 사용 기술: Java, Hexagonal, WebFlux, MySQL, R2DBC, JWT, Passport
+		- 집중: JWT, Passport
+	3. 회원
+		- 사용 기술: Java, Hexagonal, MVC, MySQL, JPA / QueryDSL, Redis Cash
+		- 집중: Hexagonal, JPA / QueryDSL, Redis Cash
+	4. 상품 (선생님, 강의, 교재, 리뷰)
+		- 사용 기술: Java, Hexagonal, WebFlux, MySQL, R2DBC
+		- 집중: WebFlux, R2DBC
+	5. 나의 강의실(강의 수강, 리뷰)
+		- 사용 기술: Java, Hexagonal, WebFlux, R2DBC, Redis, Kafka
+		- 집중: Redis, kafka
+	6. 알림
+		- 사용 기술: Java, WebFlux, R2DBC, Kafka, Batch
+		- 집중: Batch
+		- 부가적: SMS, FCM, DynamicLink 
+	7. 주문 / 결재
+		- 사용 기술: Kotlin, WebFlux, MongoDB, Transaction
+		- 집중: Kotlin, MongoDB, Transaction
+	8. 검색
+		- 집중: Elastic Search
 
-### 일정
+## 일정
 - 토요일 09:00 ~ 18:00 (오프라인) / 장소: 홍대입구역
 - 화요일 21:00 ~ 00:00 (온라인) / 디스코드
-- 루시카토 운영 WBS: https://docs.google.com/spreadsheets/d/1_1T-mYBjX9wD2YPES2RJ84CgiRahHYf481Lmy7PeZpM/edit#gid=0
-- 루시카토 프로젝트 영상촬영 WBS: https://docs.google.com/spreadsheets/d/1Rid6wIcEXjY4oSuBLqBiuCgG3K82HYU9FAUyZLhkwK4/edit
+- 루시카토 운영 WBS:
+  - https://docs.google.com/spreadsheets/d/1_1T-mYBjX9wD2YPES2RJ84CgiRahHYf481Lmy7PeZpM/edit#gid=0
+- 루시카토 프로젝트 영상촬영 WBS:
+  - https://docs.google.com/spreadsheets/d/1Rid6wIcEXjY4oSuBLqBiuCgG3K82HYU9FAUyZLhkwK4/edit
 
-### 체계
+## 체계
 ✅ 토요일 루틴:
 - 9:00 ~ 9:20
   - Lucycato WBS, Vision Check
@@ -236,7 +266,7 @@ Spring Framework 기반으로 최신 기술 스택 학습과, 본질적인 실�
 ## 블로그 링크
 - Lucycato: https://github.com/lucycato-backend/blog/wiki
 - learnGrowD: https://velog.io/@will_d/posts
-- aihoshistar: 나중에 공개됩니다.
+- aihoshistar: https://todo.so.tl/
 - Nyeong: https://jinyshin.tistory.com/
 - Java-kokyu: https://mindybughunter.com/
 - SEOKBEOM MOON: https://plum-quilt-296.notion.site/bc5d97b915224b33b210543286a060a2

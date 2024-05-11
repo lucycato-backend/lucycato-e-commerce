@@ -1,4 +1,4 @@
-package org.lucycato.common.model.task;
+package org.lucycato.common.kafka;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -12,7 +12,11 @@ import org.lucycato.common.SelfValidating;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TaskKey {
-    private String transactionUUID;
+    private String topic;
 
-    private TaskKeyCategory taskKeyCategory;
+    private String uuid;
+
+    private String destination;
 }
+
+
