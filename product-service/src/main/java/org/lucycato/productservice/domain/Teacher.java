@@ -1,6 +1,7 @@
 package org.lucycato.productservice.domain;
 
 import lombok.*;
+import org.lucycato.productservice.application.port.out.result.TeacherResult;
 import org.lucycato.productservice.domain.enums.TeacherImageCategory;
 import org.lucycato.productservice.domain.enums.TeachingGenre;
 
@@ -35,7 +36,7 @@ public class Teacher {
 
     private final LocalDateTime createdAt;
 
-    public static Teacher from() {
+    public static Teacher from(TeacherResult result) {
         return null;
     }
 
