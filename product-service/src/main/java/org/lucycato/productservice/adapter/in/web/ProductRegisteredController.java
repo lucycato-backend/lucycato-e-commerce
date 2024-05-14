@@ -3,20 +3,20 @@ package org.lucycato.productservice.adapter.in.web;
 
 import lombok.RequiredArgsConstructor;
 import org.lucycato.common.annotation.hexagonal.in.WebAdapter;
-import org.lucycato.common.annotation.resolver.AdminUserHeaders;
 import org.lucycato.common.annotation.resolver.AppUserHeaders;
-import org.lucycato.common.resolver.AdminUserHeaderDetail;
 import org.lucycato.common.resolver.AppUserHeaderDetail;
 import org.lucycato.productservice.adapter.in.web.request.*;
 import org.lucycato.productservice.application.port.in.ProductRegisteredUseCase;
 import org.lucycato.productservice.application.port.in.command.*;
 import org.lucycato.productservice.domain.*;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Mono;
 
-import java.awt.*;
 import java.util.List;
 
 @WebAdapter
@@ -48,6 +48,7 @@ public class ProductRegisteredController {
         return productRegisteredUseCase.registerTeacher(command);
     }
 
+    //TODO: 경서님
     @PostMapping(value = "api/lucycato/v1/admin/lecture-series/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Mono<LectureSeries> registerLectureSeries(
             @RequestPart(name = "request")
@@ -64,6 +65,7 @@ public class ProductRegisteredController {
         return productRegisteredUseCase.registerLectureSeries(command);
     }
 
+    //TODO: 민우님
     @PostMapping(value = "api/lucycato/v1/admin/lecture/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Mono<Lecture> registerLecture(
             @RequestPart(name = "request")
@@ -85,7 +87,7 @@ public class ProductRegisteredController {
         );
         return productRegisteredUseCase.registerLecture(command);
     }
-
+    //TODO: 진영님
     @PostMapping(value = "api/lucycato/v1/admin/lecture-content/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Mono<LectureContent> registerLectureContent(
             @RequestPart(name = "request")
@@ -105,6 +107,7 @@ public class ProductRegisteredController {
         return productRegisteredUseCase.registerLectureContent(command);
     }
 
+    //TODO: 민지님
     @PostMapping(value = "api/lucycato/v1/admin/lecture-text-e-book/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Mono<LectureTextEBook> registerLectureTextEBook(
             @RequestPart(name = "request")
@@ -132,6 +135,7 @@ public class ProductRegisteredController {
         return productRegisteredUseCase.registerLectureTextEBook(command);
     }
 
+    //TODO: 석범님
     @PostMapping("api/lucycato/v1/admin/teacher-news/register")
     public Mono<TeacherNews> registerTeacherNews(
             @RequestBody
@@ -146,6 +150,7 @@ public class ProductRegisteredController {
         return productRegisteredUseCase.registerTeacherNews(command);
     }
 
+    //TODO: 민우님
     @PostMapping("api/lucycato/v1/app/lecture-review/register")
     public Mono<LectureReview> registerLectureReview(
             @AppUserHeaders

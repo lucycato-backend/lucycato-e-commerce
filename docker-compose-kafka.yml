@@ -1,0 +1,57 @@
+version: "3.8"
+services:
+  #external-system-server
+  zookeeper:
+    image: zookeeper:3.9.2
+    networks:
+      - "lucycato_network"
+    ports:
+      - '2181:2181'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+      - ZOO_TLS_CLIENT_AUTH=none
+      - ZOO_TLS_QUORUM_CLIENT_AUTH=none
+  kafka:
+    image: bitnami/kafka:latest
+    networks:
+      - "lucycato_network"
+    ports:
+      - '9092:9092'
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=LC:PLAINTEXT,LX:PLAINTEXT
+      - KAFKA_INTER_BROKER_LISTENER_NAME=LC
+      - KAFKA_LISTENERS=LC://kafka:29092,LX://localhost:9092
+      - KAFKA_ADVERTISED_LISTENERS=LC://kafka:29092,LX://localhost:9092
+    depends_on:
+      - zookeeper
+  kafka-ui:
+    image: provectuslabs/kafka-ui
+    container_name: kafka-ui
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8989:8080"
+    depends_on:
+      - kafka
+      - zookeeper
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=local
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:29092
+      - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper:2181
+
+networks:
+  lucycato_network:
+    driver: bridge
+
+    #kafka topic create
+    # - enter kafka terminal -> kafka-topics.sh --create --bootstrap-server <broker-list> --replication-factor <number> --partitions <number> --topic <topic-name>
+    # - ex) kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 3 --topic my-topic
+    #kafka topic list
+    # - enter kafka terminal -> kafka-topics.sh --list --bootstrap-server <broker-list>
+    # - ex) kafka-topics.sh --list --bootstrap-server localhost:9092
+    #kafka topic delete
+    # - enter kafka terminal -> kafka-topics.sh --delete --bootstrap-server <broker-list> --topic <topic-name>
+    # - ex) kafka-topics.sh --delete --bootstrap-server localhost:9092 --topic my-topic
