@@ -4,10 +4,15 @@ import lombok.RequiredArgsConstructor;
 import org.lucycato.productservice.application.port.in.ProductRegisteredUseCase;
 import org.lucycato.productservice.application.port.in.command.*;
 import org.lucycato.productservice.application.port.out.FileStorePort;
+import org.lucycato.productservice.application.port.out.LecturePort;
+import org.lucycato.productservice.application.port.out.LectureTextEBookPort;
 import org.lucycato.productservice.application.port.out.TeacherPort;
+import org.lucycato.productservice.application.port.out.result.LectureTextEBookResult;
 import org.lucycato.productservice.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -16,6 +21,8 @@ import reactor.core.publisher.Mono;
 public class ProductRegisteredService implements ProductRegisteredUseCase {
     private final TeacherPort teacherPort;
     private final FileStorePort fileStorePort;
+    private final LectureTextEBookPort lectureTextEBookPort;
+    private final LecturePort lecturePort;
 
     @Override
     public Mono<Teacher> registerTeacher(RegisteredTeacherCommand command) {
@@ -59,10 +66,36 @@ public class ProductRegisteredService implements ProductRegisteredUseCase {
         return null;
     }
 
-    //TODO:
+    //TODO: 밍디
     @Override
     public Mono<LectureTextEBook> registerLectureTextEBook(RegisteredLectureTextEBookCommand command) {
-        return null;
+        return lecturePort.findById(command.getLectureId())
+                .flatMap(lecture -> lectureTextEBookPort.registerLectureTextEBook(
+                                command.getLectureId(),
+                                command.getEBookUniqueCode(),
+                                command.getTitle(),
+                                command.getDescription(),
+                                command.getTableOfContents(),
+                                command.getAuthor(),
+                                command.getPublisher(),
+                                command.getPage(),
+                                lecture.getSubjectCategory(),
+                                lecture.getTeachingGenre()
+                        )
+                        .flatMap(lectureTextEBook -> Mono.zip(
+                                        Mono.just(lectureTextEBook),
+                                        fileStorePort.saveImageFiles(command.getLectureTextEBookImageFiles()),
+                                        fileStorePort.saveImageFile(command.getPreviewTextEBookPDFFile()),
+                                        fileStorePort.saveVideoFile(command.getFullTextEBookPDFFile())
+                                )
+                        )
+                        .flatMap(tuple -> lectureTextEBookPort.modifyLectureTextEBook(
+                                tuple.getT1().getLectureTextEBookId(),
+                                tuple.getT2(),
+                                tuple.getT3(),
+                                tuple.getT4()
+                        ))
+                        .map(LectureTextEBook::from));
     }
 
     //TODO:
