@@ -1,5 +1,6 @@
 package org.lucycato.userservice.application.port.out;
 
+import org.lucycato.userservice.application.port.out.result.AppUserMarketingConsentResult;
 import org.lucycato.userservice.application.port.out.result.AppUserMembershipResult;
 import org.lucycato.userservice.application.port.out.result.AppUserResult;
 import org.lucycato.userservice.domain.enums.AppUserStatus;
@@ -34,5 +35,10 @@ public interface AppUserPort {
     AppUserMembershipResult safeRemoveAppUserMembership(
             Long appUserId,
             Long appUserMembershipId
+    );
+
+    AppUserMarketingConsentResult updateAgreeMarketingTerms(
+            Long appUserId,
+            Boolean isAgreeMarketingTerms
     );
 }

@@ -1,26 +1,29 @@
 version: "3.8"
 services:
   user-service:
+    container_name: lucycato-user-service
     image: lucycato/lucycato-e-commerce-user-service:1.0.0
     networks:
       - "lucycato_network"
     ports:
-      - "8080:8080"
+      - "8083:8080"
       - "5005:5005"
     environment:
       - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n
-      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:29092
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/default
+      - SPRING_DATASOURCE_URL=jdbc:mysql://lucycato-mysql:3306/default
       - SPRING_DATASOURCE_USERNAME=admin
       - SPRING_DATASOURCE_PASSWORD=password
       - SPRING_DATASOURCE_DRIVER-CLASS-NAME=com.mysql.cj.jdbc.Driver
       - SPRING_JPA_HIBERNATE_DDL-AUTO=create
       - SPRING_JPA_SHOW-SQL=true
       - SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL=true
-      - SPRING_DATA_REDIS_HOST=redis
+      - SPRING_DATA_REDIS_HOST=lucycato-redis
       - SPRING_DATA_REDIS_PORT=6379
+
   notification-service:
+    container_name: lucycato-notification-service
     image: lucycato/lucycato-e-commerce-notification-service:1.0.0
     networks:
       - "lucycato_network"
@@ -28,19 +31,52 @@ services:
       - "8081:8080"
     environment:
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
+
   product-service:
+    container_name: lucycato-product-service
     image: lucycato/lucycato-e-commerce-product-service:1.0.0
     networks:
       - "lucycato_network"
     ports:
       - "8082:8080"
     environment:
-      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:29092
       - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
-      - SPRING_R2DBC_URL=r2dbc:mysql://mysql:3306/default
+      - SPRING_R2DBC_URL=r2dbc:mysql://lucycato-mysql:3306/default
       - SPRING_R2DBC_USERNAME=admin
       - SPRING_R2DBC_PASSWORD=password
 
+  gateway-server:
+    container_name: lucycato-gateway-server
+    image: lucycato/lucycato-e-commerce-gateway-server:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8060:8080"
+    environment:
+      - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:29092
+
+  eureka-server:
+    container_name: lucycato-eureka-server
+    image: lucycato/lucycato-e-commerce-eureka-server:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8062:8080"
+    environment:
+      - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
+
+  auth-server:
+    container_name: lucycato-auth-server
+    image: lucycato/lucycato-e-commerce-auth-server:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8072:8080"
+    environment:
+      - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
+
 networks:
   lucycato_network:
-    driver: bridge
+    external: true
