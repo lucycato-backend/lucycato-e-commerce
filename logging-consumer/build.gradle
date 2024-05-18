@@ -42,6 +42,10 @@ test {
     useJUnitPlatform()
 }
 
+bootRun {
+    sourceResources sourceSets.main
+}
+
 docker {
     def dockerHubName = 'lucycato'
     println(tasks.bootJar.outputs.files)

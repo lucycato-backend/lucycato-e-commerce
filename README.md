@@ -23,11 +23,11 @@ cd lucycato-e-commerce
 3. Docker plug-in, Docker Compose를 사용하여 프로젝트를 빌드 및 이미지를 생성, 실행합니다.
 
 ```bash
-./gradlew docker &&
- docker compose -f docker-compose-db.yml up -d &&
- docker compose -f docker-compose-kafka.yml up -d &&
- docker compose -f docker-compose-infra.yml up -d &&
- docker compose up -d
+## 로컬에서 API 실행을 원할 경우
+make local-app 
+
+## 로컬에서 DB 실행을 원할 경우
+make local-db 
 ```
 
 4. Postman을 사용하여 API를 테스트합니다.

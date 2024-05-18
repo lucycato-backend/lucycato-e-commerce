@@ -10,6 +10,7 @@ version = '1.0.0'
 
 java {
     sourceCompatibility = 17
+    targetCompatibility = 17
 }
 
 repositories {
@@ -26,9 +27,15 @@ clean {
     delete file('src/main/generated')
 }
 
+bootRun {
+    sourceResources sourceSets.main
+}
+
 dependencies {
     implementation project(':common')
     implementation project(':mvc')
+
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter:3.2.3'

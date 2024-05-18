@@ -30,6 +30,10 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
 }
 
+bootJar {
+    enabled = false
+}
+
 test {
     useJUnitPlatform()
 }

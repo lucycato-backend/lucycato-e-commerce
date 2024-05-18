@@ -19,4 +19,6 @@ public interface AppUserUseCase {
     AppUserMembership registerAppUserMembership(RegisterAppUserMembershipCommand command);
 
     void safeRemoveAppUserMembership(SafeRemoveAppUserMembershipCommand command);
+
+    void updateAgreeMarketingTerms(AgreeMarketingTermsCommand command);
 }
