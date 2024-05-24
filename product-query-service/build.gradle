@@ -5,7 +5,7 @@ plugins {
     id 'com.palantir.docker' version '0.35.0'
 }
 
-group = 'org.lucycato.product-service'
+group = 'org.lucycato.product-query-service'
 version = '1.0.0'
 
 java {
