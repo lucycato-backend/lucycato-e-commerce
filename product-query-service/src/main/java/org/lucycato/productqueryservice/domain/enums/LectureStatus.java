@@ -1,4 +1,4 @@
-package org.lucycato.productservice.domain.enums;
+package org.lucycato.productqueryservice.domain.enums;
 
 import lombok.AllArgsConstructor;
 

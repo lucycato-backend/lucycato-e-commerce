@@ -1,9 +1,9 @@
-package org.lucycato.productservice.domain.enums;
+package org.lucycato.productqueryservice.domain.enums;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public enum LectureSeriesCategory {
+public enum CourseSeriesCategory {
     SERIES("시리즈 강좌"),
     NORMAL("일반 강좌")
     ;

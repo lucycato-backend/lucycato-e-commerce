@@ -1,9 +1,9 @@
-package org.lucycato.productservice.domain.enums;
+package org.lucycato.productqueryservice.domain.enums;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public enum LectureReviewCategory {
+public enum CourseReviewCategory {
     BEST("베스트 수강평"),
     NORMAL("일반 수강평"),
     ;
