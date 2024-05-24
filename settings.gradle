@@ -10,5 +10,6 @@ include 'notification-service'
 include 'common'
 include 'mvc'
 include 'webflux'
-include 'product-service'
+include 'product-query-service'
+include 'product-command-service'
 
