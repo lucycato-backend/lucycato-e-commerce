@@ -1,9 +1,11 @@
-package org.lucycato.productservice.domain;
+package org.lucycato.productqueryservice.domain;
 
-import lombok.*;
-import org.lucycato.productservice.application.port.out.result.TeacherResult;
-import org.lucycato.productservice.domain.enums.TeacherImageCategory;
-import org.lucycato.productservice.domain.enums.TeachingGenre;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import org.lucycato.productqueryservice.domain.enums.TeacherImageCategory;
+import org.lucycato.productqueryservice.domain.enums.TeachingGenre;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -11,7 +13,7 @@ import java.util.List;
 @Getter
 @Builder(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class Teacher {
+public class TeacherDetail {
     private final Long teacherId;
 
     private final Integer teacherRank;
@@ -28,7 +30,7 @@ public class Teacher {
 
     private final Statistics statistics;
 
-    private final Boolean isRecentLectureOpen;
+    private final Boolean isRecentCourseOpen;
 
     private final Boolean isRecentTeacherNews;
 
@@ -36,35 +38,8 @@ public class Teacher {
 
     private final LocalDateTime createdAt;
 
-    public static Teacher from(TeacherResult result) {
+    public static TeacherDetail create() {
         return null;
-    }
-
-    public static Record createRecord() {
-        return null;
-    }
-
-    @Getter
-    @Builder(access = AccessLevel.PRIVATE)
-    @AllArgsConstructor(access = AccessLevel.PRIVATE)
-    public static class Record {
-        private final Long teacherId;
-
-        private final String teacherRank;
-
-        private final String teacherName;
-
-        private final String teacherSlogan;
-
-        private final List<TeacherImage> teacherImages;
-
-        private final TeachingGenre teachingGenre;
-
-        private final Boolean isRecentLectureOpen;
-
-        private final Boolean isRecentTeacherNews;
-
-        private final LocalDateTime createdAt;
     }
 
     @Getter
