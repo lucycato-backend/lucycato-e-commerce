@@ -1,10 +1,10 @@
-package org.lucycato.productservice.adapter.out.persistence.entity;
+package org.lucycato.productqueryservice.adapter.out;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.lucycato.productservice.domain.enums.LectureContentCategory;
-import org.lucycato.productservice.domain.enums.LectureContentStatus;
+import org.lucycato.productqueryservice.domain.enums.LectureCategory;
+import org.lucycato.productqueryservice.domain.enums.LectureStatus;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -12,27 +12,27 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
 
-@Table("lecture_content")
+@Table("lecture")
 @Getter
 @Setter
 @NoArgsConstructor
-public class LectureContentR2dbcEntity {
+public class LectureR2dbcEntity {
     @Id
     private Long id;
 
-    private Long lectureId;
+    private Long courseId;
 
     private String title;
 
     private String description;
 
-    private LectureContentCategory category;
+    private LectureCategory lectureCategory;
 
     private String thumbnailImageUrl;
 
     private String videoUrl;
 
-    private LectureContentStatus status;
+    private LectureStatus status;
 
     @CreatedDate
     private LocalDateTime createdAt;
