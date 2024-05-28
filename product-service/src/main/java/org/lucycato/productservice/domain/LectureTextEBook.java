@@ -1,6 +1,7 @@
 package org.lucycato.productservice.domain;
 
 import lombok.*;
+import org.lucycato.productservice.application.port.out.result.LectureTextEBookResult;
 import org.lucycato.productservice.domain.enums.SubjectCategory;
 import org.lucycato.productservice.domain.enums.TeachingGenre;
 import org.lucycato.productservice.domain.enums.TextEBookStatus;
@@ -42,7 +43,7 @@ public class LectureTextEBook {
 
     private final LocalDateTime publishedAt;
 
-    public static LectureTextEBook from() {
+    public static LectureTextEBook from(LectureTextEBookResult result) {
         return null;
     }
 

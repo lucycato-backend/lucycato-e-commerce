@@ -59,4 +59,19 @@ public class LectureTextEBookR2dbcEntity {
 
     @LastModifiedDate
     private LocalDateTime modifiedAt;
+
+
+    public LectureTextEBookR2dbcEntity(Long lectureId, String eBookUniqueCode, String title, String description, String tableOfContents, String author, String publisher, Integer page, SubjectCategory subjectCategory, TeachingGenre genre, TextEBookStatus status) {
+        this.lectureId = lectureId;
+        this.eBookUniqueCode = eBookUniqueCode;
+        this.title = title;
+        this.description = description;
+        this.tableOfContents = tableOfContents;
+        this.author = author;
+        this.publisher = publisher;
+        this.page = page;
+        this.subjectCategory = subjectCategory;
+        this.genre = genre;
+        this.status = status;
+    }
 }
