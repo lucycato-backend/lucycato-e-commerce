@@ -1,4 +1,4 @@
-package org.lucycato.productservice.adapter.out.persistence.vo;
+package org.lucycato.productservice.adapter.out.persistence;
 
 import lombok.RequiredArgsConstructor;
 import org.lucycato.common.annotation.hexagonal.out.PersistenceAdapter;
@@ -9,10 +9,10 @@ import reactor.core.publisher.Mono;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
-public class LectureAdapter implements LecturePort {
+public class LecturePersistenceAdapter implements LecturePort {
     private final LectureReactiveRepository lectureReactiveRepository;
     @Override
-    public Mono<LectureResult> findById(Long id) {
-        return lectureReactiveRepository.findById(id).map(LectureResult::from);
+    public Mono<LectureResult> getLectureById(Long id) {
+        return lectureReactiveRepository.findById(id).onErrorResume(Exception.class, Mono::error).map(LectureResult::from);
     }
 }

@@ -15,7 +15,7 @@ import java.util.List;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
-public class LectureTextEBookAdapter implements LectureTextEBookPort {
+public class LectureTextEBookPersistenceAdapter implements LectureTextEBookPort {
     private final LectureTextEBookReactiveRepository lectureTextEBookReactiveRepository;
     @Override
     public Mono<LectureTextEBookResult> registerLectureTextEBook(Long lectureId, String eBookUniqueCode, String title, String description, String tableOfContents, String author, String publisher, Integer page, SubjectCategory subjectCategory, TeachingGenre teachingGenre) {

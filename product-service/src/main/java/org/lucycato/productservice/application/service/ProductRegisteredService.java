@@ -7,12 +7,9 @@ import org.lucycato.productservice.application.port.out.FileStorePort;
 import org.lucycato.productservice.application.port.out.LecturePort;
 import org.lucycato.productservice.application.port.out.LectureTextEBookPort;
 import org.lucycato.productservice.application.port.out.TeacherPort;
-import org.lucycato.productservice.application.port.out.result.LectureTextEBookResult;
 import org.lucycato.productservice.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -69,7 +66,7 @@ public class ProductRegisteredService implements ProductRegisteredUseCase {
     //TODO: 밍디
     @Override
     public Mono<LectureTextEBook> registerLectureTextEBook(RegisteredLectureTextEBookCommand command) {
-        return lecturePort.findById(command.getLectureId())
+        return lecturePort.getLectureById(command.getLectureId())
                 .flatMap(lecture -> lectureTextEBookPort.registerLectureTextEBook(
                                 command.getLectureId(),
                                 command.getEBookUniqueCode(),
@@ -86,7 +83,7 @@ public class ProductRegisteredService implements ProductRegisteredUseCase {
                                         Mono.just(lectureTextEBook),
                                         fileStorePort.saveImageFiles(command.getLectureTextEBookImageFiles()),
                                         fileStorePort.saveImageFile(command.getPreviewTextEBookPDFFile()),
-                                        fileStorePort.saveVideoFile(command.getFullTextEBookPDFFile())
+                                        fileStorePort.saveImageFile(command.getFullTextEBookPDFFile())
                                 )
                         )
                         .flatMap(tuple -> lectureTextEBookPort.modifyLectureTextEBook(
