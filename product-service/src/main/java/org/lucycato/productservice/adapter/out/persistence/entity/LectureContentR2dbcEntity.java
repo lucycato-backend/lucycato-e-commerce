@@ -1,5 +1,6 @@
 package org.lucycato.productservice.adapter.out.persistence.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class LectureContentR2dbcEntity {
     @Id
     private Long id;
@@ -39,4 +41,10 @@ public class LectureContentR2dbcEntity {
 
     @LastModifiedDate
     private LocalDateTime modifiedAt;
+
+    public LectureContentR2dbcEntity(Long lectureId, String title, LectureContentCategory category) {
+        this.lectureId = lectureId;
+        this.title = title;
+        this.category = category;
+    }
 }
