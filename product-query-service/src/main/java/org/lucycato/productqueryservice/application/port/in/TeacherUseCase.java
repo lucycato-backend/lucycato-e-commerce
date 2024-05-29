@@ -15,5 +15,7 @@ public interface TeacherUseCase {
 
     Flux<TeacherCourseSeries> getTeacherCourseSeries(TeacherCourseSeriesSearchCommand command);
 
+    Flux<TeacherCourseSeries> getTeacherCourseSeries(SpecificTeacherCourseSeriesSearchCommand command);
+
     Mono<TeacherDetail> getTeacher(TeacherDetailSearchCommand command);
 }

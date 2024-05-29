@@ -71,6 +71,11 @@ public class TeacherController {
             Boolean isSimple
     ) {
         return Flux.empty();
+        SpecificTeacherCourseSeriesSearchCommand command = new SpecificTeacherCourseSeriesSearchCommand(
+                teacherId,
+                isSimple
+        );
+        return teacherUseCase.getTeacherCourseSeries(command);
     }
 
     @GetMapping("open-api/product/v1/teachers/news")
