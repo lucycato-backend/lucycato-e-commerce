@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.lucycato.productservice.application.port.in.ProductRegisteredUseCase;
 import org.lucycato.productservice.application.port.in.command.*;
 import org.lucycato.productservice.application.port.out.FileStorePort;
+import org.lucycato.productservice.application.port.out.LectureContentPort;
 import org.lucycato.productservice.application.port.out.TeacherPort;
 import org.lucycato.productservice.domain.*;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import reactor.core.publisher.Mono;
 public class ProductRegisteredService implements ProductRegisteredUseCase {
     private final TeacherPort teacherPort;
     private final FileStorePort fileStorePort;
+    private final LectureContentPort lectureContentPort;
 
     @Override
     public Mono<Teacher> registerTeacher(RegisteredTeacherCommand command) {
@@ -53,10 +55,27 @@ public class ProductRegisteredService implements ProductRegisteredUseCase {
         return null;
     }
 
-    //TODO:
+    //TODO: 진영 - 강의 내용 등록하는 비즈니스 로직 짜기
     @Override
     public Mono<LectureContent> registerLectureContent(RegisteredLectureContentCommand command) {
-        return null;
+        // LectureContentPort 통해(persistence계층어댑터와 연결되겠지) register하기
+        return lectureContentPort.registerLectureContent(
+                        command.getLectureId(),
+                        command.getLectureContentTitle(),
+                        command.getLectureContentCategory()
+                )
+                .flatMap(lectureContentResult -> Mono.zip(
+                        Mono.just(lectureContentResult),
+                        fileStorePort.saveImageFile(command.getLectureContentThumbnailImageFile()),
+                        fileStorePort.saveVideoFile(command.getLectureContentVideoFile())
+                ))
+                .flatMap(tuple -> lectureContentPort.modifyLectureContent(
+                        tuple.getT1().getLectureContentId(),
+                        tuple.getT2(),
+                        tuple.getT3()
+                ))
+                .map(LectureContent::from);
+
     }
 
     //TODO:

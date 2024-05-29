@@ -1,6 +1,7 @@
 package org.lucycato.productservice.domain;
 
 import lombok.*;
+import org.lucycato.productservice.application.port.out.result.LectureContentResult;
 import org.lucycato.productservice.domain.enums.LectureContentCategory;
 import org.lucycato.productservice.domain.enums.LectureContentStatus;
 
@@ -24,7 +25,7 @@ public class LectureContent {
 
     private final LocalDateTime createdAt;
 
-    public static LectureContent from() {
+    public static LectureContent from(LectureContentResult result) {
        return null;
     }
 
