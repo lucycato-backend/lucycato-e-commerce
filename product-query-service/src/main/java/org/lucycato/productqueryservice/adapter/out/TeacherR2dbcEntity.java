@@ -3,6 +3,7 @@ package org.lucycato.productqueryservice.adapter.out;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.lucycato.productqueryservice.domain.enums.TeacherStatus;
 import org.lucycato.productqueryservice.domain.enums.TeachingGenre;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -33,9 +34,9 @@ public class TeacherR2dbcEntity {
 
     private String curriculumVideoUrl;
 
-
-
     private TeachingGenre genre;
+
+    private TeacherStatus status;
 
     @CreatedDate
     private LocalDateTime createdAt;

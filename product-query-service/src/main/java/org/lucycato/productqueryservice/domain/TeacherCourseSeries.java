@@ -4,10 +4,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.lucycato.productqueryservice.domain.enums.CourseGenre;
-import org.lucycato.productqueryservice.domain.enums.CourseStatus;
-import org.lucycato.productqueryservice.domain.enums.SubjectCategory;
-import org.lucycato.productqueryservice.domain.enums.TeachingGenre;
+import org.lucycato.productqueryservice.domain.enums.*;
 
 import java.util.List;
 
@@ -69,6 +66,8 @@ public class TeacherCourseSeries {
         private final String teacherName;
 
         private final TeachingGenre teachingGenre;
+
+        private final TeacherStatus teacherStatus;
     }
 
     @Getter

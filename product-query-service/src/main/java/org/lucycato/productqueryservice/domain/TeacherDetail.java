@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import org.lucycato.productqueryservice.domain.enums.TeacherImageCategory;
+import org.lucycato.productqueryservice.domain.enums.TeacherStatus;
 import org.lucycato.productqueryservice.domain.enums.TeachingGenre;
 
 import java.time.LocalDateTime;
@@ -35,6 +36,8 @@ public class TeacherDetail {
     private final Boolean isRecentTeacherNews;
 
     private final TeachingGenre teachingGenre;
+
+    private final TeacherStatus teacherStatus;
 
     private final LocalDateTime createdAt;
 

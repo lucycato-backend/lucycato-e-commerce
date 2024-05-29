@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import org.lucycato.productqueryservice.domain.enums.TeacherNewStatus;
 import org.lucycato.productqueryservice.domain.enums.TeacherNewsCategory;
+import org.lucycato.productqueryservice.domain.enums.TeacherStatus;
 import org.lucycato.productqueryservice.domain.enums.TeachingGenre;
 
 import java.time.LocalDateTime;
@@ -37,5 +38,7 @@ public class TeacherNews {
         private final String teacherName;
 
         private final TeachingGenre teachingGenre;
+
+        private final TeacherStatus teacherStatus;
     }
 }
