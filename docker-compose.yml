@@ -10,7 +10,6 @@ services:
     environment:
       - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n
       - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
-      - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/default
       - SPRING_DATASOURCE_USERNAME=admin
       - SPRING_DATASOURCE_PASSWORD=password
@@ -26,8 +25,6 @@ services:
       - "lucycato_network"
     ports:
       - "8081:8080"
-    environment:
-      - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
   product-service:
     image: lucycato/lucycato-e-commerce-product-service:1.0.0
     networks:
@@ -36,7 +33,6 @@ services:
       - "8082:8080"
     environment:
       - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
-      - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
       - SPRING_R2DBC_URL=r2dbc:mysql://mysql:3306/default
       - SPRING_R2DBC_USERNAME=admin
       - SPRING_R2DBC_PASSWORD=password

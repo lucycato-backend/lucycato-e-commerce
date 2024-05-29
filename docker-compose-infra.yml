@@ -8,7 +8,6 @@ services:
     ports:
       - "8060:8080"
     environment:
-      - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
       - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
   eureka-server:
     image: lucycato/lucycato-e-commerce-eureka-server:1.0.0
@@ -16,16 +15,12 @@ services:
       - "lucycato_network"
     ports:
       - "8062:8080"
-    environment:
-      - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
   auth-server:
     image: lucycato/lucycato-e-commerce-auth-server:1.0.0
     networks:
       - "lucycato_network"
     ports:
       - "8072:8080"
-    environment:
-      - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
 
 networks:
   lucycato_network:
