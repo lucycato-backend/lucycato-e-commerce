@@ -87,14 +87,9 @@ public class CourseController {
             @PathVariable
             Long teacherId
     ) {
-        return Flux.empty();
-    }
-
-    @GetMapping("open-api/product/v1/courses/{courseId}/reviews")
-    public Flux<CourseReview> getCourseReviews(
-            @PathVariable
-            Long courseId
-    ) {
-        return Flux.empty();
+        SpecificCourseReviewByTeacherSearchCommand command = new SpecificCourseReviewByTeacherSearchCommand(
+                teacherId
+        );
+        return courseUseCase.getCourseReviews(command);
     }
 }
