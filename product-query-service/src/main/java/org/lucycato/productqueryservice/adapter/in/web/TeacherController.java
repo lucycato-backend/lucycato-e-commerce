@@ -3,8 +3,7 @@ package org.lucycato.productqueryservice.adapter.in.web;
 import lombok.RequiredArgsConstructor;
 import org.lucycato.common.annotation.hexagonal.in.WebAdapter;
 import org.lucycato.productqueryservice.application.port.in.TeacherUseCase;
-import org.lucycato.productqueryservice.application.port.in.command.TeacherDetailSearchCommand;
-import org.lucycato.productqueryservice.application.port.in.command.TeacherSearchCommand;
+import org.lucycato.productqueryservice.application.port.in.command.*;
 import org.lucycato.productqueryservice.domain.Teacher;
 import org.lucycato.productqueryservice.domain.TeacherCourseSeries;
 import org.lucycato.productqueryservice.domain.TeacherDetail;
@@ -27,14 +26,14 @@ public class TeacherController {
 
     @GetMapping("open-api/product/v1/teachers")
     public Flux<Teacher> getTeachers(
-            @RequestParam(name = "genre", required = false)
-            TeachingGenre genre,
+            @RequestParam(name = "teachingGenre", required = false)
+            TeachingGenre teachingGenre,
             @RequestParam(name = "status", defaultValue = "REGISTERED")
-            TeacherStatus status
+            TeacherStatus teacherStatus
     ) {
         TeacherSearchCommand command = new TeacherSearchCommand(
-                genre,
-                status
+                teachingGenre,
+                teacherStatus
         );
         return teacherUseCase.getTeachers(command);
     }
@@ -98,6 +97,10 @@ public class TeacherController {
             @RequestParam(name = "teacherNewsCategory")
             TeacherNewsCategory teacherNewsCategory
     ) {
-        return Flux.empty();
+        SpecificTeacherNewsSearchCommand command = new SpecificTeacherNewsSearchCommand(
+                teacherId,
+                teacherNewsCategory
+        );
+        return teacherUseCase.getTeacherNews(command);
     }
 }
