@@ -13,6 +13,10 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequiredArgsConstructor
 public class CourseController {
+    /*
+    토론: status query parameter 공개 하는것은 타당한가
+    토론: WebFlux 사용은 write 사용에 안정적이지 않은 것인가
+     */
 
     @GetMapping("open-api/product/v1/courses")
     public Flux<Course> getCourses() {
