@@ -13,5 +13,7 @@ import java.util.List;
 public interface TeacherUseCase {
     Flux<Teacher> getTeachers(TeacherSearchCommand command);
 
+    Flux<TeacherCourseSeries> getTeacherCourseSeries(TeacherCourseSeriesSearchCommand command);
+
     Mono<TeacherDetail> getTeacher(TeacherDetailSearchCommand command);
 }

@@ -54,11 +54,13 @@ public class TeacherController {
             @RequestParam(name = "teachingGenre", required = false)
             TeachingGenre teachingGenre,
             @RequestParam(name = "isSimple", defaultValue = "true")
-            Boolean isSimple,
-            @RequestParam(name = "courseSeriesIds", defaultValue = "[]")
-            Boolean courseSeriesIds
+            Boolean isSimple
     ) {
-        return Flux.empty();
+        TeacherCourseSeriesSearchCommand command = new TeacherCourseSeriesSearchCommand(
+                teachingGenre,
+                isSimple
+        );
+        return teacherUseCase.getTeacherCourseSeries(command);
     }
 
     @GetMapping("open-api/product/v1/teachers/{teacherId}/course-series")
