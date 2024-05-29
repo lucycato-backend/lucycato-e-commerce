@@ -88,7 +88,7 @@ public class ProductRegisteredController {
         return productRegisteredUseCase.registerLecture(command);
     }
     //TODO: 진영님
-    @PostMapping(value = "api/lucycato/v1/admin/lecture-content/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "api/product/v1/admin/lecture-content/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Mono<LectureContent> registerLectureContent(
             @RequestPart(name = "request")
             RegisteredLectureContentRequest request,
