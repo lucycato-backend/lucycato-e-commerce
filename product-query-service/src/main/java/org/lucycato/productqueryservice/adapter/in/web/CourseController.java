@@ -71,6 +71,17 @@ public class CourseController {
         return courseUseCase.getCourseTextEBooks(command);
     }
 
+    @GetMapping("open-api/product/v1/courses/{courseId}/reviews")
+    public Flux<CourseReview> getCourseReviews(
+            @PathVariable
+            Long courseId
+    ) {
+        SpecificCourseReviewSearchCommand command = new SpecificCourseReviewSearchCommand(
+                courseId
+        );
+        return courseUseCase.getCourseReviews(command);
+    }
+
     @GetMapping("open-api/product/v1/courses/by-teacher/{teacherId}/reviews")
     public Flux<CourseReview> getCourseReviewsByTeacher(
             @PathVariable
