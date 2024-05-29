@@ -5,8 +5,12 @@ import org.lucycato.common.annotation.hexagonal.in.WebAdapter;
 import org.lucycato.productqueryservice.domain.*;
 import org.lucycato.productqueryservice.domain.enums.CourseSeriesCategory;
 import org.lucycato.productqueryservice.domain.enums.TeacherNewsCategory;
+import org.lucycato.productqueryservice.domain.enums.TeacherStatus;
 import org.lucycato.productqueryservice.domain.enums.TeachingGenre;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -14,12 +18,20 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequiredArgsConstructor
 public class TeacherController {
+    private final TeacherUseCase teacherUseCase;
+
     @GetMapping("open-api/product/v1/teachers")
     public Flux<Teacher> getTeachers(
-            @RequestParam(name = "teachingGenre", required = false)
-            TeachingGenre teachingGenre
+            @RequestParam(name = "genre", required = false)
+            TeachingGenre genre,
+            @RequestParam(name = "status", defaultValue = "REGISTERED")
+            TeacherStatus status
     ) {
-        return Flux.empty();
+        TeacherSearchCommand command = new TeacherSearchCommand(
+                genre,
+                status
+        );
+        return teacherUseCase.getTeachers(command);
     }
 
     @GetMapping("open-api/product/v1/teachers/{teacherId}")
