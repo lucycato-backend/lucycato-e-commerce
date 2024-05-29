@@ -70,7 +70,6 @@ public class TeacherController {
             @RequestParam(name = "isSimple", defaultValue = "true")
             Boolean isSimple
     ) {
-        return Flux.empty();
         SpecificTeacherCourseSeriesSearchCommand command = new SpecificTeacherCourseSeriesSearchCommand(
                 teacherId,
                 isSimple
@@ -81,9 +80,15 @@ public class TeacherController {
     @GetMapping("open-api/product/v1/teachers/news")
     public Flux<TeacherNews> getTeacherNews(
             @RequestParam(name = "teachingGenre", required = false)
-            TeachingGenre teachingGenre
+            TeachingGenre teachingGenre,
+            @RequestParam(name = "teacherNewsCategory", required = false)
+            TeacherNewsCategory newsCategory
     ) {
-        return Flux.empty();
+        TeacherNewsSearchCommand command = new TeacherNewsSearchCommand(
+                teachingGenre,
+                newsCategory
+        );
+        return teacherUseCase.getTeacherNews(command);
     }
 
     @GetMapping("open-api/product/v1/teachers/{teacherId}/news")
