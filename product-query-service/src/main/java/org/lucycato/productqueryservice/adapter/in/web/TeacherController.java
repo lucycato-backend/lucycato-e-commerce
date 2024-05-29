@@ -27,13 +27,10 @@ public class TeacherController {
     @GetMapping("open-api/product/v1/teachers")
     public Flux<Teacher> getTeachers(
             @RequestParam(name = "teachingGenre", required = false)
-            TeachingGenre teachingGenre,
-            @RequestParam(name = "status", defaultValue = "REGISTERED")
-            TeacherStatus teacherStatus
+            TeachingGenre teachingGenre
     ) {
         TeacherSearchCommand command = new TeacherSearchCommand(
-                teachingGenre,
-                teacherStatus
+                teachingGenre
         );
         return teacherUseCase.getTeachers(command);
     }
