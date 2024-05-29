@@ -2,8 +2,13 @@ package org.lucycato.productqueryservice.adapter.in.web;
 
 import lombok.RequiredArgsConstructor;
 import org.lucycato.common.annotation.hexagonal.in.WebAdapter;
-import org.lucycato.productqueryservice.domain.*;
-import org.lucycato.productqueryservice.domain.enums.CourseSeriesCategory;
+import org.lucycato.productqueryservice.application.port.in.TeacherUseCase;
+import org.lucycato.productqueryservice.application.port.in.command.TeacherDetailSearchCommand;
+import org.lucycato.productqueryservice.application.port.in.command.TeacherSearchCommand;
+import org.lucycato.productqueryservice.domain.Teacher;
+import org.lucycato.productqueryservice.domain.TeacherCourseSeries;
+import org.lucycato.productqueryservice.domain.TeacherDetail;
+import org.lucycato.productqueryservice.domain.TeacherNews;
 import org.lucycato.productqueryservice.domain.enums.TeacherNewsCategory;
 import org.lucycato.productqueryservice.domain.enums.TeacherStatus;
 import org.lucycato.productqueryservice.domain.enums.TeachingGenre;
@@ -38,7 +43,10 @@ public class TeacherController {
     public Mono<TeacherDetail> getTeacher(
             @PathVariable Long teacherId
     ) {
-        return Mono.empty();
+        TeacherDetailSearchCommand command = new TeacherDetailSearchCommand(
+                teacherId
+        );
+        return teacherUseCase.getTeacher(command);
     }
 
     @GetMapping("open-api/product/v1/teachers/course-series")
