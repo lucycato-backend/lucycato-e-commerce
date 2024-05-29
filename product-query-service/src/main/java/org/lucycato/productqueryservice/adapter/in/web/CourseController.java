@@ -39,8 +39,14 @@ public class CourseController {
     }
 
     @GetMapping("open-api/product/v1/courses/{courseId}")
-    public Mono<CourseDetail> getCourse() {
-        return Mono.empty();
+    public Mono<CourseDetail> getCourse(
+            @PathVariable
+            Long courseId
+    ) {
+        CourseDetailSearchCommand command = new CourseDetailSearchCommand(
+                courseId
+        );
+        return courseUseCase.getCures(command);
     }
 
     @GetMapping("open-api/product/v1/courses/{courseId}/lectures")
