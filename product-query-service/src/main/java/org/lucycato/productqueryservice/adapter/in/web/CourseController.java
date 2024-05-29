@@ -54,7 +54,10 @@ public class CourseController {
             @PathVariable
             Long courseId
     ) {
-        return Flux.empty();
+        SpecificCourseLectureSearchCommand command = new SpecificCourseLectureSearchCommand(
+                courseId
+        );
+        return courseUseCase.getCourseLectures(command);
     }
 
     @GetMapping("open-api/product/v1/courses/{courseId}/text-e-books")
