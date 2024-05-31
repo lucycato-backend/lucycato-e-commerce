@@ -39,4 +39,11 @@ public class TeacherNewsR2dbcEntity {
 
     @LastModifiedDate
     private LocalDateTime modifiedAt;
+
+    public TeacherNewsR2dbcEntity(Long teacherId, String title, String content, TeacherNewStatus status) {
+        this.teacherId = teacherId;
+        this.title = title;
+        this.content = content;
+        this.status = status;
+    }
 }
