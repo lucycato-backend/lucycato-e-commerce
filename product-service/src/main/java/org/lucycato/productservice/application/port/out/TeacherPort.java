@@ -1,6 +1,10 @@
 package org.lucycato.productservice.application.port.out;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import org.lucycato.productservice.application.port.out.result.TeacherNewsResult;
 import org.lucycato.productservice.application.port.out.result.TeacherResult;
+import org.lucycato.productservice.domain.enums.TeacherNewStatus;
 import org.lucycato.productservice.domain.enums.TeachingGenre;
 import reactor.core.publisher.Mono;
 
@@ -20,4 +24,5 @@ public interface TeacherPort {
             String curriculumImageUrl,
             String videoImageUrl
     );
+
 }
