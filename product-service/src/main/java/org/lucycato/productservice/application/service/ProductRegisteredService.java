@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.lucycato.productservice.application.port.in.ProductRegisteredUseCase;
 import org.lucycato.productservice.application.port.in.command.*;
 import org.lucycato.productservice.application.port.out.FileStorePort;
+import org.lucycato.productservice.application.port.out.TeacherNewsPort;
 import org.lucycato.productservice.application.port.out.TeacherPort;
 import org.lucycato.productservice.domain.*;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import reactor.core.publisher.Mono;
 public class ProductRegisteredService implements ProductRegisteredUseCase {
     private final TeacherPort teacherPort;
     private final FileStorePort fileStorePort;
+    private final TeacherNewsPort teacherNewsPort;
 
     @Override
     public Mono<Teacher> registerTeacher(RegisteredTeacherCommand command) {
@@ -68,7 +70,13 @@ public class ProductRegisteredService implements ProductRegisteredUseCase {
     //TODO:
     @Override
     public Mono<TeacherNews> registerTeacherNews(RegisteredTeacherNewsCommand command) {
-        return null;
+        return teacherNewsPort.registerTeacherNews(
+                        command.getTeacherId(),
+                        command.getTitle(),
+                        command.getContent(),
+                        command.getTeacherNewStatus()
+                )
+                .map(TeacherNews::from);
     }
 
     //TODO:
