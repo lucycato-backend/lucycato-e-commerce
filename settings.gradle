@@ -11,4 +11,5 @@ include 'common'
 include 'mvc'
 include 'webflux'
 include 'product-service'
+include 'event-service'
 
