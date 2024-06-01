@@ -8,6 +8,7 @@ include 'eureka-server'
 include 'task-consumer'
 
 include 'user-auth-command-service'
+include 'user-auth-query-service'
 include 'notification-query-service'
 include 'product-query-service'
 include 'product-command-service'
