@@ -1,15 +1,20 @@
 rootProject.name = 'lucycato-e-commerce'
-include 'gateway-server'
-include 'eureka-server'
-include 'logging-consumer'
-include 'task-consumer'
-include 'auth-server'
-include 'user-service'
-include 'notification-service'
-
 include 'common'
 include 'mvc'
 include 'webflux'
+
+include 'gateway-server'
+include 'eureka-server'
+include 'task-consumer'
+
+include 'user-auth-command-service'
+include 'notification-query-service'
 include 'product-query-service'
 include 'product-command-service'
+include 'event-query-service'
+include 'event-command-service'
+include 'board-query-service'
+include 'board-command-service'
+include 'notification-command-service'
+include 'user-auth-query-service'
 
