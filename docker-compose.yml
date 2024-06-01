@@ -1,7 +1,7 @@
 version: "3.8"
 services:
-  user-service:
-    image: lucycato/lucycato-e-commerce-user-service:1.0.0
+  user-auth-command-service:
+    image: lucycato/lucycato-e-commerce-user-auth-command-service:1.0.0
     networks:
       - "lucycato_network"
     ports:
@@ -19,23 +19,65 @@ services:
       - SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL=true
       - SPRING_DATA_REDIS_HOST=redis
       - SPRING_DATA_REDIS_PORT=6379
-  notification-service:
-    image: lucycato/lucycato-e-commerce-notification-service:1.0.0
+  user-auth-query-service:
+    image: lucycato/lucycato-e-commerce-user-auth-query-service:1.0.0
     networks:
       - "lucycato_network"
     ports:
       - "8081:8080"
-  product-service:
-    image: lucycato/lucycato-e-commerce-product-service:1.0.0
+  notification-command-service:
+    image: lucycato/lucycato-e-commerce-notification-command-service:1.0.0
     networks:
       - "lucycato_network"
     ports:
       - "8082:8080"
+  notification-query-service:
+    image: lucycato/lucycato-e-commerce-notification-query-service:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8083:8080"
+  product-command-service:
+    image: lucycato/lucycato-e-commerce-product-command-service:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8084:8080"
+  product-query-service:
+    image: lucycato/lucycato-e-commerce-product-query-service:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8085:8080"
     environment:
       - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
       - SPRING_R2DBC_URL=r2dbc:mysql://mysql:3306/default
       - SPRING_R2DBC_USERNAME=admin
       - SPRING_R2DBC_PASSWORD=password
+  board-command-service:
+    image: lucycato/lucycato-e-commerce-board-command-service:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8086:8080"
+  board-query-service:
+    image: lucycato/lucycato-e-commerce-board-query-service:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8087:8080"
+  event-command-service:
+    image: lucycato/lucycato-e-commerce-event-command-service:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8088:8080"
+  event-query-service:
+    image: lucycato/lucycato-e-commerce-event-query-service:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8089:8080"
 
 networks:
   lucycato_network:
