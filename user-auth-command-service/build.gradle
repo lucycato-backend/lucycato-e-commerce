@@ -5,7 +5,7 @@ plugins {
     id 'com.palantir.docker' version '0.35.0'
 }
 
-group = 'org.lucycato.user-service'
+group = 'org.lucycato.user-auth-command-service'
 version = '1.0.0'
 
 java {

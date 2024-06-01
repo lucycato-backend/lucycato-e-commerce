@@ -1,19 +1,76 @@
 plugins {
     id 'java'
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+    id 'com.palantir.docker' version '0.35.0'
 }
 
-group = 'org.lucycato'
-version = '0.0.1-SNAPSHOT'
+group = 'org.lucycato.user-auth-query-service'
+version = '1.0.0'
+
+java {
+    sourceCompatibility = 17
+    targetCompatibility = 17
+}
 
 repositories {
     mavenCentral()
 }
 
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+clean {
+    delete file('src/main/generated')
+}
+
+bootRun {
+    sourceResources sourceSets.main
+}
+
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation project(':common')
+    implementation project(':mvc')
+
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter:3.2.3'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.3'
+
+    implementation 'org.springframework.boot:spring-boot-starter-actuator:3.2.3'
+
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    implementation "com.querydsl:querydsl-jpa:5.0.0:jakarta"
+    annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
+
+    runtimeOnly 'com.mysql:mysql-connector-j'
 }
 
 test {
     useJUnitPlatform()
+}
+
+docker {
+    def dockerHubName = 'lucycato'
+    println(tasks.bootJar.outputs.files)
+
+    name dockerHubName + '/' + rootProject.name + '-' + project.name + ':' + version
+
+    dockerfile file('../Dockerfile')
+
+    files tasks.bootJar.outputs.files
+
+    buildArgs(['JAR_FILE': tasks.bootJar.outputs.files.singleFile.name])
 }
