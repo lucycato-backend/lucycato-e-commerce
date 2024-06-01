@@ -9,15 +9,15 @@ services:
       - "5005:5005"
     environment:
       - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n
-      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:29092
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/default
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:9092
+      - SPRING_DATASOURCE_URL=jdbc:mysql://lucycato-mysql:3306/default
       - SPRING_DATASOURCE_USERNAME=admin
       - SPRING_DATASOURCE_PASSWORD=password
       - SPRING_DATASOURCE_DRIVER-CLASS-NAME=com.mysql.cj.jdbc.Driver
       - SPRING_JPA_HIBERNATE_DDL-AUTO=create
       - SPRING_JPA_SHOW-SQL=true
       - SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL=true
-      - SPRING_DATA_REDIS_HOST=redis
+      - SPRING_DATA_REDIS_HOST=lucycato-redis
       - SPRING_DATA_REDIS_PORT=6379
   user-auth-query-service:
     image: lucycato/lucycato-e-commerce-user-auth-query-service:1.0.0
@@ -26,7 +26,7 @@ services:
     ports:
       - "8081:8080"
     environment:
-      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:29092
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:9092
   notification-command-service:
     image: lucycato/lucycato-e-commerce-notification-command-service:1.0.0
     networks:
@@ -34,7 +34,7 @@ services:
     ports:
       - "8082:8080"
     environment:
-      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:29092
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:9092
   notification-query-service:
     image: lucycato/lucycato-e-commerce-notification-query-service:1.0.0
     networks:
@@ -42,7 +42,7 @@ services:
     ports:
       - "8083:8080"
     environment:
-      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:29092
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:9092
   product-command-service:
     image: lucycato/lucycato-e-commerce-product-command-service:1.0.0
     networks:
@@ -50,7 +50,7 @@ services:
     ports:
       - "8084:8080"
     environment:
-      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:29092
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:9092
   product-query-service:
     image: lucycato/lucycato-e-commerce-product-query-service:1.0.0
     networks:
@@ -58,8 +58,8 @@ services:
     ports:
       - "8085:8080"
     environment:
-      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:29092
-      - SPRING_R2DBC_URL=r2dbc:mysql://mysql:3306/default
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:9092
+      - SPRING_R2DBC_URL=r2dbc:mysql://lucycato-mysql:3306/default
       - SPRING_R2DBC_USERNAME=admin
       - SPRING_R2DBC_PASSWORD=password
   board-command-service:
@@ -69,7 +69,7 @@ services:
     ports:
       - "8086:8080"
     environment:
-      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:29092
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:9092
   board-query-service:
     image: lucycato/lucycato-e-commerce-board-query-service:1.0.0
     networks:
@@ -77,7 +77,7 @@ services:
     ports:
       - "8087:8080"
     environment:
-      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:29092
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:9092
   event-command-service:
     image: lucycato/lucycato-e-commerce-event-command-service:1.0.0
     networks:
@@ -85,7 +85,7 @@ services:
     ports:
       - "8088:8080"
     environment:
-      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:29092
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:9092
   event-query-service:
     image: lucycato/lucycato-e-commerce-event-query-service:1.0.0
     networks:
@@ -93,7 +93,7 @@ services:
     ports:
       - "8089:8080"
     environment:
-      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:29092
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:9092
   order-command-service:
     image: lucycato/lucycato-e-commerce-order-command-service:1.0.0
     networks:
@@ -101,7 +101,7 @@ services:
     ports:
       - "8090:8080"
     environment:
-      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:29092
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:9092
   order-query-service:
     image: lucycato/lucycato-e-commerce-order-query-service:1.0.0
     networks:
@@ -109,7 +109,7 @@ services:
     ports:
       - "8091:8080"
     environment:
-      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:29092
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:9092
 
 networks:
   lucycato_network:

@@ -33,9 +33,6 @@ dependencies {
     implementation 'org.springframework.kafka:spring-kafka'
     annotationProcessor 'org.projectlombok:lombok'
 
-    implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
-    implementation 'com.github.jasync-sql:jasync-mysql:2.2.0'
-
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.kafka:spring-kafka-test'
     testImplementation 'io.projectreactor:reactor-test'

@@ -7,7 +7,7 @@ services:
     ports:
       - "8060:8080"
     environment:
-      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:29092
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:9092
   eureka-server:
     image: lucycato/lucycato-e-commerce-eureka-server:1.0.0
     networks:

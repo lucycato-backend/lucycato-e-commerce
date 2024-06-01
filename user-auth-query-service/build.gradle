@@ -46,16 +46,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-
-    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
-    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
-    implementation "com.querydsl:querydsl-jpa:5.0.0:jakarta"
-    annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
-
-    runtimeOnly 'com.mysql:mysql-connector-j'
 }
 
 test {
