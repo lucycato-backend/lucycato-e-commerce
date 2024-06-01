@@ -78,6 +78,18 @@ services:
       - "lucycato_network"
     ports:
       - "8089:8080"
+  order-command-service:
+    image: lucycato/lucycato-e-commerce-order-command-service:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8090:8080"
+  order-query-service:
+    image: lucycato/lucycato-e-commerce-order-query-service:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8091:8080"
 
 networks:
   lucycato_network:

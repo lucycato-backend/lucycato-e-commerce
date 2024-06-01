@@ -18,4 +18,5 @@ include 'board-query-service'
 include 'board-command-service'
 include 'notification-command-service'
 include 'user-auth-query-service'
-
+include 'order-query-service'
+include 'order-command-service'
