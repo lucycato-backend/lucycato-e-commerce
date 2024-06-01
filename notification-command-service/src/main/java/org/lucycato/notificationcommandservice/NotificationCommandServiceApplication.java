@@ -1,6 +1,5 @@
 package org.lucycato.notificationcommandservice;
 
-import org.lucycato.boardcommandservice.BoardCommandServiceApplication;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.annotation.ComponentScan;
 
@@ -8,6 +7,6 @@ import org.springframework.context.annotation.ComponentScan;
 public class NotificationCommandServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(BoardCommandServiceApplication.class, args);
+        SpringApplication.run(NotificationCommandServiceApplication.class, args);
     }
 }

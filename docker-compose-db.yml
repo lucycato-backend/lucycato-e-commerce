@@ -21,18 +21,18 @@ services:
       '--lower_case_table_names=1'
     ]
 
-  lucycato-phpmyadmin:
-    container_name: lucycato-phpmyadmin
-    image: phpmyadmin/phpmyadmin:5.0.4
-    depends_on:
-      - lucycato-mysql
-    environment:
-      - PMA_HOST=lucycato-mysql
-      - MYSQL_ROOT_PASSWORD=password
-    ports:
-      - "20080:80"
-    networks:
-      - "lucycato_network"
+#  lucycato-phpmyadmin:
+#    container_name: lucycato-phpmyadmin
+#    image: phpmyadmin/phpmyadmin:5.0.4
+#    depends_on:
+#      - lucycato-mysql
+#    environment:
+#      - PMA_HOST=lucycato-mysql
+#      - MYSQL_ROOT_PASSWORD=password
+#    ports:
+#      - "20080:80"
+#    networks:
+#      - "lucycato_network"
 
   lucycato-redis:
     container_name: lucycato-redis
@@ -47,7 +47,7 @@ services:
 
   lucycato-zookeeper:
     container_name: lucycato-zookeeper
-    image: 'zookeeper:3.9.2'
+    image: zookeeper:3.9.2
     networks:
       - "lucycato_network"
     ports:
@@ -59,12 +59,11 @@ services:
 
   lucycato-kafka:
     container_name: lucycato-kafka
-    image: 'ghcr.io/lucycato-backend/kafka:1.0.0'
+    image: bitnami/kafka:latest
     networks:
       - "lucycato_network"
     ports:
-      - '9092:9092'
-      - '29092:29092' # Bootstrap
+      - '29092:29092'
     environment:
       - KAFKA_BROKER_ID=1
       - KAFKA_ZOOKEEPER_CONNECT=lucycato-zookeeper:2181
@@ -76,21 +75,21 @@ services:
     depends_on:
       - lucycato-zookeeper
 
-  lucycato-kafka-ui:
-    container_name: lucycato-kafka-ui
-    image: provectuslabs/kafka-ui
-    networks:
-      - "lucycato_network"
-    ports:
-      - "28989:8080"
-    depends_on:
-      - lucycato-kafka
-      - lucycato-zookeeper
-    environment:
-      - KAFKA_CLUSTERS_0_NAME=local
-      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=lucycato-kafka:29092
-      - KAFKA_CLUSTERS_0_ZOOKEEPER=lucycato-zookeeper:2181
+#  lucycato-kafka-ui:
+#    container_name: lucycato-kafka-ui
+#    image: provectuslabs/kafka-ui
+#    networks:
+#      - "lucycato_network"
+#    ports:
+#      - "28989:8080"
+#    depends_on:
+#      - lucycato-kafka
+#      - lucycato-zookeeper
+#    environment:
+#      - KAFKA_CLUSTERS_0_NAME=local
+#      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=lucycato-lucycato-kafka:29092
+#      - KAFKA_CLUSTERS_0_ZOOKEEPER=lucycato-zookeeper:2181
 
 networks:
   lucycato_network:
-    external: true
+    driver: bridge

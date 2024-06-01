@@ -23,13 +23,6 @@ configurations {
     }
 }
 
-clean {
-    delete file('src/main/generated')
-}
-
-bootRun {
-    sourceResources sourceSets.main
-}
 
 dependencies {
     implementation project(':common')

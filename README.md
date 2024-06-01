@@ -100,16 +100,16 @@ Spring Framework 기반으로 최신 기술 스택 학습과, 본질적인 실�
 9. MongoDB / Elasticsearch
     - 여러 데이터베이스의 동작 원리를 이해하자
     - 여러 데이터베이스의 특징 및 장단점을 이해하여 언제 사용하는것이 적합한지 전략을 구축해보자
-10. Kotlin
+10. 통합테스트, 단위 테스트, 기능 테스트
+    - 안정적인 시스템, 리팩토링을 할 수 있는 시스템을 개발해보자.
+11. Spring Security, Cookie, Session, JWT, Oauth2  with Gateway, Custom Auth Server
+    - MSA 환경에서의 인증 / 인가를 이해하자
+    - 자원 서버를 이해하자.
+    - 시스템의 보안을 높이는 방법에 대해 연구하자. 
+12. Kotlin
     - vs Java
     - null-safety
     - coroutine
-11. 통합테스트, 단위 테스트, 기능 테스트
-    - 안정적인 시스템, 리팩토링을 할 수 있는 시스템을 개발해보자.
-12. Spring Security, Cookie, Session, JWT, Oauth2  with Gateway, Custom Auth Server
-	- MSA 환경에서의 인증 / 인가를 이해하자
-	- 자원 서버를 이해하자.
-	- 시스템의 보안을 높이는 방법에 대해 연구하자.
 13. 결국엔 기초
     - RESTFul 설계, OOP, SOLID, Clean Architecture
     - Class, Function Elastic Naming
@@ -159,11 +159,9 @@ Spring Framework 기반으로 최신 기술 스택 학습과, 본질적인 실�
 
 ## 일정
 - 토요일 09:00 ~ 18:00 (오프라인) / 장소: 홍대입구역
-- 화요일 21:00 ~ 00:00 (온라인) / 디스코드
+- 화요일 22:00 ~ 00:00 (온라인) / 디스코드
 - 루시카토 운영 WBS:
   - https://docs.google.com/spreadsheets/d/1_1T-mYBjX9wD2YPES2RJ84CgiRahHYf481Lmy7PeZpM/edit#gid=0
-- 루시카토 프로젝트 영상촬영 WBS:
-  - https://docs.google.com/spreadsheets/d/1Rid6wIcEXjY4oSuBLqBiuCgG3K82HYU9FAUyZLhkwK4/edit
 
 ## 체계
 ✅ 토요일 루틴:
