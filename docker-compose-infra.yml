@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  #infra-server
+  gateway-server:
+    image: lucycato/lucycato-e-commerce-gateway-server:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8060:8080"
+    environment:
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
+  eureka-server:
+    image: lucycato/lucycato-e-commerce-eureka-server:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8062:8080"
+  auth-server:
+    image: lucycato/lucycato-e-commerce-auth-server:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8072:8080"
+
+networks:
+  lucycato_network:
+    driver: bridge
