@@ -1,11 +1,12 @@
 version: "3.8"
 
 services:
-  mysql:
-    image: mysql:latest
-    platform: linux/amd64
+  lucycato-mysql:
+    container_name: lucycato-mysql
+    image: mysql:8.0.29
     networks:
-      - lucycato_network
+      - "lucycato_network"
+    user: 1000:1000
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=default
@@ -13,69 +14,83 @@ services:
       - MYSQL_PASSWORD=password
       - TZ=Asia/Seoul
     ports:
-      - "3306:3306"
+      - "23306:3306"
     command: [
       '--character-set-server=utf8mb4',
       '--collation-server=utf8mb4_general_ci',
       '--lower_case_table_names=1'
     ]
-    volumes:
-      - ./data/mysql:/var/lib/mysql
 
-  phpmyadmin:
+  lucycato-phpmyadmin:
+    container_name: lucycato-phpmyadmin
     image: phpmyadmin/phpmyadmin:5.0.4
     depends_on:
-      - mysql
-    container_name: phpmyadmin
+      - lucycato-mysql
     environment:
-      - PMA_HOST=mysql
+      - PMA_HOST=lucycato-mysql
       - MYSQL_ROOT_PASSWORD=password
     ports:
       - "20080:80"
     networks:
-      - lucycato_network
+      - "lucycato_network"
 
-  redis:
-    container_name: redis
+  lucycato-redis:
+    container_name: lucycato-redis
     image: redis:latest
     command: redis-server
     ports:
-      - "6379:6379"
+      - "26379:6379"
     volumes:
       - ./data/redis:/data
     networks:
-      - lucycato_network
-  
-#  mongo:
-#    container_name: mongo
-#    image: mongo:latest
-#    restart: always
-#    environment:
-#      - MONGO_INITDB_ROOT_USERNAME=root
-#      - MONGO_INITDB_ROOT_PASSWORD=password
-#      - MONGO_INITDB_DATABASE=mydatabase
-#      - MONGO_INITDB_USERNAME=user
-#      - MONGO_INITDB_PASSWORD=password
-#    volumes:
-#      - ./data/mongodb:/data/db
-#    networks:
-#      - lucycato_network
+      - "lucycato_network"
 
-#  rabbitmq:
-#    container_name: rabbitmq
-#    image: rabbitmq:3-management-alpine
-#    ports:
-#      - "5672:5672"
-#      - "15672:15672"
-#    environment:
-#      - RABBITMQ_DEFAULT_USER=root
-#      - RABBITMQ_DEFAULT_PASS=password
-#    volumes:
-#      - ./data/rabbitmq/data:/var/lib/rabbitmq
-#      - ./data/rabbitmq/logs:/var/log/rabbitmq
-#    networks:
-#      - lucycato_network
+  lucycato-zookeeper:
+    container_name: lucycato-zookeeper
+    image: 'zookeeper:3.9.2'
+    networks:
+      - "lucycato_network"
+    ports:
+      - '22181:2181'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+      - ZOO_TLS_CLIENT_AUTH=none
+      - ZOO_TLS_QUORUM_CLIENT_AUTH=none
+
+  lucycato-kafka:
+    container_name: lucycato-kafka
+    image: 'ghcr.io/lucycato-backend/kafka:1.0.0'
+    networks:
+      - "lucycato_network"
+    ports:
+      - '9092:9092'
+      - '29092:29092' # Bootstrap
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_ZOOKEEPER_CONNECT=lucycato-zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=LC:PLAINTEXT,LX:PLAINTEXT
+      - KAFKA_INTER_BROKER_LISTENER_NAME=LC
+      - KAFKA_LISTENERS=LC://0.0.0.0:29092,LX://0.0.0.0:9092
+      - KAFKA_ADVERTISED_LISTENERS=LC://localhost:29092,LX://localhost:9092
+    depends_on:
+      - lucycato-zookeeper
+
+  lucycato-kafka-ui:
+    container_name: lucycato-kafka-ui
+    image: provectuslabs/kafka-ui
+    networks:
+      - "lucycato_network"
+    ports:
+      - "28989:8080"
+    depends_on:
+      - lucycato-kafka
+      - lucycato-zookeeper
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=local
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=lucycato-kafka:29092
+      - KAFKA_CLUSTERS_0_ZOOKEEPER=lucycato-zookeeper:2181
 
 networks:
   lucycato_network:
-    driver: bridge
+    external: true

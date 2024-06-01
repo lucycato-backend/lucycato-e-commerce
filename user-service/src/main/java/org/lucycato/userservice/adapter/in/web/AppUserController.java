@@ -134,4 +134,26 @@ public class AppUserController {
         );
         appUserUseCase.safeRemoveAppUserMembership(command);
     }
+
+    // 마케팅 약관 동의 받기
+    @PostMapping("api/lucycato/v1/app/user/agree-marketing-terms")
+    public void updateAgreeMarketingTerms(
+            @AppUserHeaders
+            AppUserHeaderDetail appUserHeaderDetail,
+            @RequestBody
+            AgreeMarketingTermsRequest request
+    ) {
+        AgreeMarketingTermsCommand command = new AgreeMarketingTermsCommand(
+                appUserHeaderDetail.getAppUserId(),
+                request.getIsAgreeMarketingTerms()
+        );
+
+        appUserUseCase.updateAgreeMarketingTerms(command);
+    }
+
+    @GetMapping("test")
+    public String test() {
+        System.out.println("test");
+        return "test";
+    }
 }
