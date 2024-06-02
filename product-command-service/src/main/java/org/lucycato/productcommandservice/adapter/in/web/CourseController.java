@@ -52,4 +52,10 @@ public class CourseController {
     public void deleteCourseLecture() {
 
     }
+
+    @GetMapping("")
+    public String test() {
+        System.out.println("Hello Jiny");
+        return "Hello Jiny";
+    }
 }
