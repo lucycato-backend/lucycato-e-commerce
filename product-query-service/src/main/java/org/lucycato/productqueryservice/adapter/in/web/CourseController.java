@@ -92,10 +92,4 @@ public class CourseController {
         );
         return courseUseCase.getCourseReviews(command);
     }
-
-    @GetMapping("")
-    public Mono<String> test() {
-        System.out.println("Hello Jiny");
-        return Mono.just("Hello Jiny");
-    }
 }

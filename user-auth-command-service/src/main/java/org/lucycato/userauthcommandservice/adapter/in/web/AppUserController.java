@@ -151,7 +151,7 @@ public class AppUserController {
         appUserUseCase.updateAgreeMarketingTerms(command);
     }
 
-    @GetMapping("/test-jin")
+    @GetMapping("/test")
     public String test() {
         System.out.println("test");
         return "test";
