@@ -1,0 +1,33 @@
+spring:
+  config:
+    activate:
+      on-profile: default
+
+  r2dbc:
+    url: r2dbc:mysql://localhost:3306/default
+    username: admin
+    password: password
+
+server:
+  port: 8085
+
+kafka:
+  clusters:
+    bootstrapservers: localhost:9092
+
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  r2dbc:
+    url: r2dbc:mysql://lucycato-mysql:3306/default
+    username: admin
+    password: password
+
+kafka:
+  clusters:
+    bootstrapservers: lucycato-kafka:9092

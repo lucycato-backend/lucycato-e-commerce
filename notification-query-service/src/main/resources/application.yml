@@ -1,0 +1,24 @@
+spring:
+  config:
+    activate:
+      on-profile: default
+
+server:
+  port: 8083
+
+kafka:
+  clusters:
+    bootstrapservers: localhost:9092
+
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+
+kafka:
+  clusters:
+    bootstrapservers: lucycato-kafka:9092
