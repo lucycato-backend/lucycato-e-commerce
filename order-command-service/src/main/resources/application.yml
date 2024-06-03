@@ -1,0 +1,34 @@
+#spring.application.name=order-command-service
+
+spring:
+  config:
+    activate:
+      on-profile: default
+
+  data:
+    redis:
+      host: localhost
+      port: 26379
+server:
+  port: 8090
+
+kafka:
+  clusters:
+    bootstrapservers: localhost:9092
+
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  data:
+    redis:
+      host: lucycato-redis
+      port: 6379
+
+kafka:
+  clusters:
+    bootstrapservers: lucycato-kafka:9092
