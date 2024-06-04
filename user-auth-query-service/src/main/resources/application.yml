@@ -1,7 +1,7 @@
 spring:
   config:
     activate:
-      on-profile: default
+      on-profile: local
 
 server:
   port: 8081
@@ -17,7 +17,7 @@ kafka:
 spring:
   config:
     activate:
-      on-profile: prod
+      on-profile: docker
 
 
 kafka:

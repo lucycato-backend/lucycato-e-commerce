@@ -1,7 +1,7 @@
 spring:
   config:
     activate:
-      on-profile: default
+      on-profile: local
 
   mvc:
     pathmatch:
@@ -40,7 +40,7 @@ springdoc:
 spring:
   config:
     activate:
-      on-profile: prod
+      on-profile: docker
 
   data:
     redis:

@@ -3,7 +3,7 @@
 spring:
   config:
     activate:
-      on-profile: default
+      on-profile: local
 
   data:
     redis:
@@ -22,7 +22,7 @@ kafka:
 spring:
   config:
     activate:
-      on-profile: prod
+      on-profile: docker
 
   data:
     redis:
