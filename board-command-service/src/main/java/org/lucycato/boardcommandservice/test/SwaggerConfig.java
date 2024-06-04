@@ -7,12 +7,14 @@ import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityScheme.Type;
+import org.springdoc.core.customizers.OperationCustomizer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SwaggerConfig {
+
     @Bean
     public OpenAPI openAPI(@Value("${springdoc.version}") String version) {
         Info info = new Info()
@@ -34,5 +36,24 @@ public class SwaggerConfig {
                 .info(info)
                 .addSecurityItem(securityRequirement)
                 .components(components);
+    }
+
+    @Bean
+    public OperationCustomizer customizeOperation() {
+        return (operation, handlerMethod) -> {
+            operation.addParametersItem(new io.swagger.v3.oas.models.parameters.Parameter()
+                    .name("free1")
+                    .in(SecurityScheme.In.HEADER.toString())
+                    .required(false)
+                    .description("Custom Free Header 1")
+                    .schema(new io.swagger.v3.oas.models.media.StringSchema()));
+            operation.addParametersItem(new io.swagger.v3.oas.models.parameters.Parameter()
+                    .name("free2")
+                    .in(SecurityScheme.In.HEADER.toString())
+                    .required(false)
+                    .description("Custom Free Header 2")
+                    .schema(new io.swagger.v3.oas.models.media.StringSchema()));
+            return operation;
+        };
     }
 }
