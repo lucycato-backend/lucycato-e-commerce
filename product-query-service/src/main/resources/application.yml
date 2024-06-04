@@ -1,7 +1,7 @@
 spring:
   config:
     activate:
-      on-profile: local
+      on-profile: default
 
   r2dbc:
     url: r2dbc:mysql://localhost:3306/default

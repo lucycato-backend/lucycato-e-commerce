@@ -1,7 +1,7 @@
 spring:
   config:
     activate:
-      on-profile: local
+      on-profile: default
 
   datasource:
     url: jdbc:mysql://localhost:23306/default
