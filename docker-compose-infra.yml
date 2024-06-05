@@ -19,15 +19,21 @@ services:
     networks:
       - "lucycato_network"
     ports:
-      - "8060:8080"
+      - "8071:8071"
+    depends_on:
+      - eureka-server
     environment:
-      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:9092
-  eureka-server:
-    image: lucycato/lucycato-e-commerce-eureka-server:1.0.0
+      - SPRING_PROFILES_ACTIVE=docker
+  task-consumer:
+    image: lucycato/lucycato-e-commerce-task-consumer:1.0.0
     networks:
       - "lucycato_network"
     ports:
-      - "8062:8080"
+      - "8072:8072"
+    depends_on:
+      - eureka-server
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
 
 networks:
   lucycato_network:
