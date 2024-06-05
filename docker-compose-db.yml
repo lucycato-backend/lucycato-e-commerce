@@ -45,6 +45,7 @@ services:
     networks:
       - "lucycato_network"
 
+
   lucycato-zookeeper:
     container_name: lucycato-zookeeper
     image: zookeeper:3.9.2
