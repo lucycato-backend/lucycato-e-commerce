@@ -1,5 +1,19 @@
 version: "3.8"
 services:
+  eureka-server:
+    image: lucycato/lucycato-e-commerce-eureka-server:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8761:8761"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8761/actuator/health" ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 5s
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
   gateway-server:
     image: lucycato/lucycato-e-commerce-gateway-server:1.0.0
     networks:
