@@ -7,6 +7,10 @@ spring:
   config:
     activate:
       on-profile: default
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
 
 eureka:
   client:
@@ -30,6 +34,10 @@ spring:
   config:
     activate:
       on-profile: docker
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
 
 eureka:
   client:

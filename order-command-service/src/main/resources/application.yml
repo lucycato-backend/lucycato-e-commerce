@@ -11,6 +11,10 @@ spring:
     redis:
       host: localhost
       port: 26379
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
 
 eureka:
   client:
@@ -38,6 +42,10 @@ spring:
     redis:
       host: lucycato-redis
       port: 6379
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
 
 eureka:
   client:

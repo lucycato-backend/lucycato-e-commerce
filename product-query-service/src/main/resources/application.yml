@@ -7,6 +7,10 @@ spring:
   config:
     activate:
       on-profile: default
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
 
   r2dbc:
     url: r2dbc:mysql://localhost:3306/default
@@ -38,6 +42,10 @@ spring:
     url: r2dbc:mysql://lucycato-mysql:3306/default
     username: admin
     password: password
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
 
 eureka:
   client:

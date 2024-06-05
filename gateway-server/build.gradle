@@ -16,6 +16,12 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
 ext {
     set('springCloudVersion', "2023.0.2")
 }
@@ -24,8 +30,14 @@ dependencies {
     implementation project(':common')
 
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
+
+
     implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'
