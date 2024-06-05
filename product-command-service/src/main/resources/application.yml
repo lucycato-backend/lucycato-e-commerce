@@ -1,23 +1,43 @@
-spring:
-  config:
-    activate:
-      on-profile: local
-
 server:
   port: 8084
+
+spring:
+  application:
+    name: product-command-service
+  config:
+    activate:
+      on-profile: default
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    registerWithEureka: true
+    fetchRegistry: true
+  instance:
+    preferIpAddress: true
 
 kafka:
   clusters:
     bootstrapservers: localhost:9092
 
-
 ---
 
 spring:
+  application:
+    name: product-command-service
   config:
     activate:
       on-profile: docker
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-server:8761/eureka/
+    registerWithEureka: true
+    fetchRegistry: true
+  instance:
+    preferIpAddress: true
 
 kafka:
   clusters:

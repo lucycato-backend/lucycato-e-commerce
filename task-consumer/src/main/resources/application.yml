@@ -1,12 +1,16 @@
 server:
-  port: 8081
+  port: 8072
 
 spring:
   application:
-    name: user-auth-query-service
+    name: task-consumer
   config:
     activate:
       on-profile: default
+  r2dbc:
+    url: r2dbc:mysql://localhost:3306/default
+    username: admin
+    password: password
 
 eureka:
   client:
@@ -25,10 +29,14 @@ kafka:
 
 spring:
   application:
-    name: user-auth-query-service
+    name: task-consumer
   config:
     activate:
       on-profile: docker
+  r2dbc:
+    url: r2dbc:mysql://lucycato-mysql:3306/default
+    username: admin
+    password: password
 
 eureka:
   client:

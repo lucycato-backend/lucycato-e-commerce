@@ -1,0 +1,36 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: eureka-server
+  config:
+    active:
+      on-profile: default
+
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+  server:
+    enableSelfPreservation: false
+  instance:
+    hostname: localhost
+
+---
+
+spring:
+  application:
+    name: eureka-server
+  config:
+    active:
+      on-profile: docker
+
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+  server:
+    enableSelfPreservation: false
+  instance:
+    hostname: eureka-server

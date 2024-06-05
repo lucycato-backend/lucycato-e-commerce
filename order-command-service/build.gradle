@@ -26,9 +26,15 @@ clean {
     delete file('src/main/generated')
 }
 
+ext {
+    set('springCloudVersion', "2023.0.2")
+}
+
 dependencies {
     implementation project(':common')
     implementation project(':mvc')
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter'
@@ -39,6 +45,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
 }
 
 test {

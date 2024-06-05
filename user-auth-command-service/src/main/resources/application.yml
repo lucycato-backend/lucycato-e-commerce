@@ -1,8 +1,12 @@
+server:
+  port: 8080
+
 spring:
+  application:
+    name: user-auth-command-service
   config:
     activate:
-      on-profile: local
-
+      on-profile: default
   datasource:
     url: jdbc:mysql://localhost:23306/default
     username: admin
@@ -20,14 +24,24 @@ spring:
       host: localhost
       port: 26379
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    registerWithEureka: true
+    fetchRegistry: true
+  instance:
+    preferIpAddress: true
+
 kafka:
   clusters:
     bootstrapservers: localhost:9092
 
-
 ---
 
 spring:
+  application:
+    name: user-auth-command-service
   config:
     activate:
       on-profile: docker
@@ -49,13 +63,24 @@ spring:
       host: lucycato-redis
       port: 6379
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-server:8761/eureka/
+    registerWithEureka: true
+    fetchRegistry: true
+  instance:
+    preferIpAddress: true
+
 kafka:
   clusters:
     bootstrapservers: lucycato-kafka:9092
 
-
 ---
+
 spring:
+  application:
+    name: user-auth-command-service
   config:
     activate:
       on-profile: service_local_db_server
@@ -76,6 +101,15 @@ spring:
     redis:
       host: hometo.store
       port: 26379
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://hometo.store:8761/eureka/
+    registerWithEureka: true
+    fetchRegistry: true
+  instance:
+    preferIpAddress: true
 
 kafka:
   clusters:
