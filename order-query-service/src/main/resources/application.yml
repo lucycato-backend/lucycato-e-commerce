@@ -1,4 +1,8 @@
-#spring.application.name=order-query-service
+spring:
+  config:
+    import: application-common.yml
+
+---
 spring:
   config:
     activate:
@@ -6,20 +10,3 @@ spring:
 
 server:
   port: 8091
-
-kafka:
-  clusters:
-    bootstrapservers: localhost:9092
-
-
----
-
-spring:
-  config:
-    activate:
-      on-profile: docker
-
-
-kafka:
-  clusters:
-    bootstrapservers: lucycato-kafka:9092

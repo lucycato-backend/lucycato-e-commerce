@@ -1,82 +1,12 @@
 spring:
   config:
+    import: application-common.yml
+
+---
+spring:
+  config:
     activate:
       on-profile: default
 
-  datasource:
-    url: jdbc:mysql://localhost:23306/default
-    username: admin
-    password: password
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  jpa:
-    hibernate:
-      ddl-auto: create
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-  data:
-    redis:
-      host: localhost
-      port: 26379
-
-kafka:
-  clusters:
-    bootstrapservers: localhost:9092
-
-
----
-
-spring:
-  config:
-    activate:
-      on-profile: docker
-
-  datasource:
-    url: jdbc:mysql://lucycato-mysql:3306/default
-    username: admin
-    password: password
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  jpa:
-    hibernate:
-      ddl-auto: create
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-  data:
-    redis:
-      host: lucycato-redis
-      port: 6379
-
-kafka:
-  clusters:
-    bootstrapservers: lucycato-kafka:9092
-
-
----
-spring:
-  config:
-    activate:
-      on-profile: service_local_db_server
-
-  datasource:
-    url: jdbc:mysql://hometo.store:23306/default
-    username: admin
-    password: password
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  jpa:
-    hibernate:
-      ddl-auto: create
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-  data:
-    redis:
-      host: hometo.store
-      port: 26379
-
-kafka:
-  clusters:
-    bootstrapservers: hometo.store:9092
+server:
+  port: 8080

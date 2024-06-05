@@ -33,6 +33,8 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.kafka:spring-kafka-test'
     testImplementation 'io.projectreactor:reactor-test'
+    implementation 'org.springdoc:springdoc-openapi-starter-webflux-ui:2.1.0'
+
 }
 
 test {
