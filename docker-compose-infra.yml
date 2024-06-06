@@ -1,19 +1,39 @@
 version: "3.8"
 services:
-  gateway-server:
-    image: lucycato/lucycato-e-commerce-gateway-server:1.0.0
-    networks:
-      - "lucycato_network"
-    ports:
-      - "8060:8080"
-    environment:
-      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=lucycato-kafka:9092
   eureka-server:
     image: lucycato/lucycato-e-commerce-eureka-server:1.0.0
     networks:
       - "lucycato_network"
     ports:
-      - "8062:8080"
+      - "8761:8761"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8761/actuator/health" ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 5s
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+  gateway-server:
+    image: lucycato/lucycato-e-commerce-gateway-server:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8071:8071"
+    depends_on:
+      - eureka-server
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+  task-consumer:
+    image: lucycato/lucycato-e-commerce-task-consumer:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8072:8072"
+    depends_on:
+      - eureka-server
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
 
 networks:
   lucycato_network:

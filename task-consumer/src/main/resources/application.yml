@@ -1,13 +1,16 @@
 server:
-  port: 8088
+  port: 8072
 
 spring:
   application:
-    name: event-command-service
+    name: task-consumer
   config:
-    import: application-common.yml
     activate:
       on-profile: default
+  r2dbc:
+    url: r2dbc:mysql://localhost:3306/default
+    username: admin
+    password: password
   cloud:
     loadbalancer:
       ribbon:
@@ -30,11 +33,14 @@ kafka:
 
 spring:
   application:
-    name: event-command-service
+    name: task-consumer
   config:
-    import: application-common.yml
     activate:
       on-profile: docker
+  r2dbc:
+    url: r2dbc:mysql://lucycato-mysql:3306/default
+    username: admin
+    password: password
   cloud:
     loadbalancer:
       ribbon:
@@ -52,4 +58,3 @@ eureka:
 kafka:
   clusters:
     bootstrapservers: lucycato-kafka:9092
-

@@ -1,5 +1,4 @@
-package org.lucycato.common;
-
+package org.lucycato.mvc;
 
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
@@ -13,8 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class SwaggerConfig {
-
+public class WebMvcSwaggerConfig {
     @Bean
     public OpenAPI openAPI(@Value("${springdoc.version}") String version) {
         Info info = new Info()
@@ -32,7 +30,7 @@ public class SwaggerConfig {
                         .bearerFormat("JWT"));
 
         return new OpenAPI()
-                .components(new Components())
+                .components(components)
                 .info(info)
                 .addSecurityItem(securityRequirement)
                 .components(components);

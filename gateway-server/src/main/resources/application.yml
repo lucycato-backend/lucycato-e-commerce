@@ -1,0 +1,178 @@
+server:
+  port: 8071
+
+spring:
+  application:
+    name: gateway-server
+  config:
+    activate:
+      on-profile: default
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      default-filters:
+        - name: AuthGlobalFilter
+          args:
+            message: Spring Gateway Auth Filter
+            authCheck: true
+        - name: LoggingGlobalFilter
+          args:
+            message: Spring Gateway Logging Filter
+            preLogger: true
+            postLogger: true
+      routes:
+        - id: user-auth-command-service
+          uri: lb://user-auth-command-service
+          predicates:
+            - Path=open-api/user-auth-command/**, api/admin/user-auth-command/**, api/app/user-auth-command/**
+        - id: user-auth-query-service
+          uri: lb://user-auth-query-service
+          predicates:
+            - Path=open-api/user-auth-query/**, api/admin/user-auth-query/**, api/app/user-auth-query/**
+        - id: notification-command-service
+          uri: lb://notification-command-service
+          predicates:
+            - Path=open-api/notification-command/**, api/admin/notification-command/**, api/app/notification-command/**
+        - id: notification-query-service
+          uri: lb://notification-query-service
+          predicates:
+            - Path=open-api/notification-query/**, api/admin/notification-query/**, api/app/notification-query/**
+        - id: product-command-service
+          uri: lb://product-command-service
+          predicates:
+            - Path=open-api/product-command/**, api/admin/product-command/**, api/app/product-command/**
+        - id: product-query-service
+          uri: lb://product-query-service
+          predicates:
+            - Path=open-api/product-query/**, api/admin/product-query/**, api/app/product-query/**
+        - id: board-command-service
+          uri: lb://board-command-service
+          predicates:
+            - Path=open-api/board-command/**, api/admin/board-command/**, api/app/board-command/**
+        - id: board-query-service
+          uri: lb://board-query-service
+          predicates:
+            - Path=open-api/board-query/**, api/admin/board-query/**, api/app/board-query/**
+        - id: event-command-service
+          uri: lb://event-command-service
+          predicates:
+            - Path=open-api/event-command/**, api/admin/event-command/**, api/app/event-command/**
+        - id: event-query-service
+          uri: lb://event-query-service
+          predicates:
+            - Path=open-api/event-query/**, api/admin/event-query/**, api/app/event-query/**
+        - id: order-command-service
+          uri: lb://order-command-service
+          predicates:
+            - Path=open-api/order-command/**, api/admin/order-command/**, api/app/order-command/**
+        - id: order-query-service
+          uri: lb://order-query-service
+          predicates:
+            - Path=open-api/order-query/**, api/admin/order-query/**, api/app/order-query/**
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    registerWithEureka: true
+    fetchRegistry: true
+  instance:
+    preferIpAddress: true
+
+kafka:
+  clusters:
+    bootstrapservers: localhost:9092
+
+---
+
+spring:
+  application:
+    name: gateway-server
+  config:
+    activate:
+      on-profile: docker
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      default-filters:
+        - name: AuthGlobalFilter
+          args:
+            message: Spring Gateway Auth Filter
+            authCheck: true
+        - name: LoggingGlobalFilter
+          args:
+            message: Spring Gateway Logging Filter
+            preLogger: true
+            postLogger: true
+      routes:
+        - id: user-auth-command-service
+          uri: lb://user-auth-command-service
+          predicates:
+            - Path=open-api/user-auth-command/**, api/admin/user-auth-command/**, api/app/user-auth-command/**
+        - id: user-auth-query-service
+          uri: lb://user-auth-query-service
+          predicates:
+            - Path=open-api/user-auth-query/**, api/admin/user-auth-query/**, api/app/user-auth-query/**
+        - id: notification-command-service
+          uri: lb://notification-command-service
+          predicates:
+            - Path=open-api/notification-command/**, api/admin/notification-command/**, api/app/notification-command/**
+        - id: notification-query-service
+          uri: lb://notification-query-service
+          predicates:
+            - Path=open-api/notification-query/**, api/admin/notification-query/**, api/app/notification-query/**
+        - id: product-command-service
+          uri: lb://product-command-service
+          predicates:
+            - Path=open-api/product-command/**, api/admin/product-command/**, api/app/product-command/**
+        - id: product-query-service
+          uri: lb://product-query-service
+          predicates:
+            - Path=open-api/product-query/**, api/admin/product-query/**, api/app/product-query/**
+        - id: board-command-service
+          uri: lb://board-command-service
+          predicates:
+            - Path=open-api/board-command/**, api/admin/board-command/**, api/app/board-command/**
+        - id: board-query-service
+          uri: lb://board-query-service
+          predicates:
+            - Path=open-api/board-query/**, api/admin/board-query/**, api/app/board-query/**
+        - id: event-command-service
+          uri: lb://event-command-service
+          predicates:
+            - Path=open-api/event-command/**, api/admin/event-command/**, api/app/event-command/**
+        - id: event-query-service
+          uri: lb://event-query-service
+          predicates:
+            - Path=open-api/event-query/**, api/admin/event-query/**, api/app/event-query/**
+        - id: order-command-service
+          uri: lb://order-command-service
+          predicates:
+            - Path=open-api/order-command/**, api/admin/order-command/**, api/app/order-command/**
+        - id: order-query-service
+          uri: lb://order-query-service
+          predicates:
+            - Path=open-api/order-query/**, api/admin/order-query/**, api/app/order-query/**
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-server:8761/eureka/
+    registerWithEureka: true
+    fetchRegistry: true
+  instance:
+    preferIpAddress: true
+
+kafka:
+  clusters:
+    bootstrapservers: lucycato-kafka:9092

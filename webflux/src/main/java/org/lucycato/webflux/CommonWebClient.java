@@ -2,6 +2,7 @@ package org.lucycato.webflux;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.lucycato.common.context.XHeaderContext;
 import org.lucycato.common.api.ErrorResponse;
 import org.lucycato.common.exception.ApiExceptionImpl;
@@ -15,16 +16,12 @@ import java.net.URI;
 import java.util.Map;
 
 @Component
+@RequiredArgsConstructor
 public class CommonWebClient {
     private final ObjectMapper objectMapper;
     private final WebClient webClient;
 
-    public CommonWebClient(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
-        this.webClient = WebClient.builder().build();
-    }
-
-    public <T> Mono<T> sendGetRequestResultMono(String url) {
+    public <T> Mono<T> sendGetRequestResultMono(String url, Class<T> type) {
         return Mono.deferContextual(contextView ->
                 webClient.get()
                         .uri(URI.create(url))
@@ -32,8 +29,7 @@ public class CommonWebClient {
                                 contextView.getOrDefault(XHeaderContext.ADMIN_OR_APP_USER_JSON_STRING_HEADER_KEY, ""))
                         .retrieve()
                         .bodyToMono(String.class)
-                        .flatMap(jsonString -> Mono.fromCallable(() -> objectMapper.readValue(jsonString, new TypeReference<T>() {
-                        })))
+                        .flatMap(jsonString -> Mono.fromCallable(() -> objectMapper.readValue(jsonString, type)))
                         .onErrorResume(WebClientResponseException.class, ex ->
                                 Mono.fromCallable(() -> objectMapper.readValue(ex.getResponseBodyAsString(), new TypeReference<ErrorResponse<T>>() {
                                         }))
@@ -43,7 +39,7 @@ public class CommonWebClient {
         );
     }
 
-    public <T> Flux<T> sendGetRequestResultFlux(String url) {
+    public <T> Flux<T> sendGetRequestResultFlux(String url, Class<T> type) {
         return Flux.deferContextual(contextView ->
                 webClient.get()
                         .uri(URI.create(url))
@@ -51,8 +47,7 @@ public class CommonWebClient {
                                 contextView.getOrDefault(XHeaderContext.ADMIN_OR_APP_USER_JSON_STRING_HEADER_KEY, ""))
                         .retrieve()
                         .bodyToFlux(String.class)
-                        .flatMap(jsonString -> Mono.fromCallable(() -> objectMapper.readValue(jsonString, new TypeReference<T>() {
-                        })))
+                        .flatMap(jsonString -> Mono.fromCallable(() -> objectMapper.readValue(jsonString, type)))
                         .onErrorResume(WebClientResponseException.class, ex ->
                                 Mono.fromCallable(() -> objectMapper.readValue(ex.getResponseBodyAsString(), new TypeReference<ErrorResponse<T>>() {
                                         }))
@@ -62,7 +57,7 @@ public class CommonWebClient {
         );
     }
 
-    public <T> Mono<T> sendPostRequestResultMono(String url, Map<String, Object> body) {
+    public <T> Mono<T> sendPostRequestResultMono(String url, Map<String, Object> body, Class<T> type) {
         return Mono.deferContextual(contextView ->
                 webClient.post()
                         .uri(URI.create(url))
@@ -72,8 +67,7 @@ public class CommonWebClient {
                         .bodyValue(body)
                         .retrieve()
                         .bodyToMono(String.class)
-                        .flatMap(jsonString -> Mono.fromCallable(() -> objectMapper.readValue(jsonString, new TypeReference<T>() {
-                        })))
+                        .flatMap(jsonString -> Mono.fromCallable(() -> objectMapper.readValue(jsonString, type)))
                         .onErrorResume(WebClientResponseException.class, ex ->
                                 Mono.fromCallable(() -> objectMapper.readValue(ex.getResponseBodyAsString(), new TypeReference<ErrorResponse<T>>() {
                                         }))
@@ -83,7 +77,7 @@ public class CommonWebClient {
         );
     }
 
-    public <T> Flux<T> sendPostRequestResultFlux(String url, Map<String, Object> body) {
+    public <T> Flux<T> sendPostRequestResultFlux(String url, Map<String, Object> body, Class<T> type) {
         return Flux.deferContextual(contextView ->
                 webClient.post()
                         .uri(URI.create(url))
@@ -93,8 +87,7 @@ public class CommonWebClient {
                         .bodyValue(body)
                         .retrieve()
                         .bodyToFlux(String.class)
-                        .flatMap(jsonString -> Mono.fromCallable(() -> objectMapper.readValue(jsonString, new TypeReference<T>() {
-                        })))
+                        .flatMap(jsonString -> Mono.fromCallable(() -> objectMapper.readValue(jsonString, type)))
                         .onErrorResume(WebClientResponseException.class, ex ->
                                 Mono.fromCallable(() -> objectMapper.readValue(ex.getResponseBodyAsString(), new TypeReference<ErrorResponse<T>>() {
                                         }))
@@ -104,7 +97,7 @@ public class CommonWebClient {
         );
     }
 
-    public <T> Mono<T> sendPutRequestResultMono(String url, Map<String, Object> body) {
+    public <T> Mono<T> sendPutRequestResultMono(String url, Map<String, Object> body, Class<T> type) {
         return Mono.deferContextual(contextView ->
                 webClient.put()
                         .uri(URI.create(url))
@@ -114,8 +107,7 @@ public class CommonWebClient {
                         .bodyValue(body)
                         .retrieve()
                         .bodyToMono(String.class)
-                        .flatMap(jsonString -> Mono.fromCallable(() -> objectMapper.readValue(jsonString, new TypeReference<T>() {
-                        })))
+                        .flatMap(jsonString -> Mono.fromCallable(() -> objectMapper.readValue(jsonString, type)))
                         .onErrorResume(WebClientResponseException.class, ex ->
                                 Mono.fromCallable(() -> objectMapper.readValue(ex.getResponseBodyAsString(), new TypeReference<ErrorResponse<T>>() {
                                         }))
@@ -125,7 +117,7 @@ public class CommonWebClient {
         );
     }
 
-    public <T> Flux<T> sendPutRequestResultFlux(String url, Map<String, Object> body) {
+    public <T> Flux<T> sendPutRequestResultFlux(String url, Map<String, Object> body, Class<T> type) {
         return Flux.deferContextual(contextView ->
                 webClient.put()
                         .uri(URI.create(url))
@@ -135,8 +127,7 @@ public class CommonWebClient {
                         .bodyValue(body)
                         .retrieve()
                         .bodyToFlux(String.class)
-                        .flatMap(jsonString -> Mono.fromCallable(() -> objectMapper.readValue(jsonString, new TypeReference<T>() {
-                        })))
+                        .flatMap(jsonString -> Mono.fromCallable(() -> objectMapper.readValue(jsonString, type)))
                         .onErrorResume(WebClientResponseException.class, ex ->
                                 Mono.fromCallable(() -> objectMapper.readValue(ex.getResponseBodyAsString(), new TypeReference<ErrorResponse<T>>() {
                                         }))
@@ -146,7 +137,7 @@ public class CommonWebClient {
         );
     }
 
-    public <T> Mono<T> sendDeleteRequestResultMono(String url) {
+    public <T> Mono<T> sendDeleteRequestResultMono(String url, Class<T> type) {
         return Mono.deferContextual(contextView ->
                 webClient.delete()
                         .uri(URI.create(url))
@@ -154,8 +145,7 @@ public class CommonWebClient {
                                 contextView.getOrDefault(XHeaderContext.ADMIN_OR_APP_USER_JSON_STRING_HEADER_KEY, ""))
                         .retrieve()
                         .bodyToMono(String.class)
-                        .flatMap(jsonString -> Mono.fromCallable(() -> objectMapper.readValue(jsonString, new TypeReference<T>() {
-                        })))
+                        .flatMap(jsonString -> Mono.fromCallable(() -> objectMapper.readValue(jsonString, type)))
                         .onErrorResume(WebClientResponseException.class, ex ->
                                 Mono.fromCallable(() -> objectMapper.readValue(ex.getResponseBodyAsString(), new TypeReference<ErrorResponse<T>>() {
                                         }))
@@ -165,7 +155,7 @@ public class CommonWebClient {
         );
     }
 
-    public <T> Flux<T> sendDeleteRequestResultFlux(String url) {
+    public <T> Flux<T> sendDeleteRequestResultFlux(String url, Class<T> type) {
         return Flux.deferContextual(contextView ->
                 webClient.delete()
                         .uri(URI.create(url))
@@ -173,8 +163,7 @@ public class CommonWebClient {
                                 contextView.getOrDefault(XHeaderContext.ADMIN_OR_APP_USER_JSON_STRING_HEADER_KEY, ""))
                         .retrieve()
                         .bodyToFlux(String.class)
-                        .flatMap(jsonString -> Mono.fromCallable(() -> objectMapper.readValue(jsonString, new TypeReference<T>() {
-                        })))
+                        .flatMap(jsonString -> Mono.fromCallable(() -> objectMapper.readValue(jsonString, type)))
                         .onErrorResume(WebClientResponseException.class, ex ->
                                 Mono.fromCallable(() -> objectMapper.readValue(ex.getResponseBodyAsString(), new TypeReference<ErrorResponse<T>>() {
                                         }))

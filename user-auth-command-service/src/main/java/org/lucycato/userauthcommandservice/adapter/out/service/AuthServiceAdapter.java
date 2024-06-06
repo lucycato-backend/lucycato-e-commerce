@@ -3,7 +3,7 @@ package org.lucycato.userauthcommandservice.adapter.out.service;
 import lombok.RequiredArgsConstructor;
 import org.lucycato.common.annotation.hexagonal.out.ServiceAdapter;
 import org.lucycato.common.security.AdminUserRole;
-import org.lucycato.mvc.CommonHttpClient;
+import org.lucycato.mvc.CommonRestTemplate;
 import org.lucycato.userauthcommandservice.application.port.out.AuthPort;
 import org.lucycato.userauthcommandservice.application.port.out.result.IssueJwtTokenResult;
 import org.lucycato.userauthcommandservice.domain.enums.PlatformType;
@@ -14,7 +14,7 @@ import java.util.List;
 @ServiceAdapter
 @RequiredArgsConstructor
 public class AuthServiceAdapter implements AuthPort {
-    private final CommonHttpClient commonHttpClient;
+    private final CommonRestTemplate commonRestTemplate;
 
     //TODO: auth-service 구현
     @Override
