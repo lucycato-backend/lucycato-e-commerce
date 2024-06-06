@@ -19,21 +19,21 @@ services:
     networks:
       - "lucycato_network"
     ports:
-      - "8071:8071"
+      - "9090:8080"
     depends_on:
       - eureka-server
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-  task-consumer:
-    image: lucycato/lucycato-e-commerce-task-consumer:1.0.0
-    networks:
-      - "lucycato_network"
-    ports:
-      - "8072:8072"
-    depends_on:
-      - eureka-server
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
+#  task-consumer:
+#    image: lucycato/lucycato-e-commerce-task-consumer:1.0.0
+#    networks:
+#      - "lucycato_network"
+#    ports:
+#      - "8072:8080"
+#    depends_on:
+#      - eureka-server
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=docker
 
 networks:
   lucycato_network:
