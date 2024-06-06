@@ -2,6 +2,7 @@ package org.lucycato.boardcommandservice.test;
 
 import lombok.RequiredArgsConstructor;
 import org.lucycato.common.annotation.hexagonal.in.WebAdapter;
+import org.lucycato.common.api.ErrorResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,9 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class controller {
 
+
     @GetMapping("hello")
     public String hello() {
         System.out.println("Hell0123");
         return "hello1231";
     }
+
 }
