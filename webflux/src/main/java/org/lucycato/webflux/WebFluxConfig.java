@@ -25,7 +25,7 @@ public class WebFluxConfig implements WebFluxConfigurer {
 
     @Bean
     @LoadBalanced
-    public WebClient webClient() {
-        return WebClient.builder().build();
+    public WebClient.Builder webClient() {
+        return WebClient.builder();
     }
 }
