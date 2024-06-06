@@ -5,6 +5,7 @@ spring:
   application:
     name: user-auth-command-service
   config:
+    import: application-common.yml
     activate:
       on-profile: default
   datasource:
@@ -47,6 +48,7 @@ spring:
   application:
     name: user-auth-command-service
   config:
+    import: application-common.yml
     activate:
       on-profile: docker
   datasource:
@@ -89,6 +91,7 @@ spring:
   application:
     name: user-auth-command-service
   config:
+    import: application-common.yml
     activate:
       on-profile: service_local_db_server
   datasource:

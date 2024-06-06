@@ -5,6 +5,7 @@ spring:
   application:
     name: notification-command-service
   config:
+    import: application-common.yml
     activate:
       on-profile: default
   cloud:
@@ -32,6 +33,7 @@ spring:
   application:
     name: notification-command-service
   config:
+    import: application-common.yml
     activate:
       on-profile: docker
   cloud:

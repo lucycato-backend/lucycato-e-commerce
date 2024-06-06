@@ -5,6 +5,7 @@ spring:
   application:
     name: order-command-service
   config:
+    import: application-common.yml
     activate:
       on-profile: default
   data:
@@ -36,6 +37,7 @@ spring:
   application:
     name: order-command-service
   config:
+    import: application-common.yml
     activate:
       on-profile: docker
   data:
