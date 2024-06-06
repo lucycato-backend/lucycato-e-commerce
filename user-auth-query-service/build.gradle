@@ -37,7 +37,7 @@ ext {
 
 dependencies {
     implementation project(':common')
-    implementation project(':mvc')
+    implementation project(':webflux')
 
     implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
