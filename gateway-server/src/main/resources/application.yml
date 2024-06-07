@@ -5,6 +5,7 @@ spring:
   application:
     name: gateway-server
   config:
+    import: application-common.yml
     activate:
       on-profile: default
   cloud:
@@ -43,6 +44,7 @@ spring:
   application:
     name: gateway-server
   config:
+    import: application-common.yml
     activate:
       on-profile: docker
   cloud:
