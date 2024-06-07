@@ -24,6 +24,80 @@ spring:
             message: Spring Gateway Logging Filter
             preLogger: true
             postLogger: true
+      routes:
+        - id: user-auth-command-service
+          uri: lb://user-auth-command-service
+          predicates:
+            - Path=/user-auth-command/**
+          filters:
+            - RewritePath=/user-auth-command/(?<segment>.*), /${segment}
+        - id: user-auth-query-service
+          uri: lb://user-auth-query-service
+          predicates:
+            - Path=/user-auth-query/**
+          filters:
+            - RewritePath=/user-auth-query/(?<segment>.*), /${segment}
+        - id: notification-command-service
+          uri: lb://notification-command-service
+          predicates:
+            - Path=/notification-command/**
+          filters:
+            - RewritePath=/notification-command/(?<segment>.*), /${segment}
+        - id: notification-query-service
+          uri: lb://notification-query-service
+          predicates:
+            - Path=/notification-query/**
+          filters:
+            - RewritePath=/notification-query/(?<segment>.*), /${segment}
+        - id: product-command-service
+          uri: lb://product-command-service
+          predicates:
+            - Path=/product-command/**
+          filters:
+            - RewritePath=/product-command/(?<segment>.*), /${segment}
+        - id: product-query-service
+          uri: lb://product-query-service
+          predicates:
+            - Path=/product-query/**
+          filters:
+            - RewritePath=/product-query/(?<segment>.*), /${segment}
+        - id: board-command-service
+          uri: lb://board-command-service
+          predicates:
+            - Path=/board-command/**
+          filters:
+            - RewritePath=/board-command/(?<segment>.*), /${segment}
+        - id: board-query-service
+          uri: lb://board-query-service
+          predicates:
+            - Path=/board-query/**
+          filters:
+            - RewritePath=/board-query/(?<segment>.*), /${segment}
+        - id: event-command-service
+          uri: lb://event-command-service
+          predicates:
+            - Path=/event-command/**
+          filters:
+            - RewritePath=/event-command/(?<segment>.*), /${segment}
+        - id: event-query-service
+          uri: lb://event-query-service
+          predicates:
+            - Path=/event-query/**
+          filters:
+            - RewritePath=/event-query/(?<segment>.*), /${segment}
+        - id: order-command-service
+          uri: lb://order-command-service
+          predicates:
+            - Path=/order-command/**
+          filters:
+            - RewritePath=/order-command/(?<segment>.*), /${segment}
+        - id: order-query-service
+          uri: lb://order-query-service
+          predicates:
+            - Path=/order-query/**
+          filters:
+            - RewritePath=/order-query/(?<segment>.*), /${segment}
+
 
 eureka:
   client:
@@ -33,6 +107,8 @@ eureka:
     fetchRegistry: true
   instance:
     preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 10
+    leaseExpirationDurationInSeconds: 30
 
 kafka:
   clusters:
@@ -66,6 +142,79 @@ spring:
             message: Spring Gateway Logging Filter
             preLogger: true
             postLogger: true
+      routes:
+        - id: user-auth-command-service
+          uri: lb://user-auth-command-service
+          predicates:
+            - Path=/user-auth-command/**
+          filters:
+            - RewritePath=/user-auth-command/(?<segment>.*), /${segment}
+        - id: user-auth-query-service
+          uri: lb://user-auth-query-service
+          predicates:
+            - Path=/user-auth-query/**
+          filters:
+            - RewritePath=/user-auth-query/(?<segment>.*), /${segment}
+        - id: notification-command-service
+          uri: lb://notification-command-service
+          predicates:
+            - Path=/notification-command/**
+          filters:
+            - RewritePath=/notification-command/(?<segment>.*), /${segment}
+        - id: notification-query-service
+          uri: lb://notification-query-service
+          predicates:
+            - Path=/notification-query/**
+          filters:
+            - RewritePath=/notification-query/(?<segment>.*), /${segment}
+        - id: product-command-service
+          uri: lb://product-command-service
+          predicates:
+            - Path=/product-command/**
+          filters:
+            - RewritePath=/product-command/(?<segment>.*), /${segment}
+        - id: product-query-service
+          uri: lb://product-query-service
+          predicates:
+            - Path=/product-query/**
+          filters:
+            - RewritePath=/product-query/(?<segment>.*), /${segment}
+        - id: board-command-service
+          uri: lb://board-command-service
+          predicates:
+            - Path=/board-command/**
+          filters:
+            - RewritePath=/board-command/(?<segment>.*), /${segment}
+        - id: board-query-service
+          uri: lb://board-query-service
+          predicates:
+            - Path=/board-query/**
+          filters:
+            - RewritePath=/board-query/(?<segment>.*), /${segment}
+        - id: event-command-service
+          uri: lb://event-command-service
+          predicates:
+            - Path=/event-command/**
+          filters:
+            - RewritePath=/event-command/(?<segment>.*), /${segment}
+        - id: event-query-service
+          uri: lb://event-query-service
+          predicates:
+            - Path=/event-query/**
+          filters:
+            - RewritePath=/event-query/(?<segment>.*), /${segment}
+        - id: order-command-service
+          uri: lb://order-command-service
+          predicates:
+            - Path=/order-command/**
+          filters:
+            - RewritePath=/order-command/(?<segment>.*), /${segment}
+        - id: order-query-service
+          uri: lb://order-query-service
+          predicates:
+            - Path=/order-query/**
+          filters:
+            - RewritePath=/order-query/(?<segment>.*), /${segment}
 
 eureka:
   client:
@@ -75,6 +224,8 @@ eureka:
     fetchRegistry: true
   instance:
     preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 10
+    leaseExpirationDurationInSeconds: 30
 
 kafka:
   clusters:

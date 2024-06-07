@@ -25,6 +25,8 @@ eureka:
     fetchRegistry: true
   instance:
     preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 10
+    leaseExpirationDurationInSeconds: 30
 
 kafka:
   clusters:
@@ -57,6 +59,8 @@ eureka:
     fetchRegistry: true
   instance:
     preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 10
+    leaseExpirationDurationInSeconds: 30
 
 kafka:
   clusters:
