@@ -3,18 +3,14 @@ package org.lucycato.mvc;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.lucycato.common.context.XHeaderContext;
 import org.lucycato.common.api.ErrorResponse;
+import org.lucycato.common.context.XHeaderContext;
 import org.lucycato.common.exception.ApiExceptionImpl;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
-
-import java.net.URI;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 
 @Component
 @RequiredArgsConstructor
