@@ -16,6 +16,8 @@ eureka:
     enableSelfPreservation: false
   instance:
     hostname: localhost
+    leaseRenewalIntervalInSeconds: 10
+    leaseExpirationDurationInSeconds: 30
 
 ---
 
@@ -31,6 +33,8 @@ eureka:
     registerWithEureka: false
     fetchRegistry: false
   server:
-    enableSelfPreservation: false
+    enableSelfPreservation: true
   instance:
     hostname: eureka-server
+    leaseRenewalIntervalInSeconds: 10
+    leaseExpirationDurationInSeconds: 30

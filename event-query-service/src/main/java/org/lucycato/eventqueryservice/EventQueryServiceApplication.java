@@ -27,9 +27,14 @@ public class EventQueryServiceApplication {
         SpringApplication.run(EventQueryServiceApplication.class, args);
     }
 
-    @GetMapping("open-api/event-query/v1/test")
+    @GetMapping("open-api/v1/test2")
+    public Mono<Test> hello2() {
+        return Mono.just(new Test("dwewfwe", "fwweffwe"));
+    }
+
+    @GetMapping("open-api/v1/test")
     public Mono<Test> hello() {
-        String url = "lb://event-command-service/open-api/event-command/v1/test";
+        String url = "lb://event-command-service/open-api/v1/test2";
         return commonWebClient.sendGetRequestResultMono(url, Test.class);
     }
 

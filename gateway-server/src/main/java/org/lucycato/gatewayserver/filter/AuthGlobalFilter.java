@@ -1,26 +1,36 @@
 package org.lucycato.gatewayserver.filter;
 
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import org.lucycato.webflux.CommonWebClient;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.server.ServerRequest;
 
-@Order(Integer.MIN_VALUE)
+@Order(-10)
 @Component
 public class AuthGlobalFilter extends AbstractGatewayFilterFactory<AuthGlobalFilter.Config> {
+    private final String AUTHORIZATION_KEY = "Authorization";
+    private final CommonWebClient commonWebClient;
 
-    public AuthGlobalFilter() {
+    public AuthGlobalFilter(CommonWebClient commonWebClient) {
         super(Config.class);
+        this.commonWebClient = commonWebClient;
     }
 
     @Override
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
-            System.out.println(config.message);
+            ServerHttpRequest request = exchange.getRequest();
+            String token = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
 
-            System.out.println(config.authCheck);
-
+            if (token != null && token.startsWith("Bearer ")) {
+                //TODO: user-auth-service 통신 & 주입
+            }
             return chain.filter(exchange);
         };
     }
