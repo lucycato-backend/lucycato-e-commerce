@@ -14,7 +14,6 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 @Order(-10)
 @Component
 public class AuthGlobalFilter extends AbstractGatewayFilterFactory<AuthGlobalFilter.Config> {
-    private final String AUTHORIZATION_KEY = "Authorization";
     private final CommonWebClient commonWebClient;
 
     public AuthGlobalFilter(CommonWebClient commonWebClient) {
