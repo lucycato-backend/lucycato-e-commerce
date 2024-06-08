@@ -1,7 +1,7 @@
-package org.lucycato.productqueryservice.application.port.in;
+package org.lucycato.usercoursequeryservice.application.port.in;
 
-import org.lucycato.productqueryservice.application.port.in.command.*;
-import org.lucycato.productqueryservice.domain.*;
+import org.lucycato.usercoursequeryservice.application.port.in.command.*;
+import org.lucycato.usercoursequeryservice.domain.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

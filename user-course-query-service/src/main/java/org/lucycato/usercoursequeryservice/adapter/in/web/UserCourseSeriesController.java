@@ -1,10 +1,10 @@
-package org.lucycato.productqueryservice.adapter.in.web;
+package org.lucycato.usercoursequeryservice.adapter.in.web;
 
 import lombok.RequiredArgsConstructor;
 import org.lucycato.common.annotation.hexagonal.in.WebAdapter;
-import org.lucycato.productqueryservice.domain.CourseSeries;
-import org.lucycato.productqueryservice.domain.CourseSeriesDetail;
-import org.lucycato.productqueryservice.domain.CourseSeriesTextEBook;
+import org.lucycato.usercoursequeryservice.domain.CourseSeries;
+import org.lucycato.usercoursequeryservice.domain.CourseSeriesDetail;
+import org.lucycato.usercoursequeryservice.domain.CourseSeriesTextEBook;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,13 +16,13 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class UserCourseSeriesController {
 
-    @GetMapping("open-api/product/v1/course-series")
+    @GetMapping("open-api/usercourse/v1/course-series")
     public Flux<CourseSeries> getCourseSeries(
     ) {
         return Flux.empty();
     }
 
-    @GetMapping("open-api/product/v1/course-series/{courseSeriesId}")
+    @GetMapping("open-api/usercourse/v1/course-series/{courseSeriesId}")
     public Mono<CourseSeriesDetail> getCourseSeries(
             @PathVariable
             Long courseSeriesId
@@ -30,7 +30,7 @@ public class UserCourseSeriesController {
         return Mono.empty();
     }
 
-    @GetMapping("open-api/product/v1/course-series/by-teacher/{teacherId}/text-e-books")
+    @GetMapping("open-api/usercourse/v1/course-series/by-teacher/{teacherId}/text-e-books")
     public Flux<CourseSeriesTextEBook> getCourseTextEBooksByTeacherId(
             @PathVariable
             Long teacherId

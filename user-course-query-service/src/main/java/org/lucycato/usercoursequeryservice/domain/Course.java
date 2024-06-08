@@ -1,12 +1,12 @@
-package org.lucycato.productqueryservice.domain;
+package org.lucycato.usercoursequeryservice.domain;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.lucycato.productqueryservice.domain.enums.CourseGenre;
-import org.lucycato.productqueryservice.domain.enums.CourseStatus;
-import org.lucycato.productqueryservice.domain.enums.SubjectCategory;
+import org.lucycato.usercoursequeryservice.domain.enums.CourseGenre;
+import org.lucycato.usercoursequeryservice.domain.enums.CourseStatus;
+import org.lucycato.usercoursequeryservice.domain.enums.SubjectCategory;
 
 import java.time.LocalDateTime;
 

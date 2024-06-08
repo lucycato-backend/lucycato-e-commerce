@@ -1,12 +1,12 @@
-package org.lucycato.productqueryservice.adapter.in.web;
+package org.lucycato.usercoursequeryservice.adapter.in.web;
 
 import lombok.RequiredArgsConstructor;
 import org.lucycato.common.annotation.hexagonal.in.WebAdapter;
-import org.lucycato.productqueryservice.application.port.in.CourseUseCase;
-import org.lucycato.productqueryservice.application.port.in.command.*;
-import org.lucycato.productqueryservice.domain.*;
-import org.lucycato.productqueryservice.domain.enums.CourseGenre;
-import org.lucycato.productqueryservice.domain.enums.SubjectCategory;
+import org.lucycato.usercoursequeryservice.application.port.in.CourseUseCase;
+import org.lucycato.usercoursequeryservice.application.port.in.command.*;
+import org.lucycato.usercoursequeryservice.domain.*;
+import org.lucycato.usercoursequeryservice.domain.enums.CourseGenre;
+import org.lucycato.usercoursequeryservice.domain.enums.SubjectCategory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,7 +24,7 @@ public class UserCourseController {
     토론: WebFlux 사용은 write 사용에 안정적이지 않은 것인가
      */
 
-    @GetMapping("open-api/product/v1/courses")
+    @GetMapping("open-api/usercourse/v1/courses")
     public Flux<Course> getCourses(
             @RequestParam(name = "courseGenre", required = false)
             CourseGenre courseGenre,
@@ -38,7 +38,7 @@ public class UserCourseController {
         return courseUseCase.getCurses(command);
     }
 
-    @GetMapping("open-api/product/v1/courses/{courseId}")
+    @GetMapping("open-api/usercourse/v1/courses/{courseId}")
     public Mono<CourseDetail> getCourse(
             @PathVariable
             Long courseId
@@ -49,7 +49,7 @@ public class UserCourseController {
         return courseUseCase.getCures(command);
     }
 
-    @GetMapping("open-api/product/v1/courses/{courseId}/lectures")
+    @GetMapping("open-api/usercourse/v1/courses/{courseId}/lectures")
     public Flux<CourseLecture> getCourseLectures(
             @PathVariable
             Long courseId
@@ -60,7 +60,7 @@ public class UserCourseController {
         return courseUseCase.getCourseLectures(command);
     }
 
-    @GetMapping("open-api/product/v1/courses/{courseId}/text-e-books")
+    @GetMapping("open-api/usercourse/v1/courses/{courseId}/text-e-books")
     public Flux<CourseTextEBook> getCourseTextEBooks(
             @PathVariable
             Long courseId
@@ -71,7 +71,7 @@ public class UserCourseController {
         return courseUseCase.getCourseTextEBooks(command);
     }
 
-    @GetMapping("open-api/product/v1/courses/{courseId}/reviews")
+    @GetMapping("open-api/usercourse/v1/courses/{courseId}/reviews")
     public Flux<CourseReview> getCourseReviews(
             @PathVariable
             Long courseId
@@ -82,7 +82,7 @@ public class UserCourseController {
         return courseUseCase.getCourseReviews(command);
     }
 
-    @GetMapping("open-api/product/v1/courses/by-teacher/{teacherId}/reviews")
+    @GetMapping("open-api/usercourse/v1/courses/by-teacher/{teacherId}/reviews")
     public Flux<CourseReview> getCourseReviewsByTeacher(
             @PathVariable
             Long teacherId

@@ -1,11 +1,11 @@
-package org.lucycato.productqueryservice.adapter.out;
+package org.lucycato.usercoursequeryservice.adapter.out;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.lucycato.productqueryservice.domain.enums.SubjectCategory;
-import org.lucycato.productqueryservice.domain.enums.TeachingGenre;
-import org.lucycato.productqueryservice.domain.enums.TextEBookStatus;
+import org.lucycato.usercoursequeryservice.domain.enums.SubjectCategory;
+import org.lucycato.usercoursequeryservice.domain.enums.TeachingGenre;
+import org.lucycato.usercoursequeryservice.domain.enums.TextEBookStatus;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;

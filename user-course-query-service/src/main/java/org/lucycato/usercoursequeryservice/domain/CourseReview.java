@@ -1,11 +1,11 @@
-package org.lucycato.productqueryservice.domain;
+package org.lucycato.usercoursequeryservice.domain;
 
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.lucycato.productqueryservice.domain.enums.CourseReviewCategory;
+import org.lucycato.usercoursequeryservice.domain.enums.CourseReviewCategory;
 
 import java.time.LocalDateTime;
 
