@@ -1,9 +1,9 @@
 server:
-  port: 8091
+  port: 8088
 
 spring:
   application:
-    name: order-query-service
+    name: event-command-service
   config:
     import: application-common.yml
     activate:
@@ -50,7 +50,7 @@ management:
 
 spring:
   application:
-    name: order-query-service
+    name: event-command-service
   config:
     import: application-common.yml
     activate:
@@ -74,3 +74,4 @@ eureka:
 kafka:
   clusters:
     bootstrapservers: lucycato-kafka:9092
+
