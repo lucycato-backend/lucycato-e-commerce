@@ -111,7 +111,7 @@ public class DeviceManagementPersistenceAdapter implements DeviceManagementPort 
             String locale
 
     ) {
-        boolean isDeviceExist = deviceVos.stream().anyMatch(deviceInfo -> deviceInfo.getDeviceManAddress().equals(deviceMacAddress));
+        boolean isDeviceExist = deviceVos.stream().anyMatch(deviceInfo -> deviceInfo.getDeviceMacAddress().equals(deviceMacAddress));
 
         if (!isDeviceExist) {
             PlatformVo platformVo = new PlatformVo(
@@ -132,7 +132,7 @@ public class DeviceManagementPersistenceAdapter implements DeviceManagementPort 
             );
             deviceVos.add(deviceVo);
         } else {
-            List<PlatformVo> platformVos = deviceVos.stream().filter(deviceInfo -> deviceInfo.getDeviceManAddress().equals(deviceMacAddress)).toList()
+            List<PlatformVo> platformVos = deviceVos.stream().filter(deviceInfo -> deviceInfo.getDeviceMacAddress().equals(deviceMacAddress)).toList()
                     .get(0).getPlatformVos();
 
             boolean isPlatformExist = platformVos.stream().anyMatch(platformVo -> platformVo.getPlatformType().equals(platformType));
@@ -165,7 +165,7 @@ public class DeviceManagementPersistenceAdapter implements DeviceManagementPort 
                     platformVos
             );
 
-            deviceVos.removeIf(deviceInfo -> deviceInfo.getDeviceManAddress().equals(deviceMacAddress));
+            deviceVos.removeIf(deviceInfo -> deviceInfo.getDeviceMacAddress().equals(deviceMacAddress));
             deviceVos.add(savedDeviceVo);
         }
 
@@ -173,7 +173,7 @@ public class DeviceManagementPersistenceAdapter implements DeviceManagementPort 
     }
 
     private List<DeviceVo> modifyDeviceLogout(List<DeviceVo> deviceVos, String deviceMacAddress, PlatformType platformType) {
-        List<PlatformVo> platformVos = deviceVos.stream().filter(deviceInfo -> deviceInfo.getDeviceManAddress().equals(deviceMacAddress)).toList()
+        List<PlatformVo> platformVos = deviceVos.stream().filter(deviceInfo -> deviceInfo.getDeviceMacAddress().equals(deviceMacAddress)).toList()
                 .get(0).getPlatformVos();
 
         PlatformVo platformVo = platformVos.stream().filter(it -> it.getPlatformType().equals(platformType)).toList().get(0);
@@ -182,7 +182,7 @@ public class DeviceManagementPersistenceAdapter implements DeviceManagementPort 
         platformVos.removeIf(it -> it.getPlatformType().equals(platformType));
         platformVos.add(platformVo);
 
-        DeviceVo deviceVo = deviceVos.stream().filter(it -> it.getDeviceManAddress().equals(deviceMacAddress)).toList().get(0);
+        DeviceVo deviceVo = deviceVos.stream().filter(it -> it.getDeviceMacAddress().equals(deviceMacAddress)).toList().get(0);
         DeviceVo savedDeviceVo = new DeviceVo(
                 deviceMacAddress,
                 deviceVo.getDeviceFcmToken(),
@@ -191,7 +191,7 @@ public class DeviceManagementPersistenceAdapter implements DeviceManagementPort 
                 platformVos
         );
 
-        deviceVos.removeIf(it -> it.getDeviceManAddress().equals(deviceMacAddress));
+        deviceVos.removeIf(it -> it.getDeviceMacAddress().equals(deviceMacAddress));
         deviceVos.add(savedDeviceVo);
 
         return deviceVos;
