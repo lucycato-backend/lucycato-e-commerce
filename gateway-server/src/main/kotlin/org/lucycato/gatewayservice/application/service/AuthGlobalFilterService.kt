@@ -11,26 +11,22 @@ class AuthGlobalFilterService(
         private val objectMapper: ObjectMapper,
         private val userAuthPort: UserAuthPort
 ) : AuthGlobalFilterUseCase {
-    override fun parseJwtToAdminUserJson(token: String?): Mono<String> {
-        return if (token != null && token.startsWith("Bearer ")) {
-            userAuthPort.getAdminUserAuthByToken(token)
-                    .flatMap { adminUserAuth ->
-                        Mono.fromCallable { objectMapper.writeValueAsString(adminUserAuth) }
-                    }
-        } else {
-            Mono.empty()
-        }
+    override fun parseJwtToAdminUserJson(token: String?): Mono<String> = if (token != null && token.startsWith("Bearer ")) {
+        userAuthPort.getAdminUserAuthByToken(token)
+                .flatMap { adminUserAuth ->
+                    Mono.fromCallable { objectMapper.writeValueAsString(adminUserAuth) }
+                }
+    } else {
+        Mono.empty()
     }
 
-    override fun parseJwtToAppUserJson(token: String?): Mono<String> {
-        return if (token != null && token.startsWith("Bearer ")) {
-            userAuthPort.getAppUserAuthByToken(token)
-                    .flatMap { appUserAuth ->
-                        Mono.fromCallable { objectMapper.writeValueAsString(appUserAuth) }
-                    }
-        } else {
-            Mono.empty()
-        }
+    override fun parseJwtToAppUserJson(token: String?): Mono<String> = if (token != null && token.startsWith("Bearer ")) {
+        userAuthPort.getAppUserAuthByToken(token)
+                .flatMap { appUserAuth ->
+                    Mono.fromCallable { objectMapper.writeValueAsString(appUserAuth) }
+                }
+    } else {
+        Mono.empty()
     }
 
 }
