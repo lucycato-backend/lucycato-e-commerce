@@ -1,47 +1,37 @@
 package org.lucycato.eventcommandservice;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.lucycato.mvc.CommonRestTemplate;
+import org.lucycato.common.annotation.resolver.AdminUserHeaders;
+import org.lucycato.common.annotation.resolver.AppUserHeaders;
+import org.lucycato.common.resolver.AdminUserHeaderDetail;
+import org.lucycato.common.resolver.AppUserHeaderDetail;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
 
 @EnableDiscoveryClient
 @RestController
 @SpringBootApplication
 public class EventCommandServiceApplication {
 
-    private final CommonRestTemplate commonRestTemplate;
-
-    public EventCommandServiceApplication(CommonRestTemplate commonRestTemplate) {
-        this.commonRestTemplate = commonRestTemplate;
-    }
-
     public static void main(String[] args) {
         SpringApplication.run(EventCommandServiceApplication.class, args);
     }
 
-    @GetMapping("open-api/v1/test2")
-    public Test hello2() throws Exception {
-        return new Test("fwe", "fewwfe");
-    }
-
     @GetMapping("open-api/v1/test")
-    public Test hello() throws Exception {
-        String url = "lb://event-query-service/open-api/v1/test2";
-        return commonRestTemplate.sendGetRequest(url, Test.class);
+    public Mono<String> test() {
+        return Mono.just("HELLO");
     }
 
-    @Getter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Test {
-        private String name;
+    @GetMapping("api/app/v1/test")
+    public Mono<String> test2(@AppUserHeaders AppUserHeaderDetail appUserHeaderDetail) {
+        return Mono.just("HELLO" + appUserHeaderDetail.getAppUserId());
+    }
 
-        private String des;
+    @GetMapping("api/admin/v1/test")
+    public Mono<String> test2(@AdminUserHeaders AdminUserHeaderDetail adminUserHeaderDetail) {
+        return Mono.just("HELLO" + adminUserHeaderDetail.getAdminUserId());
     }
 }

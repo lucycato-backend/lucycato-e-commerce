@@ -1,5 +1,5 @@
-#server:
-#  port: 8071
+server:
+  port: 9090
 
 spring:
   application:
@@ -18,12 +18,9 @@ spring:
         - name: AuthGlobalFilter
           args:
             message: Spring Gateway Auth Filter
-            authCheck: true
         - name: LoggingGlobalFilter
           args:
             message: Spring Gateway Logging Filter
-            preLogger: true
-            postLogger: true
       routes:
         - id: user-auth-command-service
           uri: lb://user-auth-command-service
