@@ -26,10 +26,17 @@ class LoggingGlobalFilter(
 
     override fun apply(config: Config?): GatewayFilter {
         return GatewayFilter { exchange, chain ->
-            logRequest(exchange)
-                    .subscribeOn(Schedulers.parallel())
-                    .subscribe()
-            chain.filter(exchange).then(logResponse(exchange.response))
+            chain.filter(exchange)
+                    .doOnSubscribe {
+                        logRequest(exchange)
+                                .subscribeOn(Schedulers.parallel())
+                                .subscribe()
+                    }
+                    .doOnTerminate {
+                        logResponse(exchange.response)
+                                .subscribeOn(Schedulers.parallel())
+                                .subscribe()
+                    }
         }
     }
 

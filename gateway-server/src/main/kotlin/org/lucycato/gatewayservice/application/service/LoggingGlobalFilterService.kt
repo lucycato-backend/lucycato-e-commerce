@@ -26,18 +26,13 @@ class LoggingGlobalFilterService : LoggingGlobalFilterUseCase {
                 }
             }
 
-            log.info("""
-            
-            >> -- >> -- >> -- >> REQUEST  >> -- >> -- >> -- >>
-            Original URL: $originalUri
-            Route URL: $routeUri
-            Jwt: ${command.token}
-            Method: ${command.method}
-            Headers:
-            $headers
-            >> -- >> -- >> -- >> REQUEST  >> -- >> -- >> -- >>
-            
-            """.trimIndent()
+            log.info("\n>> -- >> -- >> -- >> REQUEST  >> -- >> -- >> -- >>\n"
+                    + "Original URL: ${originalUri}\n"
+                    + "Route URL: ${routeUri}\n"
+                    + "Jwt: ${command.token}\n"
+                    + "Method: ${command.method}\n"
+                    + "Headers:\n${headers}\n"
+                    + ">> -- >> -- >> -- >> REQUEST  >> -- >> -- >> -- >>\n"
             )
         }
     }
@@ -54,15 +49,10 @@ class LoggingGlobalFilterService : LoggingGlobalFilterUseCase {
                 }
             }
 
-            log.info("""
-                
-            << -- << -- << -- << RESPONSE << -- << -- << -- <<
-            Status: ${command.statusCode}
-            Headers:
-            $headers
-            << -- << -- << -- << RESPONSE << -- << -- << -- <<
-            
-            """.trimIndent()
+            log.info("\n<< -- << -- << -- << RESPONSE << -- << -- << -- <<\n"
+                    + "Status: ${command.statusCode}\n"
+                    + "Headers:\n${headers}\n"
+                    + "<< -- << -- << -- << RESPONSE << -- << -- << -- <<\n",
             )
         }
     }

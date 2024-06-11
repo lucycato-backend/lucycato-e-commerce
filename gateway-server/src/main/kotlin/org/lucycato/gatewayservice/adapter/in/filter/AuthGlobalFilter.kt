@@ -56,9 +56,13 @@ class AuthGlobalFilter(
                         }
                     }
                     .onErrorResume { error ->
-                        Mono.error(ApiExceptionImpl(GatewayErrorCodeImpl.INVALID_URI, error))
+                        chain.filter(exchange)
+                                .then(Mono.error(ApiExceptionImpl(GatewayErrorCodeImpl.INVALID_URI, error)))
                     }
-                    .switchIfEmpty(Mono.error(ApiExceptionImpl(GatewayErrorCodeImpl.INVALID_TOKEN)))
+                    .switchIfEmpty(
+                            chain.filter(exchange)
+                                    .then(Mono.error(ApiExceptionImpl(GatewayErrorCodeImpl.INVALID_TOKEN)))
+                    )
                     .flatMap { authJson ->
                         chain.filter(exchange.mutate().request(exchange.request.mutate().headers { httpHeaders ->
                             if (authJson.isNotEmpty()) {
@@ -68,5 +72,6 @@ class AuthGlobalFilter(
                     }
         }
     }
+
     data class Config(var message: String)
 }
