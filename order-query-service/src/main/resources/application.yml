@@ -1,0 +1,25 @@
+#spring.application.name=order-query-service
+spring:
+  config:
+    activate:
+      on-profile: local
+
+server:
+  port: 8091
+
+kafka:
+  clusters:
+    bootstrapservers: localhost:9092
+
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: docker
+
+
+kafka:
+  clusters:
+    bootstrapservers: lucycato-kafka:9092

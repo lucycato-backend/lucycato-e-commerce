@@ -18,7 +18,7 @@ public class AsyncTaskProducer {
     private final ObjectMapper objectMapper;
 
     public AsyncTaskProducer(
-            @Value("${kafka.clusters.bootstrapservers:null}") String bootstrapServers,
+            @Value("${kafka.clusters.bootstrapservers}") String bootstrapServers,
             ObjectMapper objectMapper
     ) {
         Properties props = new Properties();

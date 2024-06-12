@@ -1,7 +1,7 @@
 version: "3.8"
 services:
-  user-service:
-    image: lucycato/lucycato-e-commerce-user-service:1.0.0
+  user-auth-command-service:
+    image: lucycato/lucycato-e-commerce-user-auth-command-service:1.0.0
     networks:
       - "lucycato_network"
     ports:
@@ -9,37 +9,95 @@ services:
       - "5005:5005"
     environment:
       - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n
-      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
-      - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/default
-      - SPRING_DATASOURCE_USERNAME=admin
-      - SPRING_DATASOURCE_PASSWORD=password
-      - SPRING_DATASOURCE_DRIVER-CLASS-NAME=com.mysql.cj.jdbc.Driver
-      - SPRING_JPA_HIBERNATE_DDL-AUTO=create
-      - SPRING_JPA_SHOW-SQL=true
-      - SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL=true
-      - SPRING_DATA_REDIS_HOST=redis
-      - SPRING_DATA_REDIS_PORT=6379
-  notification-service:
-    image: lucycato/lucycato-e-commerce-notification-service:1.0.0
+      - SPRING_PROFILES_ACTIVE=docker
+  user-auth-query-service:
+    image: lucycato/lucycato-e-commerce-user-auth-query-service:1.0.0
     networks:
       - "lucycato_network"
     ports:
       - "8081:8080"
     environment:
-      - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
-  product-service:
-    image: lucycato/lucycato-e-commerce-product-service:1.0.0
+      - SPRING_PROFILES_ACTIVE=docker
+  notification-command-service:
+    image: lucycato/lucycato-e-commerce-notification-command-service:1.0.0
     networks:
       - "lucycato_network"
     ports:
       - "8082:8080"
     environment:
-      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
-      - KAFKA_LOGGING_TOPIC=lucycato.bigtech.logging.out.stdout
-      - SPRING_R2DBC_URL=r2dbc:mysql://mysql:3306/default
-      - SPRING_R2DBC_USERNAME=admin
-      - SPRING_R2DBC_PASSWORD=password
+      - SPRING_PROFILES_ACTIVE=docker
+  notification-query-service:
+    image: lucycato/lucycato-e-commerce-notification-query-service:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8083:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+  product-command-service:
+    image: lucycato/lucycato-e-commerce-product-command-service:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8084:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+  product-query-service:
+    image: lucycato/lucycato-e-commerce-product-query-service:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8085:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+  board-command-service:
+    image: lucycato/lucycato-e-commerce-board-command-service:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8086:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+  board-query-service:
+    image: lucycato/lucycato-e-commerce-board-query-service:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8087:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+  event-command-service:
+    image: lucycato/lucycato-e-commerce-event-command-service:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8088:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+  event-query-service:
+    image: lucycato/lucycato-e-commerce-event-query-service:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8089:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+  order-command-service:
+    image: lucycato/lucycato-e-commerce-order-command-service:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8090:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+  order-query-service:
+    image: lucycato/lucycato-e-commerce-order-query-service:1.0.0
+    networks:
+      - "lucycato_network"
+    ports:
+      - "8091:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
 
 networks:
   lucycato_network:

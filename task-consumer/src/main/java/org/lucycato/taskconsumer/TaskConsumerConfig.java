@@ -6,7 +6,7 @@ import org.springframework.data.r2dbc.config.EnableR2dbcAuditing;
 import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
 
 @Configuration
-@ComponentScan("com.lucycato.common")
+@ComponentScan({"org.lucycato.common", "org.lucycato.webflux"})
 @EnableR2dbcAuditing
 @EnableR2dbcRepositories
 public class TaskConsumerConfig {

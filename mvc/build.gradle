@@ -11,6 +11,10 @@ java {
 group = 'org.lucycato.mvc'
 version = '1.0.0'
 
+bootJar {
+    enabled = false
+}
+
 repositories {
     mavenCentral()
 }
