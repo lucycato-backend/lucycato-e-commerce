@@ -16,9 +16,6 @@ import org.lucycato.userauthcommandservice.util.JwtsUtil;
 @ServiceAdapter
 @RequiredArgsConstructor
 public class AuthServiceAdapter implements AuthPort {
-    private final CommonRestTemplate commonRestTemplate;
-
-    private static final String SECRET_KEY = "your-secret-key"; // 랜덤한 값으로 변경하세요
 
     //TODO: auth-service 구현
     @Override
@@ -29,19 +26,19 @@ public class AuthServiceAdapter implements AuthPort {
     @Override
     public IssueJwtTokenResult issueAdminUserJwtToken(Long adminUserId, List<AdminUserRole> adminUserRoles, String currentDeviceMacAddress, PlatformType currentPlatformType) {
         return IssueJwtTokenResult.builder()
-                .accessToken(JwtsUtil.creatrJwtToken(currentDeviceMacAddress))
+                .accessToken(JwtsUtil.createAdminJwtToken(currentDeviceMacAddress))
                 .expiredAccessToken(LocalDateTime.now())
-                .refreshToken(JwtsUtil.creatrRefreshToken())
+                .refreshToken(JwtsUtil.createAdminRefreshToken())
                 .expiredAccessToken(LocalDateTime.now())
                 .build();
     }
 
     @Override
-    public IssueJwtTokenResult issueAppUserJwtToken(Long adminUserId, String currentDeviceMacAddress, PlatformType currentPlatformType) {
+    public IssueJwtTokenResult issueAppUserJwtToken(Long appUserId, String currentDeviceMacAddress, PlatformType currentPlatformType) {
         return IssueJwtTokenResult.builder()
-                .accessToken(JwtsUtil.creatrJwtToken(currentDeviceMacAddress))
+                .accessToken(JwtsUtil.createAppJwtToken(currentDeviceMacAddress))
                 .expiredAccessToken(LocalDateTime.now())
-                .refreshToken(JwtsUtil.creatrRefreshToken())
+                .refreshToken(JwtsUtil.createAppRefreshToken())
                 .expiredAccessToken(LocalDateTime.now())
                 .build();
     }
