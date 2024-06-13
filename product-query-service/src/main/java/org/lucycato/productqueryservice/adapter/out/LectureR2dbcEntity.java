@@ -39,4 +39,10 @@ public class LectureR2dbcEntity {
 
     @LastModifiedDate
     private LocalDateTime modifiedAt;
+
+    public LectureR2dbcEntity(Long courseId, String title, LectureCategory category) {
+        this.courseId = courseId;
+        this.title = title;
+        this.lectureCategory = category;
+    }
 }

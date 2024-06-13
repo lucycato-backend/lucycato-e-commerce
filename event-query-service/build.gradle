@@ -3,6 +3,13 @@ plugins {
     id 'org.springframework.boot'
     id 'io.spring.dependency-management'
     id 'com.palantir.docker' version '0.35.0'
+    id 'org.jetbrains.kotlin.jvm' version '1.9.0'
+    id 'org.jetbrains.kotlin.plugin.spring' version '1.9.0'
+    id 'org.jetbrains.kotlin.plugin.jpa' version '1.9.0'
+}
+
+allOpen {
+    annotation("javax.persistence.Entity")
 }
 
 group = 'org.lucycato.event-query-service'
@@ -10,12 +17,7 @@ version = '1.0.0'
 
 java {
     sourceCompatibility = 17
-}
-
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
+    targetCompatibility = 17
 }
 
 repositories {
@@ -28,8 +30,16 @@ configurations {
     }
 }
 
+clean {
+    delete file('src/main/generated')
+}
+
 ext {
     set('springCloudVersion', "2023.0.2")
+}
+
+bootRun {
+    sourceResources sourceSets.main
 }
 
 dependencies {
@@ -41,15 +51,16 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.boot:spring-boot-starter'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    
-
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.kafka:spring-kafka-test'
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
+    implementation 'org.jetbrains.kotlin:kotlin-reflect'
+
     testImplementation 'io.projectreactor:reactor-test'
 }
 
@@ -63,8 +74,19 @@ test {
     useJUnitPlatform()
 }
 
-bootRun {
-    sourceResources sourceSets.main
+compileKotlin {
+    kotlinOptions {
+        freeCompilerArgs += '-Xjsr305=strict'
+        jvmTarget = '17'
+    }
+}
+
+bootJar {
+    enabled = true
+}
+
+jar {
+    enabled = false
 }
 
 docker {
