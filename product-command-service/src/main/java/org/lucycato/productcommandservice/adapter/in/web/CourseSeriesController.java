@@ -8,27 +8,27 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 public class CourseSeriesController {
-    @PostMapping("api/admin/product/v1/course-series")
+    @PostMapping("api/admin/v1/course-series")
     public void registerCourseSeries() {
 
     }
 
-    @PostMapping("api/admin/product/v1/course-series/{courseSeriesId}/courses/{courseId}")
+    @PostMapping("api/admin/v1/course-series/{courseSeriesId}/courses/{courseId}")
     public void addCourseToCourseSeries() {
 
     }
 
-    @PatchMapping("api/admin/product/v1/course-series/{courseId}")
+    @PatchMapping("api/admin/v1/course-series/{courseId}")
     public void modifyCourseSeries() {
 
     }
 
-    @DeleteMapping("api/admin/product/v1/course-series/{courseSeriesId}/courses/{courseId}")
+    @DeleteMapping("api/admin/v1/course-series/{courseSeriesId}/courses/{courseId}")
     public void deleteCourseToCourseSeries() {
 
     }
 
-    @DeleteMapping("api/admin/product/v1/course-series/{courseSeriesId}")
+    @DeleteMapping("api/admin/v1/course-series/{courseSeriesId}")
     public void deleteCourseSeries() {
 
     }
