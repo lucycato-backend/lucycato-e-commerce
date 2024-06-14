@@ -2,7 +2,9 @@ package org.lucycato.productqueryservice.adapter.in.web;
 
 import lombok.RequiredArgsConstructor;
 import org.lucycato.common.annotation.hexagonal.in.WebAdapter;
-import org.lucycato.productqueryservice.domain.CourseSeries;
+import org.lucycato.productqueryservice.application.port.in.CourseSeriesUseCase;
+import org.lucycato.productqueryservice.application.port.in.command.CourseSeriesDetailSearchCommand;
+import org.lucycato.productqueryservice.application.port.in.command.SpecificCourseSeriesTextEBookSearchCommand;
 import org.lucycato.productqueryservice.domain.CourseSeriesDetail;
 import org.lucycato.productqueryservice.domain.CourseSeriesTextEBook;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,26 +17,23 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequiredArgsConstructor
 public class CourseSeriesController {
+    private final CourseSeriesUseCase courseSeriesUseCase;
 
-    @GetMapping("open-api/product/v1/course-series")
-    public Flux<CourseSeries> getCourseSeries(
-    ) {
-        return Flux.empty();
-    }
-
-    @GetMapping("open-api/product/v1/course-series/{courseSeriesId}")
+    @GetMapping("open-api/v1/course-series/{courseSeriesId}")
     public Mono<CourseSeriesDetail> getCourseSeries(
             @PathVariable
             Long courseSeriesId
     ) {
-        return Mono.empty();
+        CourseSeriesDetailSearchCommand command = new CourseSeriesDetailSearchCommand(courseSeriesId);
+        return courseSeriesUseCase.getCourseSeriesDetail(command);
     }
 
-    @GetMapping("open-api/product/v1/course-series/by-teacher/{teacherId}/text-e-books")
-    public Flux<CourseSeriesTextEBook> getCourseTextEBooksByTeacherId(
+    @GetMapping("open-api/v1/course-series/by-teacher/{teacherId}/text-e-books")
+    public Flux<CourseSeriesTextEBook> getCourseSeriesTextEBooksByTeacherId(
             @PathVariable
             Long teacherId
     ) {
-        return Flux.empty();
+        SpecificCourseSeriesTextEBookSearchCommand command = new SpecificCourseSeriesTextEBookSearchCommand(teacherId);
+        return courseSeriesUseCase.getCourseSeriesTextEBooks(command);
     }
 }

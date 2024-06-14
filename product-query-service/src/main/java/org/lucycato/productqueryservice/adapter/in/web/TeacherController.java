@@ -9,7 +9,6 @@ import org.lucycato.productqueryservice.domain.TeacherCourseSeries;
 import org.lucycato.productqueryservice.domain.TeacherDetail;
 import org.lucycato.productqueryservice.domain.TeacherNews;
 import org.lucycato.productqueryservice.domain.enums.TeacherNewsCategory;
-import org.lucycato.productqueryservice.domain.enums.TeacherStatus;
 import org.lucycato.productqueryservice.domain.enums.TeachingGenre;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +23,7 @@ import reactor.core.publisher.Mono;
 public class TeacherController {
     private final TeacherUseCase teacherUseCase;
 
-    @GetMapping("open-api/product/v1/teachers")
+    @GetMapping("open-api/v1/teachers")
     public Flux<Teacher> getTeachers(
             @RequestParam(name = "teachingGenre", required = false)
             TeachingGenre teachingGenre
@@ -35,17 +34,17 @@ public class TeacherController {
         return teacherUseCase.getTeachers(command);
     }
 
-    @GetMapping("open-api/product/v1/teachers/{teacherId}")
+    @GetMapping("open-api/v1/teachers/{teacherId}")
     public Mono<TeacherDetail> getTeacher(
             @PathVariable Long teacherId
     ) {
         TeacherDetailSearchCommand command = new TeacherDetailSearchCommand(
                 teacherId
         );
-        return teacherUseCase.getTeacher(command);
+        return teacherUseCase.getTeacherDetail(command);
     }
 
-    @GetMapping("open-api/product/v1/teachers/course-series")
+    @GetMapping("open-api/v1/teachers/course-series")
     public Flux<TeacherCourseSeries> getTeacherCourseSeries(
             @RequestParam(name = "teachingGenre", required = false)
             TeachingGenre teachingGenre,
@@ -59,7 +58,7 @@ public class TeacherController {
         return teacherUseCase.getTeacherCourseSeries(command);
     }
 
-    @GetMapping("open-api/product/v1/teachers/{teacherId}/course-series")
+    @GetMapping("open-api/v1/teachers/{teacherId}/course-series")
     public Flux<TeacherCourseSeries> getTeacherCourseSeries(
             @PathVariable
             Long teacherId,
@@ -73,7 +72,7 @@ public class TeacherController {
         return teacherUseCase.getTeacherCourseSeries(command);
     }
 
-    @GetMapping("open-api/product/v1/teachers/news")
+    @GetMapping("open-api/v1/teachers/news")
     public Flux<TeacherNews> getTeacherNews(
             @RequestParam(name = "teachingGenre", required = false)
             TeachingGenre teachingGenre,
@@ -87,7 +86,7 @@ public class TeacherController {
         return teacherUseCase.getTeacherNews(command);
     }
 
-    @GetMapping("open-api/product/v1/teachers/{teacherId}/news")
+    @GetMapping("open-api/v1/teachers/{teacherId}/news")
     public Flux<TeacherNews> getTeacherNews(
             @PathVariable
             Long teacherId,

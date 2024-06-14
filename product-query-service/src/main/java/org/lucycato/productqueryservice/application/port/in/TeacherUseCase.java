@@ -9,12 +9,10 @@ import org.lucycato.productqueryservice.domain.TeacherNews;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
-
 public interface TeacherUseCase {
     Flux<Teacher> getTeachers(TeacherSearchCommand command);
 
-    Mono<TeacherDetail> getTeacher(TeacherDetailSearchCommand command);
+    Mono<TeacherDetail> getTeacherDetail(TeacherDetailSearchCommand command);
 
     Flux<TeacherCourseSeries> getTeacherCourseSeries(TeacherCourseSeriesSearchCommand command);
 
