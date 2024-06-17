@@ -16,7 +16,7 @@ import org.springframework.r2dbc.core.DatabaseClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -65,8 +65,8 @@ public class CoursePersistenceAdapter implements CoursePort {
                         CourseGenre.valueOf((String) row.get("course_genre")),
                         SubjectCategory.valueOf((String) row.get("subject_category")),
                         CourseStatus.valueOf((String) row.get("course_status")),
-                        (LocalDateTime) row.get("expired_at"),
-                        (LocalDateTime) row.get("created_at")
+                        ((ZonedDateTime) row.get("expired_at")).toLocalDateTime(),
+                        ((ZonedDateTime) row.get("created_at")).toLocalDateTime()
                 ));
     }
 
@@ -94,8 +94,8 @@ public class CoursePersistenceAdapter implements CoursePort {
                         CourseGenre.valueOf((String) row.get("course_genre")),
                         SubjectCategory.valueOf((String) row.get("subject_category")),
                         CourseStatus.valueOf((String) row.get("course_status")),
-                        (LocalDateTime) row.get("expired_at"),
-                        (LocalDateTime) row.get("created_at")
+                        ((ZonedDateTime) row.get("expired_at")).toLocalDateTime(),
+                        ((ZonedDateTime) row.get("created_at")).toLocalDateTime()
                 ));
     }
 
@@ -124,7 +124,7 @@ public class CoursePersistenceAdapter implements CoursePort {
                     expired_at,
                     created_at
                 FROM courses
-                WHERE course_series_id IN (:courseSeriesIds)
+                WHERE course_series_id IN (:courseSeriesIds);
                 """;
 
         return databaseClient.sql(sql)
@@ -141,8 +141,8 @@ public class CoursePersistenceAdapter implements CoursePort {
                         CourseGenre.valueOf((String) row.get("course_genre")),
                         SubjectCategory.valueOf((String) row.get("subject_category")),
                         CourseStatus.valueOf((String) row.get("course_status")),
-                        (LocalDateTime) row.get("expired_at"),
-                        (LocalDateTime) row.get("created_at")
+                        ((ZonedDateTime) row.get("expired_at")).toLocalDateTime(),
+                        ((ZonedDateTime) row.get("created_at")).toLocalDateTime()
                 ));
     }
 
@@ -178,8 +178,8 @@ public class CoursePersistenceAdapter implements CoursePort {
                         CourseGenre.valueOf((String) row.get("curse_genre")),
                         SubjectCategory.valueOf((String) row.get("subject_category")),
                         CourseStatus.valueOf((String) row.get("course_status")),
-                        (LocalDateTime) row.get("expired_at"),
-                        (LocalDateTime) row.get("created_at")
+                        ((ZonedDateTime) row.get("expired_at")).toLocalDateTime(),
+                        ((ZonedDateTime) row.get("created_at")).toLocalDateTime()
                 ));
     }
 
