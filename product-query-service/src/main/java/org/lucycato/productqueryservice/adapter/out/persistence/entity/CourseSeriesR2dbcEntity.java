@@ -30,13 +30,13 @@ public class CourseSeriesR2dbcEntity {
 
     private String description;
 
-    private List<String> explainImageUrls;
+    private List<String> explainImageUrlsJson;
 
-    private SubjectCategory subjectCategory;
+    private String subjectCategory;
 
-    private CourseSeriesCategory category;
+    private String category;
 
-    private CourseSeriesStatus status;
+    private String status;
 
     @CreatedDate
     private LocalDateTime createdAt;
