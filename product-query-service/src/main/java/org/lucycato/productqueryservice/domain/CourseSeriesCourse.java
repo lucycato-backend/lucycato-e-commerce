@@ -38,9 +38,9 @@ public class CourseSeriesCourse {
 
     private final CourseStatus courseStatus;
 
-    private final LocalDateTime expiredAt;
+    private final LocalDateTime courseExpiredAt;
 
-    private final LocalDateTime createdAt;
+    private final LocalDateTime courseCreatedAt;
 
     public static CourseSeriesCourse from(
             CourseResult courseResult,
@@ -81,8 +81,8 @@ public class CourseSeriesCourse {
                 .courseGenre(courseResult.getCourseGenre())
                 .subjectCategory(courseResult.getSubjectCategory())
                 .courseStatus(courseResult.getCourseStatus())
-                .expiredAt(courseResult.getExpiredAt())
-                .createdAt(courseResult.getCreatedAt())
+                .courseExpiredAt(courseResult.getCourseExpiredAt())
+                .courseCreatedAt(courseResult.getCourseCreatedAt())
                 .build();
     }
 

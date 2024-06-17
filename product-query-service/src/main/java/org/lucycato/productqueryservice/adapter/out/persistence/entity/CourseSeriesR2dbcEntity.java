@@ -24,23 +24,23 @@ public class CourseSeriesR2dbcEntity {
 
     private Long teacherId;
 
-    private String imageUrl;
+    private String courseSeriesImageUrl;
 
-    private String title;
+    private String courseSeriesTitle;
 
-    private String description;
+    private String courseSeriesDescription;
 
-    private List<String> explainImageUrlsJson;
+    private List<String> courseSeriesExplainImageUrlsJson;
 
     private String subjectCategory;
 
-    private String category;
+    private String courseSeriesCategory;
 
-    private String status;
+    private String courseSeriesStatus;
 
     @CreatedDate
-    private LocalDateTime createdAt;
+    private LocalDateTime courseSeriesCreatedAt;
 
     @LastModifiedDate
-    private LocalDateTime modifiedAt;
+    private LocalDateTime courseSeriesModifiedAt;
 }

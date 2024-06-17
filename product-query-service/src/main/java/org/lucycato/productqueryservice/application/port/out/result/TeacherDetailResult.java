@@ -24,7 +24,7 @@ public class TeacherDetailResult {
 
     private String teacherProfileDescription;
 
-    private String teacherImage;
+    private String teacherImageUrl;
 
     private String curriculumImageUrl;
 
@@ -34,5 +34,5 @@ public class TeacherDetailResult {
 
     private TeacherStatus teacherStatus;
 
-    private LocalDateTime createdAt;
+    private LocalDateTime teacherCreatedAt;
 }

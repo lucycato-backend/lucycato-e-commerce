@@ -32,7 +32,7 @@ public class CourseSeriesDetail {
 
     private final CourseSeriesStatus courseSeriesStatus;
 
-    private final LocalDateTime createdAt;
+    private final LocalDateTime courseSeriesCreatedAt;
 
     public static CourseSeriesDetail from(CourseSeriesDetailResult result) {
         return CourseSeriesDetail.builder()
@@ -44,7 +44,7 @@ public class CourseSeriesDetail {
                 .subjectCategory(result.getSubjectCategory())
                 .courseSeriesCategory(result.getCourseSeriesCategory())
                 .courseSeriesStatus(result.getCourseSeriesStatus())
-                .createdAt(result.getCreatedAt())
+                .courseSeriesCreatedAt(result.getCourseSeriesCreatedAt())
                 .build();
     }
 }

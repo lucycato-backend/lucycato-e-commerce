@@ -20,37 +20,37 @@ public class TextEBookR2dbcEntity {
 
     private Long courseId;
 
-    private String eBookUniqueCode;
+    private String textEBookUniqueCode;
 
-    private String imageUrl;
+    private String textEBookImageUrl;
 
-    private String title;
+    private String textEBookTitle;
 
-    private String description;
+    private String textEBookDescription;
 
-    private String tableOfContents;
+    private String textEBookTableOfContents;
 
-    private String author;
+    private String textEBookAuthor;
 
-    private String publisher;
+    private String textEBookPublisher;
 
-    private String previewDownloadUrl;
+    private String textEBookPreviewDownloadUrl;
 
-    private String fullDownLoadUrl;
+    private String textEBookFullDownLoadUrl;
 
-    private Integer page;
+    private Integer textEBookPage;
 
     private String subjectCategory;
 
-    private String genre;
+    private String textEBookGenre;
 
-    private String status;
+    private String textEBookStatus;
 
-    private LocalDateTime publishedAt;
+    private LocalDateTime textEBookPublishedAt;
 
     @CreatedDate
-    private LocalDateTime createdAt;
+    private LocalDateTime textEBookCreatedAt;
 
     @LastModifiedDate
-    private LocalDateTime modifiedAt;
+    private LocalDateTime textEBookModifiedAt;
 }

@@ -20,27 +20,27 @@ public class TeacherR2dbcEntity {
     @Id
     private Long id;
 
-    private Integer rank;
+    private Integer teacherRank;
 
-    private String name;
+    private String teacherName;
 
-    private String slogan;
+    private String teacherSlogan;
 
-    private String profileDescription;
+    private String teacherProfileDescription;
 
-    private String imageUrl;
+    private String teacherImageUrl;
 
-    private String curriculumImageUrl;
+    private String teacherCurriculumImageUrl;
 
-    private String curriculumVideoUrl;
+    private String teacherCurriculumVideoUrl;
 
-    private TeachingGenre genre;
+    private TeachingGenre teachingGenre;
 
-    private TeacherStatus status;
+    private TeacherStatus teacherStatus;
 
     @CreatedDate
-    private LocalDateTime createdAt;
+    private LocalDateTime teacherCreatedAt;
 
     @LastModifiedDate
-    private LocalDateTime modifiedAt;
+    private LocalDateTime teacherModifiedAt;
 }

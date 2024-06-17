@@ -19,9 +19,9 @@ public class CourseSeriesTextEBook {
 
     private final CourseSeries courseSeries;
 
-    private final String imageUrl;
+    private final String textEBookImageUrl;
 
-    private final String title;
+    private final String textEBookTitle;
 
     private final SubjectCategory subjectCategory;
 
@@ -39,8 +39,8 @@ public class CourseSeriesTextEBook {
         return CourseSeriesTextEBook.builder()
                 .textEBookId(textEBookResult.getTextEBookId())
                 .courseSeries(courseSeries)
-                .imageUrl(textEBookResult.getTextEBookImageUrl())
-                .title(textEBookResult.getTextEBookTitle())
+                .textEBookImageUrl(textEBookResult.getTextEBookImageUrl())
+                .textEBookTitle(textEBookResult.getTextEBookTitle())
                 .subjectCategory(textEBookResult.getSubjectCategory())
                 .teachingGenre(textEBookResult.getTeachingGenre())
                 .textEBookStatus(textEBookResult.getTextEBookStatus())

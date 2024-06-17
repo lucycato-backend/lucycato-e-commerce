@@ -41,5 +41,5 @@ public class TextEBookResult {
 
     private TextEBookStatus textEBookStatus;
 
-    private LocalDateTime publishedAt;
+    private LocalDateTime textEBookPublishedAt;
 }

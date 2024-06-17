@@ -3,12 +3,10 @@ package org.lucycato.productqueryservice.application.port.out.result;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.lucycato.productqueryservice.domain.TeacherDetail;
 import org.lucycato.productqueryservice.domain.enums.TeacherStatus;
 import org.lucycato.productqueryservice.domain.enums.TeachingGenre;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -22,11 +20,11 @@ public class TeacherResult {
 
     private String teacherSlogan;
 
-    private String teacherImage;
+    private String teacherImageUrl;
 
     private TeachingGenre teachingGenre;
 
     private TeacherStatus teacherStatus;
 
-    private LocalDateTime createdAt;
+    private LocalDateTime teacherCreatedAt;
 }

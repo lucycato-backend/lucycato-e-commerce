@@ -22,27 +22,21 @@ public class LectureR2dbcEntity {
 
     private Long courseId;
 
-    private String title;
+    private String lectureTitle;
 
-    private String description;
+    private String lectureDescription;
 
     private LectureCategory lectureCategory;
 
-    private String thumbnailImageUrl;
+    private String lectureThumbnailImageUrl;
 
-    private String videoUrl;
+    private String lectureVideoUrl;
 
-    private LectureStatus status;
+    private LectureStatus lectureStatus;
 
     @CreatedDate
-    private LocalDateTime createdAt;
+    private LocalDateTime lectureCreatedAt;
 
     @LastModifiedDate
-    private LocalDateTime modifiedAt;
-
-    public LectureR2dbcEntity(Long courseId, String title, LectureCategory category) {
-        this.courseId = courseId;
-        this.title = title;
-        this.lectureCategory = category;
-    }
+    private LocalDateTime lectureModifiedAt;
 }

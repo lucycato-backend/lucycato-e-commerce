@@ -40,7 +40,7 @@ public class TeacherDetail {
 
     private final TeacherStatus teacherStatus;
 
-    private final LocalDateTime createdAt;
+    private final LocalDateTime teacherCreatedAt;
 
     public static TeacherDetail from(
             TeacherDetailResult teacherDetailResult,
@@ -74,14 +74,14 @@ public class TeacherDetail {
                 .teacherName(teacherDetailResult.getTeacherName())
                 .teacherSlogan(teacherDetailResult.getTeacherSlogan())
                 .teacherProfileDescription(teacherDetailResult.getTeacherProfileDescription())
-                .teacherImage(teacherDetailResult.getTeacherImage())
+                .teacherImage(teacherDetailResult.getTeacherImageUrl())
                 .curriculum(curriculum)
                 .statistics(statistics)
                 .isRecentCourseOpen(isRecentCourseOpen)
                 .isRecentTeacherNews(isRecentTeacherNews)
                 .teachingGenre(teacherDetailResult.getTeachingGenre())
                 .teacherStatus(teacherDetailResult.getTeacherStatus())
-                .createdAt(teacherDetailResult.getCreatedAt())
+                .teacherCreatedAt(teacherDetailResult.getTeacherCreatedAt())
                 .build();
     }
 
@@ -101,13 +101,13 @@ public class TeacherDetail {
                 .teacherName(teacherDetailResult.getTeacherName())
                 .teacherSlogan(teacherDetailResult.getTeacherSlogan())
                 .teacherProfileDescription(teacherDetailResult.getTeacherProfileDescription())
-                .teacherImage(teacherDetailResult.getTeacherImage())
+                .teacherImage(teacherDetailResult.getTeacherImageUrl())
                 .curriculum(curriculum)
                 .isRecentCourseOpen(isRecentCourseOpen)
                 .isRecentTeacherNews(isRecentTeacherNews)
                 .teachingGenre(teacherDetailResult.getTeachingGenre())
                 .teacherStatus(teacherDetailResult.getTeacherStatus())
-                .createdAt(teacherDetailResult.getCreatedAt())
+                .teacherCreatedAt(teacherDetailResult.getTeacherCreatedAt())
                 .build();
     }
 

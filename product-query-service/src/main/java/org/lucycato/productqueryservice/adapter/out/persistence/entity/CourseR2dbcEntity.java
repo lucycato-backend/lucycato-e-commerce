@@ -22,15 +22,15 @@ public class CourseR2dbcEntity {
 
     private Long courseSeriesId;
 
-    private String title;
+    private String courseTitle;
 
-    private String subTitle;
+    private String courseSubTitle;
 
-    private Integer price;
+    private Integer coursePrice;
 
-    private String imageUrl;
+    private String courseImageUrl;
 
-    private String description;
+    private String courseDescription;
 
     private String courseGenre;
 
@@ -38,11 +38,11 @@ public class CourseR2dbcEntity {
 
     private String courseStatus;
 
-    private LocalDateTime expiredAt;
+    private LocalDateTime courseExpiredAt;
 
     @CreatedDate
-    private LocalDateTime createdAt;
+    private LocalDateTime courseCreatedAt;
 
     @LastModifiedDate
-    private LocalDateTime modifiedAt;
+    private LocalDateTime courseModifiedAt;
 }

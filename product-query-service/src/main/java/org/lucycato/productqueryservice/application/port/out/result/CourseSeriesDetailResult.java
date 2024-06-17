@@ -34,5 +34,5 @@ public class CourseSeriesDetailResult {
 
     private CourseSeriesStatus courseSeriesStatus;
 
-    private LocalDateTime createdAt;
+    private LocalDateTime courseSeriesCreatedAt;
 }

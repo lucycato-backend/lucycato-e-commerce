@@ -26,13 +26,13 @@ public class Teacher {
 
     private final Boolean isRecentCourseOpen;
 
-    private final Boolean isRecentTeacherNews;
+    private final Boolean isRecentTeacherNotice;
 
     private final TeachingGenre teachingGenre;
 
     private final TeacherStatus teacherStatus;
 
-    private final LocalDateTime createdAt;
+    private final LocalDateTime teacherCreatedAt;
 
     public static Teacher from(
             TeacherResult teacherResult,
@@ -44,12 +44,12 @@ public class Teacher {
                 .teacherRank(teacherResult.getTeacherRank())
                 .teacherName(teacherResult.getTeacherName())
                 .teacherSlogan(teacherResult.getTeacherSlogan())
-                .teacherImage(teacherResult.getTeacherImage())
+                .teacherImage(teacherResult.getTeacherImageUrl())
                 .isRecentCourseOpen(isRecentCourseOpen)
-                .isRecentTeacherNews(isRecentTeacherNews)
+                .isRecentTeacherNotice(isRecentTeacherNews)
                 .teachingGenre(teacherResult.getTeachingGenre())
                 .teacherStatus(teacherResult.getTeacherStatus())
-                .createdAt(teacherResult.getCreatedAt())
+                .teacherCreatedAt(teacherResult.getTeacherCreatedAt())
                 .build();
     }
 }

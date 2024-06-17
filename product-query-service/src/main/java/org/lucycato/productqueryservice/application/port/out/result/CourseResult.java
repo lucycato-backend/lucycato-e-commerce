@@ -1,6 +1,7 @@
 package org.lucycato.productqueryservice.application.port.out.result;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.lucycato.productqueryservice.domain.enums.CourseGenre;
@@ -31,7 +32,7 @@ public class CourseResult {
 
     private CourseStatus courseStatus;
 
-    private LocalDateTime expiredAt;
+    private LocalDateTime courseExpiredAt;
 
-    private LocalDateTime createdAt;
+    private LocalDateTime courseCreatedAt;
 }

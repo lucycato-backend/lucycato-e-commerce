@@ -42,7 +42,7 @@ public class CourseTextEBook {
 
     private final TextEBookStatus textEBookStatus;
 
-    private final LocalDateTime publishedAt;
+    private final LocalDateTime textEBookPublishedAt;
 
     public static CourseTextEBook from(CourseResult courseResult, TextEBookResult textEBookResult) {
         Course course = Course.builder()
@@ -67,7 +67,7 @@ public class CourseTextEBook {
                 .subjectCategory(textEBookResult.getSubjectCategory())
                 .teachingGenre(textEBookResult.getTeachingGenre())
                 .textEBookStatus(textEBookResult.getTextEBookStatus())
-                .publishedAt(textEBookResult.getPublishedAt())
+                .textEBookPublishedAt(textEBookResult.getTextEBookPublishedAt())
                 .build();
     }
 

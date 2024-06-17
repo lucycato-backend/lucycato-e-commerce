@@ -21,41 +21,41 @@ public class CourseDetail {
 
     private final Long courseSeriesId;
 
-    private final String title;
+    private final String courseTitle;
 
-    private final String subTitle;
+    private final String courseSubTitle;
 
-    private final Integer price;
+    private final Integer coursePrice;
 
-    private final String imageUrl;
+    private final String courseImageUrl;
 
-    private final String description;
+    private final String courseDescription;
 
-    private final CourseGenre courseGenre;
+    private final CourseGenre courseCourseGenre;
 
     private final SubjectCategory subjectCategory;
 
     private final CourseStatus courseStatus;
 
-    private final LocalDateTime expiredAt;
+    private final LocalDateTime courseExpiredAt;
 
-    private final LocalDateTime createdAt;
+    private final LocalDateTime courseCreatedAt;
 
     public static CourseDetail from(CourseDetailResult courseDetailResult) {
         return CourseDetail.builder()
                 .courseId(courseDetailResult.getCourseId())
                 .teacherId(courseDetailResult.getTeacherId())
                 .courseSeriesId(courseDetailResult.getCourseSeriesId())
-                .title(courseDetailResult.getTitle())
-                .subTitle(courseDetailResult.getSubTitle())
-                .price(courseDetailResult.getPrice())
-                .imageUrl(courseDetailResult.getImageUrl())
-                .description(courseDetailResult.getDescription())
-                .courseGenre(courseDetailResult.getCourseGenre())
+                .courseTitle(courseDetailResult.getCourseTitle())
+                .courseSubTitle(courseDetailResult.getCourseSubTitle())
+                .coursePrice(courseDetailResult.getCoursePrice())
+                .courseImageUrl(courseDetailResult.getCourseImageUrl())
+                .courseDescription(courseDetailResult.getCourseDescription())
+                .courseCourseGenre(courseDetailResult.getCourseGenre())
                 .subjectCategory(courseDetailResult.getSubjectCategory())
                 .courseStatus(courseDetailResult.getCourseStatus())
-                .expiredAt(courseDetailResult.getExpiredAt())
-                .createdAt(courseDetailResult.getCreatedAt())
+                .courseExpiredAt(courseDetailResult.getCourseExpiredAt())
+                .courseCreatedAt(courseDetailResult.getCourseCreatedAt())
                 .build();
     }
 }

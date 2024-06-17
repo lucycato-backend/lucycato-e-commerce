@@ -21,15 +21,15 @@ public class CourseDetailResult {
 
     private Long courseSeriesId;
 
-    private String title;
+    private String courseTitle;
 
-    private String subTitle;
+    private String courseSubTitle;
 
-    private Integer price;
+    private Integer coursePrice;
 
-    private String imageUrl;
+    private String courseImageUrl;
 
-    private String description;
+    private String courseDescription;
 
     private CourseGenre courseGenre;
 
@@ -37,7 +37,7 @@ public class CourseDetailResult {
 
     private CourseStatus courseStatus;
 
-    private LocalDateTime expiredAt;
+    private LocalDateTime courseExpiredAt;
 
-    private LocalDateTime createdAt;
+    private LocalDateTime courseCreatedAt;
 }

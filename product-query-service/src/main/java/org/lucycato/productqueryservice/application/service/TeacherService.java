@@ -8,7 +8,7 @@ import org.lucycato.productqueryservice.application.port.in.command.TeacherDetai
 import org.lucycato.productqueryservice.application.port.in.command.TeacherSearchCommand;
 import org.lucycato.productqueryservice.application.port.out.*;
 import org.lucycato.productqueryservice.application.port.out.result.CheckedRecentCourseOpenResult;
-import org.lucycato.productqueryservice.application.port.out.result.CheckedRecentTeacherNewsResult;
+import org.lucycato.productqueryservice.application.port.out.result.CheckedRecentTeacherNoticeResult;
 import org.lucycato.productqueryservice.application.port.out.result.CourseSeriesResult;
 import org.lucycato.productqueryservice.domain.Teacher;
 import org.lucycato.productqueryservice.domain.TeacherCourseSeries;
@@ -54,7 +54,7 @@ public class TeacherService implements TeacherUseCase {
     @Override
     public Flux<Teacher> getTeacherList(TeacherSearchCommand command) {
         Map<Long, CheckedRecentCourseOpenResult> courseMap = new ConcurrentHashMap<>();
-        Map<Long, CheckedRecentTeacherNewsResult> newsMap = new ConcurrentHashMap<>();
+        Map<Long, CheckedRecentTeacherNoticeResult> newsMap = new ConcurrentHashMap<>();
 
         Mono<Void> process1 = teacherPort.getTeacherIdsByTeachingGenre(command.getTeachingGenre())
                 .collectList()
@@ -86,7 +86,7 @@ public class TeacherService implements TeacherUseCase {
                                         .map(CheckedRecentCourseOpenResult::getIsRecentCourseOpen)
                                         .orElse(false),
                                 Optional.ofNullable(newsMap.get(teacherResult.getTeacherId()))
-                                        .map(CheckedRecentTeacherNewsResult::getIsRecentTeacherNews)
+                                        .map(CheckedRecentTeacherNoticeResult::getIsRecentTeacherNotice)
                                         .orElse(false)
                         )))
                 .sort((a, b) -> Long.compare(b.getTeacherId(), a.getTeacherId()));
