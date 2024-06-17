@@ -12,19 +12,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class TextEBookController {
 
-    @PostMapping("api/admin/product/v1/text-e-books")
+    @PostMapping("api/admin/v1/text-e-books")
     public void registerTextEBook() {
 
     }
 
-    @PatchMapping("api/admin/product/v1/text-e-books/{textEBookId}")
+    @PatchMapping("api/admin/v1/text-e-books/{textEBookId}")
     public void modifyTextEBook() {
 
     }
 
-    @DeleteMapping("api/admin/product/v1/text-e-books/{textEBookId}")
+    @DeleteMapping("api/admin/v1/text-e-books/{textEBookId}")
     public void deleteTextEBook() {
 
     }
-
 }

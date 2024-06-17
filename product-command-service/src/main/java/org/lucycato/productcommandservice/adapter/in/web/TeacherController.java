@@ -11,46 +11,46 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class TeacherController {
-    @PostMapping("api/admin/product/v1/teachers")
+    @PostMapping("api/admin/v1/teachers")
     public void registerTeacher() {
     }
 
-    @PostMapping("api/admin/product/v1/teachers/{teacherId}/course-series")
+    @PostMapping("api/admin/v1/teachers/{teacherId}/course-series")
     public void registerTeacherLectureSeries() {
 
     }
 
-    @PostMapping("api/admin/product/v1/teachers/{teacherId}/courses")
+    @PostMapping("api/admin/v1/teachers/{teacherId}/courses")
     public void registerTeacherLecture() {
 
     }
 
-    @PostMapping("api/admin/product/v1/teachers/{teacherId}/news")
+    @PostMapping("api/admin/v1/teachers/{teacherId}/news")
     public void registerTeacherNews() {
 
     }
 
-    @PatchMapping("api/admin/product/v1/teachers/{teacherId}")
+    @PatchMapping("api/admin/v1/teachers/{teacherId}")
     public void modifyTeacher() {
 
     }
 
-    @PatchMapping("api/admin/product/v1/teachers/{teacherId}/course-series/{courseSeriesId}")
+    @PatchMapping("api/admin/v1/teachers/{teacherId}/course-series/{courseSeriesId}")
     public void modifyTeacherLectureSeries() {
 
     }
 
-    @PatchMapping("api/admin/product/v1/teachers/{teacherId}/courses/{courseId}")
+    @PatchMapping("api/admin/v1/teachers/{teacherId}/courses/{courseId}")
     public void modifyTeacherLecture() {
 
     }
 
-    @PatchMapping("api/admin/product/v1/teachers/{teacherId}/news/{newsId}")
+    @PatchMapping("api/admin/v1/teachers/{teacherId}/news/{newsId}")
     public void modifyTeacherNews() {
 
     }
 
-    @DeleteMapping("api/admin/product/v1/teachers/{teacherId}")
+    @DeleteMapping("api/admin/v1/teachers/{teacherId}")
     public void deleteTeacher() {
 
     }

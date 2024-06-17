@@ -6,15 +6,17 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface CourseUseCase {
-    Flux<Course> getCurses(CourseSearchCommand command);
+    Mono<CourseDetail> getCurses(CourseDetailSearchCommand command);
 
-    Mono<CourseDetail> getCures(CourseDetailSearchCommand command);
+    Flux<CourseLecture> getCourseLectureList(SpecificCourseLectureSearchCommand command);
 
-    Flux<CourseLecture> getCourseLectures(SpecificCourseLectureSearchCommand command);
+    Flux<CourseLecture> getAuthCourseLectureList(SpecificAdminCourseLectureSearchCommand command);
 
-    Flux<CourseTextEBook> getCourseTextEBooks(SpecificCourseTextEBookSearchCommand command);
+    Flux<CourseLecture> getAuthCourseLectureList(SpecificAppCourseLectureSearchCommand command);
 
-    Flux<CourseReview> getCourseReviews(SpecificCourseReviewSearchCommand command);
+    Flux<CourseTextEBook> getCourseTextEBookList(SpecificCourseTextEBookSearchCommand command);
 
-    Flux<CourseReview> getCourseReviews(SpecificCourseReviewByTeacherSearchCommand command);
+    Flux<CourseTextEBook> getAuthCourseTextEBookList(SpecificAdminCourseTextEBookSearchCommand command);
+
+    Flux<CourseTextEBook> getAuthCourseTextEBookList(SpecificAppCourseTextEBookSearchCommand command);
 }
