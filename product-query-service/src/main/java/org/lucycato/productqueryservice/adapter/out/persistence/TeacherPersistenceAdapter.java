@@ -21,31 +21,31 @@ public class TeacherPersistenceAdapter implements TeacherPort {
     @Override
     public Flux<Long> getTeacherIdsByTeachingGenre(TeachingGenre teachingGenre) {
         String sql = """
-                SELECT id
-                FROM teachers
-                WHERE genre = :teachingGenre;
+                SELECT t.id as teacherId
+                FROM teachers t
+                WHERE t.teacher_genre = :teachingGenre;
                 """;
 
         return databaseClient.sql(sql)
                 .bind("teachingGenre", teachingGenre)
                 .fetch()
                 .all()
-                .flatMap(row -> Flux.just((Long) row.get("id")));
+                .flatMap(row -> Flux.just((Long) row.get("teacherId")));
     }
 
     @Override
     public Flux<TeacherResult> getTeacherListByTeachingGenre(TeachingGenre teachingGenre) {
         String sql = """
-                SELECT id,
-                    rank,
-                    name,
-                    slogan,
-                    image_url,
-                    genre,
-                    status,
-                    created_at
-                FROM teachers
-                WHERE genre = :teachingGenre;
+                SELECT t.id as teacherId,
+                    t.teacher_rank as teacherRank,
+                    t.teacher_name as teacherName,
+                    t.teacher_slogan as teacherSlogan,
+                    t.teacher_image_url as teacherImageUrl,
+                    t.teaching_genre as teachingGenre,
+                    t.teacher_status as teacherStatus,
+                    t.teacher_created_at as teacherCreatedAt
+                FROM teachers t
+                WHERE t.teacher_genre = :teachingGenre;
                 """;
 
         return databaseClient.sql(sql)
@@ -53,30 +53,30 @@ public class TeacherPersistenceAdapter implements TeacherPort {
                 .fetch()
                 .all()
                 .flatMap(row -> Flux.just(new TeacherResult(
-                        (Long) row.get("id"),
-                        (Integer) row.get("rank"),
-                        (String) row.get("name"),
-                        (String) row.get("slogan"),
-                        (String) row.get("image_url"),
-                        TeachingGenre.valueOf((String) row.get("genre")),
-                        TeacherStatus.valueOf((String) row.get("status")),
-                        ((ZonedDateTime) row.get("created_at")).toLocalDateTime()
+                        (Long) row.get("teacherId"),
+                        (Integer) row.get("teacherRank"),
+                        (String) row.get("teacherName"),
+                        (String) row.get("teacherSlogan"),
+                        (String) row.get("teacherImageUrl"),
+                        TeachingGenre.valueOf((String) row.get("teachingGenre")),
+                        TeacherStatus.valueOf((String) row.get("teacherStatus")),
+                        ((ZonedDateTime) row.get("teacherCreatedAt")).toLocalDateTime()
                 )));
     }
 
     @Override
     public Mono<TeacherResult> getSimpleTeacher(Long teacherId) {
         String sql = """
-                SELECT id,
-                    rank,
-                    name,
-                    slogan,
-                    image_url,
-                    genre,
-                    status,
-                    created_at
-                FROM teachers
-                WHERE id = :teacherId;
+                SELECT t.id as teacherId,
+                    t.teacher_rank as teacherRank,
+                    t.teacher_name as teacherName,
+                    t.teacher_slogan as teacherSlogan,
+                    t.teacher_image_url as teacherImageUrl,
+                    t.teaching_genre as teachingGenre,
+                    t.teacher_status as teacherStatus,
+                    t.teacher_created_at as teacherCreatedAt
+                FROM teachers t
+                WHERE t.id = :teacherId;
                 """;
 
         return databaseClient.sql(sql)
@@ -84,33 +84,33 @@ public class TeacherPersistenceAdapter implements TeacherPort {
                 .fetch()
                 .one()
                 .map(row -> new TeacherResult(
-                        (Long) row.get("id"),
-                        (Integer) row.get("rank"),
-                        (String) row.get("name"),
-                        (String) row.get("slogan"),
-                        (String) row.get("image_url"),
-                        TeachingGenre.valueOf((String) row.get("genre")),
-                        TeacherStatus.valueOf((String) row.get("status")),
-                        ((ZonedDateTime) row.get("created_at")).toLocalDateTime()
+                        (Long) row.get("teacherId"),
+                        (Integer) row.get("teacherRank"),
+                        (String) row.get("teacherName"),
+                        (String) row.get("teacherSlogan"),
+                        (String) row.get("teacherImageUrl"),
+                        TeachingGenre.valueOf((String) row.get("teachingGenre")),
+                        TeacherStatus.valueOf((String) row.get("teacherStatus")),
+                        ((ZonedDateTime) row.get("teacherCreatedAt")).toLocalDateTime()
                 ));
     }
 
     @Override
     public Mono<TeacherDetailResult> getTeacher(Long teacherId) {
         String sql = """
-                SELECT id,
-                    rank,
-                    name,
-                    slogan,
-                    profile_description
-                    image_url,
-                    curriculum_image_url,
-                    curriculum_video_url
-                    genre,
-                    status,
-                    created_at
-                FROM teachers
-                WHERE id = :teacherId;
+                SELECT t.id as teacherId,
+                    t.teacher_rank as teacherRank,
+                    t.teacher_name as teacherName,
+                    t.teacher_slogan as teacherSlogan,
+                    t.teacher_profile_description as teacherProfileDescription,
+                    t.teacher_image_url as teacherImageUrl,
+                    t.teacher_curriculum_image_url as curriculumImageUrl,
+                    t.teacher_curriculum_video_url as curriculumVideoUrl,
+                    t.teaching_genre as teachingGenre,
+                    t.teacher_status as teacherStatus,
+                    t.teacher_created_at as teacherCreatedAt
+                FROM teachers t
+                WHERE t.id = :teacherId;
                 """;
 
         return databaseClient.sql(sql)
@@ -118,17 +118,19 @@ public class TeacherPersistenceAdapter implements TeacherPort {
                 .fetch()
                 .one()
                 .map(row -> new TeacherDetailResult(
-                        (Long) row.get("id"),
-                        (Integer) row.get("rank"),
-                        (String) row.get("name"),
-                        (String) row.get("slogan"),
-                        (String) row.get("profile_description"),
-                        (String) row.get("image_url"),
-                        (String) row.get("curriculum_image_url"),
-                        (String) row.get("curriculum_video_url"),
-                        TeachingGenre.valueOf((String) row.get("genre")),
-                        TeacherStatus.valueOf((String) row.get("status")),
-                        ((ZonedDateTime) row.get("created_at")).toLocalDateTime()
+                        (Long) row.get("teacherId"),
+                        (Integer) row.get("teacherRank"),
+                        (String) row.get("teacherName"),
+                        (String) row.get("teacherSlogan"),
+                        (String) row.get("teacherProfileDescription"),
+                        (String) row.get("teacherImageUrl"),
+                        (String) row.get("curriculumImageUrl"),
+                        (String) row.get("curriculumVideoUrl"),
+                        TeachingGenre.valueOf((String) row.get("teachingGenre")),
+                        TeacherStatus.valueOf((String) row.get("teacherStatus")),
+                        ((ZonedDateTime) row.get("teacherCreatedAt")).toLocalDateTime()
                 ));
+
+
     }
 }

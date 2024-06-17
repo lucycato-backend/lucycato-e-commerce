@@ -19,14 +19,14 @@ public class LecturePersistenceAdapter implements LecturePort {
     @Override
     public Flux<LectureResult> getLectureListByCourseIds(List<Long> courseIds) {
         String sql = """
-                SELECT id,
-                    title,
-                    description,
-                    lecture_category,
-                    video_url,
-                    status
-                FROM lectures
-                WHERE course_id IN (:courseIds);
+                SELECT l.id as lectureId,
+                    l.lectureTitle as lectureTitle,
+                    l.lectureDescription as lectureDescription,
+                    l.lectureCategory as lectureCategory,
+                    l.lectureVideoUrl as lectureVideoUrl,
+                    l.lectureStatus as lectureStatus
+                FROM lectures l
+                WHERE l.course_id IN (:courseIds);
                 """;
 
         return databaseClient.sql(sql)
@@ -34,12 +34,12 @@ public class LecturePersistenceAdapter implements LecturePort {
                 .fetch()
                 .all()
                 .flatMap(row -> Flux.just(new LectureResult(
-                        (Long) row.get("id"),
-                        (String) row.get("title"),
-                        (String) row.get("description"),
-                        LectureCategory.valueOf((String) row.get("lecture_category")),
-                        (String) row.get("video_url"),
-                        LectureStatus.valueOf((String) row.get("status"))
+                        (Long) row.get("lectureId"),
+                        (String) row.get("lectureTitle"),
+                        (String) row.get("lectureDescription"),
+                        LectureCategory.valueOf((String) row.get("lectureCategory")),
+                        (String) row.get("lectureVideoUrl"),
+                        LectureStatus.valueOf((String) row.get("lectureStatus"))
                 )));
     }
 }

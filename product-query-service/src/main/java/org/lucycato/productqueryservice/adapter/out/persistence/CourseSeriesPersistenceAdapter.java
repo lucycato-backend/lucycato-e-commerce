@@ -27,15 +27,14 @@ public class CourseSeriesPersistenceAdapter implements CourseSeriesPort {
     @Override
     public Flux<CourseSeriesResult> getCourseSeriesListByTeacherIds(List<Long> teacherIds) {
         String sql = """
-                SELECT id,
-                    teacher_id,
-                    image_url,
-                    title,
-                    description,
-                    category,
-                    status
-                FROM course_series
-                WHERE teacher_id IN (:teacherIds);
+                SELECT cs.id as courseSeriesId,
+                    cs.teacher_id as teacherId,
+                    cs.course_series_image_url as courseSeriesImageUrl,
+                    cs.course_series_title as courseSeriesTitle,
+                    cs.course_series_description as courseSeriesDescription,
+                    cs.course_series_status as courseSeriesStatus
+                FROM course_series cs
+                WHERE cs.teacher_id IN (:teacherIds);
                 """;
 
         return databaseClient.sql(sql)
@@ -43,50 +42,50 @@ public class CourseSeriesPersistenceAdapter implements CourseSeriesPort {
                 .fetch()
                 .all()
                 .flatMap(row -> Flux.just(new CourseSeriesResult(
-                        (Long) row.get("id"),
-                        (Long) row.get("teacher_id"),
-                        (String) row.get("image_url"),
-                        (String) row.get("title"),
-                        (String) row.get("description"),
-                        CourseSeriesCategory.valueOf((String) row.get("category")),
-                        CourseSeriesStatus.valueOf((String) row.get("status"))
+                        (Long) row.get("courseSeriesId"),
+                        (Long) row.get("teacherId"),
+                        (String) row.get("courseSeriesImageUrl"),
+                        (String) row.get("courseSeriesTitle"),
+                        (String) row.get("courseSeriesDescription"),
+                        CourseSeriesCategory.valueOf((String) row.get("courseSeriesCategory")),
+                        CourseSeriesStatus.valueOf((String) row.get("courseSeriesStatus"))
                 )));
     }
 
     @Override
     public Mono<CourseSeriesDetailResult> getCourseSeries(Long courseSeriesId) {
         String sql = """
-                SELECT id,
-                    teacher_id,
-                    image_url,
-                    title,
-                    description,
-                    explain_image_urls_json,
-                    subject_category,
-                    category,
-                    status,
-                    created_at
-                FROM course_series
-                WHERE id = :courseSeriesId;
+                SELECT cs.id as courseSeriesId,
+                    cs.teacher_id as teacherId,
+                    cs.course_series_imageUrl as courseSeriesImageUrl,
+                    cs.course_series_title as courseSeriesTitle,
+                    cs.course_series_description as courseSeriesDescription,
+                    cs.course_series_explain_image_urls_json as courseSeriesExplainImageUrlsJson,
+                    cs.subject_category as subjectCategory
+                    cs.course_series_category as courseSeriesCategory,
+                    cs.course_series_status as courseSeriesStatus,
+                    cs.course_series_createdAt as courseSeriesCreatedAt
+                FROM course_series cs
+                WHERE cs.id = :courseSeriesId;
                 """;
 
         return databaseClient.sql(sql)
                 .bind("courseSeriesId", courseSeriesId)
                 .fetch()
                 .one()
-                .flatMap(row -> Mono.fromCallable(() -> objectMapper.readValue((String) row.get("explain_image_urls_json"), new TypeReference<List<String>>() {
+                .flatMap(row -> Mono.fromCallable(() -> objectMapper.readValue((String) row.get("courseSeriesExplainImageUrlsJson"), new TypeReference<List<String>>() {
                                 }))
                                 .map(explainList -> new CourseSeriesDetailResult(
-                                        (Long) row.get("id"),
-                                        (Long) row.get("teacher_id"),
-                                        (String) row.get("image_url"),
-                                        (String) row.get("title"),
-                                        (String) row.get("description"),
+                                        (Long) row.get("courseSeriesId"),
+                                        (Long) row.get("teacherId"),
+                                        (String) row.get("courseSeriesImageUrl"),
+                                        (String) row.get("courseSeriesTitle"),
+                                        (String) row.get("courseSeriesDescription"),
                                         explainList,
-                                        SubjectCategory.valueOf((String) row.get("subject_category")),
-                                        CourseSeriesCategory.valueOf((String) row.get("category")),
-                                        CourseSeriesStatus.valueOf((String) row.get("status")),
-                                        ((ZonedDateTime) row.get("created_at")).toLocalDateTime()
+                                        SubjectCategory.valueOf((String) row.get("subjectCategory")),
+                                        CourseSeriesCategory.valueOf((String) row.get("courseSeriesCategory")),
+                                        CourseSeriesStatus.valueOf((String) row.get("courseSeriesStatus")),
+                                        ((ZonedDateTime) row.get("courseSeriesCreatedAt")).toLocalDateTime()
                                 ))
                 );
 
@@ -95,15 +94,15 @@ public class CourseSeriesPersistenceAdapter implements CourseSeriesPort {
     @Override
     public Mono<CourseSeriesResult> getSimpleCourseSeries(Long courseSeriesId) {
         String sql = """
-                SELECT id,
-                    teacher_id,
-                    image_url,
-                    title,
-                    description,
-                    category,
-                    status
-                FROM course_series
-                WHERE id = :courseSeriesId;
+                SELECT cs.id as courseSeriesId,
+                    cs.teacher_id as teacherId,
+                    cs.course_series_image_url as courseSeriesImageUrl,
+                    cs.course_series_title as courseSeriesTitle,
+                    cs.course_series_description as courseSeriesDescription,
+                    cs.course_series_category as courseSeriesCategory,
+                    cs.course_series_status as courseSeriesStatus
+                FROM course_series cs
+                WHERE cs.id = :courseSeriesId;
                 """;
 
         return databaseClient.sql(sql)
@@ -111,13 +110,13 @@ public class CourseSeriesPersistenceAdapter implements CourseSeriesPort {
                 .fetch()
                 .one()
                 .map(row -> new CourseSeriesResult(
-                        (Long) row.get("id"),
-                        (Long) row.get("teacher_id"),
-                        (String) row.get("image_url"),
-                        (String) row.get("title"),
-                        (String) row.get("description"),
-                        CourseSeriesCategory.valueOf((String) row.get("category")),
-                        CourseSeriesStatus.valueOf((String) row.get("status"))
+                        (Long) row.get("courseSeriesId"),
+                        (Long) row.get("teacherId"),
+                        (String) row.get("courseSeriesImageUrl"),
+                        (String) row.get("courseSeriesTitle"),
+                        (String) row.get("courseSeriesDescription"),
+                        CourseSeriesCategory.valueOf((String) row.get("courseSeriesCategory")),
+                        CourseSeriesStatus.valueOf((String) row.get("courseSeriesStatus"))
                 ));
     }
 
@@ -125,8 +124,8 @@ public class CourseSeriesPersistenceAdapter implements CourseSeriesPort {
     public Mono<Long> getCourseSeriesCount(Long teacherId) {
         String sql = """
                 SELECT COUNT(*) as courseSeriesCnt
-                FROM course_series
-                WHERE teacher_id = : teacherId;
+                FROM course_series cs
+                WHERE cs.teacher_id = :teacherId;
                 """;
 
         return databaseClient.sql(sql)

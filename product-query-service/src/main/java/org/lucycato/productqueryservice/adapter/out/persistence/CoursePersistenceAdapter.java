@@ -36,19 +36,19 @@ public class CoursePersistenceAdapter implements CoursePort {
     @Override
     public Mono<CourseResult> getSimpleCourse(Long courseId) {
         String sql = """
-                SELECT id,
-                    teacher_id,
-                    title,
-                    sub_title,
-                    price,
-                    image_url,
-                    course_genre,
-                    subject_category,
-                    course_status,
-                    expired_at,
-                    created_at
-                FROM courses
-                WHERE id = :courseId;
+                SELECT c.id as courseId,
+                    c.teacher_id as teacherId,
+                    c.course_title as courseTitle,
+                    c.course_sub_title as courseSubTitle,
+                    c.course_price as coursePrice,
+                    c.course_image_url as courseImageUrl,
+                    c.course_genre as courseGenre,
+                    c.subject_category as subjectCategory,
+                    c.course_status as courseStatus,
+                    c.course_expired_at as courseExpiredAt,
+                    c.course_created_at as courseCreatedAt
+                FROM courses c
+                WHERE c.id = :courseId;
                 """;
 
         return databaseClient.sql(sql)
@@ -56,26 +56,38 @@ public class CoursePersistenceAdapter implements CoursePort {
                 .fetch()
                 .one()
                 .map(row -> new CourseResult(
-                        (Long) row.get("id"),
-                        (Long) row.get("teacher_id"),
-                        (String) row.get("title"),
-                        (String) row.get("sub_title"),
-                        (Integer) row.get("price"),
-                        (String) row.get("image_url"),
-                        CourseGenre.valueOf((String) row.get("course_genre")),
-                        SubjectCategory.valueOf((String) row.get("subject_category")),
-                        CourseStatus.valueOf((String) row.get("course_status")),
-                        ((ZonedDateTime) row.get("expired_at")).toLocalDateTime(),
-                        ((ZonedDateTime) row.get("created_at")).toLocalDateTime()
+                        (Long) row.get("courseId"),
+                        (Long) row.get("teacherId"),
+                        (String) row.get("courseTitle"),
+                        (String) row.get("courseSubTitle"),
+                        (Integer) row.get("coursePrice"),
+                        (String) row.get("courseImageUrl"),
+                        CourseGenre.valueOf((String) row.get("courseGenre")),
+                        SubjectCategory.valueOf((String) row.get("subjectCategory")),
+                        CourseStatus.valueOf((String) row.get("courseStatus")),
+                        ((ZonedDateTime) row.get("courseExpiredAt")).toLocalDateTime(),
+                        ((ZonedDateTime) row.get("courseCreatedAt")).toLocalDateTime()
                 ));
     }
 
     @Override
     public Mono<CourseDetailResult> getCourse(Long courseId) {
         String sql = """
-                SELECT *
-                FROM courses
-                WHERE id = :courseId;
+                SELECT c.id as cCourseId,
+                    c.teacher_id as cTeacherId,
+                    c.course_series_id as cCourseSeriesId,
+                    c.title as cCourseTitle,
+                    c.sub_title as cCourseSubTitle,
+                    c.price as cCoursePrice,
+                    c.image_url as cCourseImageUrl,
+                    c.description as cCourseDescription,
+                    c.course_genre as cCourseGenre,
+                    c.subject_category as subjectCategory,
+                    c.course_status as cCourseStatus,
+                    c.expired_at as cCourseExpiredAt,
+                    c.created_at as cCourseCreatedAt
+                FROM courses c
+                WHERE c.id = :courseId;
                 """;
 
         return databaseClient.sql(sql)
@@ -83,19 +95,19 @@ public class CoursePersistenceAdapter implements CoursePort {
                 .fetch()
                 .one()
                 .map(row -> new CourseDetailResult(
-                        (Long) row.get("id"),
-                        (Long) row.get("teacher_id"),
-                        (Long) row.get("course_series_id"),
-                        (String) row.get("title"),
-                        (String) row.get("sub_title"),
-                        (Integer) row.get("price"),
-                        (String) row.get("image_url"),
-                        (String) row.get("description"),
-                        CourseGenre.valueOf((String) row.get("course_genre")),
-                        SubjectCategory.valueOf((String) row.get("subject_category")),
-                        CourseStatus.valueOf((String) row.get("course_status")),
-                        ((ZonedDateTime) row.get("expired_at")).toLocalDateTime(),
-                        ((ZonedDateTime) row.get("created_at")).toLocalDateTime()
+                        (Long) row.get("courseId"),
+                        (Long) row.get("teacherId"),
+                        (Long) row.get("courseSeriesId"),
+                        (String) row.get("courseTitle"),
+                        (String) row.get("courseSubTitle"),
+                        (Integer) row.get("coursePrice"),
+                        (String) row.get("courseImageUrl"),
+                        (String) row.get("courseDescription"),
+                        CourseGenre.valueOf((String) row.get("courseGenre")),
+                        SubjectCategory.valueOf((String) row.get("subjectCategory")),
+                        CourseStatus.valueOf((String) row.get("courseStatus")),
+                        ((ZonedDateTime) row.get("courseExpiredAt")).toLocalDateTime(),
+                        ((ZonedDateTime) row.get("courseCreatedAt")).toLocalDateTime()
                 ));
     }
 
@@ -112,19 +124,19 @@ public class CoursePersistenceAdapter implements CoursePort {
     @Override
     public Flux<CourseResult> getCourseListByCourseSeriesIds(List<Long> courseSeriesIds) {
         String sql = """
-                SELECT id,
-                    teacher_id,
-                    title,
-                    sub_title,
-                    price,
-                    image_url,
-                    course_genre,
-                    subject_category,
-                    course_status,
-                    expired_at,
-                    created_at
-                FROM courses
-                WHERE course_series_id IN (:courseSeriesIds);
+                SELECT c.id as courseId,
+                    c.teacher_id as teacherId,
+                    c.course_title as courseTitle,
+                    c.course_sub_title as courseSubTitle,
+                    c.course_price as coursePrice,
+                    c.course_image_url as courseImageUrl,
+                    c.course_genre as courseGenre,
+                    c.subject_category as subjectCategory,
+                    c.course_status as courseStatus,
+                    c.course_expired_at as courseExpiredAt,
+                    c.course_created_at as courseCreatedAt
+                FROM courses c
+                WHERE c.course_series_id IN (:courseSeriesIds);
                 """;
 
         return databaseClient.sql(sql)
@@ -132,36 +144,36 @@ public class CoursePersistenceAdapter implements CoursePort {
                 .fetch()
                 .all()
                 .flatMap(row -> Flux.just(new CourseResult(
-                        (Long) row.get("id"),
-                        (Long) row.get("teacher_id"),
-                        (String) row.get("title"),
-                        (String) row.get("sub_title"),
-                        (Integer) row.get("price"),
-                        (String) row.get("image_url"),
-                        CourseGenre.valueOf((String) row.get("course_genre")),
-                        SubjectCategory.valueOf((String) row.get("subject_category")),
-                        CourseStatus.valueOf((String) row.get("course_status")),
-                        ((ZonedDateTime) row.get("expired_at")).toLocalDateTime(),
-                        ((ZonedDateTime) row.get("created_at")).toLocalDateTime()
+                        (Long) row.get("courseId"),
+                        (Long) row.get("teacherId"),
+                        (String) row.get("courseTitle"),
+                        (String) row.get("courseSubTitle"),
+                        (Integer) row.get("coursePrice"),
+                        (String) row.get("courseImageUrl"),
+                        CourseGenre.valueOf((String) row.get("courseGenre")),
+                        SubjectCategory.valueOf((String) row.get("subjectCategory")),
+                        CourseStatus.valueOf((String) row.get("courseStatus")),
+                        ((ZonedDateTime) row.get("courseExpiredAt")).toLocalDateTime(),
+                        ((ZonedDateTime) row.get("courseCreatedAt")).toLocalDateTime()
                 )));
     }
 
     @Override
     public Flux<CourseResult> getCourseListByTeacherIds(List<Long> teacherIds) {
         String sql = """
-                SELECT id,
-                    teacher_id,
-                    title,
-                    sub_title,
-                    price,
-                    image_url,
-                    curse_genre,
-                    subject_category,
-                    course_status,
-                    expired_at,
-                    created_at
-                FROM courses
-                WHERE teacher_id IN (:teacherIds);
+                SELECT c.id as courseId,
+                    c.teacher_id as teacherId,
+                    c.course_title as courseTitle,
+                    c.course_sub_title as courseSubTitle,
+                    c.course_price as coursePrice,
+                    c.course_image_url as courseImageUrl,
+                    c.course_genre as courseGenre,
+                    c.subject_category as subjectCategory,
+                    c.course_status as courseStatus,
+                    c.course_expired_at as courseExpiredAt,
+                    c.course_created_at as courseCreatedAt
+                FROM courses c
+                WHERE c.teacher_id IN (:teacherIds);
                 """;
 
         return databaseClient.sql(sql)
@@ -169,26 +181,27 @@ public class CoursePersistenceAdapter implements CoursePort {
                 .fetch()
                 .all()
                 .flatMap(row -> Flux.just(new CourseResult(
-                        (Long) row.get("id"),
-                        (Long) row.get("teacher_id"),
-                        (String) row.get("title"),
-                        (String) row.get("sub_title"),
-                        (Integer) row.get("price"),
-                        (String) row.get("image_url"),
-                        CourseGenre.valueOf((String) row.get("curse_genre")),
-                        SubjectCategory.valueOf((String) row.get("subject_category")),
-                        CourseStatus.valueOf((String) row.get("course_status")),
-                        ((ZonedDateTime) row.get("expired_at")).toLocalDateTime(),
-                        ((ZonedDateTime) row.get("created_at")).toLocalDateTime()
+                        (Long) row.get("courseId"),
+                        (Long) row.get("teacherId"),
+                        (String) row.get("courseTitle"),
+                        (String) row.get("courseSubTitle"),
+                        (Integer) row.get("coursePrice"),
+                        (String) row.get("courseImageUrl"),
+                        CourseGenre.valueOf((String) row.get("courseGenre")),
+                        SubjectCategory.valueOf((String) row.get("subjectCategory")),
+                        CourseStatus.valueOf((String) row.get("courseStatus")),
+                        ((ZonedDateTime) row.get("courseExpiredAt")).toLocalDateTime(),
+                        ((ZonedDateTime) row.get("courseCreatedAt")).toLocalDateTime()
                 )));
     }
 
     @Override
     public Mono<CourseCountResult> getCourseCount() {
         String sql = """
-                SELECT course_status, COUNT(*) as statusCount
-                FROM courses
-                GROUP BY course_status;
+                SELECT c.course_status as courseStatus,
+                    COUNT(*) as statusCount
+                FROM courses c
+                GROUP BY c.course_status;
                 """;
         return databaseClient.sql(sql)
                 .fetch()
@@ -199,9 +212,9 @@ public class CoursePersistenceAdapter implements CoursePort {
                     Long operatorCnt = 0L;
                     Long notOperatorCnt = 0L;
                     for (Map<String, Object> map: rowList) {
-                        if (CourseStatus.valueOf((String) map.get("course_status")).equals(CourseStatus.REGISTERED)) {
+                        if (CourseStatus.valueOf((String) map.get("courseStatus")).equals(CourseStatus.REGISTERED)) {
                             operatorCnt = (Long) map.get("statusCount");
-                        } else if (CourseStatus.valueOf((String) map.get("course_status")).equals(CourseStatus.UNREGISTERED)) {
+                        } else if (CourseStatus.valueOf((String) map.get("courseStatus")).equals(CourseStatus.UNREGISTERED)) {
                             notOperatorCnt = (Long) map.get("statusCount");
                         }
                     }
