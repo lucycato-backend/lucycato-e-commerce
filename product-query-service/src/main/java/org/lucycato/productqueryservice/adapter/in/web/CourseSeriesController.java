@@ -4,7 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.lucycato.common.annotation.hexagonal.in.WebAdapter;
 import org.lucycato.productqueryservice.application.port.in.CourseSeriesUseCase;
 import org.lucycato.productqueryservice.application.port.in.command.CourseSeriesDetailSearchCommand;
+import org.lucycato.productqueryservice.application.port.in.command.SpecificCourseSeriesCourseSearchByTeacherIdCommand;
+import org.lucycato.productqueryservice.application.port.in.command.SpecificCourseSeriesCourseSearchCommand;
 import org.lucycato.productqueryservice.application.port.in.command.SpecificCourseSeriesTextEBookSearchCommand;
+import org.lucycato.productqueryservice.domain.CourseSeriesCourse;
 import org.lucycato.productqueryservice.domain.CourseSeriesDetail;
 import org.lucycato.productqueryservice.domain.CourseSeriesTextEBook;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +28,25 @@ public class CourseSeriesController {
             Long courseSeriesId
     ) {
         CourseSeriesDetailSearchCommand command = new CourseSeriesDetailSearchCommand(courseSeriesId);
-        return courseSeriesUseCase.getCourseSeriesDetail(command);
+        return courseSeriesUseCase.getCourseSeries(command);
+    }
+
+    @GetMapping("open-api/v1/course-series/{courseSeriesId}/courses")
+    public Flux<CourseSeriesCourse> getCourseSeriesCourseList(
+            @PathVariable
+            Long courseSeriesId
+    ) {
+        SpecificCourseSeriesCourseSearchCommand command = new SpecificCourseSeriesCourseSearchCommand(courseSeriesId);
+        return courseSeriesUseCase.getCourseSeriesCourseList(command);
+    }
+
+    @GetMapping("open-api/v1/course-series/by-teacher/{teacherId}/courses")
+    public Flux<CourseSeriesCourse> getCourseSeriesCourseListByTeacherId(
+            @PathVariable
+            Long teacherId
+    ) {
+        SpecificCourseSeriesCourseSearchByTeacherIdCommand command = new SpecificCourseSeriesCourseSearchByTeacherIdCommand(teacherId);
+        return courseSeriesUseCase.getCourseSeriesCourseListByTeacherId(command);
     }
 
     @GetMapping("open-api/v1/course-series/by-teacher/{teacherId}/text-e-books")
@@ -34,6 +55,6 @@ public class CourseSeriesController {
             Long teacherId
     ) {
         SpecificCourseSeriesTextEBookSearchCommand command = new SpecificCourseSeriesTextEBookSearchCommand(teacherId);
-        return courseSeriesUseCase.getCourseSeriesTextEBooks(command);
+        return courseSeriesUseCase.getCourseSeriesTextEBookList(command);
     }
 }

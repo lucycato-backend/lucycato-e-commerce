@@ -1,5 +1,6 @@
 package org.lucycato.productqueryservice.adapter.in.web;
 
+import ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy;
 import lombok.RequiredArgsConstructor;
 import org.lucycato.common.annotation.hexagonal.in.WebAdapter;
 import org.lucycato.common.annotation.resolver.AdminUserHeaders;
@@ -9,11 +10,9 @@ import org.lucycato.common.resolver.AppUserHeaderDetail;
 import org.lucycato.productqueryservice.application.port.in.CourseUseCase;
 import org.lucycato.productqueryservice.application.port.in.command.*;
 import org.lucycato.productqueryservice.domain.*;
-import org.lucycato.productqueryservice.domain.enums.CourseGenre;
-import org.lucycato.productqueryservice.domain.enums.SubjectCategory;
+import org.springframework.boot.autoconfigure.sendgrid.SendGridAutoConfiguration;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -23,6 +22,7 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class CourseController {
     private final CourseUseCase courseUseCase;
+
     @GetMapping("open-api/v1/courses/{courseId}")
     public Mono<CourseDetail> getCourse(
             @PathVariable
@@ -31,7 +31,7 @@ public class CourseController {
         CourseDetailSearchCommand command = new CourseDetailSearchCommand(
                 courseId
         );
-        return courseUseCase.getCursesDetail(command);
+        return courseUseCase.getCurses(command);
     }
 
     @GetMapping("open-api/v1/courses/{courseId}/lectures")
@@ -42,7 +42,7 @@ public class CourseController {
         SpecificCourseLectureSearchCommand command = new SpecificCourseLectureSearchCommand(
                 courseId
         );
-        return courseUseCase.getCourseLectures(command);
+        return courseUseCase.getCourseLectureList(command);
     }
 
     @GetMapping("api/admin/v1/courses/{courseId}/lectures")
@@ -56,7 +56,7 @@ public class CourseController {
                 adminUserHeaderDetail.getAdminUserId(),
                 courseId
         );
-        return courseUseCase.getAuthCourseLectures(command);
+        return courseUseCase.getAuthCourseLectureList(command);
     }
 
     @GetMapping("api/app/v1/courses/{courseId}/lectures")
@@ -70,7 +70,7 @@ public class CourseController {
                 appUserHeaderDetail.getAppUserId(),
                 courseId
         );
-        return courseUseCase.getAuthCourseLectures(command);
+        return courseUseCase.getAuthCourseLectureList(command);
     }
 
     @GetMapping("open-api/v1/courses/{courseId}/text-e-books")
@@ -81,7 +81,7 @@ public class CourseController {
         SpecificCourseTextEBookSearchCommand command = new SpecificCourseTextEBookSearchCommand(
                 courseId
         );
-        return courseUseCase.getCourseTextEBooks(command);
+        return courseUseCase.getCourseTextEBookList(command);
     }
 
     @GetMapping("api/admin/v1/courses/{courseId}/text-e-books")
@@ -95,7 +95,7 @@ public class CourseController {
                 adminUserHeaderDetail.getAdminUserId(),
                 courseId
         );
-        return courseUseCase.getAuthCourseTextEBooks(command);
+        return courseUseCase.getAuthCourseTextEBookList(command);
     }
 
     @GetMapping("api/app/v1/courses/{courseId}/text-e-books")
@@ -109,28 +109,6 @@ public class CourseController {
                 appUserHeaderDetail.getAppUserId(),
                 courseId
         );
-        return courseUseCase.getAuthCourseTextEBooks(command);
-    }
-
-    @GetMapping("open-api/v1/courses/{courseId}/reviews")
-    public Flux<CourseReview> getCourseReviews(
-            @PathVariable
-            Long courseId
-    ) {
-        SpecificCourseReviewSearchCommand command = new SpecificCourseReviewSearchCommand(
-                courseId
-        );
-        return courseUseCase.getCourseReviews(command);
-    }
-
-    @GetMapping("open-api/v1/courses/by-teacher/{teacherId}/reviews")
-    public Flux<CourseReview> getCourseReviewsByTeacher(
-            @PathVariable
-            Long teacherId
-    ) {
-        SpecificCourseReviewByTeacherSearchCommand command = new SpecificCourseReviewByTeacherSearchCommand(
-                teacherId
-        );
-        return courseUseCase.getCourseReviews(command);
+        return courseUseCase.getAuthCourseTextEBookList(command);
     }
 }

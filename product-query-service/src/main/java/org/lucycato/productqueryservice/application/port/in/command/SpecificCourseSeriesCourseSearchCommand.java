@@ -1,6 +1,5 @@
 package org.lucycato.productqueryservice.application.port.in.command;
 
-
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -10,12 +9,12 @@ import org.lucycato.common.SelfValidating;
 @Getter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class SpecificCourseReviewByTeacherSearchCommand extends SelfValidating<SpecificCourseReviewByTeacherSearchCommand> {
+public class SpecificCourseSeriesCourseSearchCommand extends SelfValidating<SpecificCourseSeriesCourseSearchCommand> {
     @NotNull
-    private Long teacherId;
+    private Long courseSeriesId;
 
-    public SpecificCourseReviewByTeacherSearchCommand(Long teacherId) {
-        this.teacherId = teacherId;
+    public SpecificCourseSeriesCourseSearchCommand(Long courseSeriesId) {
+        this.courseSeriesId = courseSeriesId;
 
         this.validateSelf();
     }

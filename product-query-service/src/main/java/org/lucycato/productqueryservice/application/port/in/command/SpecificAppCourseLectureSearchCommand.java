@@ -5,17 +5,20 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.lucycato.common.SelfValidating;
-import org.lucycato.productqueryservice.domain.enums.TeachingGenre;
 
 @Getter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class SpecificTeacherCourseSeriesSearchCommand extends SelfValidating<SpecificTeacherCourseSeriesSearchCommand> {
+public class SpecificAppCourseLectureSearchCommand extends SelfValidating<SpecificAppCourseLectureSearchCommand> {
     @NotNull
-    private Long teacherId;
+    private Long appUserId;
 
-    public SpecificTeacherCourseSeriesSearchCommand(Long teacherId) {
-        this.teacherId = teacherId;
+    @NotNull
+    private Long courseId;
+
+    public SpecificAppCourseLectureSearchCommand(Long appUserId, Long courseId) {
+        this.appUserId = appUserId;
+        this.courseId = courseId;
 
         this.validateSelf();
     }
