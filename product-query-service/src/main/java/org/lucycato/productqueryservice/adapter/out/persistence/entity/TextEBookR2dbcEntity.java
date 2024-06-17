@@ -1,28 +1,29 @@
-package org.lucycato.productqueryservice.adapter.out;
+package org.lucycato.productqueryservice.adapter.out.persistence.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.lucycato.productqueryservice.domain.enums.CourseSeriesCategory;
-import org.lucycato.productqueryservice.domain.enums.CourseSeriesStatus;
 import org.lucycato.productqueryservice.domain.enums.SubjectCategory;
+import org.lucycato.productqueryservice.domain.enums.TeachingGenre;
+import org.lucycato.productqueryservice.domain.enums.TextEBookStatus;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
-@Table("course_series")
+@Table("text_e_book")
 @Getter
 @Setter
 @NoArgsConstructor
-public class CourseSeriesR2dbcEntity {
+public class TextEBookR2dbcEntity {
     @Id
     private Long id;
 
-    private Long teacherId;
+    private Long courseId;
+
+    private String eBookUniqueCode;
 
     private String imageUrl;
 
@@ -30,13 +31,25 @@ public class CourseSeriesR2dbcEntity {
 
     private String description;
 
-    private List<String> explainImageUrls;
+    private String tableOfContents;
+
+    private String author;
+
+    private String publisher;
+
+    private String previewDownloadUrl;
+
+    private String fullDownLoadUrl;
+
+    private Integer page;
 
     private SubjectCategory subjectCategory;
 
-    private CourseSeriesCategory category;
+    private TeachingGenre genre;
 
-    private CourseSeriesStatus status;
+    private TextEBookStatus status;
+
+    private LocalDateTime publishedAt;
 
     @CreatedDate
     private LocalDateTime createdAt;

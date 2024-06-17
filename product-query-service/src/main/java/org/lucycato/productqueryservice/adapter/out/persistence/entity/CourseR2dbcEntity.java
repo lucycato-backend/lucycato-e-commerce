@@ -1,4 +1,4 @@
-package org.lucycato.productqueryservice.adapter.out;
+package org.lucycato.productqueryservice.adapter.out.persistence.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
