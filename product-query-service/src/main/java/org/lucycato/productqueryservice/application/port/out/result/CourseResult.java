@@ -3,7 +3,6 @@ package org.lucycato.productqueryservice.application.port.out.result;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.lucycato.productqueryservice.domain.CourseSeriesCourse;
 import org.lucycato.productqueryservice.domain.enums.CourseGenre;
 import org.lucycato.productqueryservice.domain.enums.CourseStatus;
 import org.lucycato.productqueryservice.domain.enums.SubjectCategory;
