@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CheckedRecentTeacherNewsResult {
+public class CheckedRecentTeacherNoticeResult {
     private Long newsId;
 
     private Long teacherId;
 
-    private Boolean isRecentTeacherNews;
+    private Boolean isRecentTeacherNotice;
 }
