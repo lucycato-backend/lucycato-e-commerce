@@ -1,6 +1,5 @@
 package org.lucycato.productqueryservice.adapter.in.web;
 
-import ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy;
 import lombok.RequiredArgsConstructor;
 import org.lucycato.common.annotation.hexagonal.in.WebAdapter;
 import org.lucycato.common.annotation.resolver.AdminUserHeaders;
@@ -10,7 +9,6 @@ import org.lucycato.common.resolver.AppUserHeaderDetail;
 import org.lucycato.productqueryservice.application.port.in.CourseUseCase;
 import org.lucycato.productqueryservice.application.port.in.command.*;
 import org.lucycato.productqueryservice.domain.*;
-import org.springframework.boot.autoconfigure.sendgrid.SendGridAutoConfiguration;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,7 +33,7 @@ public class CourseController {
     }
 
     @GetMapping("open-api/v1/courses/{courseId}/lectures")
-    public Flux<CourseLecture> getCourseLectures(
+    public Flux<CourseLecture> getCourseLectureList(
             @PathVariable
             Long courseId
     ) {
@@ -46,7 +44,7 @@ public class CourseController {
     }
 
     @GetMapping("api/admin/v1/courses/{courseId}/lectures")
-    public Flux<CourseLecture> getAuthCourseLectures(
+    public Flux<CourseLecture> getAuthCourseLectureList(
             @AdminUserHeaders
             AdminUserHeaderDetail adminUserHeaderDetail,
             @PathVariable
@@ -60,7 +58,7 @@ public class CourseController {
     }
 
     @GetMapping("api/app/v1/courses/{courseId}/lectures")
-    public Flux<CourseLecture> getAuthCourseLectures(
+    public Flux<CourseLecture> getAuthCourseLectureList(
             @AppUserHeaders
             AppUserHeaderDetail appUserHeaderDetail,
             @PathVariable
@@ -74,7 +72,7 @@ public class CourseController {
     }
 
     @GetMapping("open-api/v1/courses/{courseId}/text-e-books")
-    public Flux<CourseTextEBook> getCourseTextEBooks(
+    public Flux<CourseTextEBook> getCourseTextEBookList(
             @PathVariable
             Long courseId
     ) {
@@ -85,7 +83,7 @@ public class CourseController {
     }
 
     @GetMapping("api/admin/v1/courses/{courseId}/text-e-books")
-    public Flux<CourseTextEBook> getAuthCourseTextEBooks(
+    public Flux<CourseTextEBook> getAuthCourseTextEBookList(
             @AdminUserHeaders
             AdminUserHeaderDetail adminUserHeaderDetail,
             @PathVariable
@@ -99,7 +97,7 @@ public class CourseController {
     }
 
     @GetMapping("api/app/v1/courses/{courseId}/text-e-books")
-    public Flux<CourseTextEBook> getAuthCourseTextEBooks(
+    public Flux<CourseTextEBook> getAuthCourseTextEBookList(
             @AppUserHeaders
             AppUserHeaderDetail appUserHeaderDetail,
             @PathVariable

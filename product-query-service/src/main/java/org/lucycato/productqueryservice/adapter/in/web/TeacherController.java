@@ -22,7 +22,7 @@ public class TeacherController {
     private final TeacherUseCase teacherUseCase;
 
     @GetMapping("open-api/v1/teachers")
-    public Flux<Teacher> getTeachers(
+    public Flux<Teacher> getTeacherList(
             @RequestParam(name = "teachingGenre", required = false)
             TeachingGenre teachingGenre
     ) {
@@ -47,7 +47,7 @@ public class TeacherController {
     }
 
     @GetMapping("open-api/v1/teachers/course-series")
-    public Flux<TeacherCourseSeries> getTeacherCourseSeries(
+    public Flux<TeacherCourseSeries> getTeacherCourseSeriesList(
             @RequestParam(name = "teachingGenre", required = false)
             TeachingGenre teachingGenre
     ) {
@@ -58,7 +58,7 @@ public class TeacherController {
     }
 
     @GetMapping("open-api/v1/teachers/{teacherId}/course-series")
-    public Flux<TeacherCourseSeries> getTeacherCourseSeries(
+    public Flux<TeacherCourseSeries> getTeacherCourseSeriesList(
             @PathVariable
             Long teacherId
     ) {

@@ -117,7 +117,7 @@ public class TeacherService implements TeacherUseCase {
                             coursePort.getCourseCount(),
                             textEBookPort.getTextEBookCountResult(),
                             boardPort.getCourseReviewCount(),
-                            boardPort.countTeacherNewsCount()
+                            boardPort.countTeacherNoticeCount()
                     )
                     .flatMap(tuples ->
                             teacherPort.getTeacher(command.getTeacherId())
