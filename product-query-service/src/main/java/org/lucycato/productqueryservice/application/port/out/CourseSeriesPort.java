@@ -15,5 +15,5 @@ public interface CourseSeriesPort {
 
     Mono<CourseSeriesResult> getSimpleCourseSeries(Long courseSeriesId);
 
-    Mono<Integer> getCourseSeriesCount();
+    Mono<Long> getCourseSeriesCount();
 }

@@ -10,11 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CourseCountResult {
-    private Integer allOperatorCourseCount;
+    private Long allOperatorCourseCount;
 
-    private Integer completeOperatorCourseCount;
+    private Long progressOperatorCourseCount;
 
-    private Integer progressOperatorCourseCount;
-
-    private Integer notOperatorCourseCount;
+    private Long notOperatorCourseCount;
 }

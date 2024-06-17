@@ -10,7 +10,7 @@ public interface BoardPort {
 
     Flux<CheckedRecentTeacherNewsResult> checkTeacherNewsListByTeacherIds(List<Long> teacherIds);
 
-    Mono<Integer> countTeacherNoticeCount();
+    Mono<Long> countTeacherNoticeCount();
 
-    Mono<Integer> getCourseReviewCount();
+    Mono<Long> getCourseReviewCount();
 }

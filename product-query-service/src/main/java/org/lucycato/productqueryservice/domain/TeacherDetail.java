@@ -46,11 +46,11 @@ public class TeacherDetail {
             TeacherDetailResult teacherDetailResult,
             Boolean isRecentCourseOpen,
             Boolean isRecentTeacherNews,
-            Integer courseSeriesCount,
+            Long courseSeriesCount,
             CourseCountResult courseCountResult,
             TextEBookCountResult textEBookCountResult,
-            Integer targetStudentReviewCount,
-            Integer teacherNewsCount
+            Long targetStudentReviewCount,
+            Long teacherNewsCount
     ) {
         Curriculum curriculum = Curriculum.builder()
                 .curriculumImageUrl(teacherDetailResult.getCurriculumImageUrl())
@@ -60,13 +60,12 @@ public class TeacherDetail {
         Statistics statistics = Statistics.builder()
                 .courseSeriesCount(courseSeriesCount)
                 .allOperatorCourseCount(courseCountResult.getAllOperatorCourseCount())
-                .completeOperatorCourseCount(courseCountResult.getCompleteOperatorCourseCount())
                 .progressOperatorCourseCount(courseCountResult.getProgressOperatorCourseCount())
                 .notOperatorCourseCount(courseCountResult.getNotOperatorCourseCount())
                 .operatorTextEBookCount(textEBookCountResult.getOperatorTextEBookCount())
                 .nonOperatorTextEBookCount(textEBookCountResult.getNonOperatorTextEBookCount())
                 .targetStudentReviewCount(targetStudentReviewCount)
-                .teacherNewsCount(teacherNewsCount)
+                .teacherNoticeCount(teacherNewsCount)
                 .build();
 
         return TeacherDetail.builder()
@@ -125,22 +124,20 @@ public class TeacherDetail {
     @Builder(access = AccessLevel.PRIVATE)
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     public static class Statistics {
-        private final Integer courseSeriesCount;
+        private final Long courseSeriesCount;
 
-        private final Integer allOperatorCourseCount;
+        private final Long allOperatorCourseCount;
 
-        private final Integer completeOperatorCourseCount;
+        private final Long progressOperatorCourseCount;
 
-        private final Integer progressOperatorCourseCount;
+        private final Long notOperatorCourseCount;
 
-        private final Integer notOperatorCourseCount;
+        private final Long operatorTextEBookCount;
 
-        private final Integer operatorTextEBookCount;
+        private final Long nonOperatorTextEBookCount;
 
-        private final Integer nonOperatorTextEBookCount;
+        private final Long targetStudentReviewCount;
 
-        private final Integer targetStudentReviewCount;
-
-        private final Integer teacherNewsCount;
+        private final Long teacherNoticeCount;
     }
 }

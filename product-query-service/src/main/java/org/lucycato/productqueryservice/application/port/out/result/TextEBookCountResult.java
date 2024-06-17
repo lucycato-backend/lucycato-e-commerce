@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TextEBookCountResult {
-    private Integer operatorTextEBookCount;
+    private Long operatorTextEBookCount;
 
-    private Integer nonOperatorTextEBookCount;
+    private Long nonOperatorTextEBookCount;
 }
