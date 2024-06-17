@@ -113,7 +113,7 @@ public class TeacherService implements TeacherUseCase {
             return Mono.zip(
                             coursePort.checkRecentCourseOpenListByTeacherIds(Collections.singletonList(command.getTeacherId())).collectList(),
                             boardPort.checkTeacherNewsListByTeacherIds(Collections.singletonList(command.getTeacherId())).collectList(),
-                            courseSeriesPort.getCourseSeriesCount(),
+                            courseSeriesPort.getCourseSeriesCount(command.getTeacherId()),
                             coursePort.getCourseCount(),
                             textEBookPort.getTextEBookCountResult(),
                             boardPort.getCourseReviewCount(),
