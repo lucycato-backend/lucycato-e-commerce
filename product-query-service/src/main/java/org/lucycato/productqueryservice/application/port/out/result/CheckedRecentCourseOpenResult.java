@@ -1,9 +1,6 @@
 package org.lucycato.productqueryservice.application.port.out.result;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @Builder
@@ -15,4 +12,9 @@ public class CheckedRecentCourseOpenResult {
     private Long teacherId;
 
     private Boolean isRecentCourseOpen;
+
+    public CheckedRecentCourseOpenResult updateIsRecentCourseOpenTrue() {
+        this.isRecentCourseOpen = true;
+        return this;
+    }
 }
