@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import org.lucycato.productqueryservice.application.port.out.result.TeacherResult;
 import org.lucycato.productqueryservice.domain.enums.TeacherStatus;
 import org.lucycato.productqueryservice.domain.enums.TeachingGenre;
 
@@ -33,7 +34,22 @@ public class Teacher {
 
     private final LocalDateTime createdAt;
 
-    public static Teacher create() {
-        return null;
+    public static Teacher from(
+            TeacherResult teacherResult,
+            Boolean isRecentCourseOpen,
+            Boolean isRecentTeacherNews
+    ) {
+        return Teacher.builder()
+                .teacherId(teacherResult.getTeacherId())
+                .teacherRank(teacherResult.getTeacherRank())
+                .teacherName(teacherResult.getTeacherName())
+                .teacherSlogan(teacherResult.getTeacherSlogan())
+                .teacherImage(teacherResult.getTeacherImage())
+                .isRecentCourseOpen(isRecentCourseOpen)
+                .isRecentTeacherNews(isRecentTeacherNews)
+                .teachingGenre(teacherResult.getTeachingGenre())
+                .teacherStatus(teacherResult.getTeacherStatus())
+                .createdAt(teacherResult.getCreatedAt())
+                .build();
     }
 }

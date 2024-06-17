@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import org.lucycato.productqueryservice.application.port.out.result.CourseDetailResult;
 import org.lucycato.productqueryservice.domain.enums.CourseGenre;
 import org.lucycato.productqueryservice.domain.enums.CourseStatus;
 import org.lucycato.productqueryservice.domain.enums.SubjectCategory;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 @Builder(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class CourseDetail {
-    private final Long id;
+    private final Long courseId;
 
     private final Long teacherId;
 
@@ -40,5 +41,21 @@ public class CourseDetail {
 
     private final LocalDateTime createdAt;
 
-    private final LocalDateTime modifiedAt;
+    public static CourseDetail from(CourseDetailResult courseDetailResult) {
+        return CourseDetail.builder()
+                .courseId(courseDetailResult.getCourseId())
+                .teacherId(courseDetailResult.getTeacherId())
+                .courseSeriesId(courseDetailResult.getCourseSeriesId())
+                .title(courseDetailResult.getTitle())
+                .subTitle(courseDetailResult.getSubTitle())
+                .price(courseDetailResult.getPrice())
+                .imageUrl(courseDetailResult.getImageUrl())
+                .description(courseDetailResult.getDescription())
+                .courseGenre(courseDetailResult.getCourseGenre())
+                .subjectCategory(courseDetailResult.getSubjectCategory())
+                .courseStatus(courseDetailResult.getCourseStatus())
+                .expiredAt(courseDetailResult.getExpiredAt())
+                .createdAt(courseDetailResult.getCreatedAt())
+                .build();
+    }
 }
