@@ -3,9 +3,6 @@ package org.lucycato.productqueryservice.adapter.out.persistence.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.lucycato.productqueryservice.domain.enums.SubjectCategory;
-import org.lucycato.productqueryservice.domain.enums.TeachingGenre;
-import org.lucycato.productqueryservice.domain.enums.TextEBookStatus;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -43,11 +40,11 @@ public class TextEBookR2dbcEntity {
 
     private Integer page;
 
-    private SubjectCategory subjectCategory;
+    private String subjectCategory;
 
-    private TeachingGenre genre;
+    private String genre;
 
-    private TextEBookStatus status;
+    private String status;
 
     private LocalDateTime publishedAt;
 

@@ -1,11 +1,6 @@
 package org.lucycato.productqueryservice.adapter.out.persistence.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.lucycato.productqueryservice.domain.enums.CourseGenre;
-import org.lucycato.productqueryservice.domain.enums.CourseStatus;
-import org.lucycato.productqueryservice.domain.enums.SubjectCategory;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -15,8 +10,10 @@ import java.time.LocalDateTime;
 
 @Table("course")
 @Getter
-@Setter
+@Setter(value = AccessLevel.PRIVATE)
+@Builder(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class CourseR2dbcEntity {
     @Id
     private Long id;
@@ -35,11 +32,11 @@ public class CourseR2dbcEntity {
 
     private String description;
 
-    private CourseGenre courseGenre;
+    private String courseGenre;
 
-    private SubjectCategory subjectCategory;
+    private String subjectCategory;
 
-    private CourseStatus courseStatus;
+    private String courseStatus;
 
     private LocalDateTime expiredAt;
 
