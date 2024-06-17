@@ -25,7 +25,7 @@ public class LecturePersistenceAdapter implements LecturePort {
                     lecture_category,
                     video_url,
                     status
-                FROM lecture
+                FROM lectures
                 WHERE course_id IN (:courseIds);
                 """;
 
