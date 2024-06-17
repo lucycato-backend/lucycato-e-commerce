@@ -42,7 +42,7 @@ public class CourseSeriesPersistenceAdapter implements CourseSeriesPort {
                 .bind("teacherIds", teacherIds)
                 .fetch()
                 .all()
-                .map(row -> new CourseSeriesResult(
+                .flatMap(row -> Flux.just(new CourseSeriesResult(
                         (Long) row.get("id"),
                         (Long) row.get("teacher_id"),
                         (String) row.get("image_url"),
@@ -50,7 +50,7 @@ public class CourseSeriesPersistenceAdapter implements CourseSeriesPort {
                         (String) row.get("description"),
                         CourseSeriesCategory.valueOf((String) row.get("category")),
                         CourseSeriesStatus.valueOf((String) row.get("status"))
-                ));
+                )));
     }
 
     @Override

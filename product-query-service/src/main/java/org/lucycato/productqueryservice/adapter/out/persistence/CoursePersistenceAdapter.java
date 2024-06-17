@@ -131,7 +131,7 @@ public class CoursePersistenceAdapter implements CoursePort {
                 .bind("courseSeriesIds", courseSeriesIds)
                 .fetch()
                 .all()
-                .map(row -> new CourseResult(
+                .flatMap(row -> Flux.just(new CourseResult(
                         (Long) row.get("id"),
                         (Long) row.get("teacher_id"),
                         (String) row.get("title"),
@@ -143,7 +143,7 @@ public class CoursePersistenceAdapter implements CoursePort {
                         CourseStatus.valueOf((String) row.get("course_status")),
                         ((ZonedDateTime) row.get("expired_at")).toLocalDateTime(),
                         ((ZonedDateTime) row.get("created_at")).toLocalDateTime()
-                ));
+                )));
     }
 
     @Override
@@ -168,7 +168,7 @@ public class CoursePersistenceAdapter implements CoursePort {
                 .bind("teacherIds", teacherIds)
                 .fetch()
                 .all()
-                .map(row -> new CourseResult(
+                .flatMap(row -> Flux.just(new CourseResult(
                         (Long) row.get("id"),
                         (Long) row.get("teacher_id"),
                         (String) row.get("title"),
@@ -180,7 +180,7 @@ public class CoursePersistenceAdapter implements CoursePort {
                         CourseStatus.valueOf((String) row.get("course_status")),
                         ((ZonedDateTime) row.get("expired_at")).toLocalDateTime(),
                         ((ZonedDateTime) row.get("created_at")).toLocalDateTime()
-                ));
+                )));
     }
 
     @Override
