@@ -12,7 +12,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
 
-@Table("lecture")
+@Table("lectures")
 @Getter
 @Setter
 @NoArgsConstructor

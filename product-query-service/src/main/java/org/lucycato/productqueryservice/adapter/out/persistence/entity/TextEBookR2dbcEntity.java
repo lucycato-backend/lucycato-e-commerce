@@ -10,7 +10,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
 
-@Table("text_e_book")
+@Table("text_e_books")
 @Getter
 @Setter
 @NoArgsConstructor

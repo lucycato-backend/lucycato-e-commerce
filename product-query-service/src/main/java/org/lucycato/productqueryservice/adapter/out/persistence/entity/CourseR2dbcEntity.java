@@ -8,7 +8,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
 
-@Table("course")
+@Table("courses")
 @Getter
 @Setter(value = AccessLevel.PRIVATE)
 @Builder(access = AccessLevel.PRIVATE)
