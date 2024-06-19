@@ -20,15 +20,23 @@ public class TeacherQnAJpaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long studentId;
+
     private Long teacherId;
 
-    private Long studentId;
+    private Long lectureId;
 
     private String title;
 
     private String content;
 
-    private Long lectureId;
-
     private String answer;
+
+    public TeacherQnAJpaEntity(Long studentId, Long teacherId, Long lectureId, String title, String content) {
+        this.studentId = studentId;
+        this.teacherId = teacherId;
+        this.lectureId = lectureId;
+        this.title = title;
+        this.content = content;
+    }
 }

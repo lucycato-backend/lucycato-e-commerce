@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 public class QuestionRequest {
     private Long teacherId;
 
-    private Long studentId;
-
     private String title;
 
     private String content;

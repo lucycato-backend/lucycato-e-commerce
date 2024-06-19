@@ -28,5 +28,12 @@ public class TeacherNoticeJpaEntity {
     private String content;
 
     private String type;
+
+    public TeacherNoticeJpaEntity(Long teacherId, String title, String type, String content) {
+        this.teacherId = teacherId;
+        this.title = title;
+        this.type = type;
+        this.content = content;
+    }
 }
 
