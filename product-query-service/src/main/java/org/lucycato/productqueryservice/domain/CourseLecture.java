@@ -1,28 +1,46 @@
 package org.lucycato.productqueryservice.domain;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
+import org.lucycato.productqueryservice.application.port.out.result.CourseResult;
+import org.lucycato.productqueryservice.application.port.out.result.LectureResult;
 import org.lucycato.productqueryservice.domain.enums.*;
 
 @Getter
 @Builder(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class CourseLecture {
-    private Long lectureId;
+    private final Long lectureId;
 
-    private Course course;
+    private final Course course;
 
-    private String lectureTitle;
+    private final String lectureTitle;
 
-    private String lectureDescription;
+    private final String lectureDescription;
 
-    private LectureCategory lectureCategory;
+    private final LectureCategory lectureCategory;
 
-    private String lectureVideoUrl;
+    private final String lectureVideoUrl;
 
-    private LectureStatus lectureStatus;
+    private final LectureStatus lectureStatus;
+
+    public static CourseLecture from(CourseResult courseResult, LectureResult lectureResult) {
+        Course course = Course.builder()
+                .courseId(courseResult.getCourseId())
+                .courseTitle(courseResult.getCourseTitle())
+                .courseGenre(courseResult.getCourseGenre())
+                .subjectCategory(courseResult.getSubjectCategory())
+                .courseStatus(courseResult.getCourseStatus())
+                .build();
+        return CourseLecture.builder()
+                .lectureId(lectureResult.getLectureId())
+                .course(course)
+                .lectureTitle(lectureResult.getLectureTitle())
+                .lectureDescription(lectureResult.getLectureDescription())
+                .lectureCategory(lectureResult.getLectureCategory())
+                .lectureVideoUrl(lectureResult.getLectureVideoUrl())
+                .lectureStatus(lectureResult.getLectureStatus())
+                .build();
+    }
 
     @Getter
     @Builder(access = AccessLevel.PRIVATE)
