@@ -21,18 +21,18 @@ services:
       '--lower_case_table_names=1'
     ]
 
-#  lucycato-phpmyadmin:
-#    container_name: lucycato-phpmyadmin
-#    image: phpmyadmin/phpmyadmin:5.0.4
-#    depends_on:
-#      - lucycato-mysql
-#    environment:
-#      - PMA_HOST=lucycato-mysql
-#      - MYSQL_ROOT_PASSWORD=password
-#    ports:
-#      - "20080:80"
-#    networks:
-#      - "lucycato_network"
+  lucycato-phpmyadmin:
+    container_name: lucycato-phpmyadmin
+    image: phpmyadmin/phpmyadmin:5.0.4
+    depends_on:
+      - lucycato-mysql
+    environment:
+      - PMA_HOST=lucycato-mysql
+      - MYSQL_ROOT_PASSWORD=password
+    ports:
+      - "20080:80"
+    networks:
+      - "lucycato_network"
 
   lucycato-redis:
     container_name: lucycato-redis
