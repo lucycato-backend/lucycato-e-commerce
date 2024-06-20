@@ -17,6 +17,9 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 public class ModifyTextEBookCommand extends SelfValidating<ModifyTextEBookCommand> {
     @NotNull
+    private Long requestAdminUserId;
+
+    @NotNull
     private Long textEBookId;
 
     @NotNull
@@ -55,7 +58,8 @@ public class ModifyTextEBookCommand extends SelfValidating<ModifyTextEBookComman
 
     private MultipartFile textEBookFullDownloadUrl;
 
-    public ModifyTextEBookCommand(Long textEBookId, Long courseId, String textEBookUniqueCode, String textEBookTitle, String textEBookDescription, String textEBookTableOfContents, String textEBookAuthor, String textEBookPublisher, Integer textEBookPage, SubjectCategory subjectCategory, LocalDateTime textEBookPublishedAt, MultipartFile textEBookImageFile, MultipartFile textEBookPreviewDownloadFile, MultipartFile textEBookFullDownloadUrl) {
+    public ModifyTextEBookCommand(Long requestAdminUserId, Long textEBookId, Long courseId, String textEBookUniqueCode, String textEBookTitle, String textEBookDescription, String textEBookTableOfContents, String textEBookAuthor, String textEBookPublisher, Integer textEBookPage, SubjectCategory subjectCategory, LocalDateTime textEBookPublishedAt, MultipartFile textEBookImageFile, MultipartFile textEBookPreviewDownloadFile, MultipartFile textEBookFullDownloadUrl) {
+        this.requestAdminUserId = requestAdminUserId;
         this.textEBookId = textEBookId;
         this.courseId = courseId;
         this.textEBookUniqueCode = textEBookUniqueCode;

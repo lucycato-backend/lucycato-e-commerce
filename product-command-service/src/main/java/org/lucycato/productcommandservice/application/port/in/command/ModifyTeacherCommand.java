@@ -14,6 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 @EqualsAndHashCode(callSuper = false)
 public class ModifyTeacherCommand extends SelfValidating<ModifyTeacherCommand> {
     @NotNull
+    private Long requestAdminUserId;
+
+    @NotNull
     private Long teacherId;
 
     @NotNull
@@ -37,7 +40,8 @@ public class ModifyTeacherCommand extends SelfValidating<ModifyTeacherCommand> {
 
     private MultipartFile teacherCurriculumVideoFile;
 
-    public ModifyTeacherCommand(Long teacherId, Integer teacherRank, String teacherName, String teacherSlogan, String teacherProfileDescription, TeachingGenre teachingGenre, MultipartFile teacherImageFile, MultipartFile teacherCurriculumImageFile, MultipartFile teacherCurriculumVideoFile) {
+    public ModifyTeacherCommand(Long requestAdminUserId, Long teacherId, Integer teacherRank, String teacherName, String teacherSlogan, String teacherProfileDescription, TeachingGenre teachingGenre, MultipartFile teacherImageFile, MultipartFile teacherCurriculumImageFile, MultipartFile teacherCurriculumVideoFile) {
+        this.requestAdminUserId = requestAdminUserId;
         this.teacherId = teacherId;
         this.teacherRank = teacherRank;
         this.teacherName = teacherName;

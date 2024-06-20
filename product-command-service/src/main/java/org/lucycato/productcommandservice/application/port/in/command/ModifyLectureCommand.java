@@ -14,6 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 @EqualsAndHashCode(callSuper = false)
 public class ModifyLectureCommand extends SelfValidating<ModifyLectureCommand> {
     @NotNull
+    private Long requestAdminUserId;
+
+    @NotNull
     private Long lectureId;
 
     @NotNull
@@ -32,7 +35,8 @@ public class ModifyLectureCommand extends SelfValidating<ModifyLectureCommand> {
 
     private MultipartFile lectureVideoUrl;
 
-    public ModifyLectureCommand(Long lectureId, Long courseId, String lectureTitle, String lectureDescription, LectureCategory lectureCategory, MultipartFile lectureThumbnailImageUrl, MultipartFile lectureVideoUrl) {
+    public ModifyLectureCommand(Long requestAdminUserId, Long lectureId, Long courseId, String lectureTitle, String lectureDescription, LectureCategory lectureCategory, MultipartFile lectureThumbnailImageUrl, MultipartFile lectureVideoUrl) {
+        this.requestAdminUserId = requestAdminUserId;
         this.lectureId = lectureId;
         this.courseId = courseId;
         this.lectureTitle = lectureTitle;

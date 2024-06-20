@@ -17,6 +17,9 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 public class ModifyCourseSeriesCommand extends SelfValidating<ModifyCourseSeriesCommand> {
     @NotNull
+    private Long requestAdminUserId;
+
+    @NotNull
     private Long courseSeriesId;
 
     @NotNull
@@ -38,7 +41,8 @@ public class ModifyCourseSeriesCommand extends SelfValidating<ModifyCourseSeries
 
     private List<MultipartFile> courseSeriesExplainImageFiles;
 
-    public ModifyCourseSeriesCommand(Long courseSeriesId, Long teacherId, String courseSeriesTitle, String courseSeriesDescription, SubjectCategory subjectCategory, CourseSeriesCategory courseSeriesCategory, MultipartFile courseSeriesImageFile, List<MultipartFile> courseSeriesExplainImageFiles) {
+    public ModifyCourseSeriesCommand(Long requestAdminUserId, Long courseSeriesId, Long teacherId, String courseSeriesTitle, String courseSeriesDescription, SubjectCategory subjectCategory, CourseSeriesCategory courseSeriesCategory, MultipartFile courseSeriesImageFile, List<MultipartFile> courseSeriesExplainImageFiles) {
+        this.requestAdminUserId = requestAdminUserId;
         this.courseSeriesId = courseSeriesId;
         this.teacherId = teacherId;
         this.courseSeriesTitle = courseSeriesTitle;

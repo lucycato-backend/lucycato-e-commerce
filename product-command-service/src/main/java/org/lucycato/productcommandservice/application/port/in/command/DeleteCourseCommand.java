@@ -11,9 +11,13 @@ import org.lucycato.common.SelfValidating;
 @EqualsAndHashCode(callSuper = false)
 public class DeleteCourseCommand extends SelfValidating<DeleteCourseCommand> {
     @NotNull
+    private Long requestAdminUserId;
+
+    @NotNull
     private Long courseId;
 
-    public DeleteCourseCommand(Long courseId) {
+    public DeleteCourseCommand(Long requestAdminUserId, Long courseId) {
+        this.requestAdminUserId = requestAdminUserId;
         this.courseId = courseId;
 
         this.validateSelf();

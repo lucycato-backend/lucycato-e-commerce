@@ -2,6 +2,8 @@ package org.lucycato.productcommandservice.adapter.in.web;
 
 import lombok.RequiredArgsConstructor;
 import org.lucycato.common.annotation.hexagonal.in.WebAdapter;
+import org.lucycato.common.annotation.resolver.AdminUserHeaders;
+import org.lucycato.common.resolver.AdminUserHeaderDetail;
 import org.lucycato.productcommandservice.adapter.in.web.request.RegisterTeacherRequest;
 import org.lucycato.productcommandservice.application.port.in.TeacherUseCase;
 import org.lucycato.productcommandservice.application.port.in.command.DeleteTeacherCommand;
@@ -20,6 +22,8 @@ public class TeacherController {
 
     @PostMapping(value = "api/admin/v1/teachers", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public TeacherDetail registerTeacher(
+            @AdminUserHeaders
+            AdminUserHeaderDetail adminUserHeaderDetail,
             @RequestPart(name = "request")
             RegisterTeacherRequest request,
             @RequestPart(name = "teacherImageFile")
@@ -30,6 +34,7 @@ public class TeacherController {
             MultipartFile teacherCurriculumVideoFile
     ) {
         RegisterTeacherCommand command = new RegisterTeacherCommand(
+                adminUserHeaderDetail.getAdminUserId(),
                 request.getTeacherRank(),
                 request.getTeacherName(),
                 request.getTeacherSlogan(),
@@ -45,6 +50,8 @@ public class TeacherController {
 
     @PatchMapping(value = "api/admin/v1/teachers/{teacherId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public TeacherDetail modifyTeacher(
+            @AdminUserHeaders
+            AdminUserHeaderDetail adminUserHeaderDetail,
             @PathVariable
             Long teacherId,
             @RequestPart(name = "request")
@@ -57,6 +64,7 @@ public class TeacherController {
             MultipartFile teacherCurriculumVideoFile
     ) {
         ModifyTeacherCommand command = new ModifyTeacherCommand(
+                adminUserHeaderDetail.getAdminUserId(),
                 teacherId,
                 request.getTeacherRank(),
                 request.getTeacherName(),
@@ -73,10 +81,15 @@ public class TeacherController {
 
     @DeleteMapping("api/admin/v1/teachers/{teacherId}")
     public Object deleteTeacher(
+            @AdminUserHeaders
+            AdminUserHeaderDetail adminUserHeaderDetail,
             @PathVariable
             Long teacherId
     ) {
-        DeleteTeacherCommand command = new DeleteTeacherCommand(teacherId);
+        DeleteTeacherCommand command = new DeleteTeacherCommand(
+                adminUserHeaderDetail.getAdminUserId(),
+                teacherId
+        );
         teacherUseCase.deleteTeacher(command);
 
         return new Object();

@@ -11,9 +11,13 @@ import org.lucycato.common.SelfValidating;
 @EqualsAndHashCode(callSuper = false)
 public class DeleteTextEBookCommand extends SelfValidating<DeleteTextEBookCommand> {
     @NotNull
+    private Long requestAdminUserId;
+
+    @NotNull
     private Long textEBookId;
 
-    public DeleteTextEBookCommand(Long textEBookId) {
+    public DeleteTextEBookCommand(Long requestAdminUserId, Long textEBookId) {
+        this.requestAdminUserId = requestAdminUserId;
         this.textEBookId = textEBookId;
 
         this.validateSelf();

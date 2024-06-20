@@ -17,6 +17,9 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 public class ModifyCourseCommand extends SelfValidating<ModifyCourseCommand> {
     @NotNull
+    private Long requestAdminUserId;
+
+    @NotNull
     private Long courseId;
 
     @NotNull
@@ -52,7 +55,8 @@ public class ModifyCourseCommand extends SelfValidating<ModifyCourseCommand> {
 
     private MultipartFile teacherCurriculumVideoFile;
 
-    public ModifyCourseCommand(Long courseId, Long teacherId, Long courseSeriesId, String courseTitle, String courseSubTitle, Integer coursePrice, String courseDescription, CourseGenre courseGenre, SubjectCategory subjectCategory, LocalDateTime expiredAt, MultipartFile teacherImageFile, MultipartFile teacherCurriculumImageFile, MultipartFile teacherCurriculumVideoFile) {
+    public ModifyCourseCommand(Long requestAdminUserId, Long courseId, Long teacherId, Long courseSeriesId, String courseTitle, String courseSubTitle, Integer coursePrice, String courseDescription, CourseGenre courseGenre, SubjectCategory subjectCategory, LocalDateTime expiredAt, MultipartFile teacherImageFile, MultipartFile teacherCurriculumImageFile, MultipartFile teacherCurriculumVideoFile) {
+        this.requestAdminUserId = requestAdminUserId;
         this.courseId  = courseId;
         this.teacherId = teacherId;
         this.courseSeriesId = courseSeriesId;

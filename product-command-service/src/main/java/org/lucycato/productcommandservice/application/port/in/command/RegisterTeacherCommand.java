@@ -14,6 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 @EqualsAndHashCode(callSuper = false)
 public class RegisterTeacherCommand extends SelfValidating<RegisterTeacherCommand> {
     @NotNull
+    private Long requestAdminUserId;
+
+    @NotNull
     private Integer teacherRank;
 
     @NotBlank
@@ -34,7 +37,8 @@ public class RegisterTeacherCommand extends SelfValidating<RegisterTeacherComman
 
     private MultipartFile teacherCurriculumVideoFile;
 
-    public RegisterTeacherCommand(Integer teacherRank, String teacherName, String teacherSlogan, String teacherProfileDescription, TeachingGenre teachingGenre, MultipartFile teacherImageFile, MultipartFile teacherCurriculumImageFile, MultipartFile teacherCurriculumVideoFile) {
+    public RegisterTeacherCommand(Long requestAdminUserId, Integer teacherRank, String teacherName, String teacherSlogan, String teacherProfileDescription, TeachingGenre teachingGenre, MultipartFile teacherImageFile, MultipartFile teacherCurriculumImageFile, MultipartFile teacherCurriculumVideoFile) {
+        this.requestAdminUserId = requestAdminUserId;
         this.teacherRank = teacherRank;
         this.teacherName = teacherName;
         this.teacherSlogan = teacherSlogan;
