@@ -3,7 +3,6 @@ package org.lucycato.productcommandservice.adapter.in.web.request;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.lucycato.productcommandservice.domain.enums.SubjectCategory;
-import org.lucycato.productcommandservice.domain.enums.TextEBookStatus;
 
 import java.time.LocalDateTime;
 
