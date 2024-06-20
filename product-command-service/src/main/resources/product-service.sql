@@ -3,11 +3,11 @@ GRANT ALL PRIVILEGES ON *.* TO `admin`@`%` WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 SHOW GRANTS FOR `admin`@`%`
 
-CREATE DATABASE IF NOT EXISTS product_service
+CREATE DATABASE IF NOT EXISTS default
     DEFAULT CHARACTER SET utf8mb4
     DEFAULT COLLATE utf8mb4_general_ci;
 
-CREATE TABLE IF NOT EXISTS `product_service`.`teachers` (
+CREATE TABLE IF NOT EXISTS `default`.`teachers` (
     `id` BIGINT NOT NULL AUTO_INCREMENT,
     `teacher_rank` INT NOT NULL,
     `teacher_name` VARCHAR(50) NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `product_service`.`teachers` (
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `product_service`.`course_series` (
+CREATE TABLE IF NOT EXISTS `default`.`course_series` (
     `id` BIGINT NOT NULL AUTO_INCREMENT,
     `teacher_id` BIGINT,
     `course_series_image_url` VARCHAR(200) NOT NULL,
@@ -36,13 +36,12 @@ CREATE TABLE IF NOT EXISTS `product_service`.`course_series` (
     `course_series_created_at` DATETIME,
     `course_series_modified_at` DATETIME,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`teacher_id`) REFERENCES `product_service`.`teachers`(`id`)
+    FOREIGN KEY (`teacher_id`) REFERENCES `default`.`teachers`(`id`)
         ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `product_service`.`courses` (
+CREATE TABLE IF NOT EXISTS `default`.`courses` (
     `id`  BIGINT NOT NULL AUTO_INCREMENT,
-    `teacher_id` BIGINT,
     `course_series_id` BIGINT,
     `course_title` VARCHAR(100) NOT NULL,
     `course_sub_title` VARCHAR(100) NOT NULL,
@@ -56,15 +55,13 @@ CREATE TABLE IF NOT EXISTS `product_service`.`courses` (
     `course_created_at` DATETIME,
     `course_modified_at` DATETIME,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`teacher_id`) REFERENCES `product_service`.`teachers` (`id`)
-        ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (`course_series_id`) REFERENCES `product_service`.`course_series` (`id`)
+    FOREIGN KEY (`course_series_id`) REFERENCES `default`.`course_series` (`id`)
         ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `product_service`.`lectures` (
+CREATE TABLE IF NOT EXISTS `default`.`lectures` (
     `id` BIGINT NOT NULL AUTO_INCREMENT,
-    `course_id` BIGINT
+    `course_id` BIGINT,
     `lecture_title` VARCHAR(100) NOT NULL,
     `lecture_description` VARCHAR(512) NOT NULL,
     `lecture_thumbnail_image_url` VARCHAR(200) NOT NULL,
@@ -74,11 +71,11 @@ CREATE TABLE IF NOT EXISTS `product_service`.`lectures` (
     `lecture_created_at` DATETIME,
     `lecture_modified_at` DATETIME,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`course_id`) REFERENCES `product_service`.`courses` (`id`)
+    FOREIGN KEY (`course_id`) REFERENCES `default`.`courses` (`id`)
         ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `product_service`.`text_e_books` (
+CREATE TABLE IF NOT EXISTS `default`.`text_e_books` (
     `id` BIGINT NOT NULL AUTO_INCREMENT,
     `course_id` BIGINT,
     `text_e_book_unique_code` VARCHAR(200) NOT NULL,
@@ -97,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `product_service`.`text_e_books` (
     `text_e_book_created_at` DATETIME,
     `text_e_book_modified_at` DATETIME,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`course_id`) REFERENCES `product_service`.`courses` (`id`)
+    FOREIGN KEY (`course_id`) REFERENCES `default`.`courses` (`id`)
         ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 

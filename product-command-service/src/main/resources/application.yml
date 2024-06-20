@@ -9,7 +9,7 @@ spring:
     activate:
       on-profile: default
   datasource:
-    url: jdbc:mysql://localhost:23306/product_service
+    url: jdbc:mysql://localhost:23306/default
     username: admin
     password: password
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -54,7 +54,7 @@ spring:
     activate:
       on-profile: docker
   datasource:
-    url: jdbc:mysql://lucycato-mysql:3306/product_service
+    url: jdbc:mysql://lucycato-mysql:3306/default
     username: admin
     password: password
     driver-class-name: com.mysql.cj.jdbc.Driver
