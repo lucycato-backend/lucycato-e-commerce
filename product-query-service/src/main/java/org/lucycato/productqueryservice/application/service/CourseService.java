@@ -31,7 +31,11 @@ public class CourseService implements CourseUseCase {
     @Override
     public Mono<CourseDetail> getCurses(CourseDetailSearchCommand command) {
         return coursePort.getCourse(command.getCourseId())
-                .map(CourseDetail::from);
+                .flatMap(courseDetailResult ->
+                        coursePort.checkRecentCourseOpenListByCourseIds(Collections.singletonList(command.getCourseId()))
+                                .collectList()
+                                .map(checkedRecentCourseOpenResultList -> CourseDetail.from(courseDetailResult, checkedRecentCourseOpenResultList.isEmpty()))
+                );
     }
 
     @Override

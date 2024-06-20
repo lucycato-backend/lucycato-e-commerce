@@ -10,6 +10,7 @@ import org.lucycato.productqueryservice.application.port.out.CoursePort;
 import org.lucycato.productqueryservice.application.port.out.CourseSeriesPort;
 import org.lucycato.productqueryservice.application.port.out.TeacherPort;
 import org.lucycato.productqueryservice.application.port.out.TextEBookPort;
+import org.lucycato.productqueryservice.application.port.out.result.CheckedRecentCourseOpenResult;
 import org.lucycato.productqueryservice.application.port.out.result.CourseSeriesResult;
 import org.lucycato.productqueryservice.application.port.out.result.TextEBookResult;
 import org.lucycato.productqueryservice.domain.CourseSeriesCourse;
@@ -22,6 +23,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
@@ -45,17 +47,25 @@ public class CourseSeriesService implements CourseSeriesUseCase {
     //TODO: 성능 최적화
     @Override
     public Flux<CourseSeriesCourse> getCourseSeriesCourseList(SpecificCourseSeriesCourseSearchCommand command) {
-        Map<Long, TextEBookResult> map = new ConcurrentHashMap<>();
+        Map<Long, TextEBookResult> textEBookMap = new ConcurrentHashMap<>();
+        Map<Long, CheckedRecentCourseOpenResult> checkRecentOpenCourseMap = new ConcurrentHashMap<>();
 
-        Mono<Void> process = textEBookPort.getTextEBookListByCourseSeriesIds(Collections.singletonList(command.getCourseSeriesId()))
+        Mono<Void> textEBookTask = textEBookPort.getTextEBookListByCourseSeriesIds(Collections.singletonList(command.getCourseSeriesId()))
                 .flatMap(item -> {
-                    map.put(item.getCourseId(), item);
+                    textEBookMap.put(item.getCourseId(), item);
+                    return Flux::just;
+                })
+                .then();
+
+        Mono<Void> checkRecentCourseOpenTask = coursePort.checkRecentCourseOpenListByCourseIds(Collections.singletonList(command.getCourseSeriesId()))
+                .flatMap(item -> {
+                    checkRecentOpenCourseMap.put(item.getCourseId(), item);
                     return Flux::just;
                 })
                 .then();
 
         return Flux.combineLatest(
-                        Mono.when(process).flatMapMany(Flux::just),
+                        Mono.when(textEBookTask, checkRecentCourseOpenTask).flatMapMany(Flux::just),
                         coursePort.getCourseListByCourseSeriesIds(Collections.singletonList(command.getCourseSeriesId())),
                         (a, b) -> b
                 )
@@ -67,8 +77,10 @@ public class CourseSeriesService implements CourseSeriesUseCase {
                                         courseResult,
                                         tuples.getT1(),
                                         tuples.getT2(),
-                                        map.get(courseResult.getCourseId())))
-                                )
+                                        textEBookMap.get(courseResult.getCourseId()),
+                                        Optional.ofNullable(checkRecentOpenCourseMap.get(courseResult.getCourseId()))
+                                                .isPresent()
+                                )))
                 )
                 .sort(Collections.reverseOrder());
 
@@ -93,23 +105,31 @@ public class CourseSeriesService implements CourseSeriesUseCase {
     public Flux<CourseSeriesCourse> getCourseSeriesCourseListByTeacherId(SpecificCourseSeriesCourseSearchByTeacherIdCommand command) {
         Map<Long, CourseSeriesResult> courseSeriesMap = new ConcurrentHashMap<>();
         Map<Long, TextEBookResult> textEBookMap = new ConcurrentHashMap<>();
+        Map<Long, CheckedRecentCourseOpenResult> checkRecentOpenCourseMap = new ConcurrentHashMap<>();
 
-        Mono<Void> process1 = courseSeriesPort.getCourseSeriesListByTeacherIds(Collections.singletonList(command.getTeacherId()))
+        Mono<Void> courseTask = courseSeriesPort.getCourseSeriesListByTeacherIds(Collections.singletonList(command.getTeacherId()))
                 .flatMap(item -> {
                     courseSeriesMap.put(item.getTeacherId(), item);
                     return Flux::just;
                 })
                 .then();
 
-        Mono<Void> process2 = textEBookPort.getTextEBookListByTeacherIds(Collections.singletonList(command.getTeacherId()))
+        Mono<Void> textEBookTask = textEBookPort.getTextEBookListByTeacherIds(Collections.singletonList(command.getTeacherId()))
                 .flatMap(item -> {
                     textEBookMap.put(item.getCourseId(), item);
                     return Flux::just;
                 })
                 .then();
 
+        Mono<Void> checkRecentCourseOpenTask = coursePort.checkRecentCourseOpenListByTeacherIds(Collections.singletonList(command.getTeacherId()))
+                .flatMap(item -> {
+                    checkRecentOpenCourseMap.put(item.getCourseId(), item);
+                    return Flux::just;
+                })
+                .then();
+
         return Flux.combineLatest(
-                        Mono.when(process1, process2).flatMapMany(Flux::just),
+                        Mono.when(courseTask, textEBookTask, checkRecentCourseOpenTask).flatMapMany(Flux::just),
                         coursePort.getCourseListByTeacherIds(Collections.singletonList(command.getTeacherId())),
                         (a, b) -> b
                 )
@@ -118,8 +138,10 @@ public class CourseSeriesService implements CourseSeriesUseCase {
                                 courseResult,
                                 teacherResult,
                                 courseSeriesMap.get(courseResult.getTeacherId()),
-                                textEBookMap.get(courseResult.getCourseId())))
-                        )
+                                textEBookMap.get(courseResult.getCourseId()),
+                                Optional.ofNullable(checkRecentOpenCourseMap.get(courseResult.getCourseId()))
+                                        .isPresent()
+                        )))
                 )
                 .sort(Collections.reverseOrder());
     }

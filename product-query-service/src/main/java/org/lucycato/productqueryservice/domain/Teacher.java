@@ -37,7 +37,7 @@ public class Teacher {
     public static Teacher from(
             TeacherResult teacherResult,
             Boolean isRecentCourseOpen,
-            Boolean isRecentTeacherNews
+            Boolean isRecentTeacherNotice
     ) {
         return Teacher.builder()
                 .teacherId(teacherResult.getTeacherId())
@@ -46,7 +46,7 @@ public class Teacher {
                 .teacherSlogan(teacherResult.getTeacherSlogan())
                 .teacherImage(teacherResult.getTeacherImageUrl())
                 .isRecentCourseOpen(isRecentCourseOpen)
-                .isRecentTeacherNotice(isRecentTeacherNews)
+                .isRecentTeacherNotice(isRecentTeacherNotice)
                 .teachingGenre(teacherResult.getTeachingGenre())
                 .teacherStatus(teacherResult.getTeacherStatus())
                 .teacherCreatedAt(teacherResult.getTeacherCreatedAt())
