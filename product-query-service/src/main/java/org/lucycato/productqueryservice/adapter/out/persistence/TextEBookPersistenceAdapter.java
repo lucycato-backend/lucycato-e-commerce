@@ -68,8 +68,7 @@ public class TextEBookPersistenceAdapter implements TextEBookPort {
     @Override
     public Flux<TextEBookResult> getTextEBookListByTeacherIds(List<Long> teacherIds) {
         String sql = """
-                SELECT t.id as textEBookId,
-                    c.teacher_id as teacherId,
+                SELECT tb.id as textEBookId,
                     tb.course_id as courseId,
                     tb.text_e_book_unique_code as textEBookUniqueCode,
                     tb.text_e_book_image_url as textEBookImageUrl,
@@ -85,8 +84,9 @@ public class TextEBookPersistenceAdapter implements TextEBookPort {
                     tb.text_e_book_status as textEBookStatus,
                     tb.text_e_book_published_at as textEBookPublishedAt
                 FROM text_e_books tb
-                LEFT JOIN courses c ON tb.course_id = c.id
-                WHERE c.teacher_id IN (:teacherIds);
+                INNER JOIN courses c ON tb.course_id = c.id
+                INNER JOIN course_series cs ON c.course_series_id = cs.id
+                WHERE cs.teacher_id IN (:teacherIds);
                 """;
 
         return databaseClient.sql(sql)
@@ -115,8 +115,7 @@ public class TextEBookPersistenceAdapter implements TextEBookPort {
     @Override
     public Flux<TextEBookResult> getTextEBookListByCourseSeriesIds(List<Long> courseSeriesIds) {
         String sql = """
-                SELECT t.id as teacherId,
-                    c.course_series_id as courseSeriesId,
+                SELECT tb.id as teacherId,
                     tb.course_id as courseId,
                     tb.text_e_book_unique_code as textEBookUniqueCode,
                     tb.text_e_book_image_url as textEBookImageUrl,
@@ -132,7 +131,7 @@ public class TextEBookPersistenceAdapter implements TextEBookPort {
                     tb.text_e_book_status as textEBookStatus,
                     tb.text_e_book_published_at as textEBookPublishedAt
                 FROM text_e_books tb
-                LEFT JOIN courses c ON tb.course_id = c.id
+                INNER JOIN courses c ON tb.course_id = c.id
                 WHERE c.course_series_id IN (:courseSeriesIds);
                 """;
 

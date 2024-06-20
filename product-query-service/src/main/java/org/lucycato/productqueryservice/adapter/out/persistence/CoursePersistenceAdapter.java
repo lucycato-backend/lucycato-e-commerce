@@ -162,7 +162,7 @@ public class CoursePersistenceAdapter implements CoursePort {
     public Flux<CourseResult> getCourseListByTeacherIds(List<Long> teacherIds) {
         String sql = """
                 SELECT c.id as courseId,
-                    c.teacher_id as teacherId,
+                    cs.teacher_id as teacherId,
                     c.course_title as courseTitle,
                     c.course_sub_title as courseSubTitle,
                     c.course_price as coursePrice,
@@ -173,7 +173,8 @@ public class CoursePersistenceAdapter implements CoursePort {
                     c.course_expired_at as courseExpiredAt,
                     c.course_created_at as courseCreatedAt
                 FROM courses c
-                WHERE c.teacher_id IN (:teacherIds);
+                INNER JOIN course_series cs ON c.course_series_id = cs.id
+                WHERE cs.teacher_id IN (:teacherIds);
                 """;
 
         return databaseClient.sql(sql)
