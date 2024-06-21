@@ -26,12 +26,8 @@ public class CourseController {
             AdminUserHeaderDetail adminUserHeaderDetail,
             @RequestPart(name = "request")
             RegisterCourseRequest request,
-            @RequestPart(name = "teacherImageFile", required = false)
-            MultipartFile teacherImageFile,
-            @RequestPart(name = "teacherCurriculumImageFile", required = false)
-            MultipartFile teacherCurriculumImageFile,
-            @RequestPart(name = "teacherCurriculumVideoFile", required = false)
-            MultipartFile teacherCurriculumVideoFile
+            @RequestPart(name = "courseImageFile", required = false)
+            MultipartFile courseImageFile
     ) {
         RegisterCourseCommand command = new RegisterCourseCommand(
                 adminUserHeaderDetail.getAdminUserId(),
@@ -44,9 +40,7 @@ public class CourseController {
                 request.getCourseGenre(),
                 request.getSubjectCategory(),
                 request.getExpiredAt(),
-                teacherImageFile,
-                teacherCurriculumImageFile,
-                teacherCurriculumVideoFile
+                courseImageFile
         );
 
         return courseUseCase.registerCourse(command);
@@ -60,12 +54,8 @@ public class CourseController {
             Long courseId,
             @RequestPart(name = "request")
             RegisterCourseRequest request,
-            @RequestPart(name = "teacherImageFile", required = false)
-            MultipartFile teacherImageFile,
-            @RequestPart(name = "teacherCurriculumImageFile", required = false)
-            MultipartFile teacherCurriculumImageFile,
-            @RequestPart(name = "teacherCurriculumVideoFile", required = false)
-            MultipartFile teacherCurriculumVideoFile
+            @RequestPart(name = "courseImageFile", required = false)
+            MultipartFile courseImageFile
     ) {
         ModifyCourseCommand command = new ModifyCourseCommand(
                 adminUserHeaderDetail.getAdminUserId(),
@@ -79,9 +69,7 @@ public class CourseController {
                 request.getCourseGenre(),
                 request.getSubjectCategory(),
                 request.getExpiredAt(),
-                teacherImageFile,
-                teacherCurriculumImageFile,
-                teacherCurriculumVideoFile
+                courseImageFile
         );
 
         return courseUseCase.modifyCourse(command);
