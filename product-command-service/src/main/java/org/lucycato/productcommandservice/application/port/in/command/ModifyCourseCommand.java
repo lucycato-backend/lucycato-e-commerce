@@ -23,9 +23,6 @@ public class ModifyCourseCommand extends SelfValidating<ModifyCourseCommand> {
     private Long courseId;
 
     @NotNull
-    private Long teacherId;
-
-    @NotNull
     private Long courseSeriesId;
 
     @NotBlank
@@ -51,10 +48,9 @@ public class ModifyCourseCommand extends SelfValidating<ModifyCourseCommand> {
 
     private MultipartFile courseImageFile;
 
-    public ModifyCourseCommand(Long requestAdminUserId, Long courseId, Long teacherId, Long courseSeriesId, String courseTitle, String courseSubTitle, Integer coursePrice, String courseDescription, CourseGenre courseGenre, SubjectCategory subjectCategory, LocalDateTime expiredAt, MultipartFile courseImageFile) {
+    public ModifyCourseCommand(Long requestAdminUserId, Long courseId, Long courseSeriesId, String courseTitle, String courseSubTitle, Integer coursePrice, String courseDescription, CourseGenre courseGenre, SubjectCategory subjectCategory, LocalDateTime expiredAt, MultipartFile courseImageFile) {
         this.requestAdminUserId = requestAdminUserId;
         this.courseId  = courseId;
-        this.teacherId = teacherId;
         this.courseSeriesId = courseSeriesId;
         this.courseTitle = courseTitle;
         this.courseSubTitle = courseSubTitle;

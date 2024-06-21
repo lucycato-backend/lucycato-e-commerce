@@ -24,6 +24,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
@@ -58,6 +59,7 @@ public class CoursePersistenceAdapter implements CoursePort {
                 courseSubTitle,
                 coursePrice,
                 courseDescription,
+                courseImageUrl,
                 courseGenre,
                 subjectCategory,
                 courseStatus,
@@ -80,7 +82,7 @@ public class CoursePersistenceAdapter implements CoursePort {
     ) {
         CourseJpaEntity courseJpaEntity = courseJpaRepository.findById(courseId).orElseThrow(() -> new ApiExceptionImpl(ErrorCodeImpl.NOT_FOUND));
         CourseSeriesJpaEntity courseSeriesJpaEntity = CourseSeriesJpaEntity.builder()
-                .id(courseId)
+                .id(courseSeriesId)
                 .build();
         courseJpaEntity.setCourseSeriesJpaEntity(courseSeriesJpaEntity);
         courseJpaEntity.setCourseTitle(courseTitle);
@@ -118,7 +120,7 @@ public class CoursePersistenceAdapter implements CoursePort {
 
     @Override
     public Boolean getRecentCourseOpen(Long courseId) {
-        return Optional.ofNullable(redisTemplate.opsForHash().get(PRODUCT_SERVICE_RECENT_COURSE_UPLOAD_BY_COURSE_ID_HASH_KEY, courseId))
+        return Optional.ofNullable(redisTemplate.opsForHash().get(PRODUCT_SERVICE_RECENT_COURSE_UPLOAD_BY_COURSE_ID_HASH_KEY, String.valueOf(courseId)))
                 .isPresent();
     }
 
