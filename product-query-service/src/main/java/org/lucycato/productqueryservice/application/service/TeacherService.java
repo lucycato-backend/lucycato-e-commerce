@@ -56,26 +56,26 @@ public class TeacherService implements TeacherUseCase {
         Map<Long, CheckedRecentCourseOpenResult> courseMap = new ConcurrentHashMap<>();
         Map<Long, CheckedRecentTeacherNoticeResult> newsMap = new ConcurrentHashMap<>();
 
-        Mono<Void> process1 = teacherPort.getTeacherIdsByTeachingGenre(command.getTeachingGenre())
+        Mono<Void> courseOpenTask = teacherPort.getTeacherIdsByTeachingGenre(command.getTeachingGenre())
                 .collectList()
                 .flatMapMany(coursePort::checkRecentCourseOpenListByTeacherIds)
                 .flatMap(item -> {
                     courseMap.put(item.getTeacherId(), item);
-                    return Flux::just;
+                    return Flux.empty();
                 })
                 .then();
 
-        Mono<Void> process2 = teacherPort.getTeacherIdsByTeachingGenre(command.getTeachingGenre())
+        Mono<Void> teacherNoticeTask = teacherPort.getTeacherIdsByTeachingGenre(command.getTeachingGenre())
                 .collectList()
                 .flatMapMany(boardPort::checkTeacherNewsListByTeacherIds)
                 .flatMap(item -> {
                     newsMap.put(item.getTeacherId(), item);
-                    return Flux::just;
+                    return Flux.empty();
                 })
                 .then();
 
         return Flux.combineLatest(
-                        Mono.when(process1, process2).flatMapMany(Flux::just),
+                        Mono.when(courseOpenTask, teacherNoticeTask).then(Mono.just("")).flatMapMany(Flux::just),
                         teacherPort.getTeacherListByTeachingGenre(command.getTeachingGenre()),
                         (a, b) -> b
                 )
