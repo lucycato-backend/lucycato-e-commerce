@@ -11,7 +11,7 @@ import org.lucycato.boardcommandservice.adapter.out.persistence.repository.ExamS
 import org.lucycato.boardcommandservice.adapter.out.persistence.repository.TeacherNoticeJpaRepository;
 import org.lucycato.boardcommandservice.adapter.out.persistence.repository.TeacherQnAJpaRepository;
 import org.lucycato.boardcommandservice.application.port.out.TeacherPort;
-import org.lucycato.boardcommandservice.application.port.out.result.CUDReturnIdResult;
+import org.lucycato.boardcommandservice.application.port.out.result.*;
 import org.lucycato.common.annotation.hexagonal.out.PersistenceAdapter;
 
 
@@ -24,45 +24,45 @@ public class TeacherNoticePersistenceAdapter implements TeacherPort {
     private final TeacherQnAJpaRepository teacherQnAJpaRepository;
     private final ExamStoryJpaRepository examStoryJpaRepository;
     @Override
-    public CUDReturnIdResult createTeacherNotice(Long teacherId, String title, String content, String type) {
+    public TeacherNoticeResult createTeacherNotice(Long teacherId, String title, String content, String type) {
         TeacherNoticeJpaEntity teacherNoticeJpaEntity = new TeacherNoticeJpaEntity(
                 teacherId, title, content, type
         );
         TeacherNoticeJpaEntity savedEntity = noticeJpaRepository.save(teacherNoticeJpaEntity);
-        return new CUDReturnIdResult(savedEntity.getId());
+        return TeacherNoticeResult.from(savedEntity);
     }
 
     @Override
-    public CUDReturnIdResult createCourseReview(Long id, Long teacherId, Long lectureId, String title, String content, int score) {
+    public CourseReviewResult createCourseReview(Long id, Long teacherId, Long lectureId, String title, String content, int score) {
         CourseReviewJpaEntity courseReviewJpaEntity = new CourseReviewJpaEntity(
                 id, teacherId, lectureId, title, content, score
         );
         CourseReviewJpaEntity savedEntity = courseReviewJpaRepository.save(courseReviewJpaEntity);
-        return new CUDReturnIdResult(savedEntity.getId());
+        return CourseReviewResult.from(savedEntity);
     }
 
     @Override
-    public CUDReturnIdResult createQna(Long id, Long teacherId, Long lectureId, String title, String content) {
+    public QnAResult createQna(Long id, Long teacherId, Long lectureId, String title, String content) {
         TeacherQnAJpaEntity teacherQnaJpaEntity = new TeacherQnAJpaEntity(
                 id, teacherId, lectureId, title, content);
         TeacherQnAJpaEntity savedEntity = teacherQnAJpaRepository.save(teacherQnaJpaEntity);
-        return new CUDReturnIdResult(savedEntity.getId());
+        return QnAResult.from(savedEntity);
     }
 
     @Override
-    public CUDReturnIdResult createExamStory(Long id, Long teacherId, String title, String content, String type) {
+    public ExamStoryResult createExamStory(Long id, Long teacherId, String title, String content, String type) {
         ExamStoryJpaEntity examStoryJpaEntity = new ExamStoryJpaEntity(id, teacherId, title, content, type);
         ExamStoryJpaEntity savedEntity = examStoryJpaRepository.save(examStoryJpaEntity);
-        return new CUDReturnIdResult(savedEntity.getId());
+        return ExamStoryResult.from(savedEntity);
 
     }
 
     @Override
-    public CUDReturnIdResult createAnswer(Long id, Long qnaId, String answer) {
+    public QnAResult createAnswer(Long id, Long qnaId, String answer) {
         TeacherQnAJpaEntity teacherQnAJpaEntity = teacherQnAJpaRepository.findById(qnaId).orElseThrow(
                 () -> new EntityNotFoundException("Entity not found with ID: " + qnaId));
         teacherQnAJpaEntity.setTeacherId(id);
         teacherQnAJpaEntity.setAnswer(answer);
-        return new CUDReturnIdResult(teacherQnAJpaEntity.getId());
+        return QnAResult.from(teacherQnAJpaEntity);
     }
 }

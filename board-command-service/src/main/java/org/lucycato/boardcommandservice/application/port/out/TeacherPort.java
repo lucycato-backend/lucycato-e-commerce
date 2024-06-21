@@ -1,20 +1,20 @@
 package org.lucycato.boardcommandservice.application.port.out;
 
-import org.lucycato.boardcommandservice.application.port.out.result.CUDReturnIdResult;
+import org.lucycato.boardcommandservice.application.port.out.result.*;
 
 public interface TeacherPort {
 
-    CUDReturnIdResult createTeacherNotice(
+    TeacherNoticeResult createTeacherNotice(
             Long teacherId, String title, String content, String type);
 
-    CUDReturnIdResult createCourseReview(
+    CourseReviewResult createCourseReview(
             Long id, Long teacherId, Long lectureId, String title, String content, int score);
 
-    CUDReturnIdResult createQna(
+    QnAResult createQna(
             Long id, Long teacherId, Long lectureId, String title, String content);
 
 
-    CUDReturnIdResult createExamStory(Long id, Long teacherId, String title, String content, String type);
+    ExamStoryResult createExamStory(Long id, Long teacherId, String title, String content, String type);
 
-    CUDReturnIdResult createAnswer(Long id, Long qnaId, String answer);
+    QnAResult createAnswer(Long id, Long qnaId, String answer);
 }
