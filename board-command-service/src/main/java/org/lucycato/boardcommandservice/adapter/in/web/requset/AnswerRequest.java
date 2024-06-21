@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class AnswerRequest {
-    private Long QnAid;
 
     private String answer;
 }

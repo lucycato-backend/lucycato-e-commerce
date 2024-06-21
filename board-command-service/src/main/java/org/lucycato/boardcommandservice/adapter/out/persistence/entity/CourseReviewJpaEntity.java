@@ -20,10 +20,11 @@ public class CourseReviewJpaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Long studentId;
 
     private Long teacherId;
 
-    private Long studentId;
+    private Long lectureId;
 
     private String title;
 
@@ -31,5 +32,12 @@ public class CourseReviewJpaEntity {
 
     private int score;
 
-    private Long lectureId;
+    public CourseReviewJpaEntity(Long studentId, Long teacherId, Long lectureId, String title, String content, int score) {
+        this.studentId = studentId;
+        this.teacherId = teacherId;
+        this.lectureId = lectureId;
+        this.title = title;
+        this.content = content;
+        this.score = score;
+    }
 }

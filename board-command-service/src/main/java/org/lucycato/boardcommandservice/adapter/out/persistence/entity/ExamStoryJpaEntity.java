@@ -20,13 +20,21 @@ public class ExamStoryJpaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long teacherId;
-
     private Long studentId;
+
+    private Long teacherId;
 
     private String title;
 
     private String content;
 
     private String type;
+
+    public ExamStoryJpaEntity(Long studentId, Long teacherId, String title, String content, String type) {
+        this.studentId = studentId;
+        this.teacherId = teacherId;
+        this.title = title;
+        this.content = content;
+        this.type = type;
+    }
 }
