@@ -26,9 +26,9 @@ public class LectureController {
             AdminUserHeaderDetail adminUserHeaderDetail,
             @RequestPart(name = "request")
             RegisterLectureRequest request,
-            @RequestPart(name = "lectureThumbnailImageFile")
+            @RequestPart(name = "lectureThumbnailImageFile", required = false)
             MultipartFile lectureThumbnailImageFile,
-            @RequestPart(name = "lectureVideoFile")
+            @RequestPart(name = "lectureVideoFile", required = false)
             MultipartFile lectureVideoFile
     ) {
         RegisterLectureCommand command = new RegisterLectureCommand(
@@ -52,9 +52,9 @@ public class LectureController {
             Long lectureId,
             @RequestPart(name = "request")
             RegisterLectureRequest request,
-            @RequestPart(name = "lectureThumbnailImageFile")
+            @RequestPart(name = "lectureThumbnailImageFile", required = false)
             MultipartFile lectureThumbnailImageFile,
-            @RequestPart(name = "lectureVideoFile")
+            @RequestPart(name = "lectureVideoFile", required = false)
             MultipartFile lectureVideoFile
     ) {
         ModifyLectureCommand command = new ModifyLectureCommand(

@@ -7,7 +7,6 @@ import org.lucycato.common.resolver.AdminUserHeaderDetail;
 import org.lucycato.productcommandservice.adapter.in.web.request.RegisterTextEBookRequest;
 import org.lucycato.productcommandservice.application.port.in.TextEBooksUseCase;
 import org.lucycato.productcommandservice.application.port.in.command.DeleteTextEBookCommand;
-import org.lucycato.productcommandservice.application.port.in.command.ModifyTeacherCommand;
 import org.lucycato.productcommandservice.application.port.in.command.ModifyTextEBookCommand;
 import org.lucycato.productcommandservice.application.port.in.command.RegisterTextEBookCommand;
 import org.lucycato.productcommandservice.domain.TextEBookDetail;
@@ -27,12 +26,12 @@ public class TextEBookController {
             AdminUserHeaderDetail adminUserHeaderDetail,
             @RequestPart(name = "request")
             RegisterTextEBookRequest request,
-            @RequestPart(name = "textEBookImageFile")
+            @RequestPart(name = "textEBookImageFile", required = false)
             MultipartFile textEBookImageFile,
-            @RequestPart(name = "textEBookPreviewDownloadFile")
+            @RequestPart(name = "textEBookPreviewDownloadFile", required = false)
             MultipartFile textEBookPreviewDownloadFile,
-            @RequestPart(name = "textEBookFullDownloadUrl")
-            MultipartFile textEBookFullDownloadUrl
+            @RequestPart(name = "textEBookFullDownloadFile", required = false)
+            MultipartFile textEBookFullDownloadFile
 
     ) {
         RegisterTextEBookCommand command = new RegisterTextEBookCommand(
@@ -49,7 +48,7 @@ public class TextEBookController {
                 request.getTextEBookPublishedAt(),
                 textEBookImageFile,
                 textEBookPreviewDownloadFile,
-                textEBookFullDownloadUrl
+                textEBookFullDownloadFile
         );
 
         return textEBooksUseCase.registerTextEBook(command);
@@ -63,12 +62,12 @@ public class TextEBookController {
             Long textEBookId,
             @RequestPart(name = "request")
             RegisterTextEBookRequest request,
-            @RequestPart(name = "textEBookImageFile")
+            @RequestPart(name = "textEBookImageFile", required = false)
             MultipartFile textEBookImageFile,
-            @RequestPart(name = "textEBookPreviewDownloadFile")
+            @RequestPart(name = "textEBookPreviewDownloadFile", required = false)
             MultipartFile textEBookPreviewDownloadFile,
-            @RequestPart(name = "textEBookFullDownloadUrl")
-            MultipartFile textEBookFullDownloadUrl
+            @RequestPart(name = "textEBookFullDownloadFile", required = false)
+            MultipartFile textEBookFullDownloadFile
     ) {
         ModifyTextEBookCommand command = new ModifyTextEBookCommand(
                 adminUserHeaderDetail.getAdminUserId(),
@@ -85,7 +84,7 @@ public class TextEBookController {
                 request.getTextEBookPublishedAt(),
                 textEBookImageFile,
                 textEBookPreviewDownloadFile,
-                textEBookFullDownloadUrl
+                textEBookFullDownloadFile
         );
 
         return textEBooksUseCase.modifyTextEBook(command);

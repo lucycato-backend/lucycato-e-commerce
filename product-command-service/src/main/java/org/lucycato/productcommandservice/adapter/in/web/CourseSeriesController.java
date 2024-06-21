@@ -1,13 +1,11 @@
 package org.lucycato.productcommandservice.adapter.in.web;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.lucycato.common.annotation.hexagonal.in.WebAdapter;
 import org.lucycato.common.annotation.resolver.AdminUserHeaders;
 import org.lucycato.common.resolver.AdminUserHeaderDetail;
 import org.lucycato.productcommandservice.adapter.in.web.request.RegisterCourseSeriesRequest;
 import org.lucycato.productcommandservice.application.port.in.CourseSeriesUseCase;
-import org.lucycato.productcommandservice.application.port.in.CourseUseCase;
 import org.lucycato.productcommandservice.application.port.in.command.DeleteCourseSeriesCommand;
 import org.lucycato.productcommandservice.application.port.in.command.ModifyCourseSeriesCommand;
 import org.lucycato.productcommandservice.application.port.in.command.RegisterCourseSeriesCommand;
@@ -30,9 +28,9 @@ public class CourseSeriesController {
             AdminUserHeaderDetail adminUserHeaderDetail,
             @RequestPart(name = "request")
             RegisterCourseSeriesRequest request,
-            @RequestPart(name = "courseSeriesImageFile")
+            @RequestPart(name = "courseSeriesImageFile", required = false)
             MultipartFile courseSeriesImageFile,
-            @RequestPart(name = "courseSeriesExplainImageFiles")
+            @RequestPart(name = "courseSeriesExplainImageFiles", required = false)
             List<MultipartFile> courseSeriesExplainImageFiles
     ) {
         RegisterCourseSeriesCommand command = new RegisterCourseSeriesCommand(
@@ -57,9 +55,9 @@ public class CourseSeriesController {
             Long courseSeriesId,
             @RequestPart(name = "request")
             RegisterCourseSeriesRequest request,
-            @RequestPart(name = "courseSeriesImageFile")
+            @RequestPart(name = "courseSeriesImageFile", required = false)
             MultipartFile courseSeriesImageFile,
-            @RequestPart(name = "courseSeriesExplainImageFiles")
+            @RequestPart(name = "courseSeriesExplainImageFiles", required = false)
             List<MultipartFile> courseSeriesExplainImageFiles
     ) {
         ModifyCourseSeriesCommand command = new ModifyCourseSeriesCommand(
