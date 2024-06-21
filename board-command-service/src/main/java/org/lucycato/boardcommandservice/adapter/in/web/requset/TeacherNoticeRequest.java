@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TeacherNoticeRequest {
 
-    private Long teacherId;
-
     private String title;
 
     private String content;

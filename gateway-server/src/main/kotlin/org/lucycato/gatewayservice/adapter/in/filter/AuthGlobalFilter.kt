@@ -19,6 +19,7 @@ class AuthGlobalFilter(
     companion object {
         const val WHITELIST_OPEN_API_KEY = "open-api"
         const val WHITELIST_API_KEY = "api"
+        const val WHITELIST_SWAGGER_KEY = "api-docs"
         const val AUTH_ADMIN_KEY = "admin"
         const val AUTH_APP_KEY = "app"
     }
@@ -33,7 +34,7 @@ class AuthGlobalFilter(
                         val whitelist = split[1]
                         when (whitelist) {
                             WHITELIST_OPEN_API_KEY -> Mono.just("")
-
+                            WHITELIST_SWAGGER_KEY -> Mono.just("")
                             WHITELIST_API_KEY -> {
                                 val request = exchange.request
                                 val auth = split[2]

@@ -9,8 +9,6 @@ public class CourseReviewRequest {
 
     private Long teacherId;
 
-    private Long studentId;
-
     private String title;
 
     private String content;

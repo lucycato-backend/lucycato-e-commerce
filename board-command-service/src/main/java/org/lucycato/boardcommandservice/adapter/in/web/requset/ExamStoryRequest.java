@@ -9,8 +9,6 @@ public class ExamStoryRequest {
 
     private Long teacherId;
 
-    private Long studentId;
-
     private String title;
 
     private String content;
