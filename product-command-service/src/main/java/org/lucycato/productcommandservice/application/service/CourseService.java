@@ -32,7 +32,8 @@ public class CourseService implements CourseUseCase {
 
     @Override
     public CourseDetail registerCourse(RegisterCourseCommand command) {
-        if (userAuthPort.checkAuthToChangeTeacher(command.getRequestAdminUserId(), command.getTeacherId())) {
+        Long teacherId = teacherQueryPort.getTeacherIdByCourseSeriesId(command.getCourseSeriesId());
+        if (userAuthPort.checkAuthToChangeTeacher(command.getRequestAdminUserId(), teacherId)) {
             String courseImageUrl = "";
             if (command.getCourseImageFile() != null) {
                 courseImageUrl = fileStoragePort.saveImageFile(command.getCourseImageFile());
@@ -53,12 +54,12 @@ public class CourseService implements CourseUseCase {
 
             Boolean isRecentCourseOpen = coursePort.registerRecentCourseOpen(
                     courseDetailResult.getCourseId(),
-                    command.getTeacherId()
+                    teacherId
             );
 
             coursePort.sendRecentCourseOpen(
                     courseDetailResult.getCourseId(),
-                    command.getTeacherId(),
+                    teacherId,
                     ProductBroadcastingCategory.COURSE_UPLOAD
             );
 
@@ -70,7 +71,8 @@ public class CourseService implements CourseUseCase {
 
     @Override
     public CourseDetail modifyCourse(ModifyCourseCommand command) {
-        if (userAuthPort.checkAuthToChangeTeacher(command.getRequestAdminUserId(), command.getTeacherId())) {
+        Long teacherId = teacherQueryPort.getTeacherIdByCourseId(command.getCourseId());
+        if (userAuthPort.checkAuthToChangeTeacher(command.getRequestAdminUserId(), teacherId)) {
             String courseImageUrl = "";
             if (command.getCourseImageFile() != null) {
                 courseImageUrl = fileStoragePort.saveImageFile(command.getCourseImageFile());
@@ -102,7 +104,8 @@ public class CourseService implements CourseUseCase {
         Long teacherId = teacherQueryPort.getTeacherIdByCourseId(command.getCourseId());
         if (userAuthPort.checkAuthToChangeTeacher(command.getRequestAdminUserId(), teacherId)) {
             coursePort.deleteCourse(command.getCourseId());
+        } else {
+            throw new ApiExceptionImpl(ProductCommandErrorCodeImpl.ADMIN_USER_NOT_CHANGE_TO_TEACHER);
         }
-        throw new ApiExceptionImpl(ProductCommandErrorCodeImpl.ADMIN_USER_NOT_CHANGE_TO_TEACHER);
     }
 }

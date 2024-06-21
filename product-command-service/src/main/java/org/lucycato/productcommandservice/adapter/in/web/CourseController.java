@@ -31,7 +31,6 @@ public class CourseController {
     ) {
         RegisterCourseCommand command = new RegisterCourseCommand(
                 adminUserHeaderDetail.getAdminUserId(),
-                request.getTeacherId(),
                 request.getCourseSeriesId(),
                 request.getCourseTitle(),
                 request.getCourseSubTitle(),
@@ -60,7 +59,6 @@ public class CourseController {
         ModifyCourseCommand command = new ModifyCourseCommand(
                 adminUserHeaderDetail.getAdminUserId(),
                 courseId,
-                request.getTeacherId(),
                 request.getCourseSeriesId(),
                 request.getCourseTitle(),
                 request.getCourseSubTitle(),
@@ -75,7 +73,7 @@ public class CourseController {
         return courseUseCase.modifyCourse(command);
     }
 
-    @DeleteMapping("api/app/v1/courses/{courseId}")
+    @DeleteMapping("api/admin/v1/courses/{courseId}")
     public Object deleteCourse(
             @AdminUserHeaders
             AdminUserHeaderDetail adminUserHeaderDetail,

@@ -6,10 +6,11 @@ import org.lucycato.productcommandservice.application.port.in.TextEBooksUseCase;
 import org.lucycato.productcommandservice.application.port.in.command.DeleteTextEBookCommand;
 import org.lucycato.productcommandservice.application.port.in.command.ModifyTextEBookCommand;
 import org.lucycato.productcommandservice.application.port.in.command.RegisterTextEBookCommand;
-import org.lucycato.productcommandservice.application.port.out.*;
-import org.lucycato.productcommandservice.domain.LectureDetail;
+import org.lucycato.productcommandservice.application.port.out.FileStoragePort;
+import org.lucycato.productcommandservice.application.port.out.TeacherQueryPort;
+import org.lucycato.productcommandservice.application.port.out.TextEBookPort;
+import org.lucycato.productcommandservice.application.port.out.UserAuthPort;
 import org.lucycato.productcommandservice.domain.TextEBookDetail;
-import org.lucycato.productcommandservice.domain.enums.LectureStatus;
 import org.lucycato.productcommandservice.domain.enums.TextEBookStatus;
 import org.lucycato.productcommandservice.error.ProductCommandErrorCodeImpl;
 import org.springframework.stereotype.Service;
@@ -110,7 +111,8 @@ public class TextEBookService implements TextEBooksUseCase {
         Long teacherId = teacherQueryPort.getTeacherIdByTextEBookId(command.getTextEBookId());
         if (userAuthPort.checkAuthToChangeTeacher(command.getRequestAdminUserId(), teacherId)) {
             textEBookPort.removeTextEBook(command.getTextEBookId());
+        } else {
+            throw new ApiExceptionImpl(ProductCommandErrorCodeImpl.ADMIN_USER_NOT_CHANGE_TO_TEACHER);
         }
-        throw new ApiExceptionImpl(ProductCommandErrorCodeImpl.ADMIN_USER_NOT_CHANGE_TO_TEACHER);
     }
 }

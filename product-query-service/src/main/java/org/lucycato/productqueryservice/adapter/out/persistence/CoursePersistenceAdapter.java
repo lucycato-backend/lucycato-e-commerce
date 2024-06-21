@@ -19,6 +19,7 @@ import reactor.core.publisher.Mono;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @PersistenceAdapter
@@ -115,7 +116,12 @@ public class CoursePersistenceAdapter implements CoursePort {
     @Override
     public Flux<CheckedRecentCourseOpenResult> checkRecentCourseOpenListByTeacherIds(List<Long> teacherIds) {
         return redisTemplate.opsForHash().multiGet(PRODUCT_SERVICE_RECENT_COURSE_UPLOAD_BY_TEACHER_ID_HASH_KEY, teacherIds.stream().map(String::valueOf).collect(Collectors.toList()))
-                .flatMapMany(Flux::fromIterable)
+                .flatMapMany(result -> {
+                    List<Object> nonNullResults = result.stream()
+                            .filter(Objects::nonNull)
+                            .collect(Collectors.toList());
+                    return Flux.fromIterable(nonNullResults);
+                })
                 .flatMap(it -> Flux.just(String.valueOf(it)))
                 .flatMap(json -> Mono.fromCallable(() -> objectMapper.readValue(json, CheckedRecentCourseOpenResult.class)));
     }

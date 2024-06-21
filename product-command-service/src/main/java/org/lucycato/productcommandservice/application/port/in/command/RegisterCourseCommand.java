@@ -20,9 +20,6 @@ public class RegisterCourseCommand extends SelfValidating<RegisterCourseCommand>
     private Long requestAdminUserId;
 
     @NotNull
-    private Long teacherId;
-
-    @NotNull
     private Long courseSeriesId;
 
     @NotBlank
@@ -48,9 +45,8 @@ public class RegisterCourseCommand extends SelfValidating<RegisterCourseCommand>
 
     private MultipartFile courseImageFile;
 
-    public RegisterCourseCommand(Long requestAdminUserId, Long teacherId, Long courseSeriesId, String courseTitle, String courseSubTitle, Integer coursePrice, String courseDescription, CourseGenre courseGenre, SubjectCategory subjectCategory, LocalDateTime expiredAt, MultipartFile courseImageFile) {
+    public RegisterCourseCommand(Long requestAdminUserId, Long courseSeriesId, String courseTitle, String courseSubTitle, Integer coursePrice, String courseDescription, CourseGenre courseGenre, SubjectCategory subjectCategory, LocalDateTime expiredAt, MultipartFile courseImageFile) {
         this.requestAdminUserId = requestAdminUserId;
-        this.teacherId = teacherId;
         this.courseSeriesId = courseSeriesId;
         this.courseTitle = courseTitle;
         this.courseSubTitle = courseSubTitle;

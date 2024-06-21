@@ -26,11 +26,11 @@ public class TeacherController {
             AdminUserHeaderDetail adminUserHeaderDetail,
             @RequestPart(name = "request")
             RegisterTeacherRequest request,
-            @RequestPart(name = "teacherImageFile")
+            @RequestPart(name = "teacherImageFile", required = false)
             MultipartFile teacherImageFile,
-            @RequestPart(name = "teacherCurriculumImageFile")
+            @RequestPart(name = "teacherCurriculumImageFile", required = false)
             MultipartFile teacherCurriculumImageFile,
-            @RequestPart(name = "teacherCurriculumVideoFile")
+            @RequestPart(name = "teacherCurriculumVideoFile", required = false)
             MultipartFile teacherCurriculumVideoFile
     ) {
         RegisterTeacherCommand command = new RegisterTeacherCommand(
@@ -56,11 +56,11 @@ public class TeacherController {
             Long teacherId,
             @RequestPart(name = "request")
             RegisterTeacherRequest request,
-            @RequestPart(name = "teacherImageFile")
+            @RequestPart(name = "teacherImageFile", required = false)
             MultipartFile teacherImageFile,
-            @RequestPart(name = "teacherCurriculumImageFile")
+            @RequestPart(name = "teacherCurriculumImageFile", required = false)
             MultipartFile teacherCurriculumImageFile,
-            @RequestPart(name = "teacherCurriculumVideoFile")
+            @RequestPart(name = "teacherCurriculumVideoFile", required = false)
             MultipartFile teacherCurriculumVideoFile
     ) {
         ModifyTeacherCommand command = new ModifyTeacherCommand(

@@ -24,6 +24,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
@@ -58,6 +59,7 @@ public class CoursePersistenceAdapter implements CoursePort {
                 courseSubTitle,
                 coursePrice,
                 courseDescription,
+                courseImageUrl,
                 courseGenre,
                 subjectCategory,
                 courseStatus,
@@ -80,7 +82,7 @@ public class CoursePersistenceAdapter implements CoursePort {
     ) {
         CourseJpaEntity courseJpaEntity = courseJpaRepository.findById(courseId).orElseThrow(() -> new ApiExceptionImpl(ErrorCodeImpl.NOT_FOUND));
         CourseSeriesJpaEntity courseSeriesJpaEntity = CourseSeriesJpaEntity.builder()
-                .id(courseId)
+                .id(courseSeriesId)
                 .build();
         courseJpaEntity.setCourseSeriesJpaEntity(courseSeriesJpaEntity);
         courseJpaEntity.setCourseTitle(courseTitle);
@@ -101,19 +103,24 @@ public class CoursePersistenceAdapter implements CoursePort {
             Long teacherId
     ) {
         CheckedRecentCourseOpenRedisEntity entity = new CheckedRecentCourseOpenRedisEntity(courseId, teacherId);
+        String json = "";
         try {
-            String json = objectMapper.writeValueAsString(entity);
-            redisTemplate.opsForHash().put(PRODUCT_SERVICE_RECENT_COURSE_UPLOAD_BY_TEACHER_ID_HASH_KEY, teacherId, json);
-            redisTemplate.opsForHash().put(PRODUCT_SERVICE_RECENT_COURSE_UPLOAD_BY_COURSE_ID_HASH_KEY, courseId, json);
-            return true;
+            json = objectMapper.writeValueAsString(entity);
         } catch (Exception e) {
             throw new ApiExceptionImpl(ErrorCodeImpl.JSON_PARSING, e);
         }
+
+        redisTemplate.opsForHash().put(PRODUCT_SERVICE_RECENT_COURSE_UPLOAD_BY_TEACHER_ID_HASH_KEY, String.valueOf(teacherId), json);
+        redisTemplate.expire(PRODUCT_SERVICE_RECENT_COURSE_UPLOAD_BY_TEACHER_ID_HASH_KEY, 7, TimeUnit.DAYS);
+        redisTemplate.opsForHash().put(PRODUCT_SERVICE_RECENT_COURSE_UPLOAD_BY_COURSE_ID_HASH_KEY, String.valueOf(courseId), json);
+        redisTemplate.expire(PRODUCT_SERVICE_RECENT_COURSE_UPLOAD_BY_COURSE_ID_HASH_KEY, 7, TimeUnit.DAYS);
+
+        return true;
     }
 
     @Override
     public Boolean getRecentCourseOpen(Long courseId) {
-        return Optional.ofNullable(redisTemplate.opsForHash().get(PRODUCT_SERVICE_RECENT_COURSE_UPLOAD_BY_COURSE_ID_HASH_KEY, courseId))
+        return Optional.ofNullable(redisTemplate.opsForHash().get(PRODUCT_SERVICE_RECENT_COURSE_UPLOAD_BY_COURSE_ID_HASH_KEY, String.valueOf(courseId)))
                 .isPresent();
     }
 

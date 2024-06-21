@@ -75,6 +75,7 @@ public class CourseJpaEntity {
             String courseTitle,
             String courseSubTitle,
             Integer coursePrice,
+            String courseImageUrl,
             String courseDescription,
             CourseGenre courseGenre,
             SubjectCategory subjectCategory,
@@ -86,6 +87,7 @@ public class CourseJpaEntity {
                 .courseSubTitle(courseSubTitle)
                 .coursePrice(coursePrice)
                 .courseDescription(courseDescription)
+                .courseImageUrl(courseImageUrl)
                 .courseGenre(courseGenre)
                 .subjectCategory(subjectCategory)
                 .courseStatus(courseStatus)
@@ -102,6 +104,7 @@ public class CourseJpaEntity {
             String courseSubTitle,
             Integer coursePrice,
             String courseDescription,
+            String courseImageUrl,
             CourseGenre courseGenre,
             SubjectCategory subjectCategory,
             CourseStatus courseStatus,
@@ -114,6 +117,7 @@ public class CourseJpaEntity {
                 .coursePrice(coursePrice)
                 .courseDescription(courseDescription)
                 .courseGenre(courseGenre)
+                .courseImageUrl(courseImageUrl)
                 .subjectCategory(subjectCategory)
                 .courseStatus(courseStatus)
                 .courseExpiredAt(courseExpiredAt)

@@ -10,8 +10,6 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 public class RegisterCourseRequest {
-    private Long teacherId;
-
     private Long courseSeriesId;
 
     private String courseTitle;
