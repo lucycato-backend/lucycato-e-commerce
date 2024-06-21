@@ -3,6 +3,7 @@ package org.lucycato.orderqueryservice.adapter.in.web;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -18,8 +19,15 @@ public class OrderController {
 
     }
 
+    @GetMapping("api/app/v1/orders")
+    public void getOrder(@RequestParam Long courseId,
+                         @RequestParam Integer limit,
+                         @RequestParam Integer offset) {
+
+    }
+
     @GetMapping("api/admin/v1/orders/{orderId}")
     public void getOrder(@PathVariable Long orderId) {
-        
+
     }
 }
