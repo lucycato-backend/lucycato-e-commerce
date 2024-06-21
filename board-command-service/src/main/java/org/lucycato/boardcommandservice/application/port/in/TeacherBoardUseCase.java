@@ -1,17 +1,17 @@
 package org.lucycato.boardcommandservice.application.port.in;
 
 import org.lucycato.boardcommandservice.application.port.in.command.*;
-import org.lucycato.boardcommandservice.domain.CUDReturnId;
+import org.lucycato.boardcommandservice.domain.*;
 
 public interface TeacherBoardUseCase {
 
-    CUDReturnId createTeacherNotice(CreateTeacherNoticeCommand command);
+    TeacherNotice createTeacherNotice(CreateTeacherNoticeCommand command);
 
-    CUDReturnId createCourseReview(CreateCourseReviewCommand command);
+    CourseReview createCourseReview(CreateCourseReviewCommand command);
 
-    CUDReturnId createQna(CreateQnaCommand command);
+    QnA createQna(CreateQnaCommand command);
 
-    CUDReturnId createExamStory(CreateExamStoryCommand command);
+    ExamStory createExamStory(CreateExamStoryCommand command);
 
-    CUDReturnId createAnswer(CreateAnswerCommand command);
+    QnA createAnswer(CreateAnswerCommand command);
 }

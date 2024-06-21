@@ -4,8 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.lucycato.boardcommandservice.application.port.in.TeacherBoardUseCase;
 import org.lucycato.boardcommandservice.application.port.in.command.*;
 import org.lucycato.boardcommandservice.application.port.out.TeacherPort;
-import org.lucycato.boardcommandservice.application.port.out.result.CUDReturnIdResult;
-import org.lucycato.boardcommandservice.domain.CUDReturnId;
+import org.lucycato.boardcommandservice.application.port.out.TeacherRedisPort;
+import org.lucycato.boardcommandservice.application.port.out.result.*;
+import org.lucycato.boardcommandservice.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,21 +16,23 @@ import org.springframework.transaction.annotation.Transactional;
 public class TeacherBoardService implements TeacherBoardUseCase {
 
     private final TeacherPort teacherPort;
+    private final TeacherRedisPort teacherRedisPort;
 
     @Override
-    public CUDReturnId createTeacherNotice(CreateTeacherNoticeCommand command) {
-        CUDReturnIdResult cudReturnIdResult = teacherPort.createTeacherNotice(
+    public TeacherNotice createTeacherNotice(CreateTeacherNoticeCommand command) {
+        TeacherNoticeResult teacherNoticeResult = teacherPort.createTeacherNotice(
                 command.getTeacherId(),
                 command.getTitle(),
                 command.getContent(),
                 command.getType()
         );
-        return CUDReturnId.from(cudReturnIdResult);
+        teacherRedisPort.addTeacherNoticeRedis(teacherNoticeResult.getTeacherId(), teacherNoticeResult.getId());
+        return TeacherNotice.from(teacherNoticeResult);
     }
 
     @Override
-    public CUDReturnId createCourseReview(CreateCourseReviewCommand command) {
-        CUDReturnIdResult cudReturnIdResult = teacherPort.createCourseReview(
+    public CourseReview createCourseReview(CreateCourseReviewCommand command) {
+        CourseReviewResult courseReviewResult = teacherPort.createCourseReview(
                 command.getId(),
                 command.getTeacherId(),
                 command.getLectureId(),
@@ -37,41 +40,41 @@ public class TeacherBoardService implements TeacherBoardUseCase {
                 command.getContent(),
                 command.getScore()
         );
-        return CUDReturnId.from(cudReturnIdResult);
+        return CourseReview.from(courseReviewResult);
     }
 
     @Override
-    public CUDReturnId createQna(CreateQnaCommand command) {
-        CUDReturnIdResult cudReturnIdResult = teacherPort.createQna(
+    public QnA createQna(CreateQnaCommand command) {
+        QnAResult qnAResult = teacherPort.createQna(
                 command.getId(),
                 command.getTeacherId(),
                 command.getLectureId(),
                 command.getTitle(),
                 command.getContent()
         );
-        return CUDReturnId.from(cudReturnIdResult);
+        return QnA.from(qnAResult);
     }
 
     @Override
-    public CUDReturnId createExamStory(CreateExamStoryCommand command) {
-        CUDReturnIdResult cudReturnIdResult = teacherPort.createExamStory(
+    public ExamStory createExamStory(CreateExamStoryCommand command) {
+        ExamStoryResult examStoryResult = teacherPort.createExamStory(
                 command.getId(),
                 command.getTeacherId(),
                 command.getTitle(),
                 command.getContent(),
                 command.getType()
         );
-        return CUDReturnId.from(cudReturnIdResult);
+        return ExamStory.from(examStoryResult);
     }
 
     @Override
-    public CUDReturnId createAnswer(CreateAnswerCommand command) {
-        CUDReturnIdResult cudReturnIdResult = teacherPort.createAnswer(
+    public QnA createAnswer(CreateAnswerCommand command) {
+        QnAResult qnAResult = teacherPort.createAnswer(
                 command.getId(),
                 command.getQnaId(),
                 command.getAnswer()
         );
-        return CUDReturnId.from(cudReturnIdResult);
+        return QnA.from(qnAResult);
     }
 
 }
