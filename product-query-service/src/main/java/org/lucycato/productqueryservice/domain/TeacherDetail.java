@@ -88,7 +88,7 @@ public class TeacherDetail {
     public static TeacherDetail simple(
             TeacherDetailResult teacherDetailResult,
             Boolean isRecentCourseOpen,
-            Boolean isRecentTeacherNews
+            Boolean isRecentTeacherNotice
     ) {
         Curriculum curriculum = Curriculum.builder()
                 .curriculumImageUrl(teacherDetailResult.getCurriculumImageUrl())
@@ -104,7 +104,7 @@ public class TeacherDetail {
                 .teacherImage(teacherDetailResult.getTeacherImageUrl())
                 .curriculum(curriculum)
                 .isRecentCourseOpen(isRecentCourseOpen)
-                .isRecentTeacherNews(isRecentTeacherNews)
+                .isRecentTeacherNews(isRecentTeacherNotice)
                 .teachingGenre(teacherDetailResult.getTeachingGenre())
                 .teacherStatus(teacherDetailResult.getTeacherStatus())
                 .teacherCreatedAt(teacherDetailResult.getTeacherCreatedAt())

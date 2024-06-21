@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 public class CoursePersistenceAdapter implements CoursePort {
 
     private final String PRODUCT_SERVICE_RECENT_COURSE_UPLOAD_BY_TEACHER_ID_HASH_KEY = "product-service:courses:recent-upload:by-teacher-id";
+    private final String PRODUCT_SERVICE_RECENT_COURSE_UPLOAD_BY_COURSE_ID_HASH_KEY = "product-service:courses:recent-upload:by-course-id";
 
     private final ObjectMapper objectMapper;
 
@@ -116,10 +117,17 @@ public class CoursePersistenceAdapter implements CoursePort {
         return redisTemplate.opsForHash().multiGet(PRODUCT_SERVICE_RECENT_COURSE_UPLOAD_BY_TEACHER_ID_HASH_KEY, teacherIds.stream().map(String::valueOf).collect(Collectors.toList()))
                 .flatMapMany(Flux::fromIterable)
                 .flatMap(it -> Flux.just(String.valueOf(it)))
-                .flatMap(json -> Mono.fromCallable(() ->
-                        objectMapper.readValue(json, CheckedRecentCourseOpenResult.class).updateIsRecentCourseOpenTrue()
-                ));
+                .flatMap(json -> Mono.fromCallable(() -> objectMapper.readValue(json, CheckedRecentCourseOpenResult.class)));
     }
+
+    @Override
+    public Flux<CheckedRecentCourseOpenResult> checkRecentCourseOpenListByCourseIds(List<Long> courseIds) {
+        return redisTemplate.opsForHash().multiGet(PRODUCT_SERVICE_RECENT_COURSE_UPLOAD_BY_COURSE_ID_HASH_KEY, courseIds.stream().map(String::valueOf).collect(Collectors.toList()))
+                .flatMapMany(Flux::fromIterable)
+                .flatMap(it -> Flux.just(String.valueOf(it)))
+                .flatMap(json -> Mono.fromCallable(() -> objectMapper.readValue(json, CheckedRecentCourseOpenResult.class)));
+    }
+
 
     @Override
     public Flux<CourseResult> getCourseListByCourseSeriesIds(List<Long> courseSeriesIds) {
@@ -162,7 +170,7 @@ public class CoursePersistenceAdapter implements CoursePort {
     public Flux<CourseResult> getCourseListByTeacherIds(List<Long> teacherIds) {
         String sql = """
                 SELECT c.id as courseId,
-                    c.teacher_id as teacherId,
+                    cs.teacher_id as teacherId,
                     c.course_title as courseTitle,
                     c.course_sub_title as courseSubTitle,
                     c.course_price as coursePrice,
@@ -173,7 +181,8 @@ public class CoursePersistenceAdapter implements CoursePort {
                     c.course_expired_at as courseExpiredAt,
                     c.course_created_at as courseCreatedAt
                 FROM courses c
-                WHERE c.teacher_id IN (:teacherIds);
+                INNER JOIN course_series cs ON c.course_series_id = cs.id
+                WHERE cs.teacher_id IN (:teacherIds);
                 """;
 
         return databaseClient.sql(sql)

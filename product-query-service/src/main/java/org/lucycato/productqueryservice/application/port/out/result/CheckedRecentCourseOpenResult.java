@@ -10,11 +10,4 @@ public class CheckedRecentCourseOpenResult {
     private Long courseId;
 
     private Long teacherId;
-
-    private Boolean isRecentCourseOpen;
-
-    public CheckedRecentCourseOpenResult updateIsRecentCourseOpenTrue() {
-        this.isRecentCourseOpen = true;
-        return this;
-    }
 }

@@ -4,5 +4,5 @@ import reactor.core.publisher.Mono;
 
 public interface UserAuthPort {
 
-    Mono<Boolean> checkAdminUserTeacherAssistance(Long adminUserId);
+    Mono<Boolean> checkAuthToChangeTeacher(Long adminUserId);
 }

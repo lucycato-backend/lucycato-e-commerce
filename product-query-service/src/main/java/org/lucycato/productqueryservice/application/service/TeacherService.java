@@ -83,11 +83,9 @@ public class TeacherService implements TeacherUseCase {
                         Teacher.from(
                                 teacherResult,
                                 Optional.ofNullable(courseMap.get(teacherResult.getTeacherId()))
-                                        .map(CheckedRecentCourseOpenResult::getIsRecentCourseOpen)
-                                        .orElse(false),
+                                        .isPresent(),
                                 Optional.ofNullable(newsMap.get(teacherResult.getTeacherId()))
-                                        .map(CheckedRecentTeacherNoticeResult::getIsRecentTeacherNotice)
-                                        .orElse(false)
+                                        .isPresent()
                         )))
                 .sort((a, b) -> Long.compare(b.getTeacherId(), a.getTeacherId()));
     }
@@ -104,8 +102,8 @@ public class TeacherService implements TeacherUseCase {
                                     .flatMap(teacherResult -> Mono.just(
                                             TeacherDetail.simple(
                                                     teacherResult,
-                                                    !tuples.getT1().isEmpty() && tuples.getT1().get(0).getIsRecentCourseOpen(),
-                                                    !tuples.getT2().isEmpty() && tuples.getT1().get(0).getIsRecentCourseOpen()
+                                                    !tuples.getT1().isEmpty(),
+                                                    !tuples.getT2().isEmpty()
                                             )
                                     ))
                     );
@@ -124,8 +122,8 @@ public class TeacherService implements TeacherUseCase {
                                     .flatMap(teacherDetailResult -> Mono.just(
                                             TeacherDetail.from(
                                                     teacherDetailResult,
-                                                    !tuples.getT1().isEmpty() && tuples.getT1().get(0).getIsRecentCourseOpen(),
-                                                    !tuples.getT2().isEmpty() && tuples.getT1().get(0).getIsRecentCourseOpen(),
+                                                    !tuples.getT1().isEmpty(),
+                                                    !tuples.getT2().isEmpty(),
                                                     tuples.getT3(),
                                                     tuples.getT4(),
                                                     tuples.getT5(),

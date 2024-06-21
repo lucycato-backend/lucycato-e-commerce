@@ -7,8 +7,6 @@ import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
 
 @Configuration
 @ComponentScan({"org.lucycato.common", "org.lucycato.webflux"})
-@EnableR2dbcRepositories
-@EnableR2dbcAuditing
 public class ProductQueryServiceConfig {
 
 }

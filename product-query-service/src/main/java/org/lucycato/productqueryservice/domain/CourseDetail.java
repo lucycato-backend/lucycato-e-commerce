@@ -37,11 +37,13 @@ public class CourseDetail {
 
     private final CourseStatus courseStatus;
 
+    private final Boolean isRecentCourseOpen;
+
     private final LocalDateTime courseExpiredAt;
 
     private final LocalDateTime courseCreatedAt;
 
-    public static CourseDetail from(CourseDetailResult courseDetailResult) {
+    public static CourseDetail from(CourseDetailResult courseDetailResult, Boolean isRecentCourseOpen) {
         return CourseDetail.builder()
                 .courseId(courseDetailResult.getCourseId())
                 .teacherId(courseDetailResult.getTeacherId())
@@ -54,6 +56,7 @@ public class CourseDetail {
                 .courseCourseGenre(courseDetailResult.getCourseGenre())
                 .subjectCategory(courseDetailResult.getSubjectCategory())
                 .courseStatus(courseDetailResult.getCourseStatus())
+                .isRecentCourseOpen(isRecentCourseOpen)
                 .courseExpiredAt(courseDetailResult.getCourseExpiredAt())
                 .courseCreatedAt(courseDetailResult.getCourseCreatedAt())
                 .build();

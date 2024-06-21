@@ -38,6 +38,8 @@ public class CourseSeriesCourse {
 
     private final CourseStatus courseStatus;
 
+    private final Boolean isRecentCourseOpen;
+
     private final LocalDateTime courseExpiredAt;
 
     private final LocalDateTime courseCreatedAt;
@@ -46,7 +48,8 @@ public class CourseSeriesCourse {
             CourseResult courseResult,
             TeacherResult teacherResult,
             CourseSeriesResult courseSeriesResult,
-            TextEBookResult textEBookResult
+            TextEBookResult textEBookResult,
+            Boolean isRecentCourseOpen
     ) {
         Teacher teacher = Teacher.builder()
                 .teacherId(teacherResult.getTeacherId())
@@ -69,6 +72,7 @@ public class CourseSeriesCourse {
                 .textEBookPreviewDownloadUrl(textEBookResult.getTextEBookPreviewDownloadUrl())
                 .textEBookStatus(textEBookResult.getTextEBookStatus())
                 .build();
+
         return CourseSeriesCourse.builder()
                 .courseId(courseResult.getCourseId())
                 .teacher(teacher)
@@ -81,6 +85,7 @@ public class CourseSeriesCourse {
                 .courseGenre(courseResult.getCourseGenre())
                 .subjectCategory(courseResult.getSubjectCategory())
                 .courseStatus(courseResult.getCourseStatus())
+                .isRecentCourseOpen(isRecentCourseOpen)
                 .courseExpiredAt(courseResult.getCourseExpiredAt())
                 .courseCreatedAt(courseResult.getCourseCreatedAt())
                 .build();
