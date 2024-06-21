@@ -12,7 +12,7 @@ public class UserAuthServiceAdapter implements UserAuthPort {
     private final CommonWebClient commonWebClient;
 
     @Override
-    public Mono<Boolean> checkAdminUserTeacherAssistance(Long adminUserId) {
+    public Mono<Boolean> checkAuthToChangeTeacher(Long adminUserId) {
         return Mono.just(true);
     }
 }

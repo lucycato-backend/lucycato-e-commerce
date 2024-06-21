@@ -5,7 +5,9 @@ import org.lucycato.common.exception.ApiExceptionImpl;
 import org.lucycato.productqueryservice.application.port.in.CourseUseCase;
 import org.lucycato.productqueryservice.application.port.in.command.*;
 import org.lucycato.productqueryservice.application.port.out.*;
-import org.lucycato.productqueryservice.domain.*;
+import org.lucycato.productqueryservice.domain.CourseDetail;
+import org.lucycato.productqueryservice.domain.CourseLecture;
+import org.lucycato.productqueryservice.domain.CourseTextEBook;
 import org.lucycato.productqueryservice.error.ProductErrorCodeImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,7 +52,7 @@ public class CourseService implements CourseUseCase {
 
     @Override
     public Flux<CourseLecture> getAuthCourseLectureList(SpecificAdminCourseLectureSearchCommand command) {
-        return userAuthPort.checkAdminUserTeacherAssistance(command.getAdminUserId())
+        return userAuthPort.checkAuthToChangeTeacher(command.getAdminUserId())
                 .filter(isAuth -> isAuth)
                 .switchIfEmpty(Mono.error(new ApiExceptionImpl(ProductErrorCodeImpl.ADMIN_USER_NOT_TEACHER_ASSISTANCE)))
                 .flatMapMany(Flux::just)
@@ -88,7 +90,7 @@ public class CourseService implements CourseUseCase {
 
     @Override
     public Flux<CourseTextEBook> getAuthCourseTextEBookList(SpecificAdminCourseTextEBookSearchCommand command) {
-        return userAuthPort.checkAdminUserTeacherAssistance(command.getAdminUserId())
+        return userAuthPort.checkAuthToChangeTeacher(command.getAdminUserId())
                 .filter(isAuth -> isAuth)
                 .switchIfEmpty(Mono.error(new ApiExceptionImpl(ProductErrorCodeImpl.APP_USER_NOT_FOUND_BUY_COURSE)))
                 .flatMapMany(Flux::just)
