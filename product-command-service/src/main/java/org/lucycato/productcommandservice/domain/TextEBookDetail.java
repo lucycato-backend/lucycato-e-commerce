@@ -1,15 +1,12 @@
 package org.lucycato.productcommandservice.domain;
 
-import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.lucycato.productcommandservice.adapter.out.persistence.entity.CourseJpaEntity;
+import org.lucycato.productcommandservice.application.port.out.result.TextEBookDetailResult;
 import org.lucycato.productcommandservice.domain.enums.SubjectCategory;
 import org.lucycato.productcommandservice.domain.enums.TextEBookStatus;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
@@ -48,4 +45,26 @@ public class TextEBookDetail {
     private LocalDateTime textEBookPublishedAt;
 
     private LocalDateTime textEBookCreatedAt;
+
+    public static TextEBookDetail from(
+        TextEBookDetailResult textEBookDetailResult
+    ) {
+        return TextEBookDetail.builder()
+                .textEBookId(textEBookDetailResult.getTextEBookId())
+                .courseId(textEBookDetailResult.getCourseId())
+                .textEBookUniqueCode(textEBookDetailResult.getTextEBookUniqueCode())
+                .textEBookImageUrl(textEBookDetailResult.getTextEBookImageUrl())
+                .textEBookTitle(textEBookDetailResult.getTextEBookTitle())
+                .textEBookDescription(textEBookDetailResult.getTextEBookDescription())
+                .textEBookTableOfContents(textEBookDetailResult.getTextEBookTableOfContents())
+                .textEBookAuthor(textEBookDetailResult.getTextEBookAuthor())
+                .textEBookPublisher(textEBookDetailResult.getTextEBookPublisher())
+                .textEBookPreviewDownloadUrl(textEBookDetailResult.getTextEBookPreviewDownloadUrl())
+                .textEBookFullDownloadUrl(textEBookDetailResult.getTextEBookFullDownloadUrl())
+                .textEBookPage(textEBookDetailResult.getTextEBookPage())
+                .textEBookStatus(textEBookDetailResult.getTextEBookStatus())
+                .textEBookPublishedAt(textEBookDetailResult.getTextEBookPublishedAt())
+                .textEBookCreatedAt(textEBookDetailResult.getTextEBookCreatedAt())
+                .build();
+    }
 }

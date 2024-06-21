@@ -1,15 +1,12 @@
 package org.lucycato.productcommandservice.domain;
 
-import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.lucycato.productcommandservice.adapter.out.persistence.entity.CourseJpaEntity;
+import org.lucycato.productcommandservice.application.port.out.result.LectureDetailResult;
 import org.lucycato.productcommandservice.domain.enums.LectureCategory;
 import org.lucycato.productcommandservice.domain.enums.LectureStatus;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
@@ -34,4 +31,20 @@ public class LectureDetail {
     private LectureStatus lectureStatus;
 
     private LocalDateTime lectureCreatedAt;
+
+    public static LectureDetail from(
+            LectureDetailResult lectureDetailResult
+    ) {
+        return LectureDetail.builder()
+                .lectureId(lectureDetailResult.getLectureId())
+                .courseId(lectureDetailResult.getCourseId())
+                .lectureTitle(lectureDetailResult.getLectureTitle())
+                .lectureDescription(lectureDetailResult.getLectureDescription())
+                .lectureThumbnailImageUrl(lectureDetailResult.getLectureThumbnailImageUrl())
+                .lectureVideoUrl(lectureDetailResult.getLectureVideoUrl())
+                .lectureCategory(lectureDetailResult.getLectureCategory())
+                .lectureStatus(lectureDetailResult.getLectureStatus())
+                .lectureCreatedAt(lectureDetailResult.getLectureCreatedAt())
+                .build();
+    }
 }

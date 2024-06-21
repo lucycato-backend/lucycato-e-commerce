@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import org.lucycato.productcommandservice.application.port.out.result.CourseSeriesDetailResult;
 import org.lucycato.productcommandservice.domain.enums.CourseSeriesCategory;
 import org.lucycato.productcommandservice.domain.enums.CourseSeriesStatus;
 import org.lucycato.productcommandservice.domain.enums.SubjectCategory;
@@ -34,4 +35,20 @@ public class CourseSeriesDetail {
     private final CourseSeriesStatus courseSeriesStatus;
 
     private final LocalDateTime courseSeriesCreatedAt;
+
+    public static CourseSeriesDetail from(
+            CourseSeriesDetailResult courseSeriesDetailResult
+    ) {
+        return CourseSeriesDetail.builder()
+                .courseSeriesId(courseSeriesDetailResult.getCourseSeriesId())
+                .teacherId(courseSeriesDetailResult.getTeacherId())
+                .courseSeriesImageUrl(courseSeriesDetailResult.getCourseSeriesImageUrl())
+                .courseSeriesTitle(courseSeriesDetailResult.getCourseSeriesDescription())
+                .courseSeriesDescription(courseSeriesDetailResult.getCourseSeriesTitle())
+                .subjectCategory(courseSeriesDetailResult.getSubjectCategory())
+                .courseSeriesCategory(courseSeriesDetailResult.getCourseSeriesCategory())
+                .courseSeriesStatus(courseSeriesDetailResult.getCourseSeriesStatus())
+                .courseSeriesCreatedAt(courseSeriesDetailResult.getCourseSeriesCreatedAt())
+                .build();
+    }
 }
