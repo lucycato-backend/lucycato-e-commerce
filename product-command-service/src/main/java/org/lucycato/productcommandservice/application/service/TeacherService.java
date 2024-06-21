@@ -6,14 +6,11 @@ import org.lucycato.productcommandservice.application.port.in.TeacherUseCase;
 import org.lucycato.productcommandservice.application.port.in.command.DeleteTeacherCommand;
 import org.lucycato.productcommandservice.application.port.in.command.ModifyTeacherCommand;
 import org.lucycato.productcommandservice.application.port.in.command.RegisterTeacherCommand;
-import org.lucycato.productcommandservice.application.port.out.CoursePort;
 import org.lucycato.productcommandservice.application.port.out.FileStoragePort;
 import org.lucycato.productcommandservice.application.port.out.TeacherPort;
 import org.lucycato.productcommandservice.application.port.out.UserAuthPort;
 import org.lucycato.productcommandservice.domain.TeacherDetail;
-import org.lucycato.productcommandservice.domain.TextEBookDetail;
 import org.lucycato.productcommandservice.domain.enums.TeacherStatus;
-import org.lucycato.productcommandservice.domain.enums.TextEBookStatus;
 import org.lucycato.productcommandservice.error.ProductCommandErrorCodeImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -94,7 +91,8 @@ public class TeacherService implements TeacherUseCase {
     public void deleteTeacher(DeleteTeacherCommand command) {
         if (userAuthPort.checkAuthToChangeTeacher(command.getRequestAdminUserId(), command.getTeacherId())) {
             teacherPort.removeTeacher(command.getTeacherId());
+        } else {
+            throw new ApiExceptionImpl(ProductCommandErrorCodeImpl.ADMIN_USER_NOT_CHANGE_TO_TEACHER);
         }
-        throw new ApiExceptionImpl(ProductCommandErrorCodeImpl.ADMIN_USER_NOT_CHANGE_TO_TEACHER);
     }
 }

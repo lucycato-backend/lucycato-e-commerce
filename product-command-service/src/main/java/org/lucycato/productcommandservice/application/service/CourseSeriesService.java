@@ -87,7 +87,8 @@ public class CourseSeriesService implements CourseSeriesUseCase {
         Long teacherId = teacherQueryPort.getTeacherIdByCourseSeriesId(command.getCourseSeriesId());
         if (userAuthPort.checkAuthToChangeTeacher(command.getCourseSeriesId(), teacherId)) {
             courseSeriesPort.deleteCourseSeries(command.getCourseSeriesId());
+        } else {
+            throw new ApiExceptionImpl(ProductCommandErrorCodeImpl.ADMIN_USER_NOT_CHANGE_TO_TEACHER);
         }
-        throw new ApiExceptionImpl(ProductCommandErrorCodeImpl.ADMIN_USER_NOT_CHANGE_TO_TEACHER);
     }
 }

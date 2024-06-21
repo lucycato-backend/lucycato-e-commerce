@@ -6,17 +6,15 @@ import org.lucycato.productcommandservice.application.port.in.LectureUseCase;
 import org.lucycato.productcommandservice.application.port.in.command.DeleteLectureCommand;
 import org.lucycato.productcommandservice.application.port.in.command.ModifyLectureCommand;
 import org.lucycato.productcommandservice.application.port.in.command.RegisterLectureCommand;
-import org.lucycato.productcommandservice.application.port.out.*;
-import org.lucycato.productcommandservice.application.port.out.result.LectureDetailResult;
-import org.lucycato.productcommandservice.domain.CourseSeriesDetail;
+import org.lucycato.productcommandservice.application.port.out.FileStoragePort;
+import org.lucycato.productcommandservice.application.port.out.LecturePort;
+import org.lucycato.productcommandservice.application.port.out.TeacherQueryPort;
+import org.lucycato.productcommandservice.application.port.out.UserAuthPort;
 import org.lucycato.productcommandservice.domain.LectureDetail;
-import org.lucycato.productcommandservice.domain.enums.CourseSeriesStatus;
 import org.lucycato.productcommandservice.domain.enums.LectureStatus;
 import org.lucycato.productcommandservice.error.ProductCommandErrorCodeImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional
@@ -91,7 +89,8 @@ public class LectureService implements LectureUseCase {
         Long teacherId = teacherQueryPort.getTeacherIdByLectureId(command.getLectureId());
         if (userAuthPort.checkAuthToChangeTeacher(command.getRequestAdminUserId(), teacherId)) {
             lecturePort.deleteLecture(command.getLectureId());
+        } else {
+            throw new ApiExceptionImpl(ProductCommandErrorCodeImpl.ADMIN_USER_NOT_CHANGE_TO_TEACHER);
         }
-        throw new ApiExceptionImpl(ProductCommandErrorCodeImpl.ADMIN_USER_NOT_CHANGE_TO_TEACHER);
     }
 }
