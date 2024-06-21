@@ -28,18 +28,18 @@ public class RegisterLectureCommand extends SelfValidating<RegisterLectureComman
     @NotNull
     private LectureCategory lectureCategory;
 
-    private MultipartFile lectureThumbnailImageUrl;
+    private MultipartFile lectureThumbnailImageFile;
 
-    private MultipartFile lectureVideoUrl;
+    private MultipartFile lectureVideoFile;
 
-    public RegisterLectureCommand(Long requestAdminUserId, Long courseId, String lectureTitle, String lectureDescription, LectureCategory lectureCategory, MultipartFile lectureThumbnailImageUrl, MultipartFile lectureVideoUrl) {
+    public RegisterLectureCommand(Long requestAdminUserId, Long courseId, String lectureTitle, String lectureDescription, LectureCategory lectureCategory, MultipartFile lectureThumbnailImageFile, MultipartFile lectureVideoFilex) {
         this.requestAdminUserId = requestAdminUserId;
         this.courseId = courseId;
         this.lectureTitle = lectureTitle;
         this.lectureDescription = lectureDescription;
         this.lectureCategory = lectureCategory;
-        this.lectureThumbnailImageUrl = lectureThumbnailImageUrl;
-        this.lectureVideoUrl = lectureVideoUrl;
+        this.lectureThumbnailImageFile = lectureThumbnailImageFile;
+        this.lectureVideoFile = lectureVideoFile;
 
         this.validateSelf();
     }

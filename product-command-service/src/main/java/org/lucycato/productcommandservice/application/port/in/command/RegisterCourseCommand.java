@@ -46,13 +46,9 @@ public class RegisterCourseCommand extends SelfValidating<RegisterCourseCommand>
     @NotNull
     private LocalDateTime expiredAt;
 
-    private MultipartFile teacherImageFile;
+    private MultipartFile courseImageFile;
 
-    private MultipartFile teacherCurriculumImageFile;
-
-    private MultipartFile teacherCurriculumVideoFile;
-
-    public RegisterCourseCommand(Long requestAdminUserId, Long teacherId, Long courseSeriesId, String courseTitle, String courseSubTitle, Integer coursePrice, String courseDescription, CourseGenre courseGenre, SubjectCategory subjectCategory, LocalDateTime expiredAt, MultipartFile teacherImageFile, MultipartFile teacherCurriculumImageFile, MultipartFile teacherCurriculumVideoFile) {
+    public RegisterCourseCommand(Long requestAdminUserId, Long teacherId, Long courseSeriesId, String courseTitle, String courseSubTitle, Integer coursePrice, String courseDescription, CourseGenre courseGenre, SubjectCategory subjectCategory, LocalDateTime expiredAt, MultipartFile courseImageFile) {
         this.requestAdminUserId = requestAdminUserId;
         this.teacherId = teacherId;
         this.courseSeriesId = courseSeriesId;
@@ -63,9 +59,7 @@ public class RegisterCourseCommand extends SelfValidating<RegisterCourseCommand>
         this.courseGenre = courseGenre;
         this.subjectCategory = subjectCategory;
         this.expiredAt = expiredAt;
-        this.teacherImageFile = teacherImageFile;
-        this.teacherCurriculumImageFile = teacherCurriculumImageFile;
-        this.teacherCurriculumVideoFile = teacherCurriculumVideoFile;
+        this.courseImageFile = courseImageFile;
 
         this.validateSelf();
     }

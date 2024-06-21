@@ -31,19 +31,19 @@ public class ModifyLectureCommand extends SelfValidating<ModifyLectureCommand> {
     @NotNull
     private LectureCategory lectureCategory;
 
-    private MultipartFile lectureThumbnailImageUrl;
+    private MultipartFile lectureThumbnailImageFile;
 
-    private MultipartFile lectureVideoUrl;
+    private MultipartFile lectureVideoFile;
 
-    public ModifyLectureCommand(Long requestAdminUserId, Long lectureId, Long courseId, String lectureTitle, String lectureDescription, LectureCategory lectureCategory, MultipartFile lectureThumbnailImageUrl, MultipartFile lectureVideoUrl) {
+    public ModifyLectureCommand(Long requestAdminUserId, Long lectureId, Long courseId, String lectureTitle, String lectureDescription, LectureCategory lectureCategory, MultipartFile lectureThumbnailImageFile, MultipartFile lectureVideoFile) {
         this.requestAdminUserId = requestAdminUserId;
         this.lectureId = lectureId;
         this.courseId = courseId;
         this.lectureTitle = lectureTitle;
         this.lectureDescription = lectureDescription;
         this.lectureCategory = lectureCategory;
-        this.lectureThumbnailImageUrl = lectureThumbnailImageUrl;
-        this.lectureVideoUrl = lectureVideoUrl;
+        this.lectureThumbnailImageFile = lectureThumbnailImageFile;
+        this.lectureVideoFile = lectureVideoFile;
 
         this.validateSelf();
     }
