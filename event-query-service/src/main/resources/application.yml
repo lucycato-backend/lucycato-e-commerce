@@ -1,9 +1,9 @@
 server:
-  port: 8091
+  port: 8089
 
 spring:
   application:
-    name: order-query-service
+    name: event-query-service
   config:
     import: application-common.yml
     activate:
@@ -50,7 +50,7 @@ management:
 
 spring:
   application:
-    name: order-query-service
+    name: event-query-service
   config:
     import: application-common.yml
     activate:
