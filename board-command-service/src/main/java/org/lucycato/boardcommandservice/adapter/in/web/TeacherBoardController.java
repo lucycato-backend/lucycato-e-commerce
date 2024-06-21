@@ -2,11 +2,14 @@ package org.lucycato.boardcommandservice.adapter.in.web;
 
 import lombok.RequiredArgsConstructor;
 import org.lucycato.boardcommandservice.adapter.in.web.requset.*;
+import org.lucycato.boardcommandservice.adapter.out.persistence.TeacherRedisAdapter;
 import org.lucycato.boardcommandservice.application.port.in.TeacherBoardUseCase;
 import org.lucycato.boardcommandservice.application.port.in.command.*;
-import org.lucycato.boardcommandservice.domain.CUDReturnId;
+import org.lucycato.boardcommandservice.domain.*;
 import org.lucycato.common.annotation.hexagonal.in.WebAdapter;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @WebAdapter
 @RestController
@@ -16,8 +19,9 @@ public class TeacherBoardController {
 
     private final TeacherBoardUseCase teacherBoardUseCase;
 
+
     @PostMapping("api/app/board/v1/teachers/notices")
-    public CUDReturnId createTeacherNotice(
+    public TeacherNotice createTeacherNotice(
             @RequestBody TeacherNoticeRequest request
     ) {
         CreateTeacherNoticeCommand command = new CreateTeacherNoticeCommand(
@@ -31,7 +35,7 @@ public class TeacherBoardController {
     }
 
     @PostMapping("api/app/board/v1/course-review")
-    public CUDReturnId createCourseReview(
+    public CourseReview createCourseReview(
             @RequestBody CourseReviewRequest request
     ) {
         CreateCourseReviewCommand command = new CreateCourseReviewCommand(
@@ -46,7 +50,7 @@ public class TeacherBoardController {
     }
 
     @PostMapping("api/app/board/v1/teachers/qna")
-    public CUDReturnId createQna(
+    public QnA createQna(
             @RequestBody QuestionRequest request
     ) {
         CreateQnaCommand command = new CreateQnaCommand(
@@ -60,7 +64,7 @@ public class TeacherBoardController {
     }
 
     @PatchMapping("api/app/board/v1/teachers/qna/{qnaId}")
-    public CUDReturnId createAnswer(
+    public QnA createAnswer(
             @PathVariable Long qnaId,
             @RequestBody AnswerRequest request
     ) {
@@ -73,7 +77,7 @@ public class TeacherBoardController {
     }
 
     @PostMapping("api/app/board/v1/exam-story")
-    public CUDReturnId createExamStory(
+    public ExamStory createExamStory(
             @RequestBody ExamStoryRequest request
     ) {
         CreateExamStoryCommand command = new CreateExamStoryCommand(
@@ -86,11 +90,20 @@ public class TeacherBoardController {
         return teacherBoardUseCase.createExamStory(command);
     }
 
-    @DeleteMapping("api/app/board/v1/teacher/notices/{noticeId}")
-    public CUDReturnId deleteTeacherNotice(
-            @PathVariable Long noticeId
-    ) {
-        
+    private final TeacherRedisAdapter teacherRedisAdapter;
 
+    @GetMapping("open-api/v1/teacher/{teacherId}/recent")
+    public List<Long> testGet(
+            @PathVariable Long teacherId
+    ) {
+        return teacherRedisAdapter.getTeacherNotices(teacherId);
     }
+
+//    @DeleteMapping("api/app/board/v1/teacher/notices/{noticeId}")
+//    public CUDReturnId deleteTeacherNotice(
+//            @PathVariable Long noticeId
+//    ) {
+//
+//
+//    }
 }
