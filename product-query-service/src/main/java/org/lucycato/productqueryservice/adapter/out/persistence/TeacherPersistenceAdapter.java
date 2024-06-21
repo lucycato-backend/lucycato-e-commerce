@@ -23,7 +23,7 @@ public class TeacherPersistenceAdapter implements TeacherPort {
         String sql = """
                 SELECT t.id as teacherId
                 FROM teachers t
-                WHERE t.teacher_genre = :teachingGenre;
+                WHERE t.teaching_genre = :teachingGenre;
                 """;
 
         return databaseClient.sql(sql)
@@ -45,7 +45,7 @@ public class TeacherPersistenceAdapter implements TeacherPort {
                     t.teacher_status as teacherStatus,
                     t.teacher_created_at as teacherCreatedAt
                 FROM teachers t
-                WHERE t.teacher_genre = :teachingGenre;
+                WHERE t.teaching_genre = :teachingGenre;
                 """;
 
         return databaseClient.sql(sql)
