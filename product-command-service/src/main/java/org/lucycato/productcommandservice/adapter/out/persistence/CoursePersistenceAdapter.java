@@ -101,14 +101,19 @@ public class CoursePersistenceAdapter implements CoursePort {
             Long teacherId
     ) {
         CheckedRecentCourseOpenRedisEntity entity = new CheckedRecentCourseOpenRedisEntity(courseId, teacherId);
+        String json = "";
         try {
-            String json = objectMapper.writeValueAsString(entity);
-            redisTemplate.opsForHash().put(PRODUCT_SERVICE_RECENT_COURSE_UPLOAD_BY_TEACHER_ID_HASH_KEY, teacherId, json);
-            redisTemplate.opsForHash().put(PRODUCT_SERVICE_RECENT_COURSE_UPLOAD_BY_COURSE_ID_HASH_KEY, courseId, json);
-            return true;
+            json = objectMapper.writeValueAsString(entity);
         } catch (Exception e) {
             throw new ApiExceptionImpl(ErrorCodeImpl.JSON_PARSING, e);
         }
+
+        redisTemplate.opsForHash().put(PRODUCT_SERVICE_RECENT_COURSE_UPLOAD_BY_TEACHER_ID_HASH_KEY, String.valueOf(teacherId), json);
+        redisTemplate.expire(PRODUCT_SERVICE_RECENT_COURSE_UPLOAD_BY_TEACHER_ID_HASH_KEY, 7, TimeUnit.DAYS);
+        redisTemplate.opsForHash().put(PRODUCT_SERVICE_RECENT_COURSE_UPLOAD_BY_COURSE_ID_HASH_KEY, String.valueOf(courseId), json);
+        redisTemplate.expire(PRODUCT_SERVICE_RECENT_COURSE_UPLOAD_BY_COURSE_ID_HASH_KEY, 7, TimeUnit.DAYS);
+
+        return true;
     }
 
     @Override
