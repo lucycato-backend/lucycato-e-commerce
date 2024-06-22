@@ -32,7 +32,7 @@ services:
       - "20080:80"
     networks:
       custom_network:
-        ipv4_address: 172.20.0.9
+        ipv4_address: 172.20.0.69
 
   lucycato-redis:
     container_name: lucycato-redis
