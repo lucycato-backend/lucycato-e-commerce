@@ -15,19 +15,7 @@ public class AdminUserHeaderDetail extends SelfValidating<AdminUserHeaderDetail>
     @NotNull
     private Long adminUserId;
 
-    @NotBlank
-    private List<AdminUserRole> adminUserRoles;
-
-    @NotBlank
-    private String currentAppUserDeviceMacAddress;
-
-    @NotBlank
-    private String currentAppUserPlatFormType;
-
-    public AdminUserHeaderDetail(Long adminUserId, List<AdminUserRole> adminUserRoles, String currentAppUserDeviceMacAddress, String currentAppUserPlatFormType) {
+    public AdminUserHeaderDetail(Long adminUserId) {
         this.adminUserId = adminUserId;
-        this.adminUserRoles = adminUserRoles;
-        this.currentAppUserDeviceMacAddress = currentAppUserDeviceMacAddress;
-        this.currentAppUserPlatFormType = currentAppUserPlatFormType;
     }
 }

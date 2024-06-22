@@ -35,7 +35,7 @@ service:
 service-down:
 	docker compose -f docker-compose.yml down $(service)
 
-service-restart: service-down
+service-restart: service-down service
 
 $(foreach svc, $(SERVICES), \
   $(eval .PHONY: $(svc) $(svc)-down $(svc)-restart) \

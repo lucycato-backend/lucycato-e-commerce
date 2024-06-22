@@ -7,9 +7,6 @@ import org.lucycato.productqueryservice.application.port.in.command.*;
 import org.lucycato.productqueryservice.domain.Teacher;
 import org.lucycato.productqueryservice.domain.TeacherCourseSeries;
 import org.lucycato.productqueryservice.domain.TeacherDetail;
-import org.lucycato.productqueryservice.domain.TeacherNews;
-import org.lucycato.productqueryservice.domain.enums.TeacherNewsCategory;
-import org.lucycato.productqueryservice.domain.enums.TeacherStatus;
 import org.lucycato.productqueryservice.domain.enums.TeachingGenre;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,80 +21,50 @@ import reactor.core.publisher.Mono;
 public class TeacherController {
     private final TeacherUseCase teacherUseCase;
 
-    @GetMapping("open-api/product/v1/teachers")
-    public Flux<Teacher> getTeachers(
+    @GetMapping("open-api/v1/teachers")
+    public Flux<Teacher> getTeacherList(
             @RequestParam(name = "teachingGenre", required = false)
             TeachingGenre teachingGenre
     ) {
         TeacherSearchCommand command = new TeacherSearchCommand(
                 teachingGenre
         );
-        return teacherUseCase.getTeachers(command);
+        return teacherUseCase.getTeacherList(command);
     }
 
-    @GetMapping("open-api/product/v1/teachers/{teacherId}")
+    @GetMapping("open-api/v1/teachers/{teacherId}")
     public Mono<TeacherDetail> getTeacher(
-            @PathVariable Long teacherId
+            @PathVariable
+            Long teacherId,
+            @RequestParam(name = "isSimple", required = false)
+            Boolean isSimple
     ) {
         TeacherDetailSearchCommand command = new TeacherDetailSearchCommand(
-                teacherId
+                teacherId,
+                isSimple
         );
         return teacherUseCase.getTeacher(command);
     }
 
-    @GetMapping("open-api/product/v1/teachers/course-series")
-    public Flux<TeacherCourseSeries> getTeacherCourseSeries(
+    @GetMapping("open-api/v1/teachers/course-series")
+    public Flux<TeacherCourseSeries> getTeacherCourseSeriesList(
             @RequestParam(name = "teachingGenre", required = false)
-            TeachingGenre teachingGenre,
-            @RequestParam(name = "isSimple", defaultValue = "true")
-            Boolean isSimple
+            TeachingGenre teachingGenre
     ) {
         TeacherCourseSeriesSearchCommand command = new TeacherCourseSeriesSearchCommand(
-                teachingGenre,
-                isSimple
+                teachingGenre
         );
-        return teacherUseCase.getTeacherCourseSeries(command);
+        return teacherUseCase.getTeacherCourseSeriesList(command);
     }
 
-    @GetMapping("open-api/product/v1/teachers/{teacherId}/course-series")
-    public Flux<TeacherCourseSeries> getTeacherCourseSeries(
+    @GetMapping("open-api/v1/teachers/{teacherId}/course-series")
+    public Flux<TeacherCourseSeries> getTeacherCourseSeriesList(
             @PathVariable
-            Long teacherId,
-            @RequestParam(name = "isSimple", defaultValue = "true")
-            Boolean isSimple
+            Long teacherId
     ) {
         SpecificTeacherCourseSeriesSearchCommand command = new SpecificTeacherCourseSeriesSearchCommand(
-                teacherId,
-                isSimple
+                teacherId
         );
-        return teacherUseCase.getTeacherCourseSeries(command);
-    }
-
-    @GetMapping("open-api/product/v1/teachers/news")
-    public Flux<TeacherNews> getTeacherNews(
-            @RequestParam(name = "teachingGenre", required = false)
-            TeachingGenre teachingGenre,
-            @RequestParam(name = "teacherNewsCategory", required = false)
-            TeacherNewsCategory newsCategory
-    ) {
-        TeacherNewsSearchCommand command = new TeacherNewsSearchCommand(
-                teachingGenre,
-                newsCategory
-        );
-        return teacherUseCase.getTeacherNews(command);
-    }
-
-    @GetMapping("open-api/product/v1/teachers/{teacherId}/news")
-    public Flux<TeacherNews> getTeacherNews(
-            @PathVariable
-            Long teacherId,
-            @RequestParam(name = "teacherNewsCategory")
-            TeacherNewsCategory teacherNewsCategory
-    ) {
-        SpecificTeacherNewsSearchCommand command = new SpecificTeacherNewsSearchCommand(
-                teacherId,
-                teacherNewsCategory
-        );
-        return teacherUseCase.getTeacherNews(command);
+        return teacherUseCase.getTeacherCourseSeriesList(command);
     }
 }

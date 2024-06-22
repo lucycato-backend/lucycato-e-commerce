@@ -12,11 +12,18 @@ spring:
     loadbalancer:
       ribbon:
         enabled: false
-
   r2dbc:
     url: r2dbc:mysql://localhost:3306/default
     username: admin
     password: password
+  data:
+    redis:
+      host: localhost
+      port: 26379
+
+logging:
+  level:
+    org.springframework.r2dbc.core: debug
 
 eureka:
   client:
@@ -34,6 +41,24 @@ kafka:
     bootstrapservers: localhost:9092
 
 ---
+management:
+  endpoints:
+    enabled-by-default: false
+    web:
+      exposure:
+        include: "metrics, health, info, prometheus"
+    jmx:
+      exposure:
+        exclude: "*"
+  endpoint:
+    metrics: 
+      enabled: true
+    health:
+      enabled: true
+    info:
+      enabled: true
+    prometheus:
+      enabled: true
 
 spring:
   application:
@@ -50,6 +75,14 @@ spring:
     loadbalancer:
       ribbon:
         enabled: false
+  data:
+    redis:
+      host: lucycato-redis
+      port: 6379
+
+logging:
+  level:
+    org.springframework.r2dbc.core: debug
 
 eureka:
   client:

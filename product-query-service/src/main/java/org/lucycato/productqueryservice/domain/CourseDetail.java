@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import org.lucycato.productqueryservice.application.port.out.result.CourseDetailResult;
 import org.lucycato.productqueryservice.domain.enums.CourseGenre;
 import org.lucycato.productqueryservice.domain.enums.CourseStatus;
 import org.lucycato.productqueryservice.domain.enums.SubjectCategory;
@@ -14,31 +15,50 @@ import java.time.LocalDateTime;
 @Builder(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class CourseDetail {
-    private final Long id;
+    private final Long courseId;
 
     private final Long teacherId;
 
     private final Long courseSeriesId;
 
-    private final String title;
+    private final String courseTitle;
 
-    private final String subTitle;
+    private final String courseSubTitle;
 
-    private final Integer price;
+    private final Integer coursePrice;
 
-    private final String imageUrl;
+    private final String courseImageUrl;
 
-    private final String description;
+    private final String courseDescription;
 
-    private final CourseGenre courseGenre;
+    private final CourseGenre courseCourseGenre;
 
     private final SubjectCategory subjectCategory;
 
     private final CourseStatus courseStatus;
 
-    private final LocalDateTime expiredAt;
+    private final Boolean isRecentCourseOpen;
 
-    private final LocalDateTime createdAt;
+    private final LocalDateTime courseExpiredAt;
 
-    private final LocalDateTime modifiedAt;
+    private final LocalDateTime courseCreatedAt;
+
+    public static CourseDetail from(CourseDetailResult courseDetailResult, Boolean isRecentCourseOpen) {
+        return CourseDetail.builder()
+                .courseId(courseDetailResult.getCourseId())
+                .teacherId(courseDetailResult.getTeacherId())
+                .courseSeriesId(courseDetailResult.getCourseSeriesId())
+                .courseTitle(courseDetailResult.getCourseTitle())
+                .courseSubTitle(courseDetailResult.getCourseSubTitle())
+                .coursePrice(courseDetailResult.getCoursePrice())
+                .courseImageUrl(courseDetailResult.getCourseImageUrl())
+                .courseDescription(courseDetailResult.getCourseDescription())
+                .courseCourseGenre(courseDetailResult.getCourseGenre())
+                .subjectCategory(courseDetailResult.getSubjectCategory())
+                .courseStatus(courseDetailResult.getCourseStatus())
+                .isRecentCourseOpen(isRecentCourseOpen)
+                .courseExpiredAt(courseDetailResult.getCourseExpiredAt())
+                .courseCreatedAt(courseDetailResult.getCourseCreatedAt())
+                .build();
+    }
 }

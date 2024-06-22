@@ -4,12 +4,13 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.lucycato.productqueryservice.domain.enums.TeacherImageCategory;
+import org.lucycato.productqueryservice.application.port.out.result.CourseCountResult;
+import org.lucycato.productqueryservice.application.port.out.result.TeacherDetailResult;
+import org.lucycato.productqueryservice.application.port.out.result.TextEBookCountResult;
 import org.lucycato.productqueryservice.domain.enums.TeacherStatus;
 import org.lucycato.productqueryservice.domain.enums.TeachingGenre;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Builder(access = AccessLevel.PRIVATE)
@@ -25,7 +26,7 @@ public class TeacherDetail {
 
     private final String teacherProfileDescription;
 
-    private final List<TeacherImage> teacherImages;
+    private final String teacherImage;
 
     private final Curriculum curriculum;
 
@@ -39,19 +40,75 @@ public class TeacherDetail {
 
     private final TeacherStatus teacherStatus;
 
-    private final LocalDateTime createdAt;
+    private final LocalDateTime teacherCreatedAt;
 
-    public static TeacherDetail create() {
-        return null;
+    public static TeacherDetail from(
+            TeacherDetailResult teacherDetailResult,
+            Boolean isRecentCourseOpen,
+            Boolean isRecentTeacherNews,
+            Long courseSeriesCount,
+            CourseCountResult courseCountResult,
+            TextEBookCountResult textEBookCountResult,
+            Long targetStudentReviewCount,
+            Long teacherNewsCount
+    ) {
+        Curriculum curriculum = Curriculum.builder()
+                .curriculumImageUrl(teacherDetailResult.getCurriculumImageUrl())
+                .curriculumVideoUrl(teacherDetailResult.getCurriculumVideoUrl())
+                .build();
+
+        Statistics statistics = Statistics.builder()
+                .courseSeriesCount(courseSeriesCount)
+                .allOperatorCourseCount(courseCountResult.getAllOperatorCourseCount())
+                .progressOperatorCourseCount(courseCountResult.getProgressOperatorCourseCount())
+                .notOperatorCourseCount(courseCountResult.getNotOperatorCourseCount())
+                .operatorTextEBookCount(textEBookCountResult.getOperatorTextEBookCount())
+                .nonOperatorTextEBookCount(textEBookCountResult.getNonOperatorTextEBookCount())
+                .targetStudentReviewCount(targetStudentReviewCount)
+                .teacherNoticeCount(teacherNewsCount)
+                .build();
+
+        return TeacherDetail.builder()
+                .teacherId(teacherDetailResult.getTeacherId())
+                .teacherRank(teacherDetailResult.getTeacherRank())
+                .teacherName(teacherDetailResult.getTeacherName())
+                .teacherSlogan(teacherDetailResult.getTeacherSlogan())
+                .teacherProfileDescription(teacherDetailResult.getTeacherProfileDescription())
+                .teacherImage(teacherDetailResult.getTeacherImageUrl())
+                .curriculum(curriculum)
+                .statistics(statistics)
+                .isRecentCourseOpen(isRecentCourseOpen)
+                .isRecentTeacherNews(isRecentTeacherNews)
+                .teachingGenre(teacherDetailResult.getTeachingGenre())
+                .teacherStatus(teacherDetailResult.getTeacherStatus())
+                .teacherCreatedAt(teacherDetailResult.getTeacherCreatedAt())
+                .build();
     }
 
-    @Getter
-    @Builder(access = AccessLevel.PRIVATE)
-    @AllArgsConstructor(access = AccessLevel.PRIVATE)
-    public static class TeacherImage {
-        private final TeacherImageCategory teacherImageCategory;
+    public static TeacherDetail simple(
+            TeacherDetailResult teacherDetailResult,
+            Boolean isRecentCourseOpen,
+            Boolean isRecentTeacherNotice
+    ) {
+        Curriculum curriculum = Curriculum.builder()
+                .curriculumImageUrl(teacherDetailResult.getCurriculumImageUrl())
+                .curriculumVideoUrl(teacherDetailResult.getCurriculumVideoUrl())
+                .build();
 
-        private final String teacherImageUrl;
+        return TeacherDetail.builder()
+                .teacherId(teacherDetailResult.getTeacherId())
+                .teacherRank(teacherDetailResult.getTeacherRank())
+                .teacherName(teacherDetailResult.getTeacherName())
+                .teacherSlogan(teacherDetailResult.getTeacherSlogan())
+                .teacherProfileDescription(teacherDetailResult.getTeacherProfileDescription())
+                .teacherImage(teacherDetailResult.getTeacherImageUrl())
+                .curriculum(curriculum)
+                .isRecentCourseOpen(isRecentCourseOpen)
+                .isRecentTeacherNews(isRecentTeacherNotice)
+                .teachingGenre(teacherDetailResult.getTeachingGenre())
+                .teacherStatus(teacherDetailResult.getTeacherStatus())
+                .teacherCreatedAt(teacherDetailResult.getTeacherCreatedAt())
+                .build();
     }
 
     @Getter
@@ -67,22 +124,20 @@ public class TeacherDetail {
     @Builder(access = AccessLevel.PRIVATE)
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     public static class Statistics {
-        private final Integer lectureSeriesCount;
+        private final Long courseSeriesCount;
 
-        private final Integer allOperatorLectureCount;
+        private final Long allOperatorCourseCount;
 
-        private final Integer completeOperatorLectureCount;
+        private final Long progressOperatorCourseCount;
 
-        private final Integer progressOperatorLectureCount;
+        private final Long notOperatorCourseCount;
 
-        private final Integer notOperatorLectureCount;
+        private final Long operatorTextEBookCount;
 
-        private final Integer operatorTextEBookCount;
+        private final Long nonOperatorTextEBookCount;
 
-        private final Integer nonOperatorTextEBookCount;
+        private final Long targetStudentReviewCount;
 
-        private final Integer targetStudentReviewCount;
-
-        private final Integer teacherNewsCount;
+        private final Long teacherNoticeCount;
     }
 }

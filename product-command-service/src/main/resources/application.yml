@@ -8,6 +8,22 @@ spring:
     import: application-common.yml
     activate:
       on-profile: default
+  datasource:
+    url: jdbc:mysql://localhost:23306/default
+    username: admin
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  data:
+    redis:
+      host: localhost
+      port: 26379
   cloud:
     loadbalancer:
       ribbon:
@@ -29,6 +45,24 @@ kafka:
     bootstrapservers: localhost:9092
 
 ---
+management:
+  endpoints:
+    enabled-by-default: false
+    web:
+      exposure:
+        include: "metrics, health, info, prometheus"
+    jmx:
+      exposure:
+        exclude: "*"
+  endpoint:
+    metrics: 
+      enabled: true
+    health:
+      enabled: true
+    info:
+      enabled: true
+    prometheus:
+      enabled: true
 
 spring:
   application:
@@ -37,6 +71,22 @@ spring:
     import: application-common.yml
     activate:
       on-profile: docker
+  datasource:
+    url: jdbc:mysql://lucycato-mysql:3306/default
+    username: admin
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  data:
+    redis:
+      host: lucycato-redis
+      port: 6379
   cloud:
     loadbalancer:
       ribbon:

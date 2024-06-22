@@ -40,7 +40,7 @@ public class QueryAppUserService implements QueryAppUserUseCase {
                     platformVo.getLastLogoutAt()
             )).toList();
             return DeviceManagement.create(
-                    deviceVo.getDeviceManAddress(),
+                    deviceVo.getDeviceMacAddress(),
                     deviceVo.getDeviceFcmToken(),
                     deviceVo.getDeviceOsType(),
                     deviceVo.getDeviceOsVersion(),

@@ -63,14 +63,14 @@ services:
   cadvisor:
     container_name: lucycato-cadvisor
     image: gcr.io/cadvisor/cadvisor:latest
-    volumes:
+    volumes: 
       - "/:/rootfs"
       - "/var/run:/var/run"
       - "/sys:/sys"
       - "/var/lib/docker/:/var/lib/docker"
       - "/dev/disk/:/dev/disk"
     privileged: true
-    devices:
+    devices: 
       - "/dev/kmsg"
     networks:
       custom_network:
