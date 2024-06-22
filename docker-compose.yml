@@ -1,104 +1,184 @@
-version: "3.8"
 services:
   user-auth-command-service:
+    container_name: lucycato-user-auth-command-service
     image: lucycato/lucycato-e-commerce-user-auth-command-service:1.0.0
     networks:
-      - "lucycato_network"
+      custom_network:
+        ipv4_address: 172.20.0.12
     ports:
       - "8080:8080"
       - "5005:5005"
     environment:
       - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n
       - SPRING_PROFILES_ACTIVE=docker
+  
   user-auth-query-service:
+    container_name: lucycato-user-auth-query-service
     image: lucycato/lucycato-e-commerce-user-auth-query-service:1.0.0
     networks:
-      - "lucycato_network"
+      custom_network:
+        ipv4_address: 172.20.0.13
     ports:
       - "8081:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+  
   notification-command-service:
+    container_name: lucycato-notification-command-service
     image: lucycato/lucycato-e-commerce-notification-command-service:1.0.0
     networks:
-      - "lucycato_network"
+      custom_network:
+        ipv4_address: 172.20.0.14
     ports:
       - "8082:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+  
   notification-query-service:
+    container_name: lucycato-notification-query-service
     image: lucycato/lucycato-e-commerce-notification-query-service:1.0.0
     networks:
-      - "lucycato_network"
+      custom_network:
+        ipv4_address: 172.20.0.15
     ports:
       - "8083:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+  
   product-command-service:
+    container_name: lucycato-product-command-service
     image: lucycato/lucycato-e-commerce-product-command-service:1.0.0
     networks:
-      - "lucycato_network"
+      custom_network:
+        ipv4_address: 172.20.0.16
     ports:
       - "8084:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+  
   product-query-service:
+    container_name: lucycato-product-query-service
     image: lucycato/lucycato-e-commerce-product-query-service:1.0.0
     networks:
-      - "lucycato_network"
+      custom_network:
+        ipv4_address: 172.20.0.17
     ports:
       - "8085:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+  
   board-command-service:
+    container_name: lucycato-board-command-service
     image: lucycato/lucycato-e-commerce-board-command-service:1.0.0
     networks:
-      - "lucycato_network"
+      custom_network:
+        ipv4_address: 172.20.0.18
     ports:
       - "8086:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+  
   board-query-service:
+    container_name: lucycato-board-query-service
     image: lucycato/lucycato-e-commerce-board-query-service:1.0.0
     networks:
-      - "lucycato_network"
+      custom_network:
+        ipv4_address: 172.20.0.19
     ports:
       - "8087:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-  event-command-service:
-    image: lucycato/lucycato-e-commerce-event-command-service:1.0.0
-    networks:
-      - "lucycato_network"
-    ports:
-      - "8088:8080"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-  event-query-service:
-    image: lucycato/lucycato-e-commerce-event-query-service:1.0.0
-    networks:
-      - "lucycato_network"
-    ports:
-      - "8089:8080"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
+
   order-command-service:
+    container_name: lucycato-order-command-service
     image: lucycato/lucycato-e-commerce-order-command-service:1.0.0
     networks:
-      - "lucycato_network"
+      custom_network:
+        ipv4_address: 172.20.0.20
     ports:
       - "8090:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+
   order-query-service:
+    container_name: lucycato-order-query-service
     image: lucycato/lucycato-e-commerce-order-query-service:1.0.0
     networks:
-      - "lucycato_network"
+      custom_network:
+        ipv4_address: 172.20.0.21
     ports:
       - "8091:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
 
+  eureka-server:
+    container_name: lucycato-eureka-server
+    image: lucycato/lucycato-e-commerce-eureka-server:1.0.0
+    networks:
+      custom_network:
+        ipv4_address: 172.20.0.30
+    ports:
+      - "8762:8761"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8761/actuator/health" ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 5s
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+
+  gateway-server:
+    container_name: lucycato-gateway-server
+    image: lucycato/lucycato-e-commerce-gateway-server:1.0.0
+    networks:
+      custom_network:
+        ipv4_address: 172.20.0.2
+    ports:
+      - "9090:8080"
+    depends_on:
+      - eureka-server
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+
+  task-consumer:
+    container_name: lucycato-task-consumer
+    image: lucycato/lucycato-e-commerce-task-consumer:1.0.0
+    networks:
+      custom_network:
+        ipv4_address: 172.20.0.3
+    ports:
+      - "8072:8080"
+    depends_on:
+      - eureka-server
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+
+  user-course-command-service:
+    container_name: lucycato-user-course-command-service
+    image: lucycato/lucycato-e-commerce-user-course-command-service:1.0.0
+    networks:
+      custom_network:
+        ipv4_address: 172.20.0.22
+    ports:
+      - "8088:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+
+  user-course-query-service:
+    container_name: lucycato-user-course-query-service
+    image: lucycato/lucycato-e-commerce-user-course-query-service:1.0.0
+    networks:
+      custom_network:
+        ipv4_address: 172.20.0.23
+    ports:
+      - "8089:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+
 networks:
-  lucycato_network:
-    driver: bridge
+  custom_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16
