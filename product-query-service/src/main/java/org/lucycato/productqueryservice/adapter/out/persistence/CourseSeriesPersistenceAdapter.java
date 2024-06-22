@@ -32,6 +32,7 @@ public class CourseSeriesPersistenceAdapter implements CourseSeriesPort {
                     cs.course_series_image_url as courseSeriesImageUrl,
                     cs.course_series_title as courseSeriesTitle,
                     cs.course_series_description as courseSeriesDescription,
+                    cs.course_series_category as courseSeriesCategory,
                     cs.course_series_status as courseSeriesStatus
                 FROM course_series cs
                 WHERE cs.teacher_id IN (:teacherIds);
@@ -57,14 +58,14 @@ public class CourseSeriesPersistenceAdapter implements CourseSeriesPort {
         String sql = """
                 SELECT cs.id as courseSeriesId,
                     cs.teacher_id as teacherId,
-                    cs.course_series_imageUrl as courseSeriesImageUrl,
+                    cs.course_series_image_url as courseSeriesImageUrl,
                     cs.course_series_title as courseSeriesTitle,
                     cs.course_series_description as courseSeriesDescription,
                     cs.course_series_explain_image_urls_json as courseSeriesExplainImageUrlsJson,
-                    cs.subject_category as subjectCategory
+                    cs.subject_category as subjectCategory,
                     cs.course_series_category as courseSeriesCategory,
                     cs.course_series_status as courseSeriesStatus,
-                    cs.course_series_createdAt as courseSeriesCreatedAt
+                    cs.course_series_created_at as courseSeriesCreatedAt
                 FROM course_series cs
                 WHERE cs.id = :courseSeriesId;
                 """;

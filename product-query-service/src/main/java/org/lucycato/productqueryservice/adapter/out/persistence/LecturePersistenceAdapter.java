@@ -20,11 +20,11 @@ public class LecturePersistenceAdapter implements LecturePort {
     public Flux<LectureResult> getLectureListByCourseIds(List<Long> courseIds) {
         String sql = """
                 SELECT l.id as lectureId,
-                    l.lectureTitle as lectureTitle,
-                    l.lectureDescription as lectureDescription,
-                    l.lectureCategory as lectureCategory,
-                    l.lectureVideoUrl as lectureVideoUrl,
-                    l.lectureStatus as lectureStatus
+                    l.lecture_title as lectureTitle,
+                    l.lecture_description as lectureDescription,
+                    l.lecture_category as lectureCategory,
+                    l.lecture_video_url as lectureVideoUrl,
+                    l.lecture_status as lectureStatus
                 FROM lectures l
                 WHERE l.course_id IN (:courseIds);
                 """;

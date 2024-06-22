@@ -3,10 +3,10 @@ package org.lucycato.productqueryservice.adapter.out.persistence;
 import lombok.RequiredArgsConstructor;
 import org.lucycato.common.annotation.hexagonal.out.PersistenceAdapter;
 import org.lucycato.productqueryservice.application.port.out.TextEBookPort;
-import org.lucycato.productqueryservice.application.port.out.result.CourseCountResult;
 import org.lucycato.productqueryservice.application.port.out.result.TextEBookCountResult;
 import org.lucycato.productqueryservice.application.port.out.result.TextEBookResult;
-import org.lucycato.productqueryservice.domain.enums.*;
+import org.lucycato.productqueryservice.domain.enums.SubjectCategory;
+import org.lucycato.productqueryservice.domain.enums.TextEBookStatus;
 import org.springframework.r2dbc.core.DatabaseClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -25,19 +25,18 @@ public class TextEBookPersistenceAdapter implements TextEBookPort {
         String sql = """
                 SELECT tb.id as textEBookId,
                     tb.course_id as courseId,
-                    tb.text_e_book_unique_code as textEBookUniqueCode,
-                    tb.text_e_book_image_url as textEBookImageUrl,
-                    tb.text_e_book_title as textEBookTitle,
-                    tb.text_e_book_description as textEBookDescription,
-                    tb.text_e_book_table_of_contents as textEBookTableOfContents,
-                    tb.text_e_book_author as textEBookAuthor,
-                    tb.text_e_book_publisher as textEBookPublisher,
-                    tb.text_e_book_preview_download_url as textEBookPreviewDownloadUrl,
-                    tb.text_e_book_page as textEBookPage,
+                    tb.textebook_unique_code as textEBookUniqueCode,
+                    tb.textebook_image_url as textEBookImageUrl,
+                    tb.textebook_title as textEBookTitle,
+                    tb.textebook_description as textEBookDescription,
+                    tb.textebook_table_of_contents as textEBookTableOfContents,
+                    tb.textebook_author as textEBookAuthor,
+                    tb.textebook_publisher as textEBookPublisher,
+                    tb.textebook_preview_download_url as textEBookPreviewDownloadUrl,
+                    tb.textebook_page as textEBookPage,
                     tb.subject_category as subjectCategory,
-                    tb.text_e_book_genre as teachingGenre,
-                    tb.text_e_book_status as textEBookStatus,
-                    tb.text_e_book_published_at as textEBookPublishedAt
+                    tb.textebook_status as textEBookStatus,
+                    tb.textebook_published_at as textEBookPublishedAt
                 FROM text_e_books tb
                 WHERE tb.course_id IN (:courseIds);
                 """;
@@ -59,7 +58,6 @@ public class TextEBookPersistenceAdapter implements TextEBookPort {
                         (String) row.get("textEBookPreviewDownloadUrl"),
                         (Integer) row.get("textEBookPage"),
                         SubjectCategory.valueOf((String) row.get("subjectCategory")),
-                        TeachingGenre.valueOf((String) row.get("teachingGenre")),
                         TextEBookStatus.valueOf((String) row.get("textEBookStatus")),
                         ((ZonedDateTime) row.get("textEBookPublishedAt")).toLocalDateTime()
                 )));
@@ -70,19 +68,18 @@ public class TextEBookPersistenceAdapter implements TextEBookPort {
         String sql = """
                 SELECT tb.id as textEBookId,
                     tb.course_id as courseId,
-                    tb.text_e_book_unique_code as textEBookUniqueCode,
-                    tb.text_e_book_image_url as textEBookImageUrl,
-                    tb.text_e_book_title as textEBookTitle,
-                    tb.text_e_book_description as textEBookDescription,
-                    tb.text_e_book_table_of_contents as textEBookTableOfContents,
-                    tb.text_e_book_author as textEBookAuthor,
-                    tb.text_e_book_publisher as textEBookPublisher,
-                    tb.text_e_book_preview_download_url as textEBookPreviewDownloadUrl,
-                    tb.text_e_book_page as textEBookPage,
+                    tb.textebook_unique_code as textEBookUniqueCode,
+                    tb.textebook_image_url as textEBookImageUrl,
+                    tb.textebook_title as textEBookTitle,
+                    tb.textebook_description as textEBookDescription,
+                    tb.textebook_table_of_contents as textEBookTableOfContents,
+                    tb.textebook_author as textEBookAuthor,
+                    tb.textebook_publisher as textEBookPublisher,
+                    tb.textebook_preview_download_url as textEBookPreviewDownloadUrl,
+                    tb.textebook_page as textEBookPage,
                     tb.subject_category as subjectCategory,
-                    tb.text_e_book_genre as teachingGenre,
-                    tb.text_e_book_status as textEBookStatus,
-                    tb.text_e_book_published_at as textEBookPublishedAt
+                    tb.textebook_status as textEBookStatus,
+                    tb.textebook_published_at as textEBookPublishedAt
                 FROM text_e_books tb
                 INNER JOIN courses c ON tb.course_id = c.id
                 INNER JOIN course_series cs ON c.course_series_id = cs.id
@@ -106,7 +103,6 @@ public class TextEBookPersistenceAdapter implements TextEBookPort {
                         (String) row.get("textEBookPreviewDownloadUrl"),
                         (Integer) row.get("textEBookPage"),
                         SubjectCategory.valueOf((String) row.get("subjectCategory")),
-                        TeachingGenre.valueOf((String) row.get("teachingGenre")),
                         TextEBookStatus.valueOf((String) row.get("textEBookStatus")),
                         ((ZonedDateTime) row.get("textEBookPublishedAt")).toLocalDateTime()
                 )));
@@ -114,22 +110,24 @@ public class TextEBookPersistenceAdapter implements TextEBookPort {
 
     @Override
     public Flux<TextEBookResult> getTextEBookListByCourseSeriesIds(List<Long> courseSeriesIds) {
+        courseSeriesIds.forEach(it -> {
+            System.out.println("HELLO : " + it);
+        });
         String sql = """
                 SELECT tb.id as teacherId,
                     tb.course_id as courseId,
-                    tb.text_e_book_unique_code as textEBookUniqueCode,
-                    tb.text_e_book_image_url as textEBookImageUrl,
-                    tb.text_e_book_title as textEBookTitle,
-                    tb.text_e_book_description as textEBookDescription,
-                    tb.text_e_book_table_of_contents as textEBookTableOfContents,
-                    tb.text_e_book_author as textEBookAuthor,
-                    tb.text_e_book_publisher as textEBookPublisher,
-                    tb.text_e_book_preview_download_url as textEBookPreviewDownloadUrl,
-                    tb.text_e_book_page as textEBookPage,
+                    tb.textebook_unique_code as textEBookUniqueCode,
+                    tb.textebook_image_url as textEBookImageUrl,
+                    tb.textebook_title as textEBookTitle,
+                    tb.textebook_description as textEBookDescription,
+                    tb.textebook_table_of_contents as textEBookTableOfContents,
+                    tb.textebook_author as textEBookAuthor,
+                    tb.textebook_publisher as textEBookPublisher,
+                    tb.textebook_preview_download_url as textEBookPreviewDownloadUrl,
+                    tb.textebook_page as textEBookPage,
                     tb.subject_category as subjectCategory,
-                    tb.text_e_book_genre as teachingGenre,
-                    tb.text_e_book_status as textEBookStatus,
-                    tb.text_e_book_published_at as textEBookPublishedAt
+                    tb.textebook_status as textEBookStatus,
+                    tb.textebook_published_at as textEBookPublishedAt
                 FROM text_e_books tb
                 INNER JOIN courses c ON tb.course_id = c.id
                 WHERE c.course_series_id IN (:courseSeriesIds);
@@ -152,7 +150,6 @@ public class TextEBookPersistenceAdapter implements TextEBookPort {
                         (String) row.get("textEBookPreviewDownloadUrl"),
                         (Integer) row.get("textEBookPage"),
                         SubjectCategory.valueOf((String) row.get("subjectCategory")),
-                        TeachingGenre.valueOf((String) row.get("teachingGenre")),
                         TextEBookStatus.valueOf((String) row.get("textEBookStatus")),
                         ((ZonedDateTime) row.get("textEBookPublishedAt")).toLocalDateTime()
                 )));
@@ -161,10 +158,10 @@ public class TextEBookPersistenceAdapter implements TextEBookPort {
     @Override
     public Mono<TextEBookCountResult> getTextEBookCountResult() {
         String sql = """
-                SELECT tb.teacher_status as teacherStatus,
+                SELECT tb.textebook_status as textebookStatus,
                     COUNT(*) as statusCount
                 FROM text_e_books tb
-                GROUP BY tb.teacher_status;
+                GROUP BY tb.textebook_status;
                 """;
         return databaseClient.sql(sql)
                 .fetch()
@@ -174,9 +171,9 @@ public class TextEBookPersistenceAdapter implements TextEBookPort {
                     Long operatorCnt = 0L;
                     Long notOperatorCnt = 0L;
                     for (Map<String, Object> map: rowList) {
-                        if (TextEBookStatus.valueOf((String) map.get("teacherStatus")).equals(TextEBookStatus.OPERATOR)) {
+                        if (TextEBookStatus.valueOf((String) map.get("textebookStatus")).equals(TextEBookStatus.OPERATOR)) {
                             operatorCnt = (Long) map.get("statusCount");
-                        } else if (TextEBookStatus.valueOf((String) map.get("teacherStatus")).equals(TextEBookStatus.NOT_OPERATOR)) {
+                        } else if (TextEBookStatus.valueOf((String) map.get("textebookStatus")).equals(TextEBookStatus.NOT_OPERATOR)) {
                             notOperatorCnt = (Long) map.get("statusCount");
                         }
                     }
