@@ -53,6 +53,7 @@ public class QueryAdminUserController {
             Long targetAppUserId
     ) {
         GetAppUserByAdminUserCommand command = new GetAppUserByAdminUserCommand(
+                adminUserHeaderDetail.getAdminUserRoles(),
                 targetAppUserId
         );
         return queryAdminUserUseCase.getAppUser(command);

@@ -2,96 +2,56 @@ package org.lucycato.productcommandservice.adapter.in.web;
 
 import lombok.RequiredArgsConstructor;
 import org.lucycato.common.annotation.hexagonal.in.WebAdapter;
-import org.lucycato.common.annotation.resolver.AdminUserHeaders;
-import org.lucycato.common.resolver.AdminUserHeaderDetail;
-import org.lucycato.productcommandservice.adapter.in.web.request.RegisterTeacherRequest;
-import org.lucycato.productcommandservice.application.port.in.TeacherUseCase;
-import org.lucycato.productcommandservice.application.port.in.command.DeleteTeacherCommand;
-import org.lucycato.productcommandservice.application.port.in.command.ModifyTeacherCommand;
-import org.lucycato.productcommandservice.application.port.in.command.RegisterTeacherCommand;
-import org.lucycato.productcommandservice.domain.TeacherDetail;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @WebAdapter
 @RestController
 @RequiredArgsConstructor
 public class TeacherController {
-    private final TeacherUseCase teacherUseCase;
-
-    @PostMapping(value = "api/admin/v1/teachers", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public TeacherDetail registerTeacher(
-            @AdminUserHeaders
-            AdminUserHeaderDetail adminUserHeaderDetail,
-            @RequestPart(name = "request")
-            RegisterTeacherRequest request,
-            @RequestPart(name = "teacherImageFile", required = false)
-            MultipartFile teacherImageFile,
-            @RequestPart(name = "teacherCurriculumImageFile", required = false)
-            MultipartFile teacherCurriculumImageFile,
-            @RequestPart(name = "teacherCurriculumVideoFile", required = false)
-            MultipartFile teacherCurriculumVideoFile
-    ) {
-        RegisterTeacherCommand command = new RegisterTeacherCommand(
-                adminUserHeaderDetail.getAdminUserId(),
-                request.getTeacherRank(),
-                request.getTeacherName(),
-                request.getTeacherSlogan(),
-                request.getTeacherProfileDescription(),
-                request.getTeachingGenre(),
-                teacherImageFile,
-                teacherCurriculumImageFile,
-                teacherCurriculumVideoFile
-        );
-
-        return teacherUseCase.registerTeacher(command);
+    @PostMapping("api/admin/product/v1/teachers")
+    public void registerTeacher() {
     }
 
-    @PatchMapping(value = "api/admin/v1/teachers/{teacherId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public TeacherDetail modifyTeacher(
-            @AdminUserHeaders
-            AdminUserHeaderDetail adminUserHeaderDetail,
-            @PathVariable
-            Long teacherId,
-            @RequestPart(name = "request")
-            RegisterTeacherRequest request,
-            @RequestPart(name = "teacherImageFile", required = false)
-            MultipartFile teacherImageFile,
-            @RequestPart(name = "teacherCurriculumImageFile", required = false)
-            MultipartFile teacherCurriculumImageFile,
-            @RequestPart(name = "teacherCurriculumVideoFile", required = false)
-            MultipartFile teacherCurriculumVideoFile
-    ) {
-        ModifyTeacherCommand command = new ModifyTeacherCommand(
-                adminUserHeaderDetail.getAdminUserId(),
-                teacherId,
-                request.getTeacherRank(),
-                request.getTeacherName(),
-                request.getTeacherSlogan(),
-                request.getTeacherProfileDescription(),
-                request.getTeachingGenre(),
-                teacherImageFile,
-                teacherCurriculumImageFile,
-                teacherCurriculumVideoFile
-        );
+    @PostMapping("api/admin/product/v1/teachers/{teacherId}/course-series")
+    public void registerTeacherLectureSeries() {
 
-        return teacherUseCase.modifyTeacher(command);
     }
 
-    @DeleteMapping("api/admin/v1/teachers/{teacherId}")
-    public Object deleteTeacher(
-            @AdminUserHeaders
-            AdminUserHeaderDetail adminUserHeaderDetail,
-            @PathVariable
-            Long teacherId
-    ) {
-        DeleteTeacherCommand command = new DeleteTeacherCommand(
-                adminUserHeaderDetail.getAdminUserId(),
-                teacherId
-        );
-        teacherUseCase.deleteTeacher(command);
+    @PostMapping("api/admin/product/v1/teachers/{teacherId}/courses")
+    public void registerTeacherLecture() {
 
-        return new Object();
+    }
+
+    @PostMapping("api/admin/product/v1/teachers/{teacherId}/news")
+    public void registerTeacherNews() {
+
+    }
+
+    @PatchMapping("api/admin/product/v1/teachers/{teacherId}")
+    public void modifyTeacher() {
+
+    }
+
+    @PatchMapping("api/admin/product/v1/teachers/{teacherId}/course-series/{courseSeriesId}")
+    public void modifyTeacherLectureSeries() {
+
+    }
+
+    @PatchMapping("api/admin/product/v1/teachers/{teacherId}/courses/{courseId}")
+    public void modifyTeacherLecture() {
+
+    }
+
+    @PatchMapping("api/admin/product/v1/teachers/{teacherId}/news/{newsId}")
+    public void modifyTeacherNews() {
+
+    }
+
+    @DeleteMapping("api/admin/product/v1/teachers/{teacherId}")
+    public void deleteTeacher() {
+
     }
 }

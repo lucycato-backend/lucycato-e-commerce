@@ -4,9 +4,9 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.lucycato.productqueryservice.application.port.out.result.CourseSeriesResult;
-import org.lucycato.productqueryservice.application.port.out.result.TeacherResult;
 import org.lucycato.productqueryservice.domain.enums.*;
+
+import java.util.List;
 
 @Getter
 @Builder(access = AccessLevel.PRIVATE)
@@ -14,29 +14,47 @@ import org.lucycato.productqueryservice.domain.enums.*;
 public class TeacherCourseSeries {
     private final Long courseSeriesId;
 
+    private final String courseImageUrl;
+
+    private final String courseTitle;
+
+    private final String courseDescription;
+
     private final Teacher teacher;
 
-    private final String courseSeriesImageUrl;
+    private final List<Course> courses;
 
-    private final String courseSeriesTitle;
+    public static TeacherCourseSeries createIsNotSimple() {
+        return null;
+    }
 
-    private final String courseSeriesDescription;
+    public static TeacherCourseSeries createSimple() {
+        return null;
+    }
 
-    public static TeacherCourseSeries from(TeacherResult teacherResult, CourseSeriesResult courseSeriesResult) {
-        Teacher teacher = Teacher.builder()
-                .teacherId(teacherResult.getTeacherId())
-                .teacherName(teacherResult.getTeacherName())
-                .teachingGenre(teacherResult.getTeachingGenre())
-                .teacherStatus(teacherResult.getTeacherStatus())
-                .build();
+    @Getter
+    @Builder(access = AccessLevel.PRIVATE)
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class Course {
+        private final Long courseId;
 
-        return TeacherCourseSeries.builder()
-                .courseSeriesId(courseSeriesResult.getCourseSeriesId())
-                .teacher(teacher)
-                .courseSeriesImageUrl(courseSeriesResult.getCourseSeriesImageUrl())
-                .courseSeriesTitle(courseSeriesResult.getCourseSeriesTitle())
-                .courseSeriesDescription(courseSeriesResult.getCourseSeriesDescription())
-                .build();
+        private final CoursePreViewUrl coursePreViewUrl;
+
+        private final CourseTextEBook courseTextEBook;
+
+        private final String courseTitle;
+
+        private final String courseSubTitle;
+
+        private final Integer coursePrice;
+
+        private final String courseImageUrl;
+
+        private final CourseGenre courseGenre;
+
+        private final SubjectCategory subjectCategory;
+
+        private final CourseStatus courseStatus;
     }
 
     @Getter
@@ -51,4 +69,27 @@ public class TeacherCourseSeries {
 
         private final TeacherStatus teacherStatus;
     }
+
+    @Getter
+    @Builder(access = AccessLevel.PRIVATE)
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class CourseTextEBookPreView {
+        private final Long textEBookId;
+
+        private final String textEBookUniqueCode;
+
+        private final String textEBookTitle;
+
+        private final String textEBookPreviewDownLoadUrl;
+    }
+
+    @Getter
+    @Builder(access = AccessLevel.PRIVATE)
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class CoursePreViewUrl {
+        private final String otVideoUrl;
+
+        private final String previewVideoUrl;
+    }
+
 }

@@ -15,6 +15,8 @@ public class TaskKey {
     private String topic;
 
     private String uuid;
+
+    private String destination;
 }
 
 

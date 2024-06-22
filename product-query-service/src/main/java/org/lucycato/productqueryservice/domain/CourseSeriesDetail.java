@@ -4,7 +4,6 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.lucycato.productqueryservice.application.port.out.result.CourseSeriesDetailResult;
 import org.lucycato.productqueryservice.domain.enums.*;
 
 import java.time.LocalDateTime;
@@ -32,19 +31,7 @@ public class CourseSeriesDetail {
 
     private final CourseSeriesStatus courseSeriesStatus;
 
-    private final LocalDateTime courseSeriesCreatedAt;
+    private final LocalDateTime createdAt;
 
-    public static CourseSeriesDetail from(CourseSeriesDetailResult result) {
-        return CourseSeriesDetail.builder()
-                .courseSeriesId(result.getCourseSeriesId())
-                .teacherId(result.getTeacherId())
-                .courseSeriesImageUrl(result.getCourseSeriesImageUrl())
-                .courseSeriesTitle(result.getCourseSeriesDescription())
-                .courseSeriesDescription(result.getCourseSeriesTitle())
-                .subjectCategory(result.getSubjectCategory())
-                .courseSeriesCategory(result.getCourseSeriesCategory())
-                .courseSeriesStatus(result.getCourseSeriesStatus())
-                .courseSeriesCreatedAt(result.getCourseSeriesCreatedAt())
-                .build();
-    }
+    private final LocalDateTime modifiedAt;
 }

@@ -15,10 +15,14 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class GetAppUserByAdminUserCommand extends SelfValidating<GetAppUserByAdminUserCommand> {
+    @NotEmpty
+    private List<AdminUserRole> adminUserRoles;
+
     @NotNull
     private Long targetAppUserId;
 
-    public GetAppUserByAdminUserCommand(Long targetAppUserId) {
+    public GetAppUserByAdminUserCommand(List<AdminUserRole> adminUserRoles, Long targetAppUserId) {
+        this.adminUserRoles = adminUserRoles;
         this.targetAppUserId = targetAppUserId;
 
         this.validateSelf();

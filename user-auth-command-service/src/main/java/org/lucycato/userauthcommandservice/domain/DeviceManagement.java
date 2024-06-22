@@ -11,7 +11,7 @@ import java.util.List;
 @Builder(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class DeviceManagement {
-    private String deviceMacAddress;
+    private String deviceManAddress;
 
     private String deviceFcmToken;
 
@@ -22,14 +22,14 @@ public class DeviceManagement {
     private List<Platform> platforms;
 
     public static DeviceManagement create(
-            String deviceMacAddress,
+            String deviceManAddress,
             String deviceFcmToken,
             DeviceOsType deviceOsType,
             String deviceOsVersion,
             List<Platform> platforms
     ) {
         return DeviceManagement.builder()
-                .deviceMacAddress(deviceMacAddress)
+                .deviceManAddress(deviceManAddress)
                 .deviceFcmToken(deviceFcmToken)
                 .deviceOsType(deviceOsType)
                 .deviceOsVersion(deviceOsVersion)

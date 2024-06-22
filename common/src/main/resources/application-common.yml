@@ -14,6 +14,3 @@ springdoc:
       enabled: true
   cache:
     disabled: true
-
-server:
-  forward-headers-strategy: FRAMEWORK

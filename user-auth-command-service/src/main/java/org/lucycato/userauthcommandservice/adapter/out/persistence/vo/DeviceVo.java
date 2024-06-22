@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class DeviceVo {
-    private String deviceMacAddress;
+    private String deviceManAddress;
 
     private String deviceFcmToken;
 
@@ -22,8 +22,8 @@ public class DeviceVo {
 
     private List<PlatformVo> platformVos;
 
-    public DeviceVo(String deviceMacAddress, String deviceFcmToken, DeviceOsType deviceOsType, String deviceOsVersion, List<PlatformVo> platformVos) {
-        this.deviceMacAddress = deviceMacAddress;
+    public DeviceVo(String deviceManAddress, String deviceFcmToken, DeviceOsType deviceOsType, String deviceOsVersion, List<PlatformVo> platformVos) {
+        this.deviceManAddress = deviceManAddress;
         this.deviceFcmToken = deviceFcmToken;
         this.deviceOsType = deviceOsType;
         this.deviceOsVersion = deviceOsVersion;

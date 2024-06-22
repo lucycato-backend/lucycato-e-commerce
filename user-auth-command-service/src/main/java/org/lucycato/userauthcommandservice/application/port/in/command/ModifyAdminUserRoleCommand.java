@@ -14,13 +14,17 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class ModifyAdminUserRoleCommand extends SelfValidating<ModifyAdminUserRoleCommand> {
+    @NotEmpty
+    private List<AdminUserRole> adminUserRoles;
+
     @NotNull
     private Long targetAdminUserId;
 
     @NotNull
     private AdminUserRole targetChangeRole;
 
-    public ModifyAdminUserRoleCommand(Long targetAdminUserId, AdminUserRole targetChangeRole) {
+    public ModifyAdminUserRoleCommand(List<AdminUserRole> adminUserRoles, Long targetAdminUserId, AdminUserRole targetChangeRole) {
+        this.adminUserRoles = adminUserRoles;
         this.targetAdminUserId = targetAdminUserId;
         this.targetChangeRole = targetChangeRole;
 

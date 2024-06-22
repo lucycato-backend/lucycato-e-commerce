@@ -1,46 +1,28 @@
 package org.lucycato.productqueryservice.domain;
 
-import lombok.*;
-import org.lucycato.productqueryservice.application.port.out.result.CourseResult;
-import org.lucycato.productqueryservice.application.port.out.result.LectureResult;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import org.lucycato.productqueryservice.domain.enums.*;
 
 @Getter
 @Builder(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class CourseLecture {
-    private final Long lectureId;
+    private Long lectureId;
 
-    private final Course course;
+    private Course course;
 
-    private final String lectureTitle;
+    private String lectureTitle;
 
-    private final String lectureDescription;
+    private String lectureDescription;
 
-    private final LectureCategory lectureCategory;
+    private LectureCategory lectureCategory;
 
-    private final String lectureVideoUrl;
+    private String lectureVideoUrl;
 
-    private final LectureStatus lectureStatus;
-
-    public static CourseLecture from(CourseResult courseResult, LectureResult lectureResult) {
-        Course course = Course.builder()
-                .courseId(courseResult.getCourseId())
-                .courseTitle(courseResult.getCourseTitle())
-                .courseGenre(courseResult.getCourseGenre())
-                .subjectCategory(courseResult.getSubjectCategory())
-                .courseStatus(courseResult.getCourseStatus())
-                .build();
-        return CourseLecture.builder()
-                .lectureId(lectureResult.getLectureId())
-                .course(course)
-                .lectureTitle(lectureResult.getLectureTitle())
-                .lectureDescription(lectureResult.getLectureDescription())
-                .lectureCategory(lectureResult.getLectureCategory())
-                .lectureVideoUrl(lectureResult.getLectureVideoUrl())
-                .lectureStatus(lectureResult.getLectureStatus())
-                .build();
-    }
+    private LectureStatus lectureStatus;
 
     @Getter
     @Builder(access = AccessLevel.PRIVATE)

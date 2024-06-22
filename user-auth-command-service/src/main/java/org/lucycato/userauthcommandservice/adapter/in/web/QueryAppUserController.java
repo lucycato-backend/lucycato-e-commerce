@@ -27,7 +27,9 @@ public class QueryAppUserController {
             AppUserHeaderDetail appUserHeaderDetail
     ) {
         GetAppUserCommand command = new GetAppUserCommand(
-                appUserHeaderDetail.getAppUserId()
+                appUserHeaderDetail.getAppUserId(),
+                appUserHeaderDetail.getCurrentAppUserDeviceMacAddress(),
+                PlatformType.valueOf(appUserHeaderDetail.getCurrentAppUserPlatFormType())
         );
         return queryAppUserUseCase.getAppUser(command);
     }

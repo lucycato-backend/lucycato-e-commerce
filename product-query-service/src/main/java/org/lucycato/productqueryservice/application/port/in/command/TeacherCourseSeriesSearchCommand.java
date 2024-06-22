@@ -16,8 +16,11 @@ public class TeacherCourseSeriesSearchCommand extends SelfValidating<TeacherCour
 
     private TeachingGenre teachingGenre;
 
-    public TeacherCourseSeriesSearchCommand(TeachingGenre teachingGenre) {
+    private Boolean isSimple;
+
+    public TeacherCourseSeriesSearchCommand(TeachingGenre teachingGenre, Boolean isSimple) {
         this.teachingGenre = teachingGenre;
+        this.isSimple = isSimple;
 
         this.validateSelf();
     }

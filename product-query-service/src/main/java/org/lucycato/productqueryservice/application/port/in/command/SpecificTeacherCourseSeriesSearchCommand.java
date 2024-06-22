@@ -14,8 +14,12 @@ public class SpecificTeacherCourseSeriesSearchCommand extends SelfValidating<Spe
     @NotNull
     private Long teacherId;
 
-    public SpecificTeacherCourseSeriesSearchCommand(Long teacherId) {
+    private Boolean isSimple;
+
+
+    public SpecificTeacherCourseSeriesSearchCommand(Long teacherId, Boolean isSimple) {
         this.teacherId = teacherId;
+        this.isSimple = isSimple;
 
         this.validateSelf();
     }

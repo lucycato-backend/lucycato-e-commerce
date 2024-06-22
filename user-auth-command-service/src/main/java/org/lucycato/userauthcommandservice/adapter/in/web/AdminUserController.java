@@ -106,6 +106,7 @@ public class AdminUserController {
             ModifyAdminUserRoleRequest request
     ) {
         ModifyAdminUserRoleCommand command = new ModifyAdminUserRoleCommand(
+                adminUserHeaderDetail.getAdminUserRoles(),
                 request.getTargetUserId(),
                 request.getRole()
         );
@@ -120,6 +121,7 @@ public class AdminUserController {
             ModifyAdminUserRoleRequest request
     ) {
         ModifyAdminUserRoleCommand command = new ModifyAdminUserRoleCommand(
+                adminUserHeaderDetail.getAdminUserRoles(),
                 request.getTargetUserId(),
                 request.getRole()
         );

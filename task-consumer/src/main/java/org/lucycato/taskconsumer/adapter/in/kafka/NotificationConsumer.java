@@ -52,6 +52,16 @@ public class NotificationConsumer {
                     }))
                     .flatMap(value -> Mono.fromCallable(() -> objectMapper.readValue(value, AsyncTask.class)))
                     .flatMap(asyncTask -> {
+                        String destination = asyncTask.getTaskKey().getDestination();
+                        if (destination.equals("api/lucycato/v1/send-notification")) {
+                            SendNotificationAsyncTaskValue value = (SendNotificationAsyncTaskValue) asyncTask.getValue();
+                            SendNotificationCommand command = new SendNotificationCommand(
+                                    value.getFcmToken(),
+                                    value.getTitle(),
+                                    value.getContent()
+                            );
+                            return notificationUseCase.sendNotification(command);
+                        }
                         return Mono.empty();
                     })
                     .subscribe();

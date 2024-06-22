@@ -1,5 +1,5 @@
-server:
-  port: 9090
+#server:
+#  port: 8071
 
 spring:
   application:
@@ -18,9 +18,12 @@ spring:
         - name: AuthGlobalFilter
           args:
             message: Spring Gateway Auth Filter
+            authCheck: true
         - name: LoggingGlobalFilter
           args:
             message: Spring Gateway Logging Filter
+            preLogger: true
+            postLogger: true
       routes:
         - id: user-auth-command-service
           uri: lb://user-auth-command-service
@@ -112,24 +115,6 @@ kafka:
     bootstrapservers: localhost:9092
 
 ---
-management:
-  endpoints:
-    enabled-by-default: false
-    web:
-      exposure:
-        include: "metrics, health, info, prometheus"
-    jmx:
-      exposure:
-        exclude: "*"
-  endpoint:
-    metrics: 
-      enabled: true
-    health:
-      enabled: true
-    info:
-      enabled: true
-    prometheus:
-      enabled: true
 
 spring:
   application:
@@ -245,58 +230,3 @@ eureka:
 kafka:
   clusters:
     bootstrapservers: lucycato-kafka:9092
-
-springdoc:
-  enable-native-support: true
-  version: v1
-  packages-to-scan: org.lucycato
-  default-consumes-media-type: application/json;charset=UTF-8
-  default-produces-media-type: application/json;charset=UTF-8
-  swagger-ui:
-    path: swagger-ui.html            # Swagger UI 경로 => localhost:8081/swagger-ui.html
-    tags-sorter: alpha            # alpha: 알파벳 순 태그 정렬, method: HTTP Method 순 정렬
-    operations-sorter: alpha      # alpha: 알파벳 순 태그 정렬, method: HTTP Method 순 정렬
-    doc-expansion: none
-    urls[0]:
-      name: user-auth-command 서비스
-      url: http://localhost:9090/user-auth-command/api-docs/json
-    urls[1]:
-      name: user-auth-query 서비스
-      url: http://localhost:9090/user-auth-query/api-docs/json
-    urls[2]:
-      name: notification-command 서비스
-      url: http://localhost:9090/notification-command/api-docs/json
-    urls[3]:
-      name: notification-query 서비스
-      url: http://localhost:9090/notification-query/api-docs/json
-    urls[4]:
-      name: product-command 서비스
-      url: http://localhost:9090/product-command/api-docs/json
-    urls[5]:
-      name: product-query 서비스
-      url: http://localhost:9090/product-query/api-docs/json
-    urls[6]:
-      name: board-command 서비스
-      url: http://localhost:9090/board-command/api-docs/json
-    urls[7]:
-      name: board-query 서비스
-      url: http://localhost:9090/board-query/api-docs/json
-    urls[8]:
-      name: event-command 서비스
-      url: http://localhost:9090/event-command/api-docs/json
-    urls[9]:
-      name: event-query 서비스
-      url: http://localhost:9090/event-query/api-docs/json
-    urls[10]:
-      name: order-command 서비스
-      url: http://localhost:9090/order-command/api-docs/json
-    urls[11]:
-      name: order-query 서비스
-      url: http://localhost:9090/order-query/api-docs/json
-
-
-  api-docs:
-    enabled: true
-    path: /api-docs/json
-  cache:
-    disabled: true

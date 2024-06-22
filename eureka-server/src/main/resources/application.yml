@@ -20,24 +20,6 @@ eureka:
     leaseExpirationDurationInSeconds: 30
 
 ---
-management:
-  endpoints:
-    enabled-by-default: false
-    web:
-      exposure:
-        include: "metrics, health, info, prometheus"
-    jmx:
-      exposure:
-        exclude: "*"
-  endpoint:
-    metrics: 
-      enabled: true
-    health:
-      enabled: true
-    info:
-      enabled: true
-    prometheus:
-      enabled: true
 
 spring:
   application:

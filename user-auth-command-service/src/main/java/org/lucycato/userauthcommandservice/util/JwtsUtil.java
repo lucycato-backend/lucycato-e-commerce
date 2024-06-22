@@ -22,12 +22,8 @@ public class JwtsUtil {
     private static final long expirationMinutes = 5;
     private static final long refreshExpirationMinutes = 30;
 
-    private static final String Admin = "Admin#";
-
-    private static final String App = "App#";
-
-    public static String createAdminJwtToken(String currentDeviceMacAddress) {
-        return Admin + Jwts.builder()
+    public static String creatrJwtToken(String currentDeviceMacAddress) {
+        return Jwts.builder()
                 .setSubject(currentDeviceMacAddress)
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
                 .setIssuer(issuer)
@@ -35,26 +31,8 @@ public class JwtsUtil {
                 .compact();
     }
 
-    public static String createAppJwtToken(String currentDeviceMacAddress) {
-        return App + Jwts.builder()
-                .setSubject(currentDeviceMacAddress)
-                .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
-                .setIssuer(issuer)
-                .setExpiration(Date.from(Instant.now().plus(expirationMinutes, ChronoUnit.MINUTES)))
-                .compact();
-    }
-
-    public static String createAdminRefreshToken() {
-        return Admin + Jwts.builder()
-                .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
-                .setIssuer(issuer)
-                .setIssuedAt(Timestamp.valueOf(LocalDateTime.now()))
-                .setExpiration(Date.from(Instant.now().plus(refreshExpirationMinutes, ChronoUnit.MINUTES)))
-                .compact();
-    }
-
-    public static String createAppRefreshToken() {
-        return App + Jwts.builder()
+    public static String creatrRefreshToken() {
+        return Jwts.builder()
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
                 .setIssuer(issuer)
                 .setIssuedAt(Timestamp.valueOf(LocalDateTime.now()))
