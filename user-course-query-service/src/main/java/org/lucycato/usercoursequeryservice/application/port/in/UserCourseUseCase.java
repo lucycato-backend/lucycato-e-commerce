@@ -1,20 +1,14 @@
 package org.lucycato.usercoursequeryservice.application.port.in;
 
-import org.lucycato.usercoursequeryservice.application.port.in.command.*;
-import org.lucycato.usercoursequeryservice.domain.*;
+import org.lucycato.usercoursequeryservice.application.port.in.command.UserCourseDetailSearchCommand;
+import org.lucycato.usercoursequeryservice.application.port.in.command.UserCourseSearchCommand;
+import org.lucycato.usercoursequeryservice.domain.Course;
+import org.lucycato.usercoursequeryservice.domain.CourseDetail;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-public interface CourseUseCase {
-    Flux<Course> getCurses(CourseSearchCommand command);
+public interface UserCourseUseCase {
+    Flux<Course> getCurses(UserCourseSearchCommand command);
 
-    Mono<CourseDetail> getCures(CourseDetailSearchCommand command);
-
-    Flux<CourseLecture> getCourseLectures(SpecificCourseLectureSearchCommand command);
-
-    Flux<CourseTextEBook> getCourseTextEBooks(SpecificCourseTextEBookSearchCommand command);
-
-    Flux<CourseReview> getCourseReviews(SpecificCourseReviewSearchCommand command);
-
-    Flux<CourseReview> getCourseReviews(SpecificCourseReviewByTeacherSearchCommand command);
+    Mono<CourseDetail> getCures(UserCourseDetailSearchCommand command);
 }

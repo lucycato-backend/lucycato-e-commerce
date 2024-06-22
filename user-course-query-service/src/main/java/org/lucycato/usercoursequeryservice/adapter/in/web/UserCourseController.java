@@ -2,9 +2,11 @@ package org.lucycato.usercoursequeryservice.adapter.in.web;
 
 import lombok.RequiredArgsConstructor;
 import org.lucycato.common.annotation.hexagonal.in.WebAdapter;
-import org.lucycato.usercoursequeryservice.application.port.in.CourseUseCase;
-import org.lucycato.usercoursequeryservice.application.port.in.command.*;
-import org.lucycato.usercoursequeryservice.domain.*;
+import org.lucycato.usercoursequeryservice.application.port.in.UserCourseUseCase;
+import org.lucycato.usercoursequeryservice.application.port.in.command.UserCourseDetailSearchCommand;
+import org.lucycato.usercoursequeryservice.application.port.in.command.UserCourseSearchCommand;
+import org.lucycato.usercoursequeryservice.domain.Course;
+import org.lucycato.usercoursequeryservice.domain.CourseDetail;
 import org.lucycato.usercoursequeryservice.domain.enums.CourseGenre;
 import org.lucycato.usercoursequeryservice.domain.enums.SubjectCategory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +20,7 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequiredArgsConstructor
 public class UserCourseController {
-    private final CourseUseCase courseUseCase;
-    /*
-    토론: status query parameter 공개 하는것은 타당한가
-    토론: WebFlux 사용은 write 사용에 안정적이지 않은 것인가
-     */
+    private final UserCourseUseCase userCourseUseCase;
 
     @GetMapping("open-api/usercourse/v1/courses")
     public Flux<Course> getCourses(
@@ -31,11 +29,11 @@ public class UserCourseController {
             @RequestParam(name = "subjectCategory", required = false)
             SubjectCategory subjectCategory
     ) {
-        CourseSearchCommand command = new CourseSearchCommand(
+        UserCourseSearchCommand command = new UserCourseSearchCommand(
                 courseGenre,
                 subjectCategory
         );
-        return courseUseCase.getCurses(command);
+        return userCourseUseCase.getCurses(command);
     }
 
     @GetMapping("open-api/usercourse/v1/courses/{courseId}")
@@ -43,53 +41,9 @@ public class UserCourseController {
             @PathVariable
             Long courseId
     ) {
-        CourseDetailSearchCommand command = new CourseDetailSearchCommand(
+        UserCourseDetailSearchCommand command = new UserCourseDetailSearchCommand(
                 courseId
         );
-        return courseUseCase.getCures(command);
-    }
-
-    @GetMapping("open-api/usercourse/v1/courses/{courseId}/lectures")
-    public Flux<CourseLecture> getCourseLectures(
-            @PathVariable
-            Long courseId
-    ) {
-        SpecificCourseLectureSearchCommand command = new SpecificCourseLectureSearchCommand(
-                courseId
-        );
-        return courseUseCase.getCourseLectures(command);
-    }
-
-    @GetMapping("open-api/usercourse/v1/courses/{courseId}/text-e-books")
-    public Flux<CourseTextEBook> getCourseTextEBooks(
-            @PathVariable
-            Long courseId
-    ) {
-        SpecificCourseTextEBookSearchCommand command = new SpecificCourseTextEBookSearchCommand(
-                courseId
-        );
-        return courseUseCase.getCourseTextEBooks(command);
-    }
-
-    @GetMapping("open-api/usercourse/v1/courses/{courseId}/reviews")
-    public Flux<CourseReview> getCourseReviews(
-            @PathVariable
-            Long courseId
-    ) {
-        SpecificCourseReviewSearchCommand command = new SpecificCourseReviewSearchCommand(
-                courseId
-        );
-        return courseUseCase.getCourseReviews(command);
-    }
-
-    @GetMapping("open-api/usercourse/v1/courses/by-teacher/{teacherId}/reviews")
-    public Flux<CourseReview> getCourseReviewsByTeacher(
-            @PathVariable
-            Long teacherId
-    ) {
-        SpecificCourseReviewByTeacherSearchCommand command = new SpecificCourseReviewByTeacherSearchCommand(
-                teacherId
-        );
-        return courseUseCase.getCourseReviews(command);
+        return userCourseUseCase.getCures(command);
     }
 }

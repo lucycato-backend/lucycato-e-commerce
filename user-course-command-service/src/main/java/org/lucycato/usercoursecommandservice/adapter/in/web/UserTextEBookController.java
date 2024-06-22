@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @WebAdapter
 @RestController
 @RequiredArgsConstructor
-public class TextEBookController {
+public class UserTextEBookController {
 
     @PostMapping("api/admin/usercourse/v1/text-e-books")
     public void registerTextEBook() {

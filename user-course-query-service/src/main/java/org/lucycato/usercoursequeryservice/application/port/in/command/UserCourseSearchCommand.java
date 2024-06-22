@@ -11,12 +11,12 @@ import org.lucycato.usercoursequeryservice.domain.enums.SubjectCategory;
 @Getter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class CourseSearchCommand extends SelfValidating<CourseSearchCommand> {
+public class UserCourseSearchCommand extends SelfValidating<UserCourseSearchCommand> {
     private CourseGenre courseGenre;
 
     private SubjectCategory subjectCategory;
 
-    public CourseSearchCommand(CourseGenre courseGenre, SubjectCategory subjectCategory) {
+    public UserCourseSearchCommand(CourseGenre courseGenre, SubjectCategory subjectCategory) {
         this.courseGenre = courseGenre;
         this.subjectCategory = subjectCategory;
 

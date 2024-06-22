@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 @WebAdapter
 @RestController
 @RequiredArgsConstructor
-public class CourseSeriesController {
+public class UserCourseSeriesController {
     @PostMapping("api/admin/usercourse/v1/course-series")
     public void registerCourseSeries() {
 

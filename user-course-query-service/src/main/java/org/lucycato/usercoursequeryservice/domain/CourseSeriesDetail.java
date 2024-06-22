@@ -4,7 +4,9 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.lucycato.usercoursequeryservice.domain.enums.*;
+import org.lucycato.usercoursequeryservice.domain.enums.CourseSeriesCategory;
+import org.lucycato.usercoursequeryservice.domain.enums.CourseSeriesStatus;
+import org.lucycato.usercoursequeryservice.domain.enums.SubjectCategory;
 
 import java.time.LocalDateTime;
 import java.util.List;
