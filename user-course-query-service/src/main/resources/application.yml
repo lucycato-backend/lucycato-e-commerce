@@ -13,10 +13,10 @@ spring:
       ribbon:
         enabled: false
 
-  r2dbc:
-    url: r2dbc:mysql://localhost:23306/default
-    username: admin
-    password: password
+r2dbc:
+  url: r2dbc:mysql://localhost:23306/default
+  username: admin
+  password: password
 
 eureka:
   client:
@@ -62,10 +62,10 @@ eureka:
     leaseRenewalIntervalInSeconds: 10
     leaseExpirationDurationInSeconds: 30
 
-  r2dbc:
-    url: r2dbc:mysql://mysql:3306/default
-    username: admin
-    password: password
+r2dbc:
+  url: r2dbc:mysql://mysql:3306/default
+  username: admin
+  password: password
 
 kafka:
   clusters:

@@ -7,6 +7,8 @@ scrape_configs:
     metrics_path: '/actuator/prometheus'
     static_configs:
       - targets:
+        - 'lucycato-user-course-command-service:8080'
+        - 'lucycato-user-course-query-service:8080'
         - 'lucycato-user-auth-command-service:8080'
         - 'lucycato-user-auth-query-service:8080'
         - 'lucycato-notification-command-service:8080'
@@ -15,8 +17,6 @@ scrape_configs:
         - 'lucycato-product-query-service:8080'
         - 'lucycato-board-command-service:8080'
         - 'lucycato-board-query-service:8080'
-        - 'lucycato-event-command-service:8080'
-        - 'lucycato-event-query-service:8080'
         - 'lucycato-order-command-service:8080'
         - 'lucycato-order-query-service:8080'
 
