@@ -1,5 +1,5 @@
 server:
-  port: 8085
+  port: 8089
 
 spring:
   application:
@@ -14,7 +14,7 @@ spring:
         enabled: false
 
   r2dbc:
-    url: r2dbc:mysql://localhost:3306/default
+    url: r2dbc:mysql://localhost:23306/default
     username: admin
     password: password
 
@@ -61,6 +61,11 @@ eureka:
     preferIpAddress: true
     leaseRenewalIntervalInSeconds: 10
     leaseExpirationDurationInSeconds: 30
+
+  r2dbc:
+    url: r2dbc:mysql://mysql:3306/default
+    username: admin
+    password: password
 
 kafka:
   clusters:
