@@ -1,6 +1,6 @@
 .PHONY: local-network local local-down local-restart local-db local-db-down local-db-restart local-app local-app-down local-app-restart service service-down service-restart
 
-SERVICES := eureka-server gateway-server board-command-service board-query-service notification-command-service notification-query-service order-command-service order-query-service product-command-service product-query-service user-auth-command-service user-auth-query-service
+SERVICES := eureka-server gateway-server board-command-service board-query-service notification-command-service notification-query-service order-command-service order-query-service product-command-service product-query-service user-auth-command-service user-auth-query-service user-course-command-service
 
 local: local-db local-app
 
