@@ -38,8 +38,5 @@ out/
 .vscode/
 ./data
 
-### Docker ###
+### Docker ##
 /data
-
-### Firebase ###
-**/firebase/

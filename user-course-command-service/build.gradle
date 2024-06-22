@@ -5,12 +5,11 @@ plugins {
     id 'com.palantir.docker' version '0.35.0'
 }
 
-group = 'org.lucycato.event-command-service'
+group = 'org.lucycato.user-course-command-service'
 version = '1.0.0'
 
 java {
     sourceCompatibility = 17
-    targetCompatibility = 17
 }
 
 repositories {
@@ -31,25 +30,28 @@ ext {
     set('springCloudVersion', "2023.0.2")
 }
 
-bootRun {
-    sourceResources sourceSets.main
-}
-
 dependencies {
     implementation project(':common')
-    implementation project(':mvc')
+    implementation project(':webflux')
 
     implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
+    implementation "io.asyncer:r2dbc-mysql:1.0.2"
+    implementation 'com.github.jasync-sql:jasync-mysql:2.2.0'
+
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'io.micrometer:micrometer-registry-prometheus'
+    implementation 'com.github.loki4j:loki-logback-appender:1.5.1'
 
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 }

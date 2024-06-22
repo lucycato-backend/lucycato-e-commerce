@@ -18,3 +18,6 @@ include 'notification-command-service'
 include 'user-auth-query-service'
 include 'order-query-service'
 include 'order-command-service'
+include 'user-course-query-service'
+include 'user-course-command-service'
+

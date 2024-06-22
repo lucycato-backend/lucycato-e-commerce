@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: event-command-service
+    name: user-course-command-service
   config:
     import: application-common.yml
     activate:
@@ -12,6 +12,18 @@ spring:
     loadbalancer:
       ribbon:
         enabled: false
+  r2dbc:
+    url: r2dbc:mysql://localhost:3306/default
+    username: admin
+    password: password
+  data:
+    redis:
+      host: localhost
+      port: 26379
+
+logging:
+  level:
+    org.springframework.r2dbc.core: debug
 
 eureka:
   client:
@@ -50,15 +62,27 @@ management:
 
 spring:
   application:
-    name: event-command-service
+    name: user-course-command-service
   config:
     import: application-common.yml
     activate:
       on-profile: docker
+  r2dbc:
+    url: r2dbc:mysql://lucycato-mysql:3306/default
+    username: admin
+    password: password
   cloud:
     loadbalancer:
       ribbon:
         enabled: false
+  data:
+    redis:
+      host: lucycato-redis
+      port: 6379
+
+logging:
+  level:
+    org.springframework.r2dbc.core: debug
 
 eureka:
   client:
@@ -74,4 +98,3 @@ eureka:
 kafka:
   clusters:
     bootstrapservers: lucycato-kafka:9092
-
