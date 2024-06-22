@@ -31,7 +31,8 @@ services:
     ports:
       - "20080:80"
     networks:
-      - "lucycato_network"
+      custom_network:
+        ipv4_address: 172.20.0.9
 
   lucycato-redis:
     container_name: lucycato-redis
