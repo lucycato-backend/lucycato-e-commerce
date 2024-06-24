@@ -152,10 +152,10 @@ public class CourseSeriesService implements CourseSeriesUseCase {
     @Override
     public Flux<CourseSeriesTextEBook> getCourseSeriesTextEBookList(SpecificCourseSeriesTextEBookSearchCommand command) {
         return Flux.combineLatest(
-                        courseSeriesPort.getSimpleCourseSeries(command.getTeacherId()).flatMapMany(Flux::just),
+                        courseSeriesPort.getSimpleCourseSeries(command.getTeacherId()).flux(),
                         textEBookPort.getTextEBookListByTeacherIds(Collections.singletonList(command.getTeacherId())),
                         CourseSeriesTextEBook::from
                 )
-                .sort(Collections.reverseOrder());
+                .sort((a, b) -> Long.compare(b.getTextEBookId(), a.getTextEBookId()));
     }
 }
