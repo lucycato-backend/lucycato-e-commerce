@@ -116,6 +116,21 @@ public class CoursePersistenceAdapter implements CoursePort {
     }
 
     @Override
+    public Flux<Long> getCourseIdsByCourseSeriesId(Long courseSeriesId) {
+        String sql = """
+                SELECT c.id courseId
+                FROM courses c
+                WHERE c.course_series_id = :courseSeriesId
+                """;
+
+        return databaseClient.sql(sql)
+                .bind("courseSeriesId", courseSeriesId)
+                .fetch()
+                .all()
+                .flatMap(row -> Flux.just((Long) row.get("courseId")));
+    }
+
+    @Override
     public Flux<CheckedRecentCourseOpenResult> checkRecentCourseOpenListByTeacherIds(List<Long> teacherIds) {
         return redisTemplate.opsForHash().multiGet(PRODUCT_SERVICE_RECENT_COURSE_UPLOAD_BY_TEACHER_ID_HASH_KEY, teacherIds.stream().map(String::valueOf).collect(Collectors.toList()))
                 .flatMapMany(result -> {
