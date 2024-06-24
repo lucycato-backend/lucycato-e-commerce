@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.lucycato.productqueryservice.domain.enums.SubjectCategory;
-import org.lucycato.productqueryservice.domain.enums.TeachingGenre;
 import org.lucycato.productqueryservice.domain.enums.TextEBookStatus;
 
 import java.time.LocalDateTime;
@@ -36,8 +35,6 @@ public class TextEBookResult {
     private Integer textEBookPage;
 
     private SubjectCategory subjectCategory;
-
-    private TeachingGenre teachingGenre;
 
     private TextEBookStatus textEBookStatus;
 

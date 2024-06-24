@@ -8,7 +8,6 @@ import lombok.Getter;
 import org.lucycato.productqueryservice.application.port.out.result.CourseSeriesResult;
 import org.lucycato.productqueryservice.application.port.out.result.TextEBookResult;
 import org.lucycato.productqueryservice.domain.enums.SubjectCategory;
-import org.lucycato.productqueryservice.domain.enums.TeachingGenre;
 import org.lucycato.productqueryservice.domain.enums.TextEBookStatus;
 
 @Getter
@@ -25,8 +24,6 @@ public class CourseSeriesTextEBook {
 
     private final SubjectCategory subjectCategory;
 
-    private final TeachingGenre teachingGenre;
-
     private final TextEBookStatus textEBookStatus;
 
     public static CourseSeriesTextEBook from(CourseSeriesResult courseSeriesResult, TextEBookResult textEBookResult) {
@@ -42,7 +39,6 @@ public class CourseSeriesTextEBook {
                 .textEBookImageUrl(textEBookResult.getTextEBookImageUrl())
                 .textEBookTitle(textEBookResult.getTextEBookTitle())
                 .subjectCategory(textEBookResult.getSubjectCategory())
-                .teachingGenre(textEBookResult.getTeachingGenre())
                 .textEBookStatus(textEBookResult.getTextEBookStatus())
                 .build();
     }

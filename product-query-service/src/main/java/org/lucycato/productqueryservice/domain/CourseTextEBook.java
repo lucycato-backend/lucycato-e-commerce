@@ -38,8 +38,6 @@ public class CourseTextEBook {
 
     private final SubjectCategory subjectCategory;
 
-    private final TeachingGenre teachingGenre;
-
     private final TextEBookStatus textEBookStatus;
 
     private final LocalDateTime textEBookPublishedAt;
@@ -65,7 +63,6 @@ public class CourseTextEBook {
                 .textEBookPreviewDownloadUrl(textEBookResult.getTextEBookPreviewDownloadUrl())
                 .textEBookPage(textEBookResult.getTextEBookPage())
                 .subjectCategory(textEBookResult.getSubjectCategory())
-                .teachingGenre(textEBookResult.getTeachingGenre())
                 .textEBookStatus(textEBookResult.getTextEBookStatus())
                 .textEBookPublishedAt(textEBookResult.getTextEBookPublishedAt())
                 .build();
