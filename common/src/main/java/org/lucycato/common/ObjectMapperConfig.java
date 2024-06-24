@@ -26,8 +26,6 @@ public class ObjectMapperConfig {
 
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-
         objectMapper.setPropertyNamingStrategy(new PropertyNamingStrategies.LowerCamelCaseStrategy());
 
         return objectMapper;
