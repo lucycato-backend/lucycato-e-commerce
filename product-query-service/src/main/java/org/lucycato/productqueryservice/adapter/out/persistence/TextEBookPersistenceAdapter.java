@@ -110,11 +110,8 @@ public class TextEBookPersistenceAdapter implements TextEBookPort {
 
     @Override
     public Flux<TextEBookResult> getTextEBookListByCourseSeriesIds(List<Long> courseSeriesIds) {
-        courseSeriesIds.forEach(it -> {
-            System.out.println("HELLO : " + it);
-        });
         String sql = """
-                SELECT tb.id as teacherId,
+                SELECT tb.id as textEBookId,
                     tb.course_id as courseId,
                     tb.textebook_unique_code as textEBookUniqueCode,
                     tb.textebook_image_url as textEBookImageUrl,
@@ -134,7 +131,7 @@ public class TextEBookPersistenceAdapter implements TextEBookPort {
                 """;
 
         return databaseClient.sql(sql)
-                .bind("teacherIds", courseSeriesIds)
+                .bind("courseSeriesIds", courseSeriesIds)
                 .fetch()
                 .all()
                 .flatMap(row -> Flux.just(new TextEBookResult(
