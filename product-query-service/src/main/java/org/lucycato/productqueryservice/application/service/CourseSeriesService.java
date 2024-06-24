@@ -10,9 +10,7 @@ import org.lucycato.productqueryservice.application.port.out.CoursePort;
 import org.lucycato.productqueryservice.application.port.out.CourseSeriesPort;
 import org.lucycato.productqueryservice.application.port.out.TeacherPort;
 import org.lucycato.productqueryservice.application.port.out.TextEBookPort;
-import org.lucycato.productqueryservice.application.port.out.result.CheckedRecentCourseOpenResult;
-import org.lucycato.productqueryservice.application.port.out.result.CourseSeriesResult;
-import org.lucycato.productqueryservice.application.port.out.result.TextEBookResult;
+import org.lucycato.productqueryservice.application.port.out.result.*;
 import org.lucycato.productqueryservice.domain.CourseSeriesCourse;
 import org.lucycato.productqueryservice.domain.CourseSeriesDetail;
 import org.lucycato.productqueryservice.domain.CourseSeriesTextEBook;
@@ -53,26 +51,29 @@ public class CourseSeriesService implements CourseSeriesUseCase {
         Mono<Void> textEBookTask = textEBookPort.getTextEBookListByCourseSeriesIds(Collections.singletonList(command.getCourseSeriesId()))
                 .flatMap(item -> {
                     textEBookMap.put(item.getCourseId(), item);
-                    return Flux::just;
+                    return Flux.empty();
                 })
                 .then();
 
-        Mono<Void> checkRecentCourseOpenTask = coursePort.checkRecentCourseOpenListByCourseIds(Collections.singletonList(command.getCourseSeriesId()))
+        Mono<Void> checkRecentCourseOpenTask = coursePort.getCourseIdsByCourseSeriesId(command.getCourseSeriesId())
+                .collectList()
+                .flatMapMany(coursePort::checkRecentCourseOpenListByCourseIds)
                 .flatMap(item -> {
                     checkRecentOpenCourseMap.put(item.getCourseId(), item);
-                    return Flux::just;
+                    return Flux.empty();
                 })
                 .then();
 
         return Flux.combineLatest(
-                        Mono.when(textEBookTask, checkRecentCourseOpenTask).flatMapMany(Flux::just),
+                        Mono.when(textEBookTask, checkRecentCourseOpenTask).then(Mono.just("Complete")).flux(),
                         coursePort.getCourseListByCourseSeriesIds(Collections.singletonList(command.getCourseSeriesId())),
                         (a, b) -> b
                 )
                 .flatMap(courseResult -> Mono.zip(
                                         teacherPort.getSimpleTeacher(command.getCourseSeriesId()),
                                         courseSeriesPort.getSimpleCourseSeries(courseResult.getCourseId())
-                                ).cache()
+                                )
+                                .cache()
                                 .flatMapMany(tuples -> Flux.just(CourseSeriesCourse.from(
                                         courseResult,
                                         tuples.getT1(),
@@ -82,7 +83,7 @@ public class CourseSeriesService implements CourseSeriesUseCase {
                                                 .isPresent()
                                 )))
                 )
-                .sort(Collections.reverseOrder());
+                .sort((a, b) -> Long.compare(b.getCourseId(), a.getCourseId()));
 
 
 //        return Mono.when(process)
