@@ -9,7 +9,7 @@ import org.lucycato.productqueryservice.application.port.in.command.TeacherSearc
 import org.lucycato.productqueryservice.application.port.out.*;
 import org.lucycato.productqueryservice.application.port.out.result.CheckedRecentCourseOpenResult;
 import org.lucycato.productqueryservice.application.port.out.result.CheckedRecentTeacherNoticeResult;
-import org.lucycato.productqueryservice.application.port.out.result.CourseSeriesResult;
+import org.lucycato.productqueryservice.application.port.out.result.TeacherResult;
 import org.lucycato.productqueryservice.domain.Teacher;
 import org.lucycato.productqueryservice.domain.TeacherCourseSeries;
 import org.lucycato.productqueryservice.domain.TeacherDetail;
@@ -75,7 +75,7 @@ public class TeacherService implements TeacherUseCase {
                 .then();
 
         return Flux.combineLatest(
-                        Mono.when(courseOpenTask, teacherNoticeTask).then(Mono.just("")).flatMapMany(Flux::just),
+                        Mono.when(courseOpenTask, teacherNoticeTask).then(Mono.just("Complete")).flux(),
                         teacherPort.getTeacherListByTeachingGenre(command.getTeachingGenre()),
                         (a, b) -> b
                 )
@@ -137,25 +137,19 @@ public class TeacherService implements TeacherUseCase {
 
     @Override
     public Flux<TeacherCourseSeries> getTeacherCourseSeriesList(TeacherCourseSeriesSearchCommand command) {
-        Map<Long, CourseSeriesResult> map = new ConcurrentHashMap<>();
+        Map<Long, TeacherResult> map = new ConcurrentHashMap<>();
 
-        Mono<Void> process = teacherPort.getTeacherIdsByTeachingGenre(command.getTeachingGenre())
-                .collectList()
-                .flatMapMany(courseSeriesPort::getCourseSeriesListByTeacherIds)
+        return teacherPort.getTeacherListByTeachingGenre(command.getTeachingGenre())
                 .flatMap(item -> {
                     map.put(item.getTeacherId(), item);
-                    return Flux::just;
+                    return Flux.just(item);
                 })
-                .then();
-
-        return Flux.combineLatest(
-                        Mono.when(process).flatMapMany(Flux::just),
-                        teacherPort.getTeacherListByTeachingGenre(command.getTeachingGenre()),
-                        (a, b) -> b
+                .collectList()
+                .flatMapMany(teacherResultList ->
+                    courseSeriesPort.getCourseSeriesListByTeacherIds(teacherResultList.stream().map(TeacherResult::getTeacherId).toList())
                 )
-                .flatMap(teacherResult -> Flux.just(TeacherCourseSeries.from(teacherResult, map.get(teacherResult.getTeacherId()))))
-                .sort(Collections.reverseOrder());
-
+                .flatMap(courseSeriesResult -> Flux.just(TeacherCourseSeries.from(map.get(courseSeriesResult.getTeacherId()), courseSeriesResult)))
+                .sort((a, b) -> Long.compare(b.getCourseSeriesId(), a.getCourseSeriesId()));
     }
 
     @Override
@@ -167,6 +161,6 @@ public class TeacherService implements TeacherUseCase {
                                         Flux.just(TeacherCourseSeries.from(teacherResult, courseSeriesResult))
                                 )
                 )
-                .sort(Collections.reverseOrder());
+                .sort((a, b) -> Long.compare(b.getCourseSeriesId(), a.getCourseSeriesId()));
     }
 }
