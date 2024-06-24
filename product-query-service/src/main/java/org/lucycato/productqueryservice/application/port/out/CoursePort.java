@@ -15,6 +15,8 @@ public interface CoursePort {
 
     Mono<CourseDetailResult> getCourse(Long courseId);
 
+    Flux<Long> getCourseIdsByCourseSeriesId(Long courseSeriesId);
+
     Flux<CheckedRecentCourseOpenResult> checkRecentCourseOpenListByTeacherIds(List<Long> teacherIds);
 
     Flux<CheckedRecentCourseOpenResult> checkRecentCourseOpenListByCourseIds(List<Long> courseIds);
