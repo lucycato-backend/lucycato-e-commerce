@@ -111,40 +111,42 @@ public class CourseSeriesService implements CourseSeriesUseCase {
         Mono<Void> courseTask = courseSeriesPort.getCourseSeriesListByTeacherIds(Collections.singletonList(command.getTeacherId()))
                 .flatMap(item -> {
                     courseSeriesMap.put(item.getTeacherId(), item);
-                    return Flux::just;
+                    return Flux.empty();
                 })
                 .then();
 
         Mono<Void> textEBookTask = textEBookPort.getTextEBookListByTeacherIds(Collections.singletonList(command.getTeacherId()))
                 .flatMap(item -> {
                     textEBookMap.put(item.getCourseId(), item);
-                    return Flux::just;
+                    return Flux.empty();
                 })
                 .then();
 
         Mono<Void> checkRecentCourseOpenTask = coursePort.checkRecentCourseOpenListByTeacherIds(Collections.singletonList(command.getTeacherId()))
                 .flatMap(item -> {
                     checkRecentOpenCourseMap.put(item.getCourseId(), item);
-                    return Flux::just;
+                    return Flux.empty();
                 })
                 .then();
 
         return Flux.combineLatest(
-                        Mono.when(courseTask, textEBookTask, checkRecentCourseOpenTask).flatMapMany(Flux::just),
+                        Mono.when(courseTask, textEBookTask, checkRecentCourseOpenTask).then(Mono.just("Complete")).flux(),
                         coursePort.getCourseListByTeacherIds(Collections.singletonList(command.getTeacherId())),
                         (a, b) -> b
                 )
-                .flatMap(courseResult -> teacherPort.getSimpleTeacher(command.getTeacherId()).cache()
+                .flatMap(courseResult -> teacherPort.getSimpleTeacher(command.getTeacherId())
+                        .defaultIfEmpty(new TeacherResult())
+                        .cache()
                         .flatMapMany(teacherResult -> Flux.just(CourseSeriesCourse.from(
                                 courseResult,
                                 teacherResult,
-                                courseSeriesMap.get(courseResult.getTeacherId()),
-                                textEBookMap.get(courseResult.getCourseId()),
+                                courseSeriesMap.get(courseResult.getTeacherId()) != null ? courseSeriesMap.get(courseResult.getTeacherId()) : new CourseSeriesResult(),
+                                textEBookMap.get(courseResult.getCourseId()) != null ? textEBookMap.get(courseResult.getCourseId()) : new TextEBookResult(),
                                 Optional.ofNullable(checkRecentOpenCourseMap.get(courseResult.getCourseId()))
                                         .isPresent()
                         )))
                 )
-                .sort(Collections.reverseOrder());
+                .sort((a, b) -> Long.compare(b.getCourseId(), a.getCourseId()));
     }
 
     @Override
