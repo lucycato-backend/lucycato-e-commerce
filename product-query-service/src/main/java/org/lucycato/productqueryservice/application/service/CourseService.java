@@ -47,7 +47,7 @@ public class CourseService implements CourseUseCase {
                         lecturePort.getLectureListByCourseIds(Collections.singletonList(command.getCourseId())),
                         CourseLecture::from
                 )
-                .sort(Collections.reverseOrder());
+                .sort((a, b) -> Long.compare(b.getLectureId(), a.getLectureId()));
     }
 
     @Override
@@ -61,7 +61,7 @@ public class CourseService implements CourseUseCase {
                         lecturePort.getLectureListByCourseIds(Collections.singletonList(command.getCourseId())),
                         CourseLecture::from
                 ))
-                .sort(Collections.reverseOrder());
+                .sort((a, b) -> Long.compare(b.getLectureId(), a.getLectureId()));
     }
 
     @Override
@@ -75,7 +75,7 @@ public class CourseService implements CourseUseCase {
                         lecturePort.getLectureListByCourseIds(Collections.singletonList(command.getCourseId())),
                         CourseLecture::from
                 ))
-                .sort(Collections.reverseOrder());
+                .sort((a, b) -> Long.compare(b.getLectureId(), a.getLectureId()));
     }
 
     @Override
@@ -85,7 +85,7 @@ public class CourseService implements CourseUseCase {
                         textEBookPort.getTextEBookListByCourseIds(Collections.singletonList(command.getCourseId())),
                         CourseTextEBook::from
                 )
-                .sort(Collections.reverseOrder());
+                .sort((a, b) -> Long.compare(b.getTextEBookId(), a.getTextEBookId()));
     }
 
     @Override
@@ -99,7 +99,7 @@ public class CourseService implements CourseUseCase {
                         textEBookPort.getTextEBookListByCourseIds(Collections.singletonList(command.getCourseId())),
                         CourseTextEBook::from
                 ))
-                .sort(Collections.reverseOrder());
+                .sort((a, b) -> Long.compare(b.getTextEBookId(), a.getTextEBookId()));
     }
 
     @Override
@@ -113,6 +113,6 @@ public class CourseService implements CourseUseCase {
                         textEBookPort.getTextEBookListByCourseIds(Collections.singletonList(command.getCourseId())),
                         CourseTextEBook::from
                 ))
-                .sort(Collections.reverseOrder());
+                .sort((a, b) -> Long.compare(b.getTextEBookId(), a.getTextEBookId()));
     }
 }
