@@ -12,6 +12,8 @@ import org.lucycato.productqueryservice.domain.enums.LectureStatus;
 public class LectureResult {
     private Long lectureId;
 
+    private Long courseId;
+
     private String lectureTitle;
 
     private String lectureDescription;
