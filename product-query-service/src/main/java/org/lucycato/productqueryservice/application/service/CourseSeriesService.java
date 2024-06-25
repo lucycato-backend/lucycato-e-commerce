@@ -1,6 +1,8 @@
 package org.lucycato.productqueryservice.application.service;
 
 import lombok.RequiredArgsConstructor;
+import org.lucycato.common.error.ErrorCodeImpl;
+import org.lucycato.common.exception.ApiExceptionImpl;
 import org.lucycato.productqueryservice.application.port.in.CourseSeriesUseCase;
 import org.lucycato.productqueryservice.application.port.in.command.CourseSeriesDetailSearchCommand;
 import org.lucycato.productqueryservice.application.port.in.command.SpecificCourseSeriesCourseSearchByTeacherIdCommand;
@@ -20,6 +22,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -38,7 +41,8 @@ public class CourseSeriesService implements CourseSeriesUseCase {
 
     @Override
     public Mono<CourseSeriesDetail> getCourseSeries(CourseSeriesDetailSearchCommand command) {
-        return courseSeriesPort.getCourseSeries(command.getCourseSeriesId())
+        return courseSeriesPort.getCourseSeriesByCourseSeriesId(command.getCourseSeriesId())
+                .switchIfEmpty(Mono.error(new ApiExceptionImpl(ErrorCodeImpl.NOT_FOUND)))
                 .map(CourseSeriesDetail::from);
     }
 
@@ -48,42 +52,44 @@ public class CourseSeriesService implements CourseSeriesUseCase {
         Map<Long, TextEBookResult> textEBookMap = new ConcurrentHashMap<>();
         Map<Long, CheckedRecentCourseOpenResult> checkRecentOpenCourseMap = new ConcurrentHashMap<>();
 
-        Mono<Void> textEBookTask = textEBookPort.getTextEBookListByCourseSeriesIds(Collections.singletonList(command.getCourseSeriesId()))
-                .flatMap(item -> {
-                    textEBookMap.put(item.getCourseId(), item);
-                    return Flux.empty();
-                })
-                .then();
-
-        Mono<Void> checkRecentCourseOpenTask = coursePort.getCourseIdsByCourseSeriesId(command.getCourseSeriesId())
+        return coursePort.getCourseListByCourseSeriesIds(Collections.singletonList(command.getCourseSeriesId()))
                 .collectList()
-                .flatMapMany(coursePort::checkRecentCourseOpenListByCourseIds)
-                .flatMap(item -> {
-                    checkRecentOpenCourseMap.put(item.getCourseId(), item);
-                    return Flux.empty();
-                })
-                .then();
+                .flatMapMany(courseResults -> {
+                    List<Long> courseIds = courseResults.stream().map(CourseResult::getCourseId).toList();
 
-        return Flux.combineLatest(
-                        Mono.when(textEBookTask, checkRecentCourseOpenTask).then(Mono.just("Complete")).flux(),
-                        coursePort.getCourseListByCourseSeriesIds(Collections.singletonList(command.getCourseSeriesId())),
-                        (a, b) -> b
-                )
+                    Mono<Void> textEBookTask = textEBookPort.getTextEBookListByCourseIds(courseIds)
+                            .flatMap(item -> {
+                                textEBookMap.put(item.getCourseId(), item);
+                                return Flux.empty();
+                            })
+                            .then();
+
+                    Mono<Void> checkRecentCourseOpenTask = coursePort.checkRecentCourseOpenListByCourseIds(courseIds)
+                            .flatMap(item -> {
+                                checkRecentOpenCourseMap.put(item.getCourseId(), item);
+                                return Flux.empty();
+                            })
+                            .then();
+
+                    return Mono.when(textEBookTask, checkRecentCourseOpenTask)
+                            .thenMany(Flux.fromIterable(courseResults));
+
+                })
                 .flatMap(courseResult -> Mono.zip(
-                                        teacherPort.getSimpleTeacher(command.getCourseSeriesId()),
-                                        courseSeriesPort.getSimpleCourseSeries(courseResult.getCourseId())
+                                        teacherPort.getSimpleTeacherByCourseSeriesId(courseResult.getCourseSeriesId()),
+                                        courseSeriesPort.getSimpleCourseSeriesByCourseSeriesId(courseResult.getCourseSeriesId())
                                 )
                                 .cache()
                                 .flatMapMany(tuples -> Flux.just(CourseSeriesCourse.from(
                                         courseResult,
                                         tuples.getT1(),
                                         tuples.getT2(),
-                                        textEBookMap.get(courseResult.getCourseId()),
+                                        textEBookMap.getOrDefault(courseResult.getCourseId(), new TextEBookResult()),
                                         Optional.ofNullable(checkRecentOpenCourseMap.get(courseResult.getCourseId()))
                                                 .isPresent()
                                 )))
                 )
-                .sort((a, b) -> Long.compare(b.getCourseId(), a.getCourseId()));
+                .sort((before, after) -> Long.compare(after.getCourseId(), before.getCourseId()));
 
 
 //        return Mono.when(process)
@@ -108,54 +114,68 @@ public class CourseSeriesService implements CourseSeriesUseCase {
         Map<Long, TextEBookResult> textEBookMap = new ConcurrentHashMap<>();
         Map<Long, CheckedRecentCourseOpenResult> checkRecentOpenCourseMap = new ConcurrentHashMap<>();
 
-        Mono<Void> courseTask = courseSeriesPort.getCourseSeriesListByTeacherIds(Collections.singletonList(command.getTeacherId()))
-                .flatMap(item -> {
-                    courseSeriesMap.put(item.getTeacherId(), item);
-                    return Flux.empty();
-                })
-                .then();
+        return coursePort.getCourseListByTeacherIds(Collections.singletonList(command.getTeacherId()))
+                .collectList()
+                .flatMapMany(courseResults -> {
+                    List<Long> courseIds = courseResults.stream().map(CourseResult::getCourseId).toList();
+                    Mono<Void> courseTask = courseSeriesPort.getCourseSeriesListByCourseIds(courseIds)
+                            .flatMap(item -> {
+                                courseSeriesMap.put(item.getCourseSeriesId(), item);
+                                return Flux.empty();
+                            })
+                            .then();
 
-        Mono<Void> textEBookTask = textEBookPort.getTextEBookListByTeacherIds(Collections.singletonList(command.getTeacherId()))
-                .flatMap(item -> {
-                    textEBookMap.put(item.getCourseId(), item);
-                    return Flux.empty();
-                })
-                .then();
+                    Mono<Void> textEBookTask = textEBookPort.getTextEBookListByCourseIds(courseIds)
+                            .flatMap(item -> {
+                                textEBookMap.put(item.getCourseId(), item);
+                                return Flux.empty();
+                            })
+                            .then();
 
-        Mono<Void> checkRecentCourseOpenTask = coursePort.checkRecentCourseOpenListByTeacherIds(Collections.singletonList(command.getTeacherId()))
-                .flatMap(item -> {
-                    checkRecentOpenCourseMap.put(item.getCourseId(), item);
-                    return Flux.empty();
-                })
-                .then();
+                    Mono<Void> checkRecentCourseOpenTask = coursePort.checkRecentCourseOpenListByCourseIds(courseIds)
+                            .flatMap(item -> {
+                                checkRecentOpenCourseMap.put(item.getCourseId(), item);
+                                return Flux.empty();
+                            })
+                            .then();
 
-        return Flux.combineLatest(
-                        Mono.when(courseTask, textEBookTask, checkRecentCourseOpenTask).then(Mono.just("Complete")).flux(),
-                        coursePort.getCourseListByTeacherIds(Collections.singletonList(command.getTeacherId())),
-                        (a, b) -> b
-                )
-                .flatMap(courseResult -> teacherPort.getSimpleTeacher(command.getTeacherId())
+                    return Mono.when(courseTask, textEBookTask, checkRecentCourseOpenTask)
+                            .thenMany(Flux.fromIterable(courseResults));
+
+                })
+                .flatMap(courseResult -> teacherPort.getSimpleTeacherByTeacherId(command.getTeacherId())
                         .defaultIfEmpty(new TeacherResult())
                         .cache()
                         .flatMapMany(teacherResult -> Flux.just(CourseSeriesCourse.from(
                                 courseResult,
                                 teacherResult,
-                                courseSeriesMap.get(courseResult.getTeacherId()) != null ? courseSeriesMap.get(courseResult.getTeacherId()) : new CourseSeriesResult(),
-                                textEBookMap.get(courseResult.getCourseId()) != null ? textEBookMap.get(courseResult.getCourseId()) : new TextEBookResult(),
+                                courseSeriesMap.getOrDefault(courseResult.getCourseSeriesId(), new CourseSeriesResult()),
+                                textEBookMap.getOrDefault(courseResult.getCourseId(), new TextEBookResult()),
                                 Optional.ofNullable(checkRecentOpenCourseMap.get(courseResult.getCourseId()))
                                         .isPresent()
                         )))
                 )
-                .sort((a, b) -> Long.compare(b.getCourseId(), a.getCourseId()));
+                .sort((before, after) -> Long.compare(after.getCourseId(), before.getCourseId()));
     }
 
     @Override
     public Flux<CourseSeriesTextEBook> getCourseSeriesTextEBookList(SpecificCourseSeriesTextEBookSearchCommand command) {
-        return Flux.combineLatest(
-                        courseSeriesPort.getSimpleCourseSeries(command.getTeacherId()).flux(),
-                        textEBookPort.getTextEBookListByTeacherIds(Collections.singletonList(command.getTeacherId())),
-                        CourseSeriesTextEBook::from
+        Map<Long, CourseSeriesResult> map = new ConcurrentHashMap<>();
+        textEBookPort.getTextEBookListByTeacherIds(Collections.singletonList(command.getTeacherId()))
+                .doOnNext(it -> System.out.println("HELLO ::: " + it.getTextEBookId()))
+                .subscribe();
+
+        return textEBookPort.getTextEBookListByTeacherIds(Collections.singletonList(command.getTeacherId()))
+                .collectList()
+                .flatMapMany(textEBookResults -> courseSeriesPort.getCourseSeriesListByTextEBookIds(textEBookResults.stream().map(TextEBookResult::getTextEBookId).toList())
+                        .flatMap(courseSeriesResult ->  {
+                            map.put(courseSeriesResult.getCourseSeriesId(), courseSeriesResult);
+                            return Flux.just(courseSeriesResult);
+                        })
+                        .flatMap(it -> Flux.fromIterable(textEBookResults))
                 )
-                .sort((a, b) -> Long.compare(b.getTextEBookId(), a.getTextEBookId()));
+                .doOnNext(it -> System.out.println("HELLO2 ::: " + it.getTextEBookId()))
+                .flatMap(textEBookResult -> Flux.just(CourseSeriesTextEBook.from(map.getOrDefault(textEBookResult.getCourseSeriesId(), new CourseSeriesResult()), textEBookResult)))
+                .sort((before, after) -> Long.compare(after.getTextEBookId(), before.getTextEBookId()));
     }
 }
