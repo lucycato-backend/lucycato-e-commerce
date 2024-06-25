@@ -36,10 +36,9 @@ public class CoursePersistenceAdapter implements CoursePort {
     private final ReactiveRedisTemplate<String, String> redisTemplate;
 
     @Override
-    public Mono<CourseResult> getSimpleCourse(Long courseId) {
+    public Mono<CourseResult> getSimpleCourseByCourseId(Long courseId) {
         String sql = """
-                SELECT c.id as courseId,
-                    cs.teacher_id as teacherId,
+                SELECT c.course_series_id as courseSeriesId,
                     c.course_title as courseTitle,
                     c.course_sub_title as courseSubTitle,
                     c.course_price as coursePrice,
@@ -50,7 +49,6 @@ public class CoursePersistenceAdapter implements CoursePort {
                     c.course_expired_at as courseExpiredAt,
                     c.course_created_at as courseCreatedAt
                 FROM courses c
-                INNER JOIN course_series cs ON c.course_series_id = cs.id
                 WHERE c.id = :courseId;
                 """;
 
@@ -61,6 +59,8 @@ public class CoursePersistenceAdapter implements CoursePort {
                 .map(row -> new CourseResult(
                         (Long) row.get("courseId"),
                         (Long) row.get("teacherId"),
+                        courseId,
+                        (Long) row.get("courseSeriesId"),
                         (String) row.get("courseTitle"),
                         (String) row.get("courseSubTitle"),
                         (Integer) row.get("coursePrice"),
