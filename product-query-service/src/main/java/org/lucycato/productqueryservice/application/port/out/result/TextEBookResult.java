@@ -16,6 +16,8 @@ public class TextEBookResult {
 
     private Long courseId;
 
+    private Long courseSeriesId;
+
     private String textEBookUniqueCode;
 
     private String textEBookImageUrl;
