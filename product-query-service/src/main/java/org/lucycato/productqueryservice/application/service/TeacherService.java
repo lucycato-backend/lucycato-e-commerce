@@ -1,6 +1,8 @@
 package org.lucycato.productqueryservice.application.service;
 
 import lombok.RequiredArgsConstructor;
+import org.lucycato.common.error.ErrorCodeImpl;
+import org.lucycato.common.exception.ApiExceptionImpl;
 import org.lucycato.productqueryservice.application.port.in.TeacherUseCase;
 import org.lucycato.productqueryservice.application.port.in.command.SpecificTeacherCourseSeriesSearchCommand;
 import org.lucycato.productqueryservice.application.port.in.command.TeacherCourseSeriesSearchCommand;
@@ -9,6 +11,7 @@ import org.lucycato.productqueryservice.application.port.in.command.TeacherSearc
 import org.lucycato.productqueryservice.application.port.out.*;
 import org.lucycato.productqueryservice.application.port.out.result.CheckedRecentCourseOpenResult;
 import org.lucycato.productqueryservice.application.port.out.result.CheckedRecentTeacherNoticeResult;
+import org.lucycato.productqueryservice.application.port.out.result.CourseSeriesResult;
 import org.lucycato.productqueryservice.application.port.out.result.TeacherResult;
 import org.lucycato.productqueryservice.domain.Teacher;
 import org.lucycato.productqueryservice.domain.TeacherCourseSeries;
@@ -19,6 +22,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -56,29 +60,29 @@ public class TeacherService implements TeacherUseCase {
         Map<Long, CheckedRecentCourseOpenResult> courseMap = new ConcurrentHashMap<>();
         Map<Long, CheckedRecentTeacherNoticeResult> newsMap = new ConcurrentHashMap<>();
 
-        Mono<Void> courseOpenTask = teacherPort.getTeacherIdsByTeachingGenre(command.getTeachingGenre())
+        return teacherPort.getTeacherList(command.getTeachingGenre(), command.getPage(), command.getSize())
                 .collectList()
-                .flatMapMany(coursePort::checkRecentCourseOpenListByTeacherIds)
-                .flatMap(item -> {
-                    courseMap.put(item.getTeacherId(), item);
-                    return Flux.empty();
-                })
-                .then();
+                .flatMapMany(teacherResults -> {
+                    List<Long> teachersIds = teacherResults.stream().map(TeacherResult::getTeacherId).toList();
 
-        Mono<Void> teacherNoticeTask = teacherPort.getTeacherIdsByTeachingGenre(command.getTeachingGenre())
-                .collectList()
-                .flatMapMany(boardPort::checkTeacherNewsListByTeacherIds)
-                .flatMap(item -> {
-                    newsMap.put(item.getTeacherId(), item);
-                    return Flux.empty();
-                })
-                .then();
+                    Mono<Void> courseOpenTask = coursePort.checkRecentCourseOpenListByTeacherIds(teachersIds)
+                            .flatMap(item -> {
+                                courseMap.put(item.getTeacherId(), item);
+                                return Flux.empty();
+                            })
+                            .then();
 
-        return Flux.combineLatest(
-                        Mono.when(courseOpenTask, teacherNoticeTask).then(Mono.just("Complete")).flux(),
-                        teacherPort.getTeacherListByTeachingGenre(command.getTeachingGenre()),
-                        (a, b) -> b
-                )
+                    Mono<Void> teacherNoticeTask = boardPort.checkTeacherNewsListByTeacherIds(teachersIds)
+                            .flatMap(item -> {
+                                newsMap.put(item.getTeacherId(), item);
+                                return Flux.empty();
+                            })
+                            .then();
+
+                    return Mono.when(courseOpenTask, teacherNoticeTask)
+                            .thenMany(Flux.fromIterable(teacherResults));
+
+                })
                 .flatMap(teacherResult -> Flux.just(
                         Teacher.from(
                                 teacherResult,
@@ -86,51 +90,47 @@ public class TeacherService implements TeacherUseCase {
                                         .isPresent(),
                                 Optional.ofNullable(newsMap.get(teacherResult.getTeacherId()))
                                         .isPresent()
-                        )))
-                .sort((a, b) -> Long.compare(b.getTeacherId(), a.getTeacherId()));
+                        ))
+                )
+                .sort((before, after) -> Long.compare(after.getTeacherId(), before.getTeacherId()));
     }
 
     @Override
     public Mono<TeacherDetail> getTeacher(TeacherDetailSearchCommand command) {
         if (command.getIsSimple()) {
-            return Mono.zip(
-                            coursePort.checkRecentCourseOpenListByTeacherIds(Collections.singletonList(command.getTeacherId())).collectList(),
-                            boardPort.checkTeacherNewsListByTeacherIds(Collections.singletonList(command.getTeacherId())).collectList()
-                    )
-                    .flatMap(tuples ->
-                            teacherPort.getTeacher(command.getTeacherId())
-                                    .flatMap(teacherResult -> Mono.just(
-                                            TeacherDetail.simple(
-                                                    teacherResult,
-                                                    !tuples.getT1().isEmpty(),
-                                                    !tuples.getT2().isEmpty()
-                                            )
-                                    ))
+            return teacherPort.getTeacherByTeacherId(command.getTeacherId())
+                    .switchIfEmpty(Mono.error(new ApiExceptionImpl(ErrorCodeImpl.NOT_FOUND)))
+                    .flatMap(teacherDetailResult -> Mono.zip(
+                                    coursePort.checkRecentCourseOpenListByTeacherIds(Collections.singletonList(command.getTeacherId())).collectList(),
+                                    boardPort.checkTeacherNewsListByTeacherIds(Collections.singletonList(command.getTeacherId())).collectList()
+                            ).map(tuples -> TeacherDetail.simple(
+                                    teacherDetailResult,
+                                    !tuples.getT1().isEmpty(),
+                                    !tuples.getT2().isEmpty()
+                            ))
                     );
         } else {
-            return Mono.zip(
-                            coursePort.checkRecentCourseOpenListByTeacherIds(Collections.singletonList(command.getTeacherId())).collectList(),
-                            boardPort.checkTeacherNewsListByTeacherIds(Collections.singletonList(command.getTeacherId())).collectList(),
-                            courseSeriesPort.getCourseSeriesCount(command.getTeacherId()),
-                            coursePort.getCourseCount(),
-                            textEBookPort.getTextEBookCountResult(),
-                            boardPort.getCourseReviewCount(),
-                            boardPort.countTeacherNoticeCount()
-                    )
-                    .flatMap(tuples ->
-                            teacherPort.getTeacher(command.getTeacherId())
-                                    .flatMap(teacherDetailResult -> Mono.just(
-                                            TeacherDetail.from(
-                                                    teacherDetailResult,
-                                                    !tuples.getT1().isEmpty(),
-                                                    !tuples.getT2().isEmpty(),
-                                                    tuples.getT3(),
-                                                    tuples.getT4(),
-                                                    tuples.getT5(),
-                                                    tuples.getT6(),
-                                                    tuples.getT7()
-                                            )
-                                    ))
+            return teacherPort.getTeacherByTeacherId(command.getTeacherId())
+                    .switchIfEmpty(Mono.error(new ApiExceptionImpl(ErrorCodeImpl.NOT_FOUND)))
+                    .flatMap(teacherDetailResult -> Mono.zip(
+                                    coursePort.checkRecentCourseOpenListByTeacherIds(Collections.singletonList(command.getTeacherId())).collectList(),
+                                    boardPort.checkTeacherNewsListByTeacherIds(Collections.singletonList(command.getTeacherId())).collectList(),
+                                    courseSeriesPort.getCourseSeriesCountByTeacherId(command.getTeacherId()),
+                                    coursePort.getCourseCount(),
+                                    textEBookPort.getTextEBookCountResult(),
+                                    boardPort.getCourseReviewCount(),
+                                    boardPort.countTeacherNoticeCount()
+                            )
+                            .map(tuples -> TeacherDetail.from(
+                                    teacherDetailResult,
+                                    !tuples.getT1().isEmpty(),
+                                    !tuples.getT2().isEmpty(),
+                                    tuples.getT3(),
+                                    tuples.getT4(),
+                                    tuples.getT5(),
+                                    tuples.getT6(),
+                                    tuples.getT7()
+                            ))
                     );
         }
     }
@@ -139,28 +139,25 @@ public class TeacherService implements TeacherUseCase {
     public Flux<TeacherCourseSeries> getTeacherCourseSeriesList(TeacherCourseSeriesSearchCommand command) {
         Map<Long, TeacherResult> map = new ConcurrentHashMap<>();
 
-        return teacherPort.getTeacherListByTeachingGenre(command.getTeachingGenre())
-                .flatMap(item -> {
-                    map.put(item.getTeacherId(), item);
-                    return Flux.just(item);
-                })
+        return courseSeriesPort.getCourseSeriesList(command.getTeachingGenre())
                 .collectList()
-                .flatMapMany(teacherResultList ->
-                    courseSeriesPort.getCourseSeriesListByTeacherIds(teacherResultList.stream().map(TeacherResult::getTeacherId).toList())
+                .flatMapMany(courseSeriesResults -> teacherPort.getTeacherListByTeacherIds(courseSeriesResults.stream().map(CourseSeriesResult::getTeacherId).toList())
+                        .flatMap(teacherResult -> {
+                            map.put(teacherResult.getTeacherId(), teacherResult);
+                            return Flux.just(teacherResult);
+                        })
+                        .flatMap(it -> Flux.fromIterable(courseSeriesResults))
                 )
-                .flatMap(courseSeriesResult -> Flux.just(TeacherCourseSeries.from(map.get(courseSeriesResult.getTeacherId()), courseSeriesResult)))
-                .sort((a, b) -> Long.compare(b.getCourseSeriesId(), a.getCourseSeriesId()));
+                .flatMap(courseSeriesResult -> Flux.just(TeacherCourseSeries.from(map.getOrDefault(courseSeriesResult.getTeacherId(), new TeacherResult()), courseSeriesResult)))
+                .sort((before, after) -> Long.compare(after.getCourseSeriesId(), before.getCourseSeriesId()));
     }
 
     @Override
     public Flux<TeacherCourseSeries> getTeacherCourseSeriesList(SpecificTeacherCourseSeriesSearchCommand command) {
-        return teacherPort.getSimpleTeacher(command.getTeacherId())
-                .flatMapMany(teacherResult ->
-                        courseSeriesPort.getCourseSeriesListByTeacherIds(Collections.singletonList(teacherResult.getTeacherId()))
-                                .flatMap(courseSeriesResult ->
-                                        Flux.just(TeacherCourseSeries.from(teacherResult, courseSeriesResult))
-                                )
+        return courseSeriesPort.getCourseSeriesListByTeacherIds(Collections.singletonList(command.getTeacherId()))
+                .flatMap(courseSeriesResult -> teacherPort.getSimpleTeacherByTeacherId(courseSeriesResult.getTeacherId()).cache()
+                        .flatMapMany(teacherResult -> Flux.just(TeacherCourseSeries.from(teacherResult, courseSeriesResult)))
                 )
-                .sort((a, b) -> Long.compare(b.getCourseSeriesId(), a.getCourseSeriesId()));
+                .sort((before, after) -> Long.compare(after.getCourseSeriesId(), before.getCourseSeriesId()));
     }
 }
