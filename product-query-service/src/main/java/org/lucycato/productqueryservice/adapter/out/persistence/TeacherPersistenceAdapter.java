@@ -12,6 +12,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
@@ -19,11 +20,24 @@ public class TeacherPersistenceAdapter implements TeacherPort {
     private final DatabaseClient databaseClient;
 
     @Override
-    public Flux<Long> getTeacherIdsByTeachingGenre(TeachingGenre teachingGenre) {
+    public Flux<Long> getTeacherIds() {
         String sql = """
                 SELECT t.id as teacherId
                 FROM teachers t
-                WHERE t.teaching_genre = :teachingGenre;
+                """;
+
+        return databaseClient.sql(sql)
+                .fetch()
+                .all()
+                .flatMap(row -> Flux.just((Long) row.get("teacherId")));
+    }
+
+    @Override
+    public Flux<Long> getTeacherIds(TeachingGenre teachingGenre) {
+        String sql = """
+                SELECT t.id as teacherId
+                FROM teachers t
+                WHERE t.teaching_genre = :teachingGenre
                 """;
 
         return databaseClient.sql(sql)
@@ -34,7 +48,10 @@ public class TeacherPersistenceAdapter implements TeacherPort {
     }
 
     @Override
-    public Flux<TeacherResult> getTeacherListByTeachingGenre(TeachingGenre teachingGenre) {
+    public Flux<TeacherResult> getTeacherListByTeacherIds(List<Long> teacherIds) {
+        if (teacherIds == null || teacherIds.isEmpty()) {
+            return Flux.empty();
+        }
         String sql = """
                 SELECT t.id as teacherId,
                     t.teacher_rank as teacherRank,
@@ -45,7 +62,68 @@ public class TeacherPersistenceAdapter implements TeacherPort {
                     t.teacher_status as teacherStatus,
                     t.teacher_created_at as teacherCreatedAt
                 FROM teachers t
-                WHERE t.teaching_genre = :teachingGenre;
+                WHERE t.id IN (:teacherIds)
+                """;
+
+        return databaseClient.sql(sql)
+                .bind("teacherIds", teacherIds)
+                .fetch()
+                .all()
+                .flatMap(row -> Flux.just(new TeacherResult(
+                        (Long) row.get("teacherId"),
+                        (Integer) row.get("teacherRank"),
+                        (String) row.get("teacherName"),
+                        (String) row.get("teacherSlogan"),
+                        (String) row.get("teacherImageUrl"),
+                        TeachingGenre.valueOf((String) row.get("teachingGenre")),
+                        TeacherStatus.valueOf((String) row.get("teacherStatus")),
+                        ((ZonedDateTime) row.get("teacherCreatedAt")).toLocalDateTime()
+                )));
+    }
+
+    @Override
+    public Flux<TeacherResult> getTeacherList() {
+        String sql = """
+                SELECT t.id as teacherId,
+                    t.teacher_rank as teacherRank,
+                    t.teacher_name as teacherName,
+                    t.teacher_slogan as teacherSlogan,
+                    t.teacher_image_url as teacherImageUrl,
+                    t.teaching_genre as teachingGenre,
+                    t.teacher_status as teacherStatus,
+                    t.teacher_created_at as teacherCreatedAt
+                FROM teachers t
+                """;
+
+        return databaseClient.sql(sql)
+                .fetch()
+                .all()
+                .flatMap(row -> Flux.just(new TeacherResult(
+                        (Long) row.get("teacherId"),
+                        (Integer) row.get("teacherRank"),
+                        (String) row.get("teacherName"),
+                        (String) row.get("teacherSlogan"),
+                        (String) row.get("teacherImageUrl"),
+                        TeachingGenre.valueOf((String) row.get("teachingGenre")),
+                        TeacherStatus.valueOf((String) row.get("teacherStatus")),
+                        ((ZonedDateTime) row.get("teacherCreatedAt")).toLocalDateTime()
+                )));
+    }
+
+
+    @Override
+    public Flux<TeacherResult> getTeacherList(TeachingGenre teachingGenre) {
+        String sql = """
+                SELECT t.id as teacherId,
+                    t.teacher_rank as teacherRank,
+                    t.teacher_name as teacherName,
+                    t.teacher_slogan as teacherSlogan,
+                    t.teacher_image_url as teacherImageUrl,
+                    t.teaching_genre as teachingGenre,
+                    t.teacher_status as teacherStatus,
+                    t.teacher_created_at as teacherCreatedAt
+                FROM teachers t
+                WHERE t.teaching_genre = :teachingGenre
                 """;
 
         return databaseClient.sql(sql)
@@ -65,10 +143,50 @@ public class TeacherPersistenceAdapter implements TeacherPort {
     }
 
     @Override
-    public Mono<TeacherResult> getSimpleTeacher(Long teacherId) {
+    public Flux<TeacherResult> getTeacherList(TeachingGenre teachingGenre, Integer page, Integer size) {
+        Integer start = page * size;
         String sql = """
                 SELECT t.id as teacherId,
                     t.teacher_rank as teacherRank,
+                    t.teacher_name as teacherName,
+                    t.teacher_slogan as teacherSlogan,
+                    t.teacher_image_url as teacherImageUrl,
+                    t.teaching_genre as teachingGenre,
+                    t.teacher_status as teacherStatus,
+                    t.teacher_created_at as teacherCreatedAt
+                FROM teachers t
+                INNER JOIN (
+                    SELECT id
+                    FROM teachers
+                    ORDER BY id
+                    LIMIT :start, :size
+                ) as temp
+                ON t.id = temp.id
+                WHERE t.teaching_genre = :teachingGenre
+                """;
+
+        return databaseClient.sql(sql)
+                .bind("teachingGenre", teachingGenre)
+                .bind("start", start)
+                .bind("size", size)
+                .fetch()
+                .all()
+                .flatMap(row -> Flux.just(new TeacherResult(
+                        (Long) row.get("teacherId"),
+                        (Integer) row.get("teacherRank"),
+                        (String) row.get("teacherName"),
+                        (String) row.get("teacherSlogan"),
+                        (String) row.get("teacherImageUrl"),
+                        TeachingGenre.valueOf((String) row.get("teachingGenre")),
+                        TeacherStatus.valueOf((String) row.get("teacherStatus")),
+                        ((ZonedDateTime) row.get("teacherCreatedAt")).toLocalDateTime()
+                )));
+    }
+
+    @Override
+    public Mono<TeacherResult> getSimpleTeacherByTeacherId(Long teacherId) {
+        String sql = """
+                SELECT t.teacher_rank as teacherRank,
                     t.teacher_name as teacherName,
                     t.teacher_slogan as teacherSlogan,
                     t.teacher_image_url as teacherImageUrl,
@@ -84,6 +202,38 @@ public class TeacherPersistenceAdapter implements TeacherPort {
                 .fetch()
                 .one()
                 .map(row -> new TeacherResult(
+                        teacherId,
+                        (Integer) row.get("teacherRank"),
+                        (String) row.get("teacherName"),
+                        (String) row.get("teacherSlogan"),
+                        (String) row.get("teacherImageUrl"),
+                        TeachingGenre.valueOf((String) row.get("teachingGenre")),
+                        TeacherStatus.valueOf((String) row.get("teacherStatus")),
+                        ((ZonedDateTime) row.get("teacherCreatedAt")).toLocalDateTime()
+                ));
+    }
+
+    @Override
+    public Mono<TeacherResult> getSimpleTeacherByCourseSeriesId(Long courseSeriesId) {
+        String sql = """
+                SELECT t.id as teacherId,
+                    t.teacher_rank as teacherRank,
+                    t.teacher_name as teacherName,
+                    t.teacher_slogan as teacherSlogan,
+                    t.teacher_image_url as teacherImageUrl,
+                    t.teaching_genre as teachingGenre,
+                    t.teacher_status as teacherStatus,
+                    t.teacher_created_at as teacherCreatedAt
+                FROM teachers t
+                INNER JOIN course_series cs ON t.id = cs.teacher_id
+                WHERE cs.id = :courseSeriesId;
+                """;
+
+        return databaseClient.sql(sql)
+                .bind("courseSeriesId", courseSeriesId)
+                .fetch()
+                .one()
+                .map(row -> new TeacherResult(
                         (Long) row.get("teacherId"),
                         (Integer) row.get("teacherRank"),
                         (String) row.get("teacherName"),
@@ -96,10 +246,9 @@ public class TeacherPersistenceAdapter implements TeacherPort {
     }
 
     @Override
-    public Mono<TeacherDetailResult> getTeacher(Long teacherId) {
+    public Mono<TeacherDetailResult> getTeacherByTeacherId(Long teacherId) {
         String sql = """
-                SELECT t.id as teacherId,
-                    t.teacher_rank as teacherRank,
+                SELECT t.teacher_rank as teacherRank,
                     t.teacher_name as teacherName,
                     t.teacher_slogan as teacherSlogan,
                     t.teacher_profile_description as teacherProfileDescription,
@@ -118,7 +267,7 @@ public class TeacherPersistenceAdapter implements TeacherPort {
                 .fetch()
                 .one()
                 .map(row -> new TeacherDetailResult(
-                        (Long) row.get("teacherId"),
+                        teacherId,
                         (Integer) row.get("teacherRank"),
                         (String) row.get("teacherName"),
                         (String) row.get("teacherSlogan"),
