@@ -11,11 +11,11 @@ import java.util.List;
 
 public interface CoursePort {
 
-    Mono<CourseResult> getSimpleCourse(Long courseId);
+    Mono<CourseResult> getSimpleCourseByCourseId(Long courseId);
 
-    Mono<CourseDetailResult> getCourse(Long courseId);
+    Mono<CourseDetailResult> getCourseByCourseId(Long courseId);
 
-    Flux<Long> getCourseIdsByCourseSeriesId(Long courseSeriesId);
+    Flux<Long> getCourseIdsByCourseSeriesIds(List<Long> courseSeriesIds);
 
     Flux<CheckedRecentCourseOpenResult> checkRecentCourseOpenListByTeacherIds(List<Long> teacherIds);
 

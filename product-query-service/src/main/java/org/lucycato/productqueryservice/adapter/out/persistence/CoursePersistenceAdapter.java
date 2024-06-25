@@ -57,8 +57,6 @@ public class CoursePersistenceAdapter implements CoursePort {
                 .fetch()
                 .one()
                 .map(row -> new CourseResult(
-                        (Long) row.get("courseId"),
-                        (Long) row.get("teacherId"),
                         courseId,
                         (Long) row.get("courseSeriesId"),
                         (String) row.get("courseTitle"),
@@ -74,11 +72,9 @@ public class CoursePersistenceAdapter implements CoursePort {
     }
 
     @Override
-    public Mono<CourseDetailResult> getCourse(Long courseId) {
+    public Mono<CourseDetailResult> getCourseByCourseId(Long courseId) {
         String sql = """
-                SELECT c.id as courseId,
-                    cs.teacher_id as teacherId,
-                    c.course_series_id as courseSeriesId,
+                SELECT c.course_series_id as courseSeriesId,
                     c.course_title as courseTitle,
                     c.course_sub_title as courseSubTitle,
                     c.course_price as coursePrice,
@@ -90,7 +86,6 @@ public class CoursePersistenceAdapter implements CoursePort {
                     c.course_expired_at as courseExpiredAt,
                     c.course_created_at as courseCreatedAt
                 FROM courses c
-                INNER JOIN course_series cs ON c.course_series_id = cs.id
                 WHERE c.id = :courseId;
                 """;
 
@@ -99,8 +94,7 @@ public class CoursePersistenceAdapter implements CoursePort {
                 .fetch()
                 .one()
                 .map(row -> new CourseDetailResult(
-                        (Long) row.get("courseId"),
-                        (Long) row.get("teacherId"),
+                        courseId,
                         (Long) row.get("courseSeriesId"),
                         (String) row.get("courseTitle"),
                         (String) row.get("courseSubTitle"),
@@ -116,15 +110,18 @@ public class CoursePersistenceAdapter implements CoursePort {
     }
 
     @Override
-    public Flux<Long> getCourseIdsByCourseSeriesId(Long courseSeriesId) {
+    public Flux<Long> getCourseIdsByCourseSeriesIds(List<Long> courseSeriesIds) {
+        if (courseSeriesIds == null || courseSeriesIds.isEmpty()) {
+            return Flux.empty();
+        }
         String sql = """
                 SELECT c.id courseId
                 FROM courses c
-                WHERE c.course_series_id = :courseSeriesId
+                WHERE c.course_series_id IN (:courseSeriesIds)
                 """;
 
         return databaseClient.sql(sql)
-                .bind("courseSeriesId", courseSeriesId)
+                .bind("courseSeriesIds", courseSeriesIds)
                 .fetch()
                 .all()
                 .flatMap(row -> Flux.just((Long) row.get("courseId")));
@@ -132,35 +129,46 @@ public class CoursePersistenceAdapter implements CoursePort {
 
     @Override
     public Flux<CheckedRecentCourseOpenResult> checkRecentCourseOpenListByTeacherIds(List<Long> teacherIds) {
-        return redisTemplate.opsForHash().multiGet(PRODUCT_SERVICE_RECENT_COURSE_UPLOAD_BY_TEACHER_ID_HASH_KEY, teacherIds.stream().map(String::valueOf).collect(Collectors.toList()))
-                .flatMapMany(result -> {
-                    List<Object> nonNullResults = result.stream()
-                            .filter(Objects::nonNull)
-                            .collect(Collectors.toList());
-                    return Flux.fromIterable(nonNullResults);
-                })
-                .flatMap(it -> Flux.just(String.valueOf(it)))
-                .flatMap(json -> Mono.fromCallable(() -> objectMapper.readValue(json, CheckedRecentCourseOpenResult.class)));
+        if (teacherIds == null || teacherIds.isEmpty()) {
+            return Flux.empty();
+        } else {
+            return redisTemplate.opsForHash().multiGet(PRODUCT_SERVICE_RECENT_COURSE_UPLOAD_BY_TEACHER_ID_HASH_KEY, teacherIds.stream().map(String::valueOf).collect(Collectors.toList()))
+                    .flatMapMany(result -> {
+                        List<Object> nonNullResults = result.stream()
+                                .filter(Objects::nonNull)
+                                .collect(Collectors.toList());
+                        return Flux.fromIterable(nonNullResults);
+                    })
+                    .flatMap(it -> Flux.just(String.valueOf(it)))
+                    .flatMap(json -> Mono.fromCallable(() -> objectMapper.readValue(json, CheckedRecentCourseOpenResult.class)));
+        }
     }
 
     @Override
     public Flux<CheckedRecentCourseOpenResult> checkRecentCourseOpenListByCourseIds(List<Long> courseIds) {
-        return redisTemplate.opsForHash().multiGet(PRODUCT_SERVICE_RECENT_COURSE_UPLOAD_BY_COURSE_ID_HASH_KEY, courseIds.stream().map(String::valueOf).collect(Collectors.toList()))
-                .flatMapMany(result -> {
-                    List<Object> nonNullResults = result.stream()
-                            .filter(Objects::nonNull)
-                            .collect(Collectors.toList());
-                    return Flux.fromIterable(nonNullResults);
-                })
-                .flatMap(it -> Flux.just(String.valueOf(it)))
-                .flatMap(json -> Mono.fromCallable(() -> objectMapper.readValue(json, CheckedRecentCourseOpenResult.class)));
+        if (courseIds == null || courseIds.isEmpty()) {
+            return Flux.empty();
+        } else {
+            return redisTemplate.opsForHash().multiGet(PRODUCT_SERVICE_RECENT_COURSE_UPLOAD_BY_COURSE_ID_HASH_KEY, courseIds.stream().map(String::valueOf).collect(Collectors.toList()))
+                    .flatMapMany(result -> {
+                        List<Object> nonNullResults = result.stream()
+                                .filter(Objects::nonNull)
+                                .collect(Collectors.toList());
+                        return Flux.fromIterable(nonNullResults);
+                    })
+                    .flatMap(it -> Flux.just(String.valueOf(it)))
+                    .flatMap(json -> Mono.fromCallable(() -> objectMapper.readValue(json, CheckedRecentCourseOpenResult.class)));
+        }
     }
 
     @Override
     public Flux<CourseResult> getCourseListByCourseSeriesIds(List<Long> courseSeriesIds) {
+        if (courseSeriesIds == null || courseSeriesIds.isEmpty()) {
+            return Flux.empty();
+        }
         String sql = """
                 SELECT c.id as courseId,
-                    cs.teacher_id as teacherId,
+                    c.course_series_id as courseSeriesId,
                     c.course_title as courseTitle,
                     c.course_sub_title as courseSubTitle,
                     c.course_price as coursePrice,
@@ -171,7 +179,6 @@ public class CoursePersistenceAdapter implements CoursePort {
                     c.course_expired_at as courseExpiredAt,
                     c.course_created_at as courseCreatedAt
                 FROM courses c
-                INNER JOIN course_series cs ON c.course_series_id = c.id
                 WHERE c.course_series_id IN (:courseSeriesIds);
                 """;
 
@@ -181,7 +188,7 @@ public class CoursePersistenceAdapter implements CoursePort {
                 .all()
                 .flatMap(row -> Flux.just(new CourseResult(
                         (Long) row.get("courseId"),
-                        (Long) row.get("teacherId"),
+                        (Long) row.get("courseSeriesId"),
                         (String) row.get("courseTitle"),
                         (String) row.get("courseSubTitle"),
                         (Integer) row.get("coursePrice"),
@@ -196,9 +203,13 @@ public class CoursePersistenceAdapter implements CoursePort {
 
     @Override
     public Flux<CourseResult> getCourseListByTeacherIds(List<Long> teacherIds) {
+        if (teacherIds == null || teacherIds.isEmpty()) {
+            return Flux.empty();
+        }
         String sql = """
                 SELECT c.id as courseId,
                     cs.teacher_id as teacherId,
+                    c.course_series_id as courseSeriesId,
                     c.course_title as courseTitle,
                     c.course_sub_title as courseSubTitle,
                     c.course_price as coursePrice,
@@ -209,7 +220,7 @@ public class CoursePersistenceAdapter implements CoursePort {
                     c.course_expired_at as courseExpiredAt,
                     c.course_created_at as courseCreatedAt
                 FROM courses c
-                INNER JOIN course_series cs ON c.course_series_id = cs.id
+                INNER JOIN course_series cs ON cs.id = c.course_series_id
                 WHERE cs.teacher_id IN (:teacherIds);
                 """;
 
@@ -219,7 +230,7 @@ public class CoursePersistenceAdapter implements CoursePort {
                 .all()
                 .flatMap(row -> Flux.just(new CourseResult(
                         (Long) row.get("courseId"),
-                        (Long) row.get("teacherId"),
+                        (Long) row.get("courseSeriesId"),
                         (String) row.get("courseTitle"),
                         (String) row.get("courseSubTitle"),
                         (Integer) row.get("coursePrice"),
