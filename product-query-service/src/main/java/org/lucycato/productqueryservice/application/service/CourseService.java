@@ -1,6 +1,7 @@
 package org.lucycato.productqueryservice.application.service;
 
 import lombok.RequiredArgsConstructor;
+import org.lucycato.common.error.ErrorCodeImpl;
 import org.lucycato.common.exception.ApiExceptionImpl;
 import org.lucycato.productqueryservice.application.port.in.CourseUseCase;
 import org.lucycato.productqueryservice.application.port.in.command.*;
@@ -32,9 +33,10 @@ public class CourseService implements CourseUseCase {
 
     @Override
     public Mono<CourseDetail> getCurses(CourseDetailSearchCommand command) {
-        return coursePort.getCourse(command.getCourseId())
+        return coursePort.getCourseByCourseId(command.getCourseId())
+                .switchIfEmpty(Mono.error(new ApiExceptionImpl(ErrorCodeImpl.NOT_FOUND)))
                 .flatMap(courseDetailResult ->
-                        coursePort.checkRecentCourseOpenListByCourseIds(Collections.singletonList(command.getCourseId()))
+                        coursePort.checkRecentCourseOpenListByCourseIds(Collections.singletonList(courseDetailResult.getCourseId()))
                                 .collectList()
                                 .map(checkedRecentCourseOpenResultList -> CourseDetail.from(courseDetailResult, checkedRecentCourseOpenResultList.isEmpty()))
                 );
@@ -42,12 +44,11 @@ public class CourseService implements CourseUseCase {
 
     @Override
     public Flux<CourseLecture> getCourseLectureList(SpecificCourseLectureSearchCommand command) {
-        return Flux.combineLatest(
-                        coursePort.getSimpleCourse(command.getCourseId()),
-                        lecturePort.getLectureListByCourseIds(Collections.singletonList(command.getCourseId())),
-                        CourseLecture::from
+        return lecturePort.getLectureListByCourseIds(Collections.singletonList(command.getCourseId()))
+                .flatMap(lectureResult -> coursePort.getSimpleCourseByCourseId(lectureResult.getCourseId()).cache()
+                        .map(courseResult -> CourseLecture.from(courseResult, lectureResult))
                 )
-                .sort((a, b) -> Long.compare(b.getLectureId(), a.getLectureId()));
+                .sort((before, after) -> Long.compare(after.getLectureId(), before.getLectureId()));
     }
 
     @Override
@@ -55,13 +56,11 @@ public class CourseService implements CourseUseCase {
         return userAuthPort.checkAuthToChangeTeacher(command.getAdminUserId())
                 .filter(isAuth -> isAuth)
                 .switchIfEmpty(Mono.error(new ApiExceptionImpl(ProductErrorCodeImpl.ADMIN_USER_NOT_TEACHER_ASSISTANCE)))
-                .flatMapMany(Flux::just)
-                .flatMap(it -> Flux.combineLatest(
-                        coursePort.getSimpleCourse(command.getCourseId()),
-                        lecturePort.getLectureListByCourseIds(Collections.singletonList(command.getCourseId())),
-                        CourseLecture::from
-                ))
-                .sort((a, b) -> Long.compare(b.getLectureId(), a.getLectureId()));
+                .flatMapMany(it -> lecturePort.getLectureListByCourseIds(Collections.singletonList(command.getCourseId()))
+                        .flatMap(lectureResult -> coursePort.getSimpleCourseByCourseId(lectureResult.getCourseId()).cache()
+                                .map(courseResult -> CourseLecture.from(courseResult, lectureResult))
+                        ))
+                .sort((before, after) -> Long.compare(after.getLectureId(), before.getLectureId()));
     }
 
     @Override
@@ -69,23 +68,20 @@ public class CourseService implements CourseUseCase {
         return orderPort.checkAppUserBuyCourse(command.getAppUserId(), command.getCourseId())
                 .filter(isBuy -> isBuy)
                 .switchIfEmpty(Mono.error(new ApiExceptionImpl(ProductErrorCodeImpl.APP_USER_NOT_FOUND_BUY_COURSE)))
-                .flatMapMany(Flux::just)
-                .flatMap(it -> Flux.combineLatest(
-                        coursePort.getSimpleCourse(command.getCourseId()),
-                        lecturePort.getLectureListByCourseIds(Collections.singletonList(command.getCourseId())),
-                        CourseLecture::from
-                ))
-                .sort((a, b) -> Long.compare(b.getLectureId(), a.getLectureId()));
+                .flatMapMany(it -> lecturePort.getLectureListByCourseIds(Collections.singletonList(command.getCourseId()))
+                        .flatMap(lectureResult -> coursePort.getSimpleCourseByCourseId(lectureResult.getCourseId()).cache()
+                                .map(courseResult -> CourseLecture.from(courseResult, lectureResult))
+                        ))
+                .sort((before, after) -> Long.compare(after.getLectureId(), before.getLectureId()));
     }
 
     @Override
     public Flux<CourseTextEBook> getCourseTextEBookList(SpecificCourseTextEBookSearchCommand command) {
-        return Flux.combineLatest(
-                        coursePort.getSimpleCourse(command.getCourseId()),
-                        textEBookPort.getTextEBookListByCourseIds(Collections.singletonList(command.getCourseId())),
-                        CourseTextEBook::from
+        return textEBookPort.getTextEBookListByCourseIds(Collections.singletonList(command.getCourseId()))
+                .flatMap(textEBookResult -> coursePort.getSimpleCourseByCourseId(textEBookResult.getCourseId()).cache()
+                        .map(courseResult -> CourseTextEBook.from(courseResult, textEBookResult))
                 )
-                .sort((a, b) -> Long.compare(b.getTextEBookId(), a.getTextEBookId()));
+                .sort((before, after) -> Long.compare(after.getTextEBookId(), before.getTextEBookId()));
     }
 
     @Override
@@ -93,13 +89,11 @@ public class CourseService implements CourseUseCase {
         return userAuthPort.checkAuthToChangeTeacher(command.getAdminUserId())
                 .filter(isAuth -> isAuth)
                 .switchIfEmpty(Mono.error(new ApiExceptionImpl(ProductErrorCodeImpl.APP_USER_NOT_FOUND_BUY_COURSE)))
-                .flatMapMany(Flux::just)
-                .flatMap(it -> Flux.combineLatest(
-                        coursePort.getSimpleCourse(command.getCourseId()),
-                        textEBookPort.getTextEBookListByCourseIds(Collections.singletonList(command.getCourseId())),
-                        CourseTextEBook::from
-                ))
-                .sort((a, b) -> Long.compare(b.getTextEBookId(), a.getTextEBookId()));
+                .flatMapMany(it -> textEBookPort.getTextEBookListByCourseIds(Collections.singletonList(command.getCourseId()))
+                        .flatMap(textEBookResult -> coursePort.getSimpleCourseByCourseId(textEBookResult.getCourseId()).cache()
+                                .map(courseResult -> CourseTextEBook.from(courseResult, textEBookResult))
+                        ))
+                .sort((before, after) -> Long.compare(after.getTextEBookId(), before.getTextEBookId()));
     }
 
     @Override
@@ -107,12 +101,10 @@ public class CourseService implements CourseUseCase {
         return orderPort.checkAppUserBuyCourse(command.getAppUserId(), command.getCourseId())
                 .filter(isBuy -> isBuy)
                 .switchIfEmpty(Mono.error(new ApiExceptionImpl(ProductErrorCodeImpl.APP_USER_NOT_FOUND_BUY_COURSE)))
-                .flatMapMany(Flux::just)
-                .flatMap(it -> Flux.combineLatest(
-                        coursePort.getSimpleCourse(command.getCourseId()),
-                        textEBookPort.getTextEBookListByCourseIds(Collections.singletonList(command.getCourseId())),
-                        CourseTextEBook::from
-                ))
-                .sort((a, b) -> Long.compare(b.getTextEBookId(), a.getTextEBookId()));
+                .flatMapMany(it -> textEBookPort.getTextEBookListByCourseIds(Collections.singletonList(command.getCourseId()))
+                        .flatMap(textEBookResult -> coursePort.getSimpleCourseByCourseId(textEBookResult.getCourseId()).cache()
+                                .map(courseResult -> CourseTextEBook.from(courseResult, textEBookResult))
+                        ))
+                .sort((before, after) -> Long.compare(after.getTextEBookId(), before.getTextEBookId()));
     }
 }
