@@ -6,13 +6,25 @@ import org.lucycato.productqueryservice.domain.enums.TeachingGenre;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 public interface TeacherPort {
 
-    Flux<Long> getTeacherIdsByTeachingGenre(TeachingGenre teachingGenre);
+    Flux<Long> getTeacherIds();
 
-    Flux<TeacherResult> getTeacherListByTeachingGenre(TeachingGenre teachingGenre);
+    Flux<Long> getTeacherIds(TeachingGenre teachingGenre);
 
-    Mono<TeacherResult> getSimpleTeacher(Long teacherId);
+    Flux<TeacherResult> getTeacherListByTeacherIds(List<Long> teacherIds);
 
-    Mono<TeacherDetailResult> getTeacher(Long teacherId);
+    Flux<TeacherResult> getTeacherList();
+
+    Flux<TeacherResult> getTeacherList(TeachingGenre teachingGenre);
+
+    Flux<TeacherResult> getTeacherList(TeachingGenre teachingGenre, Integer page, Integer size);
+
+    Mono<TeacherResult> getSimpleTeacherByTeacherId(Long teacherId);
+
+    Mono<TeacherResult> getSimpleTeacherByCourseSeriesId(Long courseSeriesId);
+
+    Mono<TeacherDetailResult> getTeacherByTeacherId(Long teacherId);
 }
