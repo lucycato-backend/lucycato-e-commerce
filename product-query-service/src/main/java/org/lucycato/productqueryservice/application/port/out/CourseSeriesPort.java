@@ -2,6 +2,7 @@ package org.lucycato.productqueryservice.application.port.out;
 
 import org.lucycato.productqueryservice.application.port.out.result.CourseSeriesDetailResult;
 import org.lucycato.productqueryservice.application.port.out.result.CourseSeriesResult;
+import org.lucycato.productqueryservice.domain.enums.TeachingGenre;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -11,9 +12,15 @@ public interface CourseSeriesPort {
 
     Flux<CourseSeriesResult> getCourseSeriesListByTeacherIds(List<Long> teacherIds);
 
-    Mono<CourseSeriesDetailResult> getCourseSeries(Long courseSeriesId);
+    Flux<CourseSeriesResult> getCourseSeriesListByCourseIds(List<Long> courseIds);
 
-    Mono<CourseSeriesResult> getSimpleCourseSeries(Long courseSeriesId);
+    Flux<CourseSeriesResult> getCourseSeriesListByTextEBookIds(List<Long> textEBookIds);
 
-    Mono<Long> getCourseSeriesCount(Long teacherId);
+    Mono<CourseSeriesDetailResult> getCourseSeriesByCourseSeriesId(Long courseSeriesId);
+
+    Flux<CourseSeriesResult> getCourseSeriesList(TeachingGenre teachingGenre);
+
+    Mono<CourseSeriesResult> getSimpleCourseSeriesByCourseSeriesId(Long courseSeriesId);
+
+    Mono<Long> getCourseSeriesCountByTeacherId(Long teacherId);
 }
