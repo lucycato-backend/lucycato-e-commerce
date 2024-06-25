@@ -17,8 +17,6 @@ import java.time.LocalDateTime;
 public class CourseDetailResult {
     private Long courseId;
 
-    private Long teacherId;
-
     private Long courseSeriesId;
 
     private String courseTitle;

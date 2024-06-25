@@ -17,8 +17,6 @@ import java.time.LocalDateTime;
 public class CourseDetail {
     private final Long courseId;
 
-    private final Long teacherId;
-
     private final Long courseSeriesId;
 
     private final String courseTitle;
@@ -46,7 +44,6 @@ public class CourseDetail {
     public static CourseDetail from(CourseDetailResult courseDetailResult, Boolean isRecentCourseOpen) {
         return CourseDetail.builder()
                 .courseId(courseDetailResult.getCourseId())
-                .teacherId(courseDetailResult.getTeacherId())
                 .courseSeriesId(courseDetailResult.getCourseSeriesId())
                 .courseTitle(courseDetailResult.getCourseTitle())
                 .courseSubTitle(courseDetailResult.getCourseSubTitle())
