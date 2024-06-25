@@ -1,6 +1,7 @@
 package org.lucycato.productqueryservice.adapter.in.web;
 
 import lombok.RequiredArgsConstructor;
+import org.lucycato.common.Paging;
 import org.lucycato.common.annotation.hexagonal.in.WebAdapter;
 import org.lucycato.productqueryservice.application.port.in.TeacherUseCase;
 import org.lucycato.productqueryservice.application.port.in.command.*;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 @WebAdapter
 @RestController
 @RequiredArgsConstructor
@@ -22,14 +25,25 @@ public class TeacherController {
     private final TeacherUseCase teacherUseCase;
 
     @GetMapping("open-api/v1/teachers")
-    public Flux<Teacher> getTeacherList(
+    public Mono<Paging<List<Teacher>>> getTeacherList(
             @RequestParam(name = "teachingGenre", required = false)
-            TeachingGenre teachingGenre
+            TeachingGenre teachingGenre,
+            @RequestParam(name = "page", defaultValue = "0")
+            Integer page,
+            @RequestParam(name = "size", defaultValue = "10")
+            Integer size
+
     ) {
         TeacherSearchCommand command = new TeacherSearchCommand(
-                teachingGenre
+                teachingGenre,
+                page,
+                size
         );
-        return teacherUseCase.getTeacherList(command);
+        return teacherUseCase.getTeacherList(command)
+                .collectList()
+                .map(teachers ->
+                    Paging.CREATE(teachers, page, size, teachers.size() < size)
+                );
     }
 
     @GetMapping("open-api/v1/teachers/{teacherId}")

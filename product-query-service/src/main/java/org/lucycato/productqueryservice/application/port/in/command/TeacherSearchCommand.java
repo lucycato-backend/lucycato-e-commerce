@@ -13,8 +13,14 @@ public class TeacherSearchCommand extends SelfValidating<TeacherSearchCommand> {
 
     private TeachingGenre teachingGenre;
 
-    public TeacherSearchCommand(TeachingGenre teachingGenre) {
+    private Integer page;
+
+    private Integer size;
+
+    public TeacherSearchCommand(TeachingGenre teachingGenre, Integer page, Integer size) {
         this.teachingGenre = teachingGenre;
+        this.page = page;
+        this.size = size;
 
         this.validateSelf();
     }
