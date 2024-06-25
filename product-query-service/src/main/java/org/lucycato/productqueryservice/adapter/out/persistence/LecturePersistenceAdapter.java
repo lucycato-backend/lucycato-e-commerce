@@ -18,8 +18,12 @@ public class LecturePersistenceAdapter implements LecturePort {
 
     @Override
     public Flux<LectureResult> getLectureListByCourseIds(List<Long> courseIds) {
+        if (courseIds == null || courseIds.isEmpty()) {
+            return Flux.empty();
+        }
         String sql = """
                 SELECT l.id as lectureId,
+                    l.course_id as courseId,
                     l.lecture_title as lectureTitle,
                     l.lecture_description as lectureDescription,
                     l.lecture_category as lectureCategory,
@@ -35,6 +39,7 @@ public class LecturePersistenceAdapter implements LecturePort {
                 .all()
                 .flatMap(row -> Flux.just(new LectureResult(
                         (Long) row.get("lectureId"),
+                        (Long) row.get("courseId"),
                         (String) row.get("lectureTitle"),
                         (String) row.get("lectureDescription"),
                         LectureCategory.valueOf((String) row.get("lectureCategory")),
